@@ -1,0 +1,218 @@
+% ============================================================
+%  《高中化学系统讲义》导言区
+%  编译：xelatex（两遍）  字体：Noto Serif/Sans CJK SC + TeX Gyre Termes
+% ============================================================
+\usepackage[a4paper,top=2.1cm,bottom=2.0cm,left=1.9cm,right=1.9cm,
+  headheight=14pt,headsep=0.45cm,footskip=0.75cm]{geometry}
+
+% ---------- 字体 ----------
+\usepackage{amsmath,amssymb}
+\usepackage{unicode-math}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmathfont{TeX Gyre Termes Math}
+\setCJKmainfont{Noto Serif CJK SC}[BoldFont={Noto Sans CJK SC Bold},ItalicFont={AR PL KaitiM GB}]
+\setCJKsansfont{Noto Sans CJK SC}[BoldFont={Noto Sans CJK SC Bold}]
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont={Noto Serif CJK SC Bold}]
+\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}[BoldFont={Noto Sans CJK SC Bold}]
+\setCJKfamilyfont{zhkai}{AR PL KaitiM GB}[AutoFakeBold=2]
+\setCJKfamilyfont{zhfs}{AR PL KaitiM GB}
+\def\songti{\CJKfamily{zhsong}}
+\def\heiti{\CJKfamily{zhhei}}
+\def\kaishu{\CJKfamily{zhkai}}
+\linespread{1.22}
+\xeCJKsetcharclass{"2460}{"24FF}{1}   % ①②③ 等按中文字符处理
+\xeCJKsetcharclass{"2160}{"217F}{1}   % Ⅰ Ⅱ Ⅲ 罗马数字
+\xeCJKsetcharclass{"25A0}{"25FF}{1}   % △ ○ 等几何符号用中文字体
+\xeCJKsetcharclass{"00B7}{"00B7}{0}   % 单位中的中点·按西文处理，避免 kJ·mol 断行
+\xeCJKsetcharclass{"2013}{"2013}{0}   % en dash 用西文字体
+\setlength{\parskip}{0.15em}
+
+% ---------- 常用宏包 ----------
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric,decorations.pathreplacing,patterns,3d,shadows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{booktabs,tabularx,multirow,array,makecell,colortbl}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[skins,breakable,most]{tcolorbox}
+\usepackage{tasks}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{siunitx}
+\sisetup{inter-unit-product=\ensuremath{\cdot},per-mode=symbol}
+\usepackage[hidelinks,bookmarksnumbered]{hyperref}
+
+% ---------- 颜色 ----------
+\definecolor{mainblue}{RGB}{0,84,147}
+\definecolor{lightblue}{RGB}{232,242,251}
+\definecolor{deepgreen}{RGB}{20,110,70}
+\definecolor{lightgreen}{RGB}{233,246,238}
+\definecolor{exorange}{RGB}{196,90,10}
+\definecolor{lightorange}{RGB}{254,244,232}
+\definecolor{warnred}{RGB}{180,30,40}
+\definecolor{lightred}{RGB}{253,236,236}
+\definecolor{gkpurple}{RGB}{100,45,140}
+\definecolor{lightpurple}{RGB}{244,238,250}
+\definecolor{graytext}{RGB}{90,90,90}
+
+% ---------- 章节样式 ----------
+\ctexset{
+  chapter={
+    format={\raggedright\heiti},
+    nameformat={\color{mainblue}\Large},
+    titleformat={\color{mainblue}\LARGE\bfseries},
+    number={\arabic{chapter}},
+    name={第,章},
+    aftername={\quad},
+    beforeskip={0pt},
+    afterskip={1.0em},
+    pagestyle=fancy
+  },
+  section={
+    format={\Large\heiti\color{mainblue}\raggedright},
+    number={\arabic{chapter}.\arabic{section}},
+    beforeskip={1.0ex plus .3ex},
+    afterskip={0.6ex}
+  },
+  subsection={
+    format={\large\heiti\color{deepgreen}\raggedright},
+    number={\arabic{chapter}.\arabic{section}.\arabic{subsection}},
+    beforeskip={0.8ex plus .2ex},
+    afterskip={0.4ex}
+  },
+  subsubsection={
+    format={\normalsize\heiti\raggedright},
+    number={},
+    beforeskip={0.5ex},
+    afterskip={0.2ex}
+  },
+  contentsname={目\quad 录}
+}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\heiti\color{mainblue}\leftmark}
+\fancyhead[R]{\small\kaishu\color{graytext}高中化学系统讲义}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\chaptermark}[1]{\markboth{第\,\thechapter\,章\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- 列表 ----------
+\setlist{nosep,leftmargin=2em}
+\setlist[itemize]{label=\textcolor{mainblue}{\small$\blacktriangleright$}}
+\setlist[enumerate,1]{label=(\arabic*)}
+\settasks{label=\Alph*．,label-width=2.4em,item-indent=2.8em,before-skip=0.1em,after-skip=0.1em,column-sep=0.5em}
+\setlength{\emergencystretch}{2.5em}
+
+% ---------- 栏目环境 ----------
+\tcbset{
+  basestyle/.style={enhanced,breakable,boxrule=0.6pt,arc=1.5mm,left=2mm,right=2mm,top=1mm,bottom=1mm,
+    before skip=0.55em,after skip=0.55em,fonttitle=\heiti\bfseries\small}
+}
+% 概念：核心概念与定义
+\newtcolorbox{gainian}[1][]{basestyle,colback=lightblue,colframe=mainblue,
+  title={\faicon 核心概念\ifx\relax#1\relax\else：#1\fi},attach boxed title to top left={xshift=3mm,yshift=-2mm},
+  boxed title style={colback=mainblue,arc=1mm,boxrule=0pt},top=2.5mm}
+% 本质：追本溯源（为什么）
+\newtcolorbox{benzhi}[1][]{basestyle,colback=lightgreen,colframe=deepgreen,
+  title={追本溯源\ifx\relax#1\relax\else：#1\fi},attach boxed title to top left={xshift=3mm,yshift=-2mm},
+  boxed title style={colback=deepgreen,arc=1mm,boxrule=0pt},top=2.5mm}
+% 方法：方法提炼
+\newtcolorbox{fangfa}[1][]{basestyle,colback=lightorange,colframe=exorange,
+  title={方法提炼\ifx\relax#1\relax\else：#1\fi},attach boxed title to top left={xshift=3mm,yshift=-2mm},
+  boxed title style={colback=exorange,arc=1mm,boxrule=0pt},top=2.5mm}
+% 易错：易错警示
+\newtcolorbox{yicuo}[1][]{basestyle,colback=lightred,colframe=warnred,boxrule=0pt,leftrule=2.5pt,arc=0mm,
+  title={易错警示\ifx\relax#1\relax\else：#1\fi},coltitle=warnred,colbacktitle=lightred,
+  fonttitle=\heiti\bfseries\small,toptitle=0.5mm,bottomtitle=0mm}
+% 勘误：原课件勘误
+\newtcolorbox{kanwu}[1][]{basestyle,colback=white,colframe=warnred,boxrule=0.6pt,arc=0mm,
+  borderline={0.3pt}{1.2pt}{warnred,dashed},
+  title={课件勘误\ifx\relax#1\relax\else：#1\fi},coltitle=white,colbacktitle=warnred}
+% 真题：真题链接（参数为来源）
+\newtcolorbox{zhenti}[1]{basestyle,colback=lightpurple,colframe=gkpurple,
+  title={真题链接\quad{\normalfont\small #1}},coltitle=white,colbacktitle=gkpurple}
+% 拓展：视野拓展（高考不作要求或仅作了解）
+\newtcolorbox{tuozhan}[1][]{basestyle,colback=white,colframe=graytext,boxrule=0.4pt,
+  title={视野拓展\ifx\relax#1\relax\else：#1\fi},coltitle=graytext,colbacktitle=white,fonttitle=\heiti\small}
+% 导学
+\newtcolorbox{daoxue}{basestyle,colback=white,colframe=mainblue,boxrule=1pt,arc=2mm,
+  title={本章导学},coltitle=white,colbacktitle=mainblue,fonttitle=\heiti\bfseries}
+
+\def\faicon{}
+
+% 例题：编号随章；上半题目、下半解析
+\newcounter{liti}[chapter]
+\renewcommand{\theliti}{\thechapter-\arabic{liti}}
+\newtcolorbox{liti}[1][]{enhanced,breakable,colback=white,colframe=exorange,boxrule=0.5pt,arc=1mm,
+  left=2mm,right=2mm,top=1mm,bottom=1mm,before skip=0.6em,after skip=0.6em,
+  segmentation style={dashed,exorange},colbacklower=white,
+  before upper={\stepcounter{liti}{\heiti\color{exorange}【例\,\theliti】}\ifx\relax#1\relax\else{\kaishu\small（#1）}\fi\ },
+  before lower={\small}}
+\newcommand{\silu}{{\heiti\color{exorange}【思路】}}
+\newcommand{\jie}{{\heiti\color{exorange}【解析】}}
+\newcommand{\daan}{{\heiti\color{exorange}【答案】}}
+\newcommand{\xianjing}{{\heiti\color{warnred}【陷阱】}}
+\newcommand{\dianbo}{{\heiti\color{deepgreen}【点拨】}}
+
+% 习题与解析
+\newlist{xiti}{enumerate}{1}
+\setlist[xiti]{label={\textbf{\arabic*}.},leftmargin=1.6em,itemsep=0.35em,topsep=0.3em,resume=xiti}
+\newcommand{\zu}[1]{\par\smallskip\noindent{\heiti\color{mainblue}\large #1}\par\smallskip}
+\newcommand{\laiyuan}[1]{{\kaishu\small\color{graytext}（#1）}}
+\newenvironment{jiexilist}{\small\begin{enumerate}[label={\textbf{\arabic*}.},leftmargin=1.6em,itemsep=0.3em,topsep=0.2em]}{\end{enumerate}}
+\newcommand{\ans}[1]{{\heiti 答案：}#1\quad}
+
+% 填空线、括号
+\newcommand{\tk}[1][3em]{\underline{\hspace{#1}}}
+\newcommand{\xz}{（\hspace{2em}）}
+
+% 化学常用
+\newcommand{\kjmol}{\,kJ·mol$^{-1}$}
+\newcommand{\molL}{\,mol·L$^{-1}$}
+\newcommand{\dH}{\Delta H}
+\newcommand{\ksp}{K_{\mathrm{sp}}}
+\newcommand{\ka}{K_{\mathrm{a}}}
+\newcommand{\kb}{K_{\mathrm{b}}}
+\newcommand{\kw}{K_{\mathrm{w}}}
+\newcommand{\kh}{K_{\mathrm{h}}}
+\newcommand{\kp}{K_{p}}
+\newcommand{\NA}{N_{\mathrm{A}}}
+\newcommand{\vz}{v_{\text{正}}}
+\newcommand{\vn}{v_{\text{逆}}}
+\newcommand{\kz}{k_{\text{正}}}
+\newcommand{\kn}{k_{\text{逆}}}
+\newcommand{\eqm}{\rightleftharpoons}
+
+% 小节标题“章末”样式
+\newcommand{\zhangmo}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+
+% 表格行距
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{4pt}
+
+% chemfig 设置
+\setchemfig{atom sep=1.8em,bond offset=1pt,double bond sep=2.2pt,angle increment=30}
+
+% 能量-历程图快捷命令：\energyprofile{起点}{峰}{终点}
+\newcommand{\axisEP}[2]{%
+  \draw[-Stealth] (0,0)--(#1,0) node[below left]{\small 反应进程};
+  \draw[-Stealth] (0,0)--(0,#2) node[left]{\small 能量};}
+
+% 热化学方程式中的焓变：\dHv{-285.8}
+\newcommand{\dHv}[1]{\quad\ensuremath{\Delta H=#1\ \mathrm{kJ\cdot mol^{-1}}}}
+% 题干中的选项（行内四选项，自动排版）
+\newcommand{\xx}[4]{\begin{tasks}(4)\task #1 \task #2 \task #3 \task #4\end{tasks}}
+\newcommand{\xxb}[4]{\begin{tasks}(2)\task #1 \task #2 \task #3 \task #4\end{tasks}}
+\newcommand{\xxa}[4]{\begin{tasks}(1)\task #1 \task #2 \task #3 \task #4\end{tasks}}

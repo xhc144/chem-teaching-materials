@@ -1,0 +1,257 @@
+% ============================================================
+% 第8章 晶体结构与性质（选必2第三章）
+% ============================================================
+\chapter{晶体结构与性质}
+
+% 斜二测立方体与原子绘制（边长 2，纵深方向偏移 (0.8,0.55)）
+\newcommand{\cubeat}[1][black]{%
+ \draw[#1] (0,0)--(2,0)--(2,2)--(0,2)--cycle;
+ \draw[#1] (2,0)--(2.8,0.55)--(2.8,2.55)--(2,2); \draw[#1] (0,2)--(0.8,2.55)--(2.8,2.55);
+ \draw[#1,dashed] (0,0)--(0.8,0.55)--(2.8,0.55); \draw[#1,dashed] (0.8,0.55)--(0.8,2.55);}
+\newcommand{\at}[5]{\shade[ball color=#4] ({2*#1+0.8*#3},{2*#2+0.55*#3}) circle (#5);}
+
+\begin{daoxue}
+\textbf{知识主线：}晶体与非晶体的区别 $\to$ 晶胞与均摊法 $\to$ 四类晶体（构成粒子与作用力决定性质）$\to$ 典型晶胞结构 $\to$ 晶胞计算（化学式、配位数、距离、密度、原子坐标）。
+
+\textbf{高考考情：}广东卷第18题（工艺流程）的最后一问连续三年考晶胞：2024年考 Co、Ga、Ni 合金的粒子个数比和晶胞体积；2025年考 \ce{Ni_xCu_yN_z} 的组成和配位数；2026年考 AlSb 的离子键成分和原子占位。另外选择题常考晶体类型与熔沸点比较（2026年第4题D、2025年第5题D）。
+
+\textbf{学习目标：}①熟练运用均摊法；②掌握四类晶体的性质及熔沸点比较；③记住 NaCl、CsCl、\ce{CaF2}、ZnS（金刚石）、干冰、金属堆积等典型结构；④会计算晶胞密度、原子间距，读懂原子分数坐标。
+\end{daoxue}
+
+\section{晶体与晶胞}
+
+\textbf{晶体}内部粒子在三维空间里呈周期性有序排列，具有\textbf{自范性}（能自发呈现多面体外形）、各向异性和固定熔点；\textbf{非晶体}（玻璃、石蜡）则没有。区分晶体与非晶体最可靠的方法是 \textbf{X 射线衍射}：晶体会产生明锐的衍射峰（分立的斑点），非晶体只有弥散的宽峰（2026年广东卷第17题(3)考查了这一点）。
+
+\begin{gainian}[晶胞与均摊法]
+晶胞是描述晶体结构的基本单元，晶体可看作数量巨大的晶胞“无隙并置”而成。立方晶胞中，位于\textbf{顶点}的粒子为 8 个晶胞共有，每个晶胞占 $\frac18$；\textbf{棱上}占 $\frac14$；\textbf{面上}占 $\frac12$；\textbf{体内}占 1。（六棱柱晶胞：顶点 $\frac16$，上下底面棱 $\frac14$、侧棱 $\frac13$，面心 $\frac12$。）
+\end{gainian}
+
+\section{四类晶体}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{1.4cm}XXXX}
+\toprule
+& 分子晶体 & 共价晶体 & 离子晶体 & 金属晶体 \\
+\midrule
+构成粒子 & 分子 & 原子 & 阴、阳离子 & 金属阳离子、自由电子 \\
+作用力 & 范德华力（有的有氢键） & 共价键 & 离子键 & 金属键 \\
+熔沸点 & 低 & 很高 & 较高 & 差别大 \\
+硬度 & 小 & 很大 & 较大，较脆 & 差别大，有延展性 \\
+导电性 & 固态、熔融不导电 & 一般不导电（Si 为半导体） & 熔融或溶于水导电 & 固态导电 \\
+实例 & 干冰、冰、\ce{I2}、大多数有机物 & 金刚石、晶体硅、SiC、\ce{SiO2} & NaCl、CsCl、MgO & Na、Cu、Fe \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{金属键的“电子气”理论}：金属原子脱落下来的价电子形成遍布整块晶体的“电子气”，被所有金属阳离子共用，从而把它们维系在一起。这一模型能解释金属的通性：①导电性——在外加电场作用下自由电子定向移动；②导热性——自由电子在运动中与金属阳离子碰撞传递能量；③延展性——金属阳离子层之间发生相对滑动时，“电子气”仍能把它们结合在一起，金属键不被破坏。
+
+\textbf{混合型晶体——石墨}：层内 C 原子 $\mathrm{sp}^2$ 杂化，以共价键形成平面六元环网状结构，未杂化的 p 电子形成遍及整层的大 $\pi$ 键，可在层内移动，所以能导电；层与层之间是范德华力，易滑动，质软。1 mol 石墨含 1.5 mol C—C 键。
+
+\begin{fangfa}[熔沸点比较的思路]
+①\textbf{先看晶体类型}：一般共价晶体$>$离子晶体$>$分子晶体，金属晶体差别很大。②\textbf{同类型再比较作用力}：共价晶体——键长越短、键能越大，熔点越高：金刚石$>$SiC$>$晶体硅；离子晶体——离子电荷越高、半径越小，离子键越强：MgO$>$NaCl$>$KCl；分子晶体——有分子间氢键的反常高，组成结构相似的相对分子质量越大越高，相对分子质量相近的极性越大越高；金属晶体——金属阳离子半径越小、价电子越多，金属键越强：Al$>$Mg$>$Na，Li$>$Na$>$K。
+\end{fangfa}
+
+\begin{tuozhan}[离子液体、液晶、纳米材料]
+离子液体由体积很大的阴、阳离子构成，离子键较弱，室温下呈液态，几乎不挥发，可作溶剂或电解质；液晶介于液态与晶态之间，既有流动性又有类似晶体的各向异性；纳米晶体的表面原子比例大，性质与普通晶体不同。2026年广东卷第19题(5)中的“低共熔溶剂”也属于这类新型溶剂。
+\end{tuozhan}
+
+\section{典型晶体结构}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+\begin{scope}
+\cubeat
+\foreach \x/\y/\z in {0/0/0,1/0/0,0/1/0,1/1/0,0/0/1,1/0/1,0/1/1,1/1/1,0.5/0.5/0,0.5/0.5/1,0.5/0/0.5,0.5/1/0.5,0/0.5/0.5,1/0.5/0.5}{\at{\x}{\y}{\z}{mainblue!70}{0.13}}
+\foreach \x/\y/\z in {0.5/0/0,0.5/1/0,0/0.5/0,1/0.5/0,0.5/0/1,0.5/1/1,0/0.5/1,1/0.5/1,0/0/0.5,1/0/0.5,0/1/0.5,1/1/0.5,0.5/0.5/0.5}{\at{\x}{\y}{\z}{warnred!80}{0.08}}
+\node[font=\scriptsize,align=center] at (1.4,-0.6) {NaCl 型\\蓝 \ce{Cl-}、红 \ce{Na+}，配位数均为 6};
+\end{scope}
+\begin{scope}[xshift=4.3cm]
+\cubeat
+\foreach \x/\y/\z in {0/0/0,1/0/0,0/1/0,1/1/0,0/0/1,1/0/1,0/1/1,1/1/1}{\at{\x}{\y}{\z}{mainblue!70}{0.13}}
+\at{0.5}{0.5}{0.5}{warnred!80}{0.15}
+\node[font=\scriptsize,align=center] at (1.4,-0.6) {CsCl 型\\配位数均为 8};
+\end{scope}
+\begin{scope}[xshift=8.6cm]
+\cubeat
+\foreach \x/\y/\z in {0/0/0,1/0/0,0/1/0,1/1/0,0/0/1,1/0/1,0/1/1,1/1/1,0.5/0.5/0,0.5/0.5/1,0.5/0/0.5,0.5/1/0.5,0/0.5/0.5,1/0.5/0.5}{\at{\x}{\y}{\z}{mainblue!70}{0.12}}
+\foreach \x/\y/\z in {0.25/0.25/0.25,0.75/0.75/0.25,0.75/0.25/0.75,0.25/0.75/0.75}{\at{\x}{\y}{\z}{warnred!80}{0.12}}
+\node[font=\scriptsize,align=center] at (1.4,-0.6) {ZnS 型（闪锌矿）\\4 个红球在体内四面体空隙};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.2cm}Xp{3.6cm}}
+\toprule
+晶胞 & 结构特点 & 每个晶胞含粒子数、配位数 \\
+\midrule
+NaCl & \ce{Cl-} 面心立方，\ce{Na+} 位于棱心和体心 & 4 个 NaCl；配位数 6:6 \\
+CsCl & \ce{Cl-} 位于顶点，\ce{Cs+} 位于体心 & 1 个 CsCl；配位数 8:8 \\
+\ce{CaF2}（萤石） & \ce{Ca^2+} 面心立方，8 个 \ce{F-} 位于 8 个四面体空隙 & 4 个 \ce{CaF2}；\ce{Ca^2+} 配位数 8，\ce{F-} 配位数 4 \\
+ZnS（闪锌矿） & \ce{S^2-} 面心立方，\ce{Zn^2+} 占据一半（4 个）四面体空隙 & 4 个 ZnS；配位数 4:4 \\
+金刚石（Si、SiC 类似） & 在 ZnS 结构中全部换成 C 原子 & 8 个 C；每个 C 连 4 个 C \\
+干冰 & \ce{CO2} 分子面心立方 & 4 个 \ce{CO2}；每个分子周围紧邻 12 个 \\
+金属体心立方 & Na、K、Fe 等 & 2 个原子；配位数 8；空间利用率 68\% \\
+金属面心立方 & Cu、Ag、Au、Al 等（与六方最密堆积 Mg、Zn 一样为最密堆积） & 4 个原子；配位数 12；空间利用率 74\% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+\begin{scope}
+\cubeat
+\foreach \x/\y/\z in {0/0/0,1/0/0,0/1/0,1/1/0,0/0/1,1/0/1,0/1/1,1/1/1}{\at{\x}{\y}{\z}{orange!80}{0.15}}
+\at{0.5}{0.5}{0.5}{orange!80}{0.15}
+\node[font=\scriptsize,align=center] at (1.4,-0.6) {体心立方（Na、K、Fe）\\2 个原子，配位数 8};
+\end{scope}
+\begin{scope}[xshift=4.6cm]
+\cubeat
+\foreach \x/\y/\z in {0/0/0,1/0/0,0/1/0,1/1/0,0/0/1,1/0/1,0/1/1,1/1/1,0.5/0.5/0,0.5/0.5/1,0.5/0/0.5,0.5/1/0.5,0/0.5/0.5,1/0.5/0.5}{\at{\x}{\y}{\z}{orange!80}{0.14}}
+\node[font=\scriptsize,align=center] at (1.4,-0.6) {面心立方（Cu、Ag、Au、Al）\\4 个原子，配位数 12};
+\end{scope}
+\begin{scope}[xshift=9.2cm]
+\cubeat
+\foreach \x/\y/\z in {0/0/0,1/0/0,0/1/0,1/1/0,0/0/1,1/0/1,0/1/1,1/1/1}{\at{\x}{\y}{\z}{deepgreen!70}{0.14}}
+\at{0.5}{0.5}{0.5}{mainblue!70}{0.15}
+\foreach \x/\y/\z in {0.5/0.5/0,0.5/0.5/1,0.5/0/0.5,0.5/1/0.5,0/0.5/0.5,1/0.5/0.5}{\at{\x}{\y}{\z}{warnred!80}{0.10}}
+\node[font=\scriptsize,align=center] at (1.4,-0.6) {钙钛矿型 \ce{CaTiO3}\\绿 Ca、蓝 Ti、红 O};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\noindent\small 钙钛矿 \ce{CaTiO3}：Ca 位于顶点（$8\times\frac18=1$），Ti 位于体心（1），O 位于面心（$6\times\frac12=3$）。Ti 周围有 6 个 O（八面体配位）；每个 Ca 周围最近的 O 有 12 个（共用该顶点的 8 个晶胞中，每个晶胞各有 3 个面心 O 与它最近，每个面心 O 为 2 个晶胞共用：$8\times3\div2=12$）。\normalsize
+
+\section{晶胞的计算}
+
+\begin{fangfa}[晶胞计算公式与几何关系]
+\textbf{①密度：}$\rho=\dfrac{N\cdot M}{N_\text{A}\cdot V}=\dfrac{N\cdot M}{N_\text{A}\cdot a^3}$（$N$ 为晶胞所含“化学式单元”数）。单位换算：1 nm $=10^{-7}$ cm，1 pm $=10^{-10}$ cm，$a^3$ 的单位 cm$^3$。\\
+\textbf{②原子间距（边长 $a$）：}面对角线 $\sqrt2a$，体对角线 $\sqrt3a$。面心立方中最近两原子相距 $\frac{\sqrt2}{2}a$；体心立方中顶点与体心相距 $\frac{\sqrt3}{2}a$；ZnS（金刚石）中最近的 Zn 与 S 相距 $\frac{\sqrt3}{4}a$（体对角线的 $\frac14$）；NaCl 中最近的 \ce{Na+} 与 \ce{Cl-} 相距 $\frac a2$。\\
+\textbf{③原子分数坐标：}以晶胞一个顶点为原点，用边长的分数表示位置，如顶点 (0,0,0)，面心 $(\frac12,\frac12,0)$，体心 $(\frac12,\frac12,\frac12)$，ZnS 中体内原子 $(\frac14,\frac14,\frac14)$、$(\frac34,\frac34,\frac14)$ 等。
+\end{fangfa}
+
+\begin{liti}[原子分数坐标与投影图]
+ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位于体内四个互不相邻的四面体空隙中。(1) 若顶点 \ce{S^2-} 的坐标为 (0,0,0)，写出四个 \ce{Zn^2+} 的坐标；(2) 画出晶胞沿 $z$ 轴方向的投影图。
+\tcblower
+\jie (1) $(\frac14,\frac14,\frac14)$、$(\frac34,\frac34,\frac14)$、$(\frac34,\frac14,\frac34)$、$(\frac14,\frac34,\frac34)$（体对角线的 $\frac14$ 处，四个点互不相邻）。\\
+(2) 沿 $z$ 轴投影时只看 $x$、$y$ 坐标：\ce{S^2-} 投影在正方形的四个顶点、四条边的中点和中心；\ce{Zn^2+} 投影在 $(\frac14,\frac14)$、$(\frac34,\frac34)$、$(\frac34,\frac14)$、$(\frac14,\frac34)$ 四点：
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+\draw (0,0) rectangle (2,2);
+\foreach \x/\y in {0/0,2/0,0/2,2/2,1/0,1/2,0/1,2/1,1/1}{\fill[mainblue] (\x,\y) circle (2.2pt);}
+\foreach \x/\y in {0.5/0.5,1.5/1.5,1.5/0.5,0.5/1.5}{\fill[warnred] (\x,\y) circle (1.8pt);}
+\node[font=\scriptsize,right] at (2.2,1.4) {\textcolor{mainblue}{$\bullet$} \ce{S^2-}};
+\node[font=\scriptsize,right] at (2.2,0.9) {\textcolor{warnred}{$\bullet$} \ce{Zn^2+}};
+\end{tikzpicture}
+\end{center}
+\dianbo 投影图中“同一投影点可能对应上下多个原子”，所以不能直接用投影图数原子个数。
+\end{liti}
+
+\begin{liti}[密度计算]
+铜晶体为面心立方结构，晶胞边长 $a=361$ pm，$M(\ce{Cu})=64$ g·mol$^{-1}$，$N_\text{A}=6.02\times10^{23}$ mol$^{-1}$。求铜的密度和铜原子半径。
+\tcblower
+\jie 每个晶胞含 Cu：$8\times\frac18+6\times\frac12=4$。$\rho=\dfrac{4\times64}{6.02\times10^{23}\times(361\times10^{-10})^3}\approx9.0$ g·cm$^{-3}$。面心立方中原子沿面对角线相切：$4r=\sqrt2a$，$r=\frac{\sqrt2}{4}\times361\approx128$ pm。\\
+\xianjing 忘记把 pm 换算成 cm，或把 $N$ 取成 14（未用均摊法）。
+\end{liti}
+
+\begin{liti}[空间利用率]
+求面心立方最密堆积的空间利用率（原子视为刚性球）。
+\tcblower
+\jie 每个晶胞含 4 个原子；沿面对角线相切，$4r=\sqrt2a$，$r=\frac{\sqrt2}{4}a$。空间利用率 $=\dfrac{4\times\frac43\pi r^3}{a^3}=\dfrac{\frac{16}{3}\pi\left(\frac{\sqrt2}{4}\right)^3a^3}{a^3}=\dfrac{\sqrt2\pi}{6}\approx74\%$。同理可得体心立方（沿体对角线相切，$4r=\sqrt3a$，2 个原子）为 $\dfrac{\sqrt3\pi}{8}\approx68\%$。
+\end{liti}
+
+\begin{zhenti}{2025年广东卷第18题(5)\quad 来源：仓库所附真题文档}
+\ce{Ni_xCu_yN_z} 晶体的立方晶胞中，原子分别位于顶点、面心和体心。已知同种位置原子相同，相邻原子间的最近距离之比 $d_{\text{Ni—Cu}}:d_{\text{Ni—N}}=\sqrt2:1$，则 $x:y:z=$\tk；晶体中与 Cu 原子最近且等距离的原子数目为\tk。
+
+\textbf{解析：}设边长为 $a$：面心到顶点距离 $\frac{\sqrt2}{2}a$，面心到体心距离 $\frac12a$，二者之比为 $\sqrt2:1$。可知 Ni 在面心（同时与 Cu、N 相邻），Cu 在顶点，N 在体心。Ni：$6\times\frac12=3$；Cu：$8\times\frac18=1$；N：1。$x:y:z=3:1:1$。每个顶点 Cu 周围最近的是相邻面心上的 Ni，共 $3\times8\times\frac12=12$ 个。
+\end{zhenti}
+
+\begin{zhenti}{2026年广东卷第18题(7)\quad 来源：仓库所附真题文档（网络收集版）}
+①Sb 与 N 同族，AlSb 与 GaN 中离子键成分的百分数较大的是\tk。②AlSb 晶体的立方晶胞结构中，原子占据 A（顶点）、B（面心）、C（体内）三种位置，每种位置上只有一种原子，则 Al 占据\tk{}位置，Sb 占据\tk{}位置。
+
+\textbf{解析：}①离子键成分随两元素电负性差增大而增大；N 的电负性远大于 Sb，Ga 与 Al 电负性相近，所以 GaN 的电负性差更大，离子键成分更大。②AlSb 为 1:1 型，A$+$B 共 $8\times\frac18+6\times\frac12=4$ 个，C（体内）4 个，故顶点与面心是同一种原子，体内是另一种原子（与 ZnS 结构相同）：Al 占 A、B 则 Sb 占 C，或 Al 占 C 则 Sb 占 A、B，二者可互换。
+\end{zhenti}
+
+% ---------------- 章末 ----------------
+\zhangmo{本章小结}
+\subsection*{一、知识总结}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.4cm}X}
+\toprule
+晶体特征 & 自范性、各向异性、固定熔点；X 射线衍射鉴别 \\
+均摊法 & 立方晶胞：顶点 $\frac18$、棱 $\frac14$、面 $\frac12$、体内 1 \\
+晶体类型 & 分子、共价、离子、金属；混合型石墨；熔沸点“先类型、后作用力” \\
+典型结构 & NaCl（6）、CsCl（8）、\ce{CaF2}（8:4）、ZnS/金刚石（4）、干冰（12）、金属 bcc（8）fcc（12） \\
+计算 & $\rho=\frac{NM}{N_\text{A}a^3}$；面对角线 $\sqrt2a$、体对角线 $\sqrt3a$；分数坐标 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\subsection*{二、方法提升}
+\begin{enumerate}
+\item 求化学式：均摊法数出各粒子个数，化为最简比。
+\item 求配位数：选一个粒子，找“最近且等距”的异种（或同种）粒子，注意相邻晶胞中的粒子。
+\item 求距离：先确定两粒子在晶胞中的几何位置（同一面、体对角线等），再用勾股定理。
+\item 密度题的答案常要求“列出计算式”，分子写 $N\cdot M$，分母写 $N_\text{A}\cdot a^3$，单位换算放进式子里。
+\end{enumerate}
+\subsection*{三、易错点归纳}
+\begin{enumerate}
+\item 把分子晶体中的共价键强弱当作熔沸点高低的原因（应看分子间作用力）。
+\item NaCl 晶胞中 \ce{Na+} 的个数：棱心 $12\times\frac14+$ 体心 $1=4$，不是 13。
+\item 金刚石晶胞含 8 个 C 原子，1 mol 金刚石含 2 mol C—C 键；1 mol \ce{SiO2} 含 4 mol Si—O 键。
+\item 单位换算错误：$(a\ \mathrm{pm})^3=a^3\times10^{-30}$ cm$^3$。
+\end{enumerate}
+
+\zhangmo{分层练习}
+\zu{A组\quad 基础巩固}
+\begin{xiti}
+\item 下列说法正确的是\xz
+\xxa{具有规则几何外形的固体一定是晶体}{区分晶体与非晶体最可靠的方法是测定熔点}{晶体硅、SiC、金刚石都是共价晶体，熔点：金刚石$>$SiC$>$晶体硅}{分子晶体中分子内共价键越强，熔点越高}
+
+\item 下列各组物质熔点由高到低排列正确的是\xz
+\xxa{\ce{CO2}$>$\ce{SiO2}$>$NaCl}{MgO$>$NaCl$>$KCl}{Na$>$Mg$>$Al}{HI$>$HBr$>$HCl$>$HF}
+
+\item 某晶体的立方晶胞中，A 原子位于顶点，B 原子位于面心，C 原子位于体心，则该晶体的化学式为\tk；与 C 原子最近的 B 原子有\tk{}个。
+
+\item 某物质熔点 3550 ℃，硬度很大，不溶于水，固态和熔融态都不导电，该物质最可能是\tk{}晶体；另一物质熔点 801 ℃，易溶于水，固态不导电而熔融态导电，它属于\tk{}晶体。
+
+\item 下列各组晶体中，化学键类型相同、晶体类型也相同的是\xz
+\xx{\ce{SO2} 与 \ce{SiO2}}{\ce{CO2} 与 \ce{H2O}}{NaCl 与 HCl}{\ce{CCl4} 与 KCl}
+\end{xiti}
+
+\zu{B组\quad 高考典型}
+\begin{xiti}
+\item \laiyuan{2024年广东卷第18题(6)，来源：仓库所附真题文档}\ 一种含 Ga、Ni、Co 元素的记忆合金的晶体结构可描述为 Ga 与 Ni 交替填充在 Co 构成的立方体体心，形成如下结构单元：边长为 $a$ nm 的小立方体，8 个顶点为 Co，体心为 Ga 或 Ni；相邻两个小立方体的体心分别为 Ga 和 Ni。该合金的晶胞（由 8 个小立方体构成的大立方体）中，粒子个数最简比 Co:Ga:Ni$=$\tk，其立方晶胞的体积为\tk nm$^3$。
+
+\item \laiyuan{原创}\ 金刚石晶胞（与 ZnS 结构类似，全为 C 原子）边长为 $a$ pm。(1) 每个晶胞含 C 原子\tk{}个；(2) 最近两个 C 原子的距离为\tk pm；(3) 若原点处 C 原子坐标为 (0,0,0)，写出另外两个位于体内的 C 原子坐标；(4) 列式表示金刚石的密度（g·cm$^{-3}$，阿伏加德罗常数为 $N_\text{A}$）。
+
+\item \laiyuan{原创}\ \ce{CaF2} 晶胞中 \ce{Ca^2+} 位于顶点和面心，\ce{F-} 位于体内 8 个四面体空隙中，边长为 $a$ nm。(1) \ce{Ca^2+} 和 \ce{F-} 的配位数分别为\tk、\tk；(2) 最近的 \ce{Ca^2+} 与 \ce{F-} 的距离为\tk nm；(3) 晶体密度为\tk g·cm$^{-3}$（列式，$M(\ce{CaF2})=78$ g·mol$^{-1}$）。
+
+\item \laiyuan{原创}\ CsCl 晶胞中 \ce{Cl-} 位于顶点、\ce{Cs+} 位于体心，晶胞边长为 $a$ pm。(1) 每个 \ce{Cs+} 周围距离最近的 \ce{Cs+} 有\tk{}个；(2) \ce{Cs+} 与 \ce{Cl-} 的最近距离为\tk pm；(3) 列式表示晶体密度（$M(\ce{CsCl})=168.5$ g·mol$^{-1}$，阿伏加德罗常数为 $N_\text{A}$）。
+
+\item \laiyuan{原创}\ 钙钛矿 \ce{CaTiO3} 的晶胞如本章图示（Ca 在顶点、Ti 在体心、O 在面心）。(1) 若改为以 Ti 为顶点重新取晶胞，则 Ca 位于\tk，O 位于\tk。(2) 若晶胞边长为 $a$ nm，Ti 与 O 的最近距离为\tk nm，Ca 与 O 的最近距离为\tk nm。
+\end{xiti}
+
+\zu{C组\quad 冲刺高分}
+\begin{xiti}
+\item \laiyuan{原创}\ 氮化硼（BN）有类似石墨的六方结构（h-BN）和类似金刚石的立方结构（c-BN）。(1) h-BN 中 B 原子的杂化方式为\tk，h-BN 不导电而石墨导电，从结构上解释原因。(2) c-BN 的晶胞与 ZnS 相同，B 原子位于体内四面体空隙。c-BN 中 B 原子的杂化方式为\tk，B 的配位数为\tk。(3) c-BN 的硬度仅次于金刚石，熔点却低于金刚石，解释原因。(4) 已知 c-BN 晶胞边长为 361.5 pm，求其密度（保留两位小数，$N_\text{A}=6.02\times10^{23}$ mol$^{-1}$，B 为 10.8，N 为 14.0）。
+
+\item \laiyuan{原创}\ 某铜金合金具有面心立方结构，Au 原子位于顶点、Cu 原子位于面心。(1) 该合金的化学式为\tk。(2) 该合金可以储氢：H 原子进入由 Cu、Au 原子构成的四面体空隙中。若把 Cu、Au 原子等同看待，储氢后晶胞结构与 \ce{CaF2} 相似（H 占据全部四面体空隙），则储氢后的化学式为\tk。(3) 若晶胞边长为 $a$ cm，储氢后的晶体中氢的密度（单位体积内 H 的质量）为多少 g·cm$^{-3}$？
+\end{xiti}
+
+\zhangmo{练习解析}
+\begin{jiexilist}
+\item \ans{C}A：玻璃可制成规则外形，但不是晶体；B：最可靠的是 X 射线衍射；C：键长 C—C$<$Si—C$<$Si—Si，键能依次减小，熔点依次降低，正确；D：分子晶体熔点由分子间作用力决定。
+\item \ans{B}A：\ce{SiO2}（共价晶体）$>$NaCl（离子晶体）$>$\ce{CO2}（分子晶体）；B：离子电荷 \ce{Mg^2+}、\ce{O^2-} 高且半径小，MgO 最高，\ce{Na+} 半径小于 \ce{K+}，正确；C：金属键 Al$>$Mg$>$Na；D：HF 分子间有氢键，熔点反常高。
+\item \ce{AB3C}；6。A：$8\times\frac18=1$；B：$6\times\frac12=3$；C：1。体心 C 与 6 个面心 B 距离均为 $\frac a2$，最近。
+\item 共价；离子。
+\item \ans{B}A：\ce{SO2} 为分子晶体，\ce{SiO2} 为共价晶体；B：均为含极性共价键的分子晶体，正确；C：NaCl 含离子键、为离子晶体，HCl 含共价键、为分子晶体；D：\ce{CCl4} 为分子晶体，KCl 为离子晶体。
+\item 2:1:1；$8a^3$。大立方体（晶胞）边长为 $2a$ nm，由 8 个小立方体构成；Co 位于大立方体的顶点、面心、棱心和体心：$8\times\frac18+6\times\frac12+12\times\frac14+1=8$ 个；8 个小立方体体心中 Ga、Ni 各 4 个。Co:Ga:Ni$=8:4:4=2:1:1$；晶胞体积 $(2a)^3=8a^3$ nm$^3$。
+\item (1) 8（$8\times\frac18+6\times\frac12+4$）。(2) $\frac{\sqrt3}{4}a$（体内原子与最近顶点原子沿体对角线相距 $\frac14$）。(3) 如 $(\frac14,\frac14,\frac14)$、$(\frac34,\frac34,\frac14)$（其余为 $(\frac34,\frac14,\frac34)$、$(\frac14,\frac34,\frac34)$）。(4) $\rho=\dfrac{8\times12}{N_\text{A}\times(a\times10^{-10})^3}$ g·cm$^{-3}$。
+\item (1) 8；4。每个 \ce{F-} 位于由 4 个 \ce{Ca^2+} 构成的四面体中心，\ce{F-} 配位数 4；由化学式 \ce{CaF2}，\ce{Ca^2+} 配位数为 $4\times2=8$。(2) $\frac{\sqrt3}{4}a$。(3) $\dfrac{4\times78}{N_\text{A}\times(a\times10^{-7})^3}$。
+\item (1) 6（相邻晶胞体心的 \ce{Cs+} 位于上下前后左右，距离为 $a$）。(2) $\frac{\sqrt3}{2}a$（体心到顶点）。(3) $\rho=\dfrac{168.5}{N_\text{A}\times(a\times10^{-10})^3}$ g·cm$^{-3}$（每个晶胞含 1 个 CsCl）。
+\item (1) 体心；棱心（以 Ti 为顶点时，原体心的 Ti 成为新顶点，原顶点的 Ca 落在新晶胞体心，原面心的 O 落在新晶胞棱心，组成仍为 \ce{CaTiO3}）。(2) $\frac a2$（体心到面心）；$\frac{\sqrt2}{2}a$（顶点到相邻面心）。
+\item (1) $\mathrm{sp}^2$；h-BN 层内 B、N 电负性差较大，N 原子上的 p 电子（孤电子对）被 N 强烈吸引，形成的 $\pi$ 电子基本定域在 N 原子附近，不能像石墨中的大 $\pi$ 电子那样在层内自由移动，所以不导电。(2) $\mathrm{sp}^3$；4。(3) 二者都是共价晶体，B—N 键长略大于 C—C 键长，键能较小，熔点较低；但 B—N 键有一定极性且结构同样是立体网状，硬度仍很大。(4) 每个晶胞含 4 个 BN：$\rho=\dfrac{4\times24.8}{6.02\times10^{23}\times(361.5\times10^{-10})^3}\approx3.49$ g·cm$^{-3}$。
+\item (1) \ce{Cu3Au}（Au：$8\times\frac18=1$；Cu：$6\times\frac12=3$）。(2) \ce{Cu3AuH8}：面心立方中共有 8 个四面体空隙，全部被 H 占据，每个晶胞含 8 个 H。(3) 每个晶胞含 8 个 H，质量 $\dfrac{8\times1}{N_\text{A}}$ g，氢的密度为 $\dfrac{8}{N_\text{A}\cdot a^3}$ g·cm$^{-3}$。
+\end{jiexilist}

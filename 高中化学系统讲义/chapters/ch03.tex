@@ -1,0 +1,459 @@
+% ============================================================
+% 第3章 化学平衡（对应课件：选必一2.2 化学平衡、2.3 化学反应方向、2.4 化学反应调控）
+% ============================================================
+\chapter{化学平衡}
+
+\begin{daoxue}
+\textbf{知识主线：}可逆反应能否进行到底（平衡状态及其判断）$\to$ 进行到什么程度（平衡常数 $K$、$K_p$、转化率）$\to$ 条件改变后怎样变化（平衡移动、勒夏特列原理、图像）$\to$ 能不能自发发生（$\Delta G=\Delta H-T\Delta S$）$\to$ 工业上怎样选择条件（化学反应的调控）$\to$ 多个反应同时发生怎么办（多重平衡与选择性）。
+
+\textbf{高考考情：}本章是广东卷第19题的“主战场”：2025年考 $\Delta G$ 判断、平衡组成图、$K$ 的计算和催化剂选择性；2026年考吸收平衡的 $K$ 计算；2024年第17题考“如何证明平衡已建立”。选择题常考平衡标志、平衡移动和图像。分值约 10～14 分，是冲击 90 分必须攻克的板块。
+
+\textbf{学习目标：}①会判断平衡状态；②熟练书写 $K$、$K_p$ 并用三段式计算；③能用 $Q$ 与 $K$ 的关系解释平衡移动；④掌握图像分析的通用方法；⑤会用 $\Delta G$ 判断自发性；⑥能处理多重平衡中的转化率、选择性和 $K_p$ 计算。
+\end{daoxue}
+
+\section{化学平衡状态}
+
+\subsection{可逆反应与平衡的建立}
+在\textbf{同一条件}下，既能向正反应方向进行、又能向逆反应方向进行的反应叫可逆反应，用“\ce{<=>}”表示。可逆反应不能进行到底，任一时刻反应物与生成物共存。注意 \ce{2H2 + O2 ->[\text{点燃}] 2H2O} 与 \ce{2H2O ->[\text{电解}] 2H2 ^ + O2 ^} 条件不同，不是可逆反应。
+
+以 \ce{N2 + 3H2 <=> 2NH3} 为例：开始时反应物浓度最大，$\vz$ 最大，$\vn=0$；随着反应进行，$\vz$ 减小、$\vn$ 增大，直到 $\vz=\vn$，各物质浓度不再改变——这就是\textbf{化学平衡状态}。
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75,font=\small]
+\begin{scope}
+\draw[-Stealth] (0,0)--(5,0) node[below left]{$t$}; \draw[-Stealth] (0,0)--(0,3.2) node[left]{$c$};
+\draw[thick,mainblue] (0,2.8) .. controls (1,1.8) and (1.8,1.6) .. (2.6,1.6)--(4.8,1.6) node[right]{\ce{H2}};
+\draw[thick,deepgreen] (0,1.0) .. controls (1,0.7) and (1.8,0.62) .. (2.6,0.62)--(4.8,0.62) node[right]{\ce{N2}};
+\draw[thick,warnred] (0,0) .. controls (1,0.6) and (1.8,0.75) .. (2.6,0.76)--(4.8,0.76) node[above right]{\ce{NH3}};
+\draw[dashed] (2.6,0)--(2.6,3) node[above]{$t_1$};
+\end{scope}
+\begin{scope}[xshift=7cm]
+\draw[-Stealth] (0,0)--(5,0) node[below left]{$t$}; \draw[-Stealth] (0,0)--(0,3.2) node[left]{$v$};
+\draw[thick,mainblue] (0.02,2.8) .. controls (1,1.7) and (1.8,1.4) .. (2.6,1.4)--(4.8,1.4);
+\draw[thick,warnred] (0.02,0.02) .. controls (1,1.0) and (1.8,1.38) .. (2.6,1.4);
+\node[mainblue] at (0.9,2.4) {$\vz$}; \node[warnred] at (1.1,0.5) {$\vn$};
+\node at (3.8,1.75) {$\vz=\vn\neq0$};
+\draw[dashed] (2.6,0)--(2.6,3) node[above]{$t_1$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{gainian}[化学平衡状态的特征：逆、等、动、定、变]
+\textbf{逆}：研究对象是可逆反应；\textbf{等}：$\vz=\vn\neq0$（本质）；\textbf{动}：动态平衡，反应没有停止；\textbf{定}：各组分的浓度（含量）保持不变（现象）；\textbf{变}：条件改变，平衡会被破坏而移动。化学平衡是该条件下反应的\textbf{最大限度}，决定了反应物的最大（平衡）转化率。
+\end{gainian}
+
+\subsection{平衡状态的判断}
+判断依据只有两条：一是“正逆相等”，二是“变量不变”。
+
+\textbf{(1) 正逆相等：}同一物质的生成速率等于消耗速率；用不同物质表示时，必须\textbf{一个表示正反应、一个表示逆反应}，且速率之比等于计量数之比。以 \ce{N2 + 3H2 <=> 2NH3} 为例：“$2\vz(\ce{N2})=\vn(\ce{NH3})$”是平衡标志；“$3v(\ce{N2})=v(\ce{H2})$”任何时刻都成立，不能作标志；“断裂 3 mol H—H 键的同时断裂 6 mol N—H 键”表示正逆速率相等，是平衡标志；“断裂 3 mol H—H 键的同时形成 6 mol N—H 键”都表示正反应，不是标志。
+
+\textbf{(2) 变量不变：}一个量若随反应进行而变化（变量），则它不变时反应达到平衡；若它本来就不随反应变化（定量），则不能作为标志。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{3.4cm}XXX}
+\toprule
+物理量（不变时） & \ce{N2(g) + 3H2(g) <=> 2NH3(g)}（气体分子数变化） & \ce{H2(g) + I2(g) <=> 2HI(g)}（气体分子数不变） & \ce{C(s) + H2O(g) <=> CO(g) + H2(g)}（有固体） \\
+\midrule
+恒温恒容：总压强 $p$ & 是 & 否（$n$ 总不变） & 是 \\
+恒温恒压：总体积 $V$ & 是 & 否 & 是 \\
+气体总物质的量 $n$ & 是 & 否 & 是 \\
+恒容：气体密度 $\rho=m_\text{气}/V$ & 否（$m$、$V$ 都不变） & 否 & 是（气体质量变化） \\
+平均摩尔质量 $\bar M=m_\text{气}/n_\text{气}$ & 是 & 否 & 是 \\
+有色物质的颜色 & — & 是（\ce{I2} 浓度变化） & — \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{yicuo}
+\begin{enumerate}
+\item “各物质浓度之比等于计量数之比”“各物质浓度相等”都不一定是平衡状态——平衡时浓度\textbf{不变}，而不是\textbf{相等或成比例}。
+\item 只有一种气体生成物的分解反应要特别小心：如 \ce{NH4Cl(s) <=> NH3(g) + HCl(g)}，两种气体始终按 1:1 生成，$\bar M$ 和 \ce{NH3} 的体积分数始终不变，不能作标志；但恒容时压强、气体密度是变量，可以作标志。
+\item \textbf{绝热}容器中，反应热使体系温度变化，“温度不变”可作为平衡标志；同时平衡常数也会随温度变化。
+\end{enumerate}
+\end{yicuo}
+
+\begin{liti}[平衡标志综合判断]
+可逆反应 \ce{2NO2(g) <=> 2NO(g) + O2(g)} 在恒容密闭容器中进行：①单位时间内生成 $n$ mol \ce{O2} 的同时生成 $2n$ mol \ce{NO2}；②单位时间内生成 $n$ mol \ce{O2} 的同时生成 $2n$ mol NO；③用 \ce{NO2}、NO、\ce{O2} 表示的速率之比为 2:2:1；④混合气体颜色不再改变；⑤混合气体密度不再改变；⑥混合气体压强不再改变；⑦混合气体平均相对分子质量不再改变。能说明达到平衡状态的是\tk。
+\tcblower
+\jie ①生成 \ce{O2} 为正反应、生成 \ce{NO2} 为逆反应，且比例 1:2 正确，是。②都是正反应，否。③任何时刻都成立，否。④\ce{NO2} 红棕色，颜色不变即浓度不变，是。⑤恒容且全为气体，密度始终不变，否。⑥气体分子数变化，压强是变量，是。⑦$m$ 不变、$n$ 变化，$\bar M$ 是变量，是。答案：①④⑥⑦。
+\end{liti}
+
+\begin{liti}[恒温恒压下的体积计算]
+某体积可变的密闭容器中盛有适量 A 和 B 的混合气体，在一定条件下发生 \ce{A(g) + 3B(g) <=> 2C(g)}。维持温度和压强不变，达到平衡时容器体积为 $V$ L，其中 C 的体积分数为 10\%。则原混合气体的体积为\tk L，平衡时 A 消耗了\tk L。
+\tcblower
+\silu 恒温恒压下，气体体积之比等于物质的量之比，可直接用“体积”列三段式。\\
+\jie 平衡时 $V(\mathrm{C})=0.1V$。每生成 2 体积 C，气体总体积减少 $1+3-2=2$ 体积，所以减少 $0.1V$；原混合气体为 $V+0.1V=1.1V$ L。消耗 A 为 $0.1V\times\frac12=0.05V$ L，消耗 B 为 $0.15V$ L。\\
+\dianbo “差量法”：总体积的变化量与某物质变化量成比例，可省去设未知数。
+\end{liti}
+
+\section{化学平衡常数}
+
+\subsection{平衡常数的表达式}
+800 ℃ 时，对 \ce{CO(g) + H2O(g) <=> CO2(g) + H2(g)}，无论起始投料如何，平衡时 $\dfrac{c(\ce{CO2})\cdot c(\ce{H2})}{c(\ce{CO})\cdot c(\ce{H2O})}$ 都约等于 1.0。大量实验表明这一规律具有普遍性。
+
+\begin{gainian}[化学平衡常数]
+一定温度下，可逆反应 \ce{$m$A(g) + $n$B(g) <=> $p$C(g) + $q$D(g)} 达到平衡时，生成物浓度幂之积与反应物浓度幂之积的比值是一个常数：
+\[K=\frac{c^{\,p}(\mathrm{C})\cdot c^{\,q}(\mathrm{D})}{c^{\,m}(\mathrm{A})\cdot c^{\,n}(\mathrm{B})}\qquad(\text{各浓度均为平衡浓度})\]
+对指定反应，$K$ \textbf{只与温度有关}，与浓度、压强、催化剂无关。
+\end{gainian}
+
+\textbf{书写要点：}
+\begin{enumerate}
+\item \textbf{固体、纯液体不写入表达式}（其“浓度”视为常数）。如 \ce{CaCO3(s) <=> CaO(s) + CO2(g)}，$K=c(\ce{CO2})$。
+\item 稀水溶液中的反应，水不写入；\textbf{非水体系中有水参与}时（如酯化反应 \ce{CH3COOH + C2H5OH <=> CH3COOC2H5 + H2O}），水要写入。
+\item 离子反应先写成离子方程式再写 $K$。如 \ce{Cl2 + H2O <=> H+ + Cl- + HClO}，$K=\dfrac{c(\ce{H+})c(\ce{Cl-})c(\ce{HClO})}{c(\ce{Cl2})}$。
+\item $K$ 与方程式的写法一一对应：
+\end{enumerate}
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+方程式的变化 & $K$ 的变化 \\
+\midrule
+计量数扩大 $n$ 倍 & $K'=K^n$ \\
+正、逆反应 & $K_\text{逆}=1/K_\text{正}$ \\
+两式相加（相减） & $K=K_1\cdot K_2$（$K=K_1/K_2$） \\
+\bottomrule
+\end{tabular}
+\end{center}
+这与盖斯定律“$\Delta H$ 相加”正好对应：\textbf{方程式相加，$\Delta H$ 相加，$K$ 相乘}。
+
+\subsection{平衡常数的意义与应用}
+\textbf{①衡量反应进行的程度：}$K$ 越大，正反应进行得越完全，反应物平衡转化率越大。一般 $K>10^5$ 认为反应基本完全。如 25 ℃ 时 \ce{H2 + F2 <=> 2HF} 的 $K\approx6.5\times10^{95}$，几乎完全；\ce{H2 + I2 <=> 2HI} 的 $K\approx867$，明显不完全。但 $K$ 只反映“限度”（热力学），不反映快慢（动力学）：$K$ 很大的反应也可能很慢。
+
+\textbf{②判断反应方向：}任意时刻的浓度幂之积比值叫\textbf{浓度商} $Q$（形式同 $K$，但用任意时刻浓度）。
+\[Q<K\ \text{反应正向进行};\qquad Q=K\ \text{平衡状态};\qquad Q>K\ \text{反应逆向进行}\]
+
+\textbf{③判断反应的热效应：}升高温度，$K$ 增大，则正反应吸热；$K$ 减小，则正反应放热。
+
+\textbf{④计算平衡组成和转化率。}
+
+\begin{gainian}[转化率、产率与选择性]
+\[\alpha(\text{反应物})=\frac{\text{转化的量}}{\text{起始的量}}\times100\%,\qquad \text{产率}=\frac{\text{实际产量}}{\text{理论产量}}\times100\%\]
+\[\text{目标产物的选择性}=\frac{\text{转化为目标产物的反应物的量}}{\text{反应物转化的总量}}\times100\%,\qquad \text{目标产物产率}=\alpha\times\text{选择性}\]
+\end{gainian}
+
+\begin{liti}[三段式与 $Q$、$K$]
+将 0.1 mol CO 与 0.1 mol \ce{H2O(g)} 充入 10 L 密闭容器，800 ℃ 达平衡时 $c(\ce{CO})=0.005$ mol·L$^{-1}$。(1) 求 $K$ 和 CO 的平衡转化率。(2) 同温下，CO 仍为 0.1 mol，\ce{H2O(g)} 改为 0.3 mol，求 CO 的平衡转化率。(3) 同温下，CO 为 0.1 mol、\ce{H2O(g)} 为 0.375 mol，某时刻测得 $c(\ce{CO})=0.0025$ mol·L$^{-1}$，此时是否平衡？反应向哪个方向进行？
+\tcblower
+\jie (1) 起始 $c(\ce{CO})=c(\ce{H2O})=0.01$，转化 0.005，平衡时四种物质均为 0.005 mol·L$^{-1}$，$K=\dfrac{0.005\times0.005}{0.005\times0.005}=1$，$\alpha(\ce{CO})=50\%$。\\
+(2) 设 CO 转化 $x$ mol·L$^{-1}$：$\dfrac{x^2}{(0.01-x)(0.03-x)}=1$，解得 $x=0.0075$，$\alpha(\ce{CO})=75\%$。增大 \ce{H2O} 的浓度，CO 的转化率提高（而 \ce{H2O} 自身的转化率由 50\% 降为 25\%）。\\
+(3) 此时 CO 转化了 0.0075，$c(\ce{H2O})=0.0375-0.0075=0.03$，$Q=\dfrac{0.0075^2}{0.0025\times0.03}=0.75<K=1$，未平衡，反应正向进行。
+\end{liti}
+
+\begin{liti}[平衡常数的组合与反应方向]
+已知：①\ce{2H2(g) + CO(g) <=> CH3OH(g)} 的 $K_1$ 在 500 ℃、800 ℃ 时分别为 2.5、0.15；②\ce{CO2(g) + H2(g) <=> CO(g) + H2O(g)} 的 $K_2$ 分别为 1.0、2.5。(1) 写出 ③\ce{CO2(g) + 3H2(g) <=> CH3OH(g) + H2O(g)} 的 $K_3$ 与 $K_1$、$K_2$ 的关系，并判断反应③的 $\Delta H$ 正负。(2) 500 ℃ 时，测得反应③某时刻 \ce{H2}、\ce{CO2}、\ce{CH3OH}、\ce{H2O} 的浓度（mol·L$^{-1}$）分别为 0.8、0.1、0.3、0.15，判断此时 $\vz$ 与 $\vn$ 的大小。
+\tcblower
+\jie (1) ③$=$①$+$②，$K_3=K_1\cdot K_2$。500 ℃：$K_3=2.5$；800 ℃：$K_3=0.375$。升温 $K_3$ 减小，正反应放热，$\Delta H<0$。\\
+(2) $Q=\dfrac{0.3\times0.15}{0.1\times0.8^3}=\dfrac{0.045}{0.0512}\approx0.88<K_3=2.5$，反应正向进行，$\vz>\vn$。
+\end{liti}
+
+\subsection{压强平衡常数 $K_p$}
+对气相反应，常用平衡分压代替平衡浓度，得到\textbf{压强平衡常数} $K_p$。分压 $=$ 总压 $\times$ 物质的量分数，即 $p(\mathrm{B})=p_\text{总}\cdot\dfrac{n(\mathrm{B})}{n_\text{总}}$。如 \ce{N2(g) + 3H2(g) <=> 2NH3(g)}：
+\[K_p=\frac{p^2(\ce{NH3})}{p(\ce{N2})\cdot p^3(\ce{H2})}\]
+$K_p$ 同样只与温度有关。有些题目把分压除以标准压强 $p^\ominus=100$ kPa 使其无单位（如 2026 年广东卷第19题），按题给定义计算即可。
+
+\begin{kanwu}[课件 2.2 第38～39页]
+课件中压强平衡常数、物质的量分数平衡常数对应的方程式写作“\ce{$m$A(g) + $n$B(g) <=> $e$C(g) + $f$d(g)}”，其中“d”应为“D”。课件给出的关系 $K_p=K_c(RT)^{(e+f)-(m+n)}$ 与 $K_x=K_p\cdot p_\text{总}^{(m+n)-(e+f)}$ 正确，了解即可，高考一般直接用分压计算 $K_p$。
+\end{kanwu}
+
+\begin{fangfa}[求 $K_p$ 的步骤]
+①列三段式求平衡时各气体的物质的量和\textbf{气体总物质的量}（别漏掉不反应的稀释气体如 Ar、水蒸气）；②求各物质的量分数；③乘以总压得分压；④代入表达式。若反应前后气体分子数相等，总压和 $n_\text{总}$ 可约去，直接用物质的量代入。
+\end{fangfa}
+
+\begin{liti}[$K_p$ 的计算]
+一定温度、恒定总压 $p=100$ kPa 下，\ce{N2O4(g) <=> 2NO2(g)} 达到平衡时 \ce{N2O4} 的转化率为 50\%。求 $K_p$；若保持温度不变，将总压改为 200 kPa，平衡转化率变大还是变小？
+\tcblower
+\jie 设起始 \ce{N2O4} 1 mol，平衡时 \ce{N2O4} 0.5 mol、\ce{NO2} 1 mol，$n_\text{总}=1.5$ mol。$p(\ce{N2O4})=\frac13p$，$p(\ce{NO2})=\frac23p$，$K_p=\dfrac{(\frac23p)^2}{\frac13p}=\frac43p=133$ kPa（一般式：$K_p=\dfrac{4\alpha^2}{1-\alpha^2}p$）。总压增大，平衡向气体分子数减少的方向（逆向）移动，转化率变小；由 $\dfrac{4\alpha^2}{1-\alpha^2}\times200=133$ 可解得 $\alpha\approx0.38$。
+\end{liti}
+
+\section{化学平衡的移动}
+
+\subsection{平衡移动的本质}
+条件改变使 $\vz\neq\vn$，原平衡被破坏，在新条件下建立新平衡的过程叫\textbf{平衡移动}。$\vz>\vn$ 时正向移动，$\vz<\vn$ 时逆向移动。从热力学看，就是条件改变使 $Q\neq K$：$Q<K$ 正向移动，$Q>K$ 逆向移动。用“$Q$ 与 $K$”分析，往往比“速率”更清楚。
+
+\subsection{浓度、压强、温度、催化剂的影响}
+\textbf{(1) 浓度：}增大反应物浓度或减小生成物浓度，$Q$ 减小，$Q<K$，平衡正向移动；反之逆向移动。实验：\ce{Fe^3+ + 3SCN- <=> Fe(SCN)3}（红色），加 KSCN 溶液红色加深；加铁粉（\ce{2Fe^3+ + Fe = 3Fe^2+}，消耗 \ce{Fe^3+}）红色变浅。注意：加 KCl 固体，\ce{K+}、\ce{Cl-} 不参与反应，平衡\textbf{不移动}；改变固体或纯液体的量，平衡也不移动。
+
+\textbf{(2) 压强：}只影响有气体参与、且反应前后气体分子数不等的反应。对 \ce{2NO2(g) <=> N2O4(g)}，压缩体积到原来的一半，各浓度都变为 2 倍：
+\[Q=\frac{2c(\ce{N2O4})}{[2c(\ce{NO2})]^2}=\frac{K}{2}<K\]
+平衡正向（气体分子数减少的方向）移动。现象：颜色\textbf{先变深}（\ce{NO2} 浓度瞬间增大）\textbf{后变浅}（平衡正移），但最终仍比原来深（只能“减弱”不能“抵消”）。对 \ce{H2(g) + I2(g) <=> 2HI(g)}，压缩时 $Q=K$ 不变，平衡不移动，但颜色因浓度增大而加深。
+
+\textbf{(3) 温度：}升高温度，平衡向\textbf{吸热}方向移动；降低温度，向放热方向移动。温度是\textbf{唯一能改变 $K$} 的因素。实验：\ce{2NO2(g) <=> N2O4(g)} $\Delta H<0$，热水中红棕色加深，冰水中变浅。
+
+\textbf{(4) 催化剂：}同等程度改变 $\vz$、$\vn$，平衡不移动，但缩短达到平衡的时间。
+
+\begin{gainian}[勒夏特列原理（平衡移动原理）]
+如果改变影响平衡的一个因素（浓度、压强、温度），平衡就向着能够\textbf{减弱}这种改变的方向移动。适用于已达平衡的体系、只改变一个条件的情况；移动的结果只能减弱、不能抵消这种改变。
+\end{gainian}
+
+\begin{benzhi}[“充入惰性气体”平衡怎样移动]
+\textbf{恒温恒容}：总压增大，但各反应物、生成物的浓度（分压）不变，$Q=K$，平衡\textbf{不移动}。\textbf{恒温恒压}：容器体积增大，各气体浓度（分压）同比例减小，相当于\textbf{减压}，平衡向气体分子数增大的方向移动。工业上常在恒压下通入水蒸气（如乙苯脱氢制苯乙烯）或 Ar 稀释，就是为了提高气体分子数增大的反应的平衡转化率。
+\end{benzhi}
+
+\subsection{平衡移动与转化率的变化规律}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{5.6cm}X}
+\toprule
+操作 & 结果 \\
+\midrule
+增大反应物 A 的浓度（反应 \ce{A + B <=> C}） & 平衡正移，B 的转化率增大，A 自身的转化率减小 \\
+恒温恒容，按原比例同时增加所有反应物 & 相当于加压：若正反应气体分子数减小，各反应物转化率增大；分子数不变，转化率不变 \\
+恒温恒容，再加入一定量的唯一反应物（如 \ce{2NO2 <=> N2O4} 中再加 \ce{NO2}） & 相当于加压：\ce{NO2} 的转化率增大（新平衡中 \ce{N2O4} 的体积分数增大） \\
+恒温恒压，按原比例投料 & 新平衡与原平衡等效，各组分的百分含量和转化率不变 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{fangfa}[“虚拟容器法”（放缩法）]
+恒容容器中按比例增加投料，可设想先把新增物质放在另一个相同容器中，在相同条件下建立与原来\textbf{完全相同}的平衡，再把两个容器“压”到一个容器中——这就把“加料”转化为“加压”问题。同理，一个容器中扩大体积，可看作“减压”。这一思想也是理解\textbf{等效平衡}的钥匙：恒温恒压下，投料比例相同即等效；恒温恒容下，气体分子数不变的反应按比例投料即等效（百分含量相同），分子数改变的反应需“一边倒”后投料量完全相同才等效。
+\end{fangfa}
+
+\begin{liti}[等效平衡]
+恒温恒容的甲、乙、丙三个相同容器中发生 \ce{2SO2(g) + O2(g) <=> 2SO3(g)}：甲中投入 2 mol \ce{SO2} 和 1 mol \ce{O2}，乙中投入 2 mol \ce{SO3}，丙中投入 4 mol \ce{SO2} 和 2 mol \ce{O2}。比较：(1) 甲、乙平衡时 \ce{SO3} 的体积分数；(2) 甲中 \ce{SO2} 的转化率 $\alpha_\text{甲}$ 与乙中 \ce{SO3} 的转化率 $\alpha_\text{乙}$ 之和；(3) 甲、丙中 \ce{SO2} 的转化率。
+\tcblower
+\jie (1) 把乙中 2 mol \ce{SO3} “一边倒”为 2 mol \ce{SO2} 和 1 mol \ce{O2}，与甲完全相同，恒温恒容下两者为等效平衡，平衡组成完全相同，\ce{SO3} 体积分数相等。(2) 设甲平衡时 \ce{SO3} 为 $x$ mol，则 $\alpha_\text{甲}=\frac x2$；乙平衡时 \ce{SO3} 也为 $x$ mol，$\alpha_\text{乙}=\frac{2-x}{2}$，二者之和为 1。(3) 丙相当于把两个甲“压缩”到一个容器中，加压平衡正移，$\alpha_\text{丙}>\alpha_\text{甲}$。
+\end{liti}
+
+\begin{liti}[浓度变化倍数的分析]
+某温度下，密闭容器中发生 \ce{$a$X(g) + $b$Y(g) <=> $c$Z(g) + $d$W(g)}，达平衡后将容器体积扩大为原来的 2 倍，再次达到平衡时 W 的浓度为原平衡的 0.65 倍。则平衡向\tk{}方向移动，$a+b$\tk$c+d$，X 的转化率\tk。
+\tcblower
+\silu 先假设“平衡不移动”，再与实际比较。\\
+\jie 体积扩大为 2 倍的瞬间，W 浓度变为原来的 0.5 倍；最终为 0.65 倍 $>0.5$ 倍，说明平衡\textbf{正向}移动生成了更多 W。减压平衡向气体分子数增大的方向移动，故 $a+b<c+d$；X 的转化率增大。\\
+\xianjing 若只看“0.65 倍 $<1$ 倍”就判断“逆移”，就犯了忽视体积变化的错误。
+\end{liti}
+
+\begin{yicuo}
+下列事实\textbf{不能}用勒夏特列原理解释：使用催化剂加快合成氨；\ce{H2 + I2 <=> 2HI} 平衡体系加压颜色变深；工业合成氨选择 500 ℃左右（从平衡看低温才有利，选高温是为了速率和催化剂活性）。能解释的如：光照新制氯水 pH 减小（\ce{HClO} 分解，\ce{Cl2 + H2O <=> HCl + HClO} 正移）；浓氨水加 NaOH 固体制氨；增大压强有利于 \ce{SO2} 转化为 \ce{SO3}。
+\end{yicuo}
+
+\section{化学平衡图像}
+
+\begin{fangfa}[图像题通用四步]
+\textbf{一看面}：纵、横坐标代表什么；\textbf{二看线}：曲线的变化趋势，是否为平衡线；\textbf{三看点}：起点、拐点、交点、最高（低）点、终点；\textbf{四看辅助线}：作等温线、等压线。两个基本原则：\textbf{①“先拐先平，数值大”}——先出现拐点（先达平衡）的曲线对应的温度高或压强大或使用了催化剂；\textbf{②“定一议二”}——图中有三个变量时，先固定一个，再讨论另外两个的关系。
+\end{fangfa}
+
+\subsection{速率—时间（$v$–$t$）图像}
+\begin{center}
+\begin{tikzpicture}[scale=0.55,font=\scriptsize]
+\newcommand{\vtaxes}{\draw[-Stealth] (0,0)--(4.2,0) node[below]{$t$}; \draw[-Stealth] (0,0)--(0,3.2) node[left]{$v$}; \draw[thick] (0,1.3)--(1.2,1.3);}
+\begin{scope}
+\vtaxes \draw[thick,mainblue] (1.2,2.5) .. controls (2,1.9) .. (3.8,1.75); \draw[thick,warnred] (1.2,1.3) .. controls (2,1.6) .. (3.8,1.75); \draw[densely dotted] (1.2,1.3)--(1.2,2.5);
+\node at (2.1,-0.6) {①增大反应物浓度};\node[mainblue] at (2.0,2.5){$\vz$};\node[warnred] at (2.2,1.25){$\vn$};
+\end{scope}
+\begin{scope}[xshift=5.2cm]
+\vtaxes \draw[thick,mainblue] (1.2,2.0) .. controls (2,2.25) .. (3.8,2.35); \draw[thick,warnred] (1.2,2.7) .. controls (2,2.45) .. (3.8,2.35); \draw[densely dotted] (1.2,1.3)--(1.2,2.7);
+\node[align=center] at (2.1,-0.8) {②升温\\（正反应放热）};\node[warnred] at (2.2,2.9){$\vn$};\node[mainblue] at (2.0,1.75){$\vz$};
+\end{scope}
+\begin{scope}[xshift=10.4cm]
+\vtaxes \draw[thick,mainblue] (1.2,2.7) .. controls (2,2.45) .. (3.8,2.35); \draw[thick,warnred] (1.2,2.0) .. controls (2,2.25) .. (3.8,2.35); \draw[densely dotted] (1.2,1.3)--(1.2,2.7);
+\node[align=center] at (2.1,-0.8) {③加压（正反应\\气体分子数减小）};\node[mainblue] at (2.2,2.9){$\vz$};\node[warnred] at (2.0,1.75){$\vn$};
+\end{scope}
+\begin{scope}[xshift=15.6cm]
+\vtaxes \draw[thick,deepgreen] (1.2,2.4)--(3.8,2.4); \draw[densely dotted] (1.2,1.3)--(1.2,2.4);
+\node[align=center] at (2.1,-0.8) {④催化剂\\（或等体积反应加压）};\node[deepgreen] at (2.5,2.75){$\vz'=\vn'$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+读图要点：①\textbf{连续}（某一速率从原值开始变化）——改变的是浓度；\textbf{断点}（两条线都跳变）——改变的是温度或压强；\textbf{平台}（两线同步跳到同一值）——催化剂或等体积反应改变压强。②跳到上方的那条速率线，决定平衡移动的方向。
+
+\begin{liti}[多阶段 $v$-$t$ 图像]
+合成氨反应 \ce{N2(g) + 3H2(g) <=> 2NH3(g)} $\Delta H<0$ 在某时段内的 $v$–$t$ 图如下（$t_1$、$t_3$、$t_4$ 时刻各改变一个条件）。(1) 判断各时刻改变的条件；(2) 哪段时间内 \ce{NH3} 的百分含量最高？
+\begin{center}
+\begin{tikzpicture}[xscale=0.95,yscale=0.8,font=\scriptsize]
+\draw[-Stealth] (0,0)--(8.4,0) node[below]{$t$}; \draw[-Stealth] (0,0)--(0,3.6) node[left]{$v$};
+\draw[thick] (0,1.2)--(1.2,1.2);
+\draw[thick,warnred] (1.2,2.6) .. controls (1.8,2.2) .. (2.6,2.05); \draw[thick,mainblue] (1.2,1.8) .. controls (1.8,1.95) .. (2.6,2.05);
+\draw[thick] (2.6,2.05)--(3.6,2.05);
+\draw[thick,deepgreen] (3.6,2.9)--(5.2,2.9);
+\draw[thick,mainblue] (5.2,1.4) .. controls (5.9,1.55) .. (6.8,1.62); \draw[thick,warnred] (5.2,1.9) .. controls (5.9,1.7) .. (6.8,1.62);
+\draw[thick] (6.8,1.62)--(8.0,1.62);
+\foreach \x/\l in {1.2/t_1,2.6/t_2,3.6/t_3,5.2/t_4,6.8/t_5}{\draw[densely dotted] (\x,0)--(\x,3.1); \node[below] at (\x,0) {$\l$};}
+\node[warnred] at (1.65,2.8) {$\vn$}; \node[mainblue] at (1.65,1.55) {$\vz$};
+\node[deepgreen] at (4.4,3.15) {$\vz=\vn$};
+\node[warnred] at (5.65,2.05) {$\vn$}; \node[mainblue] at (5.65,1.25) {$\vz$};
+\end{tikzpicture}
+\end{center}
+\tcblower
+\jie (1) $t_1$：$\vz$、$\vn$ 都突然增大（断点），且 $\vn>\vz$，平衡逆移。若是加压，平衡应正移，所以是\textbf{升高温度}（放热反应升温逆移）。$t_3$：两速率同等程度增大（平台），平衡不移动，是\textbf{使用催化剂}（该反应气体分子数变化，不能是加压）。$t_4$：两速率都突然减小且 $\vn>\vz$，平衡逆移，是\textbf{减小压强}（若是降温，平衡应正移）。\\
+(2) $t_1$ 后平衡逆移，$t_4$ 后又逆移，\ce{NH3} 含量逐次降低，所以 $0\sim t_1$ 段 \ce{NH3} 百分含量最高。\\
+\xianjing 不要把“$t_3\sim t_4$ 速率最大”误认为“\ce{NH3} 含量最高”——速率大小与平衡组成是两回事。
+\end{liti}
+
+\subsection{含量（转化率）—时间—温度（压强）图像}
+\begin{center}
+\begin{tikzpicture}[scale=0.6,font=\scriptsize]
+\begin{scope}
+\draw[-Stealth] (0,0)--(5,0) node[below]{$t$}; \draw[-Stealth] (0,0)--(0,3.4) node[left]{C\%};
+\draw[thick,warnred] (0,0) .. controls (0.6,1.6) .. (1.1,1.7)--(4.6,1.7) node[right]{$T_2$};
+\draw[thick,mainblue] (0,0) .. controls (1.5,2.5) .. (2.4,2.7)--(4.6,2.7) node[right]{$T_1$};
+\node[align=center] at (2.4,-0.9) {$T_2$ 先拐，$T_2>T_1$；高温 C\% 低\\$\Rightarrow$ 正反应放热};
+\end{scope}
+\begin{scope}[xshift=7.8cm]
+\draw[-Stealth] (0,0)--(5,0) node[below]{$T$}; \draw[-Stealth] (0,0)--(0,3.4) node[left]{$\alpha$(A)};
+\draw[thick,mainblue] (0.2,2.9) .. controls (2,2.6) .. (4.6,1.6) node[right]{$p_1$};
+\draw[thick,warnred] (0.2,2.2) .. controls (2,1.9) .. (4.6,0.9) node[right]{$p_2$};
+\draw[dashed] (2.5,0)--(2.5,3.0);
+\node[align=center] at (2.4,-0.9) {升温 $\alpha$ 减小$\Rightarrow$放热；作等温线，\\若 $p_1>p_2$ 则正反应气体分子数减小};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\subsection{特殊点的分析}
+\textbf{(1) 平衡曲线外的点：}平衡曲线上每一点都是平衡点。曲线外的点，看它要“走向”曲线需要正移还是逆移：若某点的生成物含量低于同条件下的平衡值，则反应还要正向进行，$\vz>\vn$。
+
+\textbf{(2) 最高点（最低点）：}在“反应进行相同时间后测产物含量（或转化率）—温度”曲线中，若出现先升后降，则最高点之前多为“未达平衡”，升温加快速率，含量增大；最高点之后已达平衡，升温使平衡逆向移动（正反应放热），含量减小。也可能是催化剂在高温下活性降低所致——答题时要结合题给信息判断。
+
+\begin{liti}[最高点图像]
+在不同温度下，向相同的恒容密闭容器中充入等量 CO 和 \ce{H2}，发生 \ce{CO(g) + 2H2(g) <=> CH3OH(g)}，反应相同时间后测得 \ce{CH3OH} 的体积分数 $\varphi$ 与温度 $T$ 的关系如图（在 $T_3$ 处最高）。(1) $T_1$、$T_5$ 中，哪个点一定处于平衡状态？(2) 该反应 $\Delta H$\tk0。(3) $T_3$ 之前 $\varphi$ 随温度升高而增大的原因是\tk。
+\begin{center}
+\begin{tikzpicture}[scale=0.55,font=\scriptsize]
+\draw[-Stealth] (0,0)--(6.5,0) node[below]{$T$}; \draw[-Stealth] (0,0)--(0,3.2) node[left]{$\varphi(\ce{CH3OH})$};
+\draw[thick,mainblue] (0.4,0.4) .. controls (1.8,1.2) and (2.4,2.7) .. (3,2.7) .. controls (3.6,2.7) and (4.6,1.6) .. (6,1.0);
+\foreach \x/\l in {0.9/1,2.0/2,3.0/3,4.4/4,5.6/5} {\draw[dashed] (\x,0)--(\x,0.12) node[below=2pt]{$T_\l$};}
+\end{tikzpicture}
+\end{center}
+\tcblower
+\jie (1) $T_5$。最高点之后的点（$T_4$、$T_5$）已达平衡；$T_1$ 时速率慢，相同时间内尚未达到平衡。(2) $<$：最高点之后升温 $\varphi$ 减小，平衡逆移，正反应放热。(3) $T_3$ 之前反应未达平衡，升高温度反应速率加快，相同时间内生成的 \ce{CH3OH} 增多。
+\end{liti}
+
+\section{化学反应的方向}
+
+\subsection{自发过程与焓判据、熵判据}
+在一定条件下，不借助外力就能自动进行的过程叫\textbf{自发过程}，如水往低处流、冰在常温下融化、墨水扩散。能自发进行到显著程度的反应叫\textbf{自发反应}。“自发”只说明有发生的\textbf{趋势}，不涉及快慢：\ce{H2} 与 \ce{O2} 常温下自发，但不点燃几乎不反应。
+
+\textbf{焓判据：}放热反应体系能量降低，多数能自发。但有些吸热反应也自发，如 \ce{Ba(OH)2*8H2O} 与 \ce{NH4Cl} 的反应、\ce{NaHCO3} 与盐酸的反应。
+
+\textbf{熵判据：}熵（$S$）是衡量体系混乱度的物理量。同一物质 $S(\mathrm{g})>S(\mathrm{l})>S(\mathrm{s})$；\textbf{气体分子数增多的反应 $\Delta S>0$}。熵增有利于自发，但有些熵减反应也自发，如 \ce{4Fe(OH)2(s) + O2(g) + 2H2O(l) = 4Fe(OH)3(s)}。
+
+\begin{kanwu}[课件 2.3 第16页]
+课件中“\ce{Fe(OH)2(s) + O2(g) + H2O(g) = Fe(OH)3(s)}”未配平且水的状态不当，应为 \ce{4Fe(OH)2(s) + O2(g) + 2H2O(l) = 4Fe(OH)3(s)}（这是氢氧化亚铁被氧化，而不是“制备氢氧化亚铁”）。
+\end{kanwu}
+
+\subsection{自由能判据}
+\begin{gainian}[$\Delta G=\Delta H-T\Delta S$]
+恒温恒压下：$\Delta G<0$，反应能自发进行；$\Delta G=0$，平衡状态；$\Delta G>0$，不能自发进行（逆反应自发）。
+\end{gainian}
+
+\begin{center}
+\small
+\begin{tabular}{cccl}
+\toprule
+$\Delta H$ & $\Delta S$ & $\Delta G=\Delta H-T\Delta S$ & 自发性 \\
+\midrule
+$<0$ & $>0$ & 恒 $<0$ & 任何温度都自发 \\
+$>0$ & $<0$ & 恒 $>0$ & 任何温度都不自发 \\
+$<0$ & $<0$ & 低温 $<0$ & 低温自发（如合成氨） \\
+$>0$ & $>0$ & 高温 $<0$ & 高温自发（如 \ce{CaCO3} 分解） \\
+\bottomrule
+\end{tabular}
+\end{center}
+转折温度 $T=\dfrac{\Delta H}{\Delta S}$。计算时注意单位：$\Delta H$ 常用 kJ·mol$^{-1}$，$\Delta S$ 常用 J·mol$^{-1}$·K$^{-1}$，需统一。例如 \ce{CaCO3(s) = CaO(s) + CO2(g)}，$\Delta H=+178.5$ kJ·mol$^{-1}$，$\Delta S=+160.5$ J·mol$^{-1}$·K$^{-1}$，自发分解所需温度 $T>\dfrac{178.5\times10^3}{160.5}\approx1112$ K。
+
+\begin{zhenti}{2025年广东卷第19题(2)\quad 来源：仓库所附真题文档}
+298 K 下，反应 \ce{TiO2(s) + 2C(s) + 2Cl2(g) = TiCl4(g) + 2CO(g)} 的 $\Delta H<0$、$\Delta S>0$，则 298 K 下该反应\tk（填“能”或“不能”）自发进行。
+
+\textbf{解析：}$\Delta H<0$、$\Delta S>0$，$\Delta G=\Delta H-T\Delta S$ 在任何温度下都小于 0，能自发进行。
+\end{zhenti}
+
+\begin{liti}[由自发性推断]
+常温下，反应 \ce{A(s) + B(g) = 2X(g)} 不能自发进行。则该反应的 $\Delta H$\tk0。\ce{CH3OH(l) + NH3(g) = CH3NH2(g) + H2O(g)} 在某温度下自发向右进行，若 $|\Delta H|=17$ kJ·mol$^{-1}$，$|\Delta H-T\Delta S|=17$ kJ·mol$^{-1}$，则 $\Delta H$\tk0。
+\tcblower
+\jie 第一个反应气体分子数增大，$\Delta S>0$；若 $\Delta H\le0$，则 $\Delta G<0$ 一定自发，与事实矛盾，故 $\Delta H>0$。第二个反应自发，$\Delta G=-17$；该反应气体分子数增加，$\Delta S>0$，$-T\Delta S<0$。若 $\Delta H=-17$，则 $\Delta G=-17-T\Delta S<-17$，矛盾；故 $\Delta H=+17$ kJ·mol$^{-1}$，$\Delta H>0$。
+\end{liti}
+
+\section{化学反应的调控}
+
+\subsection{工业合成氨条件的选择}
+\ce{N2(g) + 3H2(g) <=> 2NH3(g)} $\Delta H=-92.4$ kJ·mol$^{-1}$。特点：可逆、放热、气体分子数减小（$\Delta S<0$，低温自发）。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{1.6cm}XXp{4.6cm}}
+\toprule
+条件 & 从速率看 & 从平衡看 & 实际选择及理由 \\
+\midrule
+压强 & 越大越快 & 越大越有利 & 10～30 MPa：压强越大，对设备材料和动力要求越高，成本增加 \\
+温度 & 越高越快 & 越低越有利 & 400～500 ℃：兼顾速率；且铁触媒在 500 ℃ 左右活性最大 \\
+催化剂 & 加快 & 无影响 & 铁触媒；原料气需净化，防止催化剂“中毒” \\
+浓度 & 增大反应物浓度 & 增大反应物浓度、减小 \ce{NH3} 浓度 & 冷却使 \ce{NH3} 液化分离；未反应的 \ce{N2}、\ce{H2} 循环使用并及时补充；\ce{N2} 价廉，适当提高其比例以提高 \ce{H2} 的转化率 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabular}{ccccccc}
+\toprule
+\multirow{2}{*}{温度/℃} & \multicolumn{6}{c}{平衡混合物中 \ce{NH3} 的体积分数/\%（$n(\ce{N2}):n(\ce{H2})=1:3$）} \\
+\cmidrule(lr){2-7}
+& 0.1 MPa & 10 MPa & 20 MPa & 30 MPa & 60 MPa & 100 MPa \\
+\midrule
+200 & 15.3 & 81.5 & 86.4 & 89.9 & 95.4 & 98.8 \\
+300 & 2.20 & 52.0 & 64.2 & 71.0 & 84.2 & 92.6 \\
+400 & 0.40 & 25.1 & 38.2 & 47.0 & 65.2 & 79.8 \\
+500 & 0.10 & 10.6 & 19.1 & 26.4 & 42.2 & 57.5 \\
+600 & 0.05 & 4.50 & 9.10 & 13.8 & 23.1 & 31.4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent\small 数据分析：同一温度下压强越大、同一压强下温度越低，\ce{NH3} 的平衡含量越高，与勒夏特列原理的预测一致；但 200 ℃ 时速率太慢，实际只能折中选择 400～500 ℃，靠循环利用原料弥补单程转化率的不足。\normalsize
+
+工艺流程中：\textbf{净化}防催化剂中毒；\textbf{压缩机}加压；\textbf{热交换器}用反应放出的热预热原料气，节约能源；\textbf{冷却}使氨液化分离，促使平衡正移；\textbf{循环}提高原料利用率。
+
+\textbf{类比——硫酸工业中 \ce{SO2} 的催化氧化}：\ce{2SO2(g) + O2(g) <=> 2SO3(g)} $\Delta H=-196.6$ kJ·mol$^{-1}$。常压下 450 ℃ 时 \ce{SO2} 平衡转化率已达 97.5\%，加压收益很小而成本大，故采用\textbf{常压}；温度 400～500 ℃（兼顾速率与 \ce{V2O5} 催化剂活性）；通入过量空气提高 \ce{SO2} 转化率；尾气中的 \ce{SO2} 需回收处理。
+
+\begin{fangfa}[“条件选择原因”的答题模板]
+从三个角度作答，缺一不可：①\textbf{速率}：该条件使反应速率较快；②\textbf{平衡}：该条件下平衡转化率（产率）较高或可接受；③\textbf{实际因素}：催化剂活性温度、设备承受能力、能耗与成本、安全与环保。例如“选择 500 ℃左右”：温度较高反应速率快，且铁触媒在 500 ℃左右活性最大；温度过高则平衡转化率降低、能耗增大。
+\end{fangfa}
+
+\section{平衡计算的常见题型}
+
+\begin{fangfa}[五类常见平衡计算]
+\textbf{①求转化率、平衡浓度}：三段式，转化量成比例。\\
+\textbf{②已知 $K$ 求组成}：设未知数代入 $K$ 表达式，常解一元二次方程；若 $K$ 很大或很小，可先假设“几乎完全反应”或“几乎不反应”再近似。\\
+\textbf{③压强、密度、平均摩尔质量的变化}：恒温恒容 $\dfrac{p_\text{后}}{p_\text{前}}=\dfrac{n_\text{后}}{n_\text{前}}$；恒温恒压 $\dfrac{V_\text{后}}{V_\text{前}}=\dfrac{n_\text{后}}{n_\text{前}}$；$\bar M=\dfrac{m_\text{总}}{n_\text{总}}$。\\
+\textbf{④平衡后再加料}：先判断是恒容还是恒压，用“虚拟容器法”转化为等效平衡或加压问题。\\
+\textbf{⑤范围（极值）问题}：可逆反应不能进行到底，各物质的量介于“完全正向”与“完全逆向”两个极端之间。
+\end{fangfa}
+
+\begin{liti}[极值法判断范围]
+在密闭容器中进行 \ce{X2(g) + Y2(g) <=> 2Z(g)}，已知 \ce{X2}、\ce{Y2}、Z 的起始浓度分别为 0.1、0.3、0.2 mol·L$^{-1}$，一定条件下达到平衡。下列浓度可能存在的是
+\xx{Z 为 0.4 mol·L$^{-1}$}{\ce{X2} 为 0.2 mol·L$^{-1}$}{\ce{Y2} 为 0.4 mol·L$^{-1}$}{Z 为 0.3 mol·L$^{-1}$}
+\tcblower
+\jie 假设完全正向：\ce{X2} 0，\ce{Y2} 0.2，Z 0.4；假设完全逆向：\ce{X2} 0.2，\ce{Y2} 0.4，Z 0。可逆反应不能进行到底，所以 $0<c(\ce{X2})<0.2$，$0.2<c(\ce{Y2})<0.4$，$0<c(\mathrm{Z})<0.4$。A、B、C 都取到了端点值，不可能；D 可能。答案：D。
+\end{liti}
+
+\begin{liti}[由压强变化求转化率]
+恒温恒容下，向密闭容器中充入 2 mol \ce{SO2} 和 1 mol \ce{O2}，发生 \ce{2SO2(g) + O2(g) <=> 2SO3(g)}，平衡时容器内压强为起始时的 $\frac56$。求 \ce{SO2} 的平衡转化率及平衡时 \ce{SO3} 的体积分数。
+\tcblower
+\jie 设转化 \ce{O2} $x$ mol，则气体总物质的量减少 $x$ mol：$\dfrac{3-x}{3}=\dfrac56$，$x=0.5$。转化 \ce{SO2} 1 mol，$\alpha(\ce{SO2})=50\%$；平衡时 \ce{SO3} 1 mol，总 2.5 mol，体积分数 40\%。
+\end{liti}
+
+\section{多重平衡与选择性}
+
+实际体系中往往同时存在几个反应，它们共用某些物质（\textbf{竞争反应}或\textbf{连续反应}）。处理多重平衡的要点：
+\begin{enumerate}
+\item \textbf{每个反应各设一个变量}（转化量 $x$、$y$），列出各物质的平衡量；共用物质的量要把各反应的贡献相加。
+\item 用\textbf{原子守恒}代替繁琐的三段式往往更快：如由 C 原子守恒得 $n(\ce{CO2})+n(\ce{CO})+n(\ce{CH3OH})=n_0(\ce{CO2})$。
+\item 每个反应的 $K$ 都要用\textbf{同一平衡体系中}各物质的平衡浓度（分压）计算，共用物质的浓度只有一个。
+\item 分析温度对转化率的影响时，要看哪个反应占主导：放热反应在低温段占主导，吸热反应在高温段占主导。
+\end{enumerate}
+
+\begin{liti}[多重平衡的计算]
+\ce{CO2} 加氢体系：反应Ⅰ \ce{CO2(g) + 3H2(g) <=> CH3OH(g) + H2O(g)} $\Delta H_1=-49.5$ kJ·mol$^{-1}$；反应Ⅱ \ce{CO2(g) + H2(g) <=> CO(g) + H2O(g)} $\Delta H_2=+41.2$ kJ·mol$^{-1}$。恒压 $p$ 下充入 1 mol \ce{CO2} 和 3 mol \ce{H2}，平衡时 \ce{CO2} 转化率为 30\%，\ce{CH3OH} 的选择性为 80\%。(1) 求平衡时各物质的物质的量；(2) 求反应Ⅱ的 $K_p$；(3) 实验发现：温度升高，\ce{CO2} 的平衡转化率先减小后增大，解释原因。
+\tcblower
+\jie (1) 转化的 \ce{CO2} 为 0.3 mol，其中 $0.3\times80\%=0.24$ mol 生成 \ce{CH3OH}，0.06 mol 生成 CO。\ce{H2} 消耗 $3\times0.24+0.06=0.78$ mol，剩 2.22 mol；\ce{H2O} 由两反应共生成 $0.24+0.06=0.30$ mol。平衡时：\ce{CO2} 0.70，\ce{H2} 2.22，\ce{CH3OH} 0.24，\ce{H2O} 0.30，CO 0.06，$n_\text{总}=3.52$ mol。\\
+(2) 反应Ⅱ前后气体分子数相等，$K_p=\dfrac{n(\ce{CO})n(\ce{H2O})}{n(\ce{CO2})n(\ce{H2})}=\dfrac{0.06\times0.30}{0.70\times2.22}\approx0.0116$。反应Ⅰ前后气体分子数不等，需代入分压（$p$ 为平衡总压）：\[K_p(\text{Ⅰ})=\dfrac{\dfrac{0.24}{3.52}p\cdot\dfrac{0.30}{3.52}p}{\dfrac{0.70}{3.52}p\cdot\left(\dfrac{2.22}{3.52}p\right)^3}\approx\dfrac{0.116}{p^2}\]
+(3) 反应Ⅰ放热、反应Ⅱ吸热。低温段以反应Ⅰ为主，升温反应Ⅰ逆移，\ce{CO2} 转化率减小；高温段以反应Ⅱ为主，升温反应Ⅱ正移，\ce{CO2} 转化率增大。同时 \ce{CH3OH} 的选择性随温度升高持续下降。
+\end{liti}
+
+\begin{zhenti}{2025年广东卷第19题(3)②③\quad 来源：仓库所附真题文档}
+将 5.0 mol \ce{TiCl4} 与 10.0 mol Ti 放入容积为 $V_0$ L 的恒容密闭容器中，体系存在：(a)\ce{Ti(s) + TiCl4(g) <=> 2TiCl2(s)} $\Delta H_1=-267.8$ kJ·mol$^{-1}$；(b)\ce{TiCl2(s) + TiCl4(g) <=> 2TiCl3(g)} $\Delta H=+200.1$ kJ·mol$^{-1}$；(c)\ce{Ti(s) + 3TiCl4(g) <=> 4TiCl3(g)} $\Delta H=+132.4$ kJ·mol$^{-1}$；(d)\ce{TiCl3(g) <=> TiCl3(s)} $\Delta H_2$（凝华，放热）。不同温度下平衡体系组成如图（1073～1273 K）：Ti(s) 的量随温度升高而增大，$T_0$ 时为 8.5 mol；曲线Ⅱ随温度升高而增大，$T_0$ 时为 6.0 mol；曲线Ⅰ随温度升高由约 9 mol 减小至接近 0；\ce{TiCl3(s)}、\ce{TiCl4(g)} 的量均很少。②曲线Ⅰ对应的物质为\tk。③温度 $T_0$ K 下（此时 \ce{TiCl2(s)}、\ce{TiCl3(s)} 均为 0），$n[\ce{TiCl4(g)}]=$\tk mol，反应(c)的平衡常数 $K=$\tk（列出算式）。
+
+\textbf{解析：}②(a)放热、(d)放热，升温逆移；(b)(c)吸热，升温正移。所以 \ce{TiCl3(g)} 随温度升高增多（曲线Ⅱ），\ce{TiCl2(s)} 随温度升高减少（曲线Ⅰ）。③由 Ti 原子守恒：$n(\ce{TiCl4})=10.0+5.0-8.5-6.0=0.5$ mol（可用 Cl 守恒验证：$4\times0.5+3\times6.0=20=4\times5.0$）。Ti 为固体不写入，$K=\dfrac{c^4(\ce{TiCl3})}{c^3(\ce{TiCl4})}=\dfrac{(6.0/V_0)^4}{(0.5/V_0)^3}$。
+\end{zhenti}
+
+\input{chapters/ch03ex}

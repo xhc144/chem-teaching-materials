@@ -1,0 +1,33 @@
+% !TEX program = xelatex
+% ============================================================
+%  高中化学系统讲义 —— 主文件
+%  编译方法：在本目录下执行  xelatex main.tex  两次（或 latexmk -xelatex main.tex）
+% ============================================================
+\documentclass[UTF8,a4paper,zihao=5,oneside,openany,fontset=none]{ctexbook}
+\input{preamble}
+
+\begin{document}
+\frontmatter
+\input{chapters/front}
+\tableofcontents
+
+\mainmatter
+\setcounter{chapter}{-1}
+\input{chapters/ch00}
+\input{chapters/ch01}
+\input{chapters/ch02}
+\input{chapters/ch03}
+\input{chapters/ch04}
+\input{chapters/ch05}
+\input{chapters/ch06}
+\input{chapters/ch07}
+\input{chapters/ch08}
+\input{chapters/ch09}
+\input{chapters/ch10}
+\input{chapters/ch11}
+\input{chapters/ch12}
+\input{chapters/ch13}
+\input{chapters/ch14}
+\appendix
+\input{chapters/appendix}
+\end{document}
