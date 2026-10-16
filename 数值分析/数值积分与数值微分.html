@@ -1,0 +1,1199 @@
+<title>数值积分与数值微分</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+/* Layout: a textbook reading column on graph-paper ground, with a sticky "question chain" rail on the left; figures run wider than prose. */
+:root{
+  --paper:#f5f7f3; --panel:#ffffff; --ink:#18201e; --ink-2:#44504d; --muted:#6c7874;
+  --rule:#d9e0d8; --grid:#e7ece5;
+  --accent:#0d6a5f; --accent-wash:rgba(13,106,95,.10);
+  --target:#2253c0; --err:#c3402a; --err-wash:rgba(195,64,42,.30);
+  --ok:#1f8a55; --ok-wash:rgba(31,138,85,.20); --check:#c46a00; --check-wash:rgba(196,106,0,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --f-display:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#111514; --panel:#181e1c; --ink:#e3e9e6; --ink-2:#b2bdb9; --muted:#87938f;
+  --rule:#2b3431; --grid:#212927;
+  --accent:#5cc3b1; --accent-wash:rgba(92,195,177,.13);
+  --target:#80a8f6; --err:#f07a5c; --err-wash:rgba(240,122,92,.34);
+  --ok:#4cc386; --ok-wash:rgba(76,195,134,.22); --check:#f0a040; --check-wash:rgba(240,160,64,.12);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#111514; --panel:#181e1c; --ink:#e3e9e6; --ink-2:#b2bdb9; --muted:#87938f;
+  --rule:#2b3431; --grid:#212927;
+  --accent:#5cc3b1; --accent-wash:rgba(92,195,177,.13);
+  --target:#80a8f6; --err:#f07a5c; --err-wash:rgba(240,122,92,.34);
+  --ok:#4cc386; --ok-wash:rgba(76,195,134,.22); --check:#f0a040; --check-wash:rgba(240,160,64,.12);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* hero */
+.hero{padding-block:56px 40px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:center}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.12em;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,5.4vw,52px);line-height:1.25;margin:10px 0 22px;text-wrap:balance;letter-spacing:.02em}
+.thesis{font-family:var(--f-display);font-weight:600;font-size:clamp(19px,2.2vw,22px);line-height:1.75;margin:0 0 18px;max-width:30em}
+.thesis em{font-style:normal;background:linear-gradient(transparent 62%,var(--accent-wash) 62%)}
+.hero p{max-width:34em;color:var(--ink-2);margin:0}
+.hero-fig{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:14px 14px 10px}
+.hero-fig figcaption{font-size:14px;color:var(--muted);line-height:1.6;padding:4px 4px 2px}
+
+/* layout */
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:56px;padding-bottom:80px}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:14px;line-height:1.5;max-height:calc(100vh - 48px);overflow:auto;padding-right:4px}
+.rail-title{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--muted);margin:0 0 10px}
+.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.rail a{display:grid;grid-template-columns:22px 1fr;gap:6px;padding:6px 8px;border-radius:6px;color:var(--ink-2);text-decoration:none}
+.rail a .n{font-family:var(--f-mono);color:var(--muted);font-size:12px;padding-top:1px}
+.rail a:hover{background:var(--accent-wash);color:var(--ink)}
+.rail a.on{background:var(--accent-wash);color:var(--accent);font-weight:500}
+.rail a.on .n{color:var(--accent)}
+main{min-width:0}
+
+/* sections */
+section{padding-block:44px 8px;border-top:1px solid var(--rule)}
+section:first-child{border-top:0;padding-top:8px}
+.q-label{font-family:var(--f-mono);font-size:13px;letter-spacing:.06em;color:var(--accent);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.q-label b{font-weight:500;color:var(--muted)}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,3.2vw,31px);line-height:1.4;margin:8px 0 18px;text-wrap:balance;max-width:30em}
+h3{font-family:var(--f-display);font-weight:600;font-size:21px;line-height:1.5;margin:38px 0 10px;text-wrap:balance}
+h4{font-size:17px;margin:0;font-weight:700}
+p{margin:12px 0;max-width:42em}
+.prose-w{max-width:42em}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,svg:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+b,strong{font-weight:700}
+.muted{color:var(--muted)}
+.small{font-size:15px;color:var(--ink-2)}
+.tg{color:var(--target)} .er{color:var(--err)}
+mjx-container{color:inherit}
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:6px 0;margin:14px 0!important}
+.mathblock{max-width:42em}
+
+.idea{display:flex;gap:14px;align-items:baseline;font-size:18px;line-height:1.8;font-weight:500;max-width:40em;margin:6px 0 20px}
+.tag{flex:none;font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--accent);background:var(--accent-wash);border-radius:4px;padding:1px 8px;line-height:1.9}
+.key{max-width:42em;background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px 20px;margin:20px 0}
+.key p{margin:6px 0}
+.key .tag{display:inline-block;margin-bottom:4px}
+.remember{max-width:42em;margin:26px 0 8px;padding-top:12px;border-top:2px solid var(--ink);font-weight:500}
+.remember .lbl{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--muted);display:block;font-weight:400}
+
+ul.plain,ol.plain{max-width:42em;padding-left:1.3em;margin:10px 0}
+ul.plain li,ol.plain li{margin:6px 0}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;max-width:100%;margin:16px 0}
+table{border-collapse:collapse;font-size:15.5px;line-height:1.6;min-width:100%}
+th,td{text-align:left;padding:8px 14px 8px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:13.5px;border-bottom:1px solid var(--ink-2)}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl-narrow{max-width:42em}
+
+/* chain */
+.chain{list-style:none;margin:18px 0;padding:0;max-width:820px;border-top:1px solid var(--rule)}
+.chain li{display:grid;grid-template-columns:34px minmax(0,1fr) minmax(0,.8fr);gap:14px;padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.chain .n{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.chain .q a{color:var(--ink);text-decoration:none;font-weight:500}
+.chain .q a:hover{color:var(--accent);text-decoration:underline}
+.chain .m{font-size:15px;color:var(--ink-2)}
+.chain .m b{color:var(--accent);font-weight:500}
+
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:820px;margin:18px 0}
+.three div{border-top:2px solid var(--ink);padding-top:10px}
+.three h4{font-family:var(--f-display);font-size:19px;margin-bottom:4px}
+.three p{font-size:15.5px;margin:0;color:var(--ink-2)}
+
+/* worked steps */
+.steps{list-style:none;margin:16px 0;padding:0;max-width:860px;counter-reset:st}
+.steps li{display:grid;grid-template-columns:28px minmax(0,1.25fr) minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px dashed var(--rule);align-items:center;counter-increment:st}
+.steps li::before{content:counter(st);font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.steps .calc{min-width:0;overflow-x:auto}
+.steps .why{font-size:15px;color:var(--ink-2);line-height:1.65}
+.steps .why b{color:var(--ink)}
+.steps-head{display:grid;grid-template-columns:28px minmax(0,1.25fr) minmax(0,1fr);gap:16px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.06em;max-width:860px;border-bottom:1px solid var(--ink-2);padding-bottom:4px;margin-top:18px}
+
+/* demos */
+.demo{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:18px 20px 16px;margin:24px 0;max-width:900px;position:relative}
+.demo-head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.demo .how{font-size:15px;color:var(--ink-2);margin:6px 0 12px;max-width:none}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:10px 0}
+.ctl-label{font-size:14px;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{font:inherit;font-size:14px;border:0;background:transparent;color:var(--ink-2);padding:6px 12px;cursor:pointer;border-right:1px solid var(--rule)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.btn{font:inherit;font-size:14px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:8px;padding:6px 14px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+select{font:inherit;font-size:14px;padding:5px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--panel);color:var(--ink)}
+input[type="range"]{accent-color:var(--accent);width:220px;max-width:100%}
+.readout{display:flex;flex-wrap:wrap;gap:8px 26px;font-size:14.5px;margin:10px 0 2px;color:var(--ink-2)}
+.readout b{font-family:var(--f-mono);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.readout .e{color:var(--err)}
+.fig{width:100%;height:auto;display:block}
+.fig text{font-family:var(--f-body);fill:var(--muted);font-size:13px}
+.fig .mono{font-family:var(--f-mono)}
+.fig .ax{stroke:var(--ink-2);stroke-width:1}
+.fig .gl{stroke:var(--grid);stroke-width:1}
+.fig .curve{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round}
+.fig .approx{fill:var(--accent-wash);stroke:var(--accent);stroke-width:1.6}
+.fig .errfill{fill:var(--err-wash);stroke:none}
+.fig .dot{fill:var(--accent);stroke:var(--panel);stroke-width:2}
+.fig .dot-ink{fill:var(--ink);stroke:var(--panel);stroke-width:2}
+.fig .target-line{stroke:var(--target);stroke-width:1.4}
+.fig .target-text{fill:var(--target)}
+.fig .err-text{fill:var(--err)}
+.fig .ink-text{fill:var(--ink)}
+.fig .acc-text{fill:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;color:var(--ink-2);margin:4px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{display:inline-block;width:18px;height:2px;border-radius:1px}
+.legend i.sw{height:10px;width:14px;border-radius:2px}
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;font-size:13px;line-height:1.55;box-shadow:0 4px 18px rgba(0,0,0,.12);min-width:150px;z-index:5}
+.tip .t-h{color:var(--muted);font-family:var(--f-mono);font-size:12px;margin-bottom:2px}
+.tip .t-r{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.tip .t-r i{display:inline-block;width:12px;height:2px}
+.tip .t-r b{font-family:var(--f-mono);font-weight:500;color:var(--ink);min-width:72px}
+.tip .t-r span{color:var(--ink-2)}
+details.data{margin-top:8px;font-size:14px}
+details.data summary{cursor:pointer;color:var(--muted)}
+details.data table{font-size:13.5px}
+
+/* romberg table */
+.romb td{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap;padding:7px 14px 7px 0}
+.romb .v .hit{color:var(--ink);font-weight:500}
+.romb .v .miss{color:var(--muted)}
+.romb .e{display:block;font-size:12px;color:var(--err)}
+.romb td.new{animation:pop .5s ease}
+@keyframes pop{from{background:var(--accent-wash)}to{background:transparent}}
+@media (prefers-reduced-motion:reduce){.romb td.new{animation:none}}
+.romb th{white-space:nowrap}
+
+/* adaptive stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 4px}
+.stats div{border-top:1px solid var(--rule);padding-top:6px}
+.stats span{display:block;font-size:12.5px;color:var(--muted)}
+.stats b{font-family:var(--f-mono);font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;word-break:break-all}
+.caption-live{min-height:3.2em;font-size:14.5px;color:var(--ink-2);margin:6px 0 0}
+.compare{font-size:14.5px;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--rule);color:var(--ink-2)}
+.compare b{font-family:var(--f-mono);font-weight:500;color:var(--ink)}
+
+/* gauss table */
+.gt td,.gt th{padding:6px 14px 6px 0;white-space:nowrap}
+.gt tr.sel td{background:var(--accent-wash)}
+.gt button{font:inherit;font-size:14px;background:none;border:0;color:var(--accent);cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:3px}
+.gt .okmark{color:var(--ok);font-weight:700}
+.gt .bad{color:var(--err)}
+
+/* exercises */
+.ex{max-width:42em;border-top:1px solid var(--rule);padding:14px 0}
+.ex h4{font-family:var(--f-display);font-size:18px;font-weight:600;margin-bottom:4px}
+.ex p{margin:6px 0}
+.ex details{margin-top:6px}
+.ex summary{cursor:pointer;color:var(--accent);font-size:15px}
+.ex .ans{padding:6px 0 2px 14px;border-left:2px solid var(--rule);margin-top:8px}
+
+.sheet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 32px;max-width:900px}
+.sheet div{min-width:0;border-bottom:1px solid var(--rule);padding:4px 0}
+.sheet .lbl{font-size:13px;color:var(--muted)}
+
+@media (max-width:640px){.fig.w640 text{font-size:21px}}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:640px){.pair{grid-template-columns:minmax(0,1fr)}}
+.closing{font-family:var(--f-display);font-weight:600;font-size:20px;line-height:1.8;max-width:34em;margin:30px 0 10px}
+footer{font-size:13.5px;color:var(--muted);padding:24px 0 40px;border-top:1px solid var(--rule)}
+
+@media (max-width:1060px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .rail{display:none}
+}
+@media (max-width:820px){
+  .hero{padding-block:32px 24px}
+  .hero-grid{grid-template-columns:minmax(0,1fr);gap:24px}
+  .three{grid-template-columns:minmax(0,1fr)}
+  .chain li{grid-template-columns:30px minmax(0,1fr);}
+  .chain .m{grid-column:2}
+  .steps li,.steps-head{grid-template-columns:24px minmax(0,1fr);gap:4px 12px}
+  .steps .why{grid-column:2}
+  .steps-head span:last-child{display:none}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sheet{grid-template-columns:minmax(0,1fr)}
+  .demo{padding:14px 12px 12px}
+  body{font-size:16.5px}
+}
+</style>
+
+<header class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">数值分析 · 三份讲义合编</div>
+      <h1>数值积分与数值微分</h1>
+      <p class="thesis">这一章只解决一个问题：<em>函数值只能一个一个地算，每算一个都有成本。怎样用尽量少的函数值，算出足够准的积分或导数，并且在不知道真值的情况下，判断结果有多准？</em></p>
+      <p>梯形、辛普森、理查森外推、龙贝格、自适应、高斯，每一个都在回答这句话里的一部分。把它们排成一串前后相接的问题，整章就只剩一条线。</p>
+    </div>
+    <figure class="hero-fig" style="margin:0">
+      <svg id="heroFig" class="fig" viewBox="0 0 460 250" role="img" aria-label="一条看不见的曲线和五个采样点"></svg>
+      <figcaption>虚线是真正的 f，你看不到它。你手里只有这五个点的值，曲线下的面积、某点的斜率，都要从这几个数推出来。</figcaption>
+    </figure>
+  </div>
+</header>
+
+<div class="wrap layout">
+<nav class="rail" aria-label="目录">
+  <p class="rail-title">问题链</p>
+  <ol id="railList">
+    <li><a href="#map"><span class="n">0</span><span>总纲</span></a></li>
+    <li><a href="#basic"><span class="n">1</span><span>几个点怎么估面积</span></a></li>
+    <li><a href="#composite"><span class="n">2</span><span>不够准就切细</span></a></li>
+    <li><a href="#order"><span class="n">3</span><span>误差有规律</span></a></li>
+    <li><a href="#richardson"><span class="n">4</span><span>理查森外推</span></a></li>
+    <li><a href="#romberg"><span class="n">5</span><span>龙贝格积分</span></a></li>
+    <li><a href="#adaptive"><span class="n">6</span><span>自适应积分</span></a></li>
+    <li><a href="#gauss"><span class="n">7</span><span>高斯求积</span></a></li>
+    <li><a href="#diff"><span class="n">8</span><span>数值微分</span></a></li>
+    <li><a href="#choose"><span class="n">·</span><span>全景与选择</span></a></li>
+    <li><a href="#practice"><span class="n">·</span><span>练习</span></a></li>
+    <li><a href="#sheet"><span class="n">·</span><span>速查</span></a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ 0 ============ -->
+<section id="map">
+  <div class="q-label">总纲</div>
+  <h2>所有方法都在填同一个公式</h2>
+  <p>不管名字叫什么，数值积分最后算的都是这个形式：</p>
+  <div class="mathblock">\[ \int_a^b f(x)\,dx \;\approx\; \sum_{i} w_i\, f(x_i) \]</div>
+  <p>挑几个点 \(x_i\)，算出函数值，各乘一个权重 \(w_i\)，再相加。能做文章的只有两件事：<b>点放在哪里</b>，<b>每个点的权重是多少</b>。数值微分也是同一个形式，只不过权重有正有负，是在做差。</p>
+  <p>评价一个方法，只看三件事：</p>
+  <div class="three">
+    <div><h4>准</h4><p>误差有多小。</p></div>
+    <div><h4>省</h4><p>用了几个函数值。实际问题里，一个函数值可能是一次实验或一次很长的模拟，函数值的个数就是成本。</p></div>
+    <div><h4>自知</h4><p>能不能估计自己的误差。真值是未知的，知道就不用算了。方法必须自己判断“算够了没有”。</p></div>
+  </div>
+  <div class="key">
+    <span class="tag">先说清楚</span>
+    <p>讲义例题里都给出了真值，那只是为了让你核对答案。真实计算中没有真值可比。所以你会看到后面反复出现同一个动作：<b>用两次不同精细程度的结果之差，估计误差</b>。理解了这一点，龙贝格表和自适应算法里那些“算来算去”就都有了目的。</p>
+  </div>
+
+  <h3>整章是一串问题</h3>
+  <p>每种方法都是在回答上一种方法留下的问题。按顺序读，就不会迷路。</p>
+  <ol class="chain">
+    <li><span class="n">1</span><span class="q"><a href="#basic">手里只有几个函数值，怎么估面积？</a></span><span class="m"><b>梯形、辛普森</b>：用能积分的简单曲线代替 f</span></li>
+    <li><span class="n">2</span><span class="q"><a href="#composite">一段直线不够像，怎么办？</a></span><span class="m"><b>复化公式</b>：切成小段，每段更像直线</span></li>
+    <li><span class="n">3</span><span class="q"><a href="#order">切细一倍，误差小多少？</a></span><span class="m"><b>误差阶</b>：误差 ≈ C·h<sup>p</sup>，可以预测</span></li>
+    <li><span class="n">4</span><span class="q"><a href="#richardson">误差能预测，能不能直接减掉？</a></span><span class="m"><b>理查森外推</b>：两次计算解出真值和误差</span></li>
+    <li><span class="n">5</span><span class="q"><a href="#romberg">能不能一直减下去？</a></span><span class="m"><b>龙贝格</b>：反复外推，一层消一项</span></li>
+    <li><span class="n">6</span><span class="q"><a href="#adaptive">有的地方难有的地方易，为何处处一样细？</a></span><span class="m"><b>自适应</b>：用误差估计决定在哪里加点</span></li>
+    <li><span class="n">7</span><span class="q"><a href="#gauss">只给 n 个点，放在哪最好？</a></span><span class="m"><b>高斯求积</b>：位置也当未知数，精度翻倍</span></li>
+    <li><span class="n">8</span><span class="q"><a href="#diff">导数怎么算？</a></span><span class="m"><b>差分 + 外推</b>：思路相同，但 h 不能太小</span></li>
+  </ol>
+  <p class="small">贯穿全页的例子是 \(\int_0^1 e^x\,dx = e-1 \approx 1.718281828\)。同一个目标，你会看到每种方法把误差从 0.14 一路压到 \(10^{-13}\)。公式里<span class="tg">蓝色</span>表示要求的真值，<span class="er">红色</span>表示误差项。</p>
+</section>
+
+<!-- ============ 1 ============ -->
+<section id="basic">
+  <div class="q-label">第 1 问 <b>梯形 · 中点 · 辛普森</b></div>
+  <h2>只有几个点的函数值，怎么估计面积？</h2>
+  <p class="idea"><span class="tag">想法</span><span>过这几个点画一条我们会积分的曲线（水平线、直线或抛物线），用它下面的面积代替 f 下面的面积。</span></p>
+  <p>记区间宽度 \(H=b-a\)，中点 \(m=\frac{a+b}2\)：</p>
+  <div class="mathblock">\[ M = H\,f(m) \qquad T=\frac H2\big[f(a)+f(b)\big] \qquad S=\frac H6\big[f(a)+4f(m)+f(b)\big] \]</div>
+  <div class="tbl-wrap tbl-narrow"><table>
+    <thead><tr><th>公式</th><th>用什么代替 f</th><th class="num">函数值个数</th><th class="num">代数精度</th></tr></thead>
+    <tbody>
+      <tr><td>中点 M</td><td>过中点的水平线</td><td class="num">1</td><td class="num">1</td></tr>
+      <tr><td>梯形 T</td><td>过两端点的直线</td><td class="num">2</td><td class="num">1</td></tr>
+      <tr><td>辛普森 S</td><td>过三点的抛物线</td><td class="num">3</td><td class="num">3</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="demo pair" id="pairFig">
+    <div style="min-width:0">
+      <h4>梯形：一条直线</h4>
+      <svg id="figT1" class="fig" viewBox="0 0 400 230" role="img" aria-label="用一条直线近似 e 的 x 次方"></svg>
+      <p class="small" style="margin:4px 0 0">红色的缝就是误差。\(T=1.8591\)，比真值大 0.141。</p>
+    </div>
+    <div style="min-width:0">
+      <h4>辛普森：一条抛物线</h4>
+      <svg id="figS1" class="fig" viewBox="0 0 400 230" role="img" aria-label="用一条抛物线近似 e 的 x 次方"></svg>
+      <p class="small" style="margin:4px 0 0">抛物线几乎贴着曲线。\(S=1.71886\)，误差 0.00058。</p>
+    </div>
+  </div>
+
+  <h3>权重是从哪来的</h3>
+  <p>权重不是凑出来的，是把插值多项式积分后自己出来的。以梯形为例，过两端点的直线是</p>
+  <div class="mathblock">\[ P_1(x)=f(a)\,\frac{b-x}{H}+f(b)\,\frac{x-a}{H} \]</div>
+  <p>两个分式在 \([a,b]\) 上的积分都等于 \(H/2\)，所以 \(\int_a^b P_1\,dx=\frac H2[f(a)+f(b)]\)。辛普森的 \(1:4:1\) 也是这样把抛物线积分得到的。中点的权重最大，因为它“代表”的那一块最宽。</p>
+
+  <h3>代数精度：用多项式给公式打分</h3>
+  <p>如果公式对 \(1, x, \dots, x^m\) 都给出精确结果，而对 \(x^{m+1}\) 不精确，就说它的代数精度是 \(m\)。检查必须从常数开始逐个往上。</p>
+  <p>辛普森只用三个点，本该只保证二次精确，实际对三次也精确：\(x^3\) 关于中点的奇对称部分在左右两边正好抵消。检验 \(\int_0^1x^3dx\)：\(\frac16\big[0+4\cdot\frac18+1\big]=\frac14\)，正好是真值。</p>
+  <p class="small">代数精度和下面要讲的“误差阶”回答的是两个问题。前者问哪些多项式能算得完全准，后者问步长缩小时误差降得多快。两者有联系，不要混用。</p>
+
+  <h3>误差从哪来</h3>
+  <div class="mathblock">\[ \class{er}{I-M}=\frac{H^3}{24}f''(\xi),\qquad \class{er}{I-T}=-\frac{H^3}{12}f''(\xi),\qquad \class{er}{I-S}=-\frac{H^5}{2880}f^{(4)}(\xi) \]</div>
+  <p>（三个 \(\xi\) 各不相同，都在区间内。）每个式子都是两部分相乘：<b>f 弯得多厉害</b>（高阶导数）和<b>区间多宽</b>（H 的幂次）。f 是给定的，我们改变不了，能改的只有 H。</p>
+  <p class="small">符号也有信息。\(f''>0\)（曲线下凸）时梯形偏大、中点偏小，而且中点的误差约为梯形的一半、符号相反。第 4 问会用到这一点。</p>
+  <p class="remember"><span class="lbl">记住</span>基本公式只在区间窄、f 很像低次多项式时才准。区间宽了怎么办，就是下一个问题。</p>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="composite">
+  <div class="q-label">第 2 问 <b>复化公式</b></div>
+  <h2>一条直线不够像，怎么办？</h2>
+  <p class="idea"><span class="tag">想法</span><span>把区间切成 n 小段，每段用基本公式，再加起来。段越短，每段上的 f 越像直线或抛物线。</span></p>
+  <p>步长 \(h=\frac{b-a}n\)，节点 \(x_i=a+ih\)，记 \(f_i=f(x_i)\)：</p>
+  <div class="mathblock">\[ T_n = h\Big[\tfrac12 f_0+f_1+f_2+\dots+f_{n-1}+\tfrac12 f_n\Big] \]
+  \[ S_n=\frac h3\big[f_0+4f_1+2f_2+4f_3+\dots+2f_{n-2}+4f_{n-1}+f_n\big]\qquad(n\ \text{为偶数}) \]</div>
+  <p>梯形内部点的权重是 1：它既是左边一段的右端，又是右边一段的左端，被算了两次 \(\tfrac12\)。辛普森两段一组拼一条抛物线，所以 n 必须是偶数；权重里的 2 是两条抛物线接头处的点。</p>
+
+  <div class="demo" id="demoA">
+    <div class="demo-head"><span class="tag">演示</span><h4>切细一倍，误差变成几分之一？</h4></div>
+    <p class="how">依次点 n = 1、2、4、8、16，盯住下表的“缩小倍数”。积分对象仍是 \(\int_0^1 e^x\,dx\)。</p>
+    <div class="controls">
+      <span class="ctl-label">公式</span>
+      <div class="seg" id="aMethod"><button type="button" id="aMethT" aria-pressed="true">梯形</button><button type="button" id="aMethS" aria-pressed="false">辛普森</button></div>
+      <span class="ctl-label">段数 n</span>
+      <div class="seg" id="aN"></div>
+    </div>
+    <svg id="figA" class="fig w640" viewBox="0 0 640 260" role="img" aria-label="复化求积示意图"></svg>
+    <div class="readout" id="aRead"></div>
+    <div class="tbl-wrap"><table id="aTable"></table></div>
+  </div>
+
+  <p>梯形每切细一倍，误差稳定地变成 1/4；辛普森变成 1/16。原因是每小段梯形的误差是 \(O(h^3)\)，一共 \(n=\frac{b-a}h\) 段，加起来是 \(O(h^2)\)。辛普森每组 \(O(h^5)\)，总计 \(O(h^4)\)。写成误差界：</p>
+  <div class="mathblock">\[ |I-T_n|\le\frac{b-a}{12}\,h^2M_2,\qquad |I-S_n|\le\frac{b-a}{180}\,h^4M_4,\qquad M_r=\max_{[a,b]}|f^{(r)}| \]</div>
+  <p>误差界可以反过来定步长。例如要用梯形算 \(\int_0^1x^2dx\) 且误差不超过 \(10^{-4}\)：\(M_2=2\)，需要 \(\frac1{12}\cdot\frac1{n^2}\cdot2\le10^{-4}\)，即 \(n\ge40.8\)，取 \(n=41\)。麻烦在于实际问题里通常不知道 \(M_2\)、\(M_4\) 是多少。</p>
+  <p class="small">数据点不等距时，梯形仍可逐段算 \(\sum_i (x_{i+1}-x_i)\frac{f_i+f_{i+1}}2\)，但辛普森的等距权重不能直接套用。</p>
+  <p class="remember"><span class="lbl">记住</span>切细是最朴素的办法，代价是函数值成倍增加：梯形想再准 100 倍，就要多算 10 倍的点。有没有更聪明的办法？关键在上表那一列稳定的“4.0×”。</p>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="order">
+  <div class="q-label">第 3 问 <b>误差阶</b></div>
+  <h2>步长减半，误差缩小多少？</h2>
+  <p class="idea"><span class="tag">想法</span><span>误差不是随机的。步长足够小时，误差几乎就是 \(C\,h^p\)。系数 C 和 f 有关，指数 p 只由公式决定。</span></p>
+  <div class="mathblock">\[ A(h) = \class{tg}{Q} + \class{er}{C\,h^p} + (\text{更高次项}) \]</div>
+  <p>\(A(h)\) 是用步长 h 算出的近似值，\(\class{tg}{Q}\) 是真值（积分或导数），p 叫方法的<b>阶</b>。于是</p>
+  <div class="mathblock">\[ \frac{\text{误差}(h/2)}{\text{误差}(h)}\approx\frac1{2^p} \]</div>
+  <div class="tbl-wrap tbl-narrow"><table>
+    <thead><tr><th>方法</th><th class="num">阶 p</th><th class="num">步长减半，误差变为</th></tr></thead>
+    <tbody>
+      <tr><td>前向、后向差分</td><td class="num">1</td><td class="num">1/2</td></tr>
+      <tr><td>复化中点、复化梯形、中心差分</td><td class="num">2</td><td class="num">1/4</td></tr>
+      <tr><td>复化辛普森</td><td class="num">4</td><td class="num">1/16</td></tr>
+    </tbody>
+  </table></div>
+  <div class="key">
+    <span class="tag">全章的钥匙</span>
+    <p>真值 Q 不知道，系数 C 也不知道，但<b>阶 p 是知道的</b>。只凭这一点信息，就能做三件事：</p>
+    <ul class="plain">
+      <li>把主要误差消掉（第 4、5 问：理查森、龙贝格）；</li>
+      <li>不知道真值也能估计误差（第 6 问：自适应的判据）；</li>
+      <li>检查程序写对了没有：用 \(h, h/2, h/4\) 算三次，<br>\(p_{\rm obs}\approx\log_2\dfrac{|A(h)-A(h/2)|}{|A(h/2)-A(h/4)|}\) 应接近理论阶。</li>
+    </ul>
+  </div>
+  <p>例如某方法在 \(h=0.2\) 与 \(h=0.1\) 的误差分别约为 0.008 与 0.002，比值为 4，所以 \(p\approx\log_24=2\)。</p>
+
+  <h3>误差界与误差估计，是两回事</h3>
+  <p><b>误差界</b>来自导数的上界（上一问的公式），是严格保证，但需要知道 f 高阶导数的最大值，通常拿不到，而且往往过于保守。<b>误差估计</b>来自两次计算之差，便宜、实用，但依赖“误差确实长成 \(Ch^p\)”这个前提。两次结果接近，不自动等于结果正确。</p>
+  <p class="small">误差有三个来源：截断误差（用有限公式代替极限，本章主要讨论它）、舍入误差（计算机只保留约 16 位有效数字，第 8 问会看到它的破坏力）、数据误差（函数值本身来自测量或别的近似计算）。\(O(h^p)\) 的意思是误差绝对值不超过某个常数乘 \(h^p\)，不表示误差恰好等于 \(h^p\)。本页约定：误差 = 真值 − 近似值。</p>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="richardson">
+  <div class="q-label">第 4 问 <b>理查森外推</b></div>
+  <h2>误差既然可以预测，能不能直接减掉？</h2>
+  <p class="idea"><span class="tag">想法</span><span>用步长 h 和 h/2 各算一次。真值和误差系数是两个未知数，两次计算是两个方程，解出来就行。</span></p>
+  <div class="mathblock">\[ \begin{aligned} A(h)&=\class{tg}{Q}+\class{er}{C h^2}\\ A(h/2)&=\class{tg}{Q}+\class{er}{\tfrac14 C h^2}\end{aligned} \]</div>
+  <p>第二式乘 4，减去第一式，C 就消失了：</p>
+  <div class="mathblock">\[ \boxed{\;\class{tg}{Q}\approx\frac{4A(h/2)-A(h)}{3}=A(h/2)+\frac{A(h/2)-A(h)}{3}\;} \]</div>
+  <p>后一种写法更好理解：<b>细结果，加上一个修正量</b>。这个修正量就是细结果的误差：</p>
+  <div class="mathblock">\[ \class{er}{\class{tg}{Q}-A(h/2)}\approx\frac{A(h/2)-A(h)}{3} \]</div>
+  <div class="key">
+    <span class="tag">全章最有用的式子</span>
+    <p>它只用到你自己算出的两个数，不需要真值，就告诉你细结果大约差多少。自适应积分的接受判据、龙贝格的停止规则，用的都是它。</p>
+  </div>
+
+  <h3>“外推”是什么意思</h3>
+  <p>把 A 看成 \(h^2\) 的函数，\(A=Q+C\cdot(h^2)\) 是一条直线，截距 Q 就是步长为零时的值，也就是真值。两次计算给出直线上的两个点，连起来往 \(h^2=0\) 方向延长，读出截距。从算过的步长往永远算不到的 \(h=0\) 延伸，这就是“外推”。</p>
+
+  <div class="demo" id="demoB">
+    <div class="demo-head"><span class="tag">演示</span><h4>把直线延长到步长为零</h4></div>
+    <p class="how">灰点是 \(\int_0^1e^x\,dx\) 的复化梯形 \(T_n\)（n = 1…16），黑点是用于外推的两次计算。切换横轴，看哪种画法下点排成直线。</p>
+    <div class="controls">
+      <span class="ctl-label">横轴</span>
+      <div class="seg"><button type="button" id="bAxH2" aria-pressed="true">h²（按 p = 2）</button><button type="button" id="bAxH" aria-pressed="false">h（误当 p = 1）</button></div>
+      <span class="ctl-label">用哪两次</span>
+      <div class="seg"><button type="button" id="bP0" aria-pressed="true">h = 1 与 ½</button><button type="button" id="bP1" aria-pressed="false">½ 与 ¼</button><button type="button" id="bP2" aria-pressed="false">¼ 与 ⅛</button></div>
+    </div>
+    <svg id="figB" class="fig w640" viewBox="0 0 640 320" role="img" aria-label="外推示意图：近似值对步长平方作图"></svg>
+    <div class="readout" id="bRead"></div>
+  </div>
+  <p>横轴取 \(h^2\) 时，各点几乎在一条直线上，延长线正好落在真值上。横轴取 h 时，点连成一条弯线，直线延长就偏了。外推成立，靠的就是“知道误差按 \(h^2\) 变化”。用错了 p，结果反而更差。</p>
+
+  <h3>一般公式</h3>
+  <div class="mathblock">\[ A_R=\frac{2^pA(h/2)-A(h)}{2^p-1}=A(h/2)+\frac{A(h/2)-A(h)}{2^p-1} \]</div>
+  <div class="tbl-wrap tbl-narrow"><table>
+    <thead><tr><th>主误差阶</th><th class="num">分母 \(2^p-1\)</th><th>外推公式</th></tr></thead>
+    <tbody>
+      <tr><td>\(O(h)\)</td><td class="num">1</td><td>\(2A(h/2)-A(h)\)</td></tr>
+      <tr><td>\(O(h^2)\)</td><td class="num">3</td><td>\(\frac{4A(h/2)-A(h)}3\)</td></tr>
+      <tr><td>\(O(h^4)\)</td><td class="num">15</td><td>\(\frac{16A(h/2)-A(h)}{15}\)</td></tr>
+      <tr><td>\(O(h^6)\)</td><td class="num">63</td><td>\(\frac{64A(h/2)-A(h)}{63}\)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">细步长不是 h/2 而是 h/r 时：\(A_R=\frac{r^pA(h/r)-A(h)}{r^p-1}\)，分母不能再照搬 \(2^p-1\)。</p>
+
+  <h3>辛普森就是外推过一次的梯形</h3>
+  <div class="mathblock">\[ \begin{aligned}\frac{4T_2-T_1}{3}&=\frac43\cdot\frac H4\big[f(a)+2f(m)+f(b)\big]-\frac13\cdot\frac H2\big[f(a)+f(b)\big]\\&=\frac H6\big[f(a)+4f(m)+f(b)\big]=S\end{aligned} \]</div>
+  <p>辛普森公式不是另起炉灶，它就是梯形 \(T_1\)、\(T_2\) 消去 \(h^2\) 误差后的结果。用 \(e^x\) 验证：\((4\times1.753931-1.859141)/3=1.718861\)，正是第 1 问的 S。还有另一种写法 \(S=\frac{2M+T}{3}\)：中点和梯形的主误差一正一负，按 2:1 混合正好抵消。</p>
+
+  <h3>例：给导数提精度</h3>
+  <p>求 \(f(x)=e^x\) 在 \(x=0\) 处的导数，真值为 1。中心差分 \(D(h)=\frac{e^h-e^{-h}}{2h}=1+\frac{h^2}6+\frac{h^4}{120}+\cdots\) 是二阶方法。</p>
+  <div class="steps-head"><span>#</span><span>计算</span><span>这一步在干什么</span></div>
+  <ol class="steps">
+    <li><div class="calc">\(D(0.2)=1.006680013\)</div><div class="why">粗步长算一次。误差 \(6.7\times10^{-3}\)。</div></li>
+    <li><div class="calc">\(D(0.1)=1.001667500\)</div><div class="why">步长减半再算一次。误差 \(1.7\times10^{-3}\)，约为上一步的 1/4，符合 p = 2。</div></li>
+    <li><div class="calc">\(\dfrac{D(0.1)-D(0.2)}{3}=-0.0016709\)</div><div class="why"><b>不看真值</b>，估计 D(0.1) 的误差。实际误差是 −0.0016675，估得很准。</div></li>
+    <li><div class="calc">\(D_R=D(0.1)+(-0.0016709)=0.999996663\)</div><div class="why">把估计的误差加回去。误差 \(3.3\times10^{-6}\)，没有多算任何函数值，误差小了 500 倍。</div></li>
+  </ol>
+  <p>把粗细步长写成 2h 与 h，外推结果展开就是常见的“五点公式”，它是四阶的：</p>
+  <div class="mathblock">\[ \frac{4D(h)-D(2h)}{3}=\frac{-f(x+2h)+8f(x+h)-8f(x-h)+f(x-2h)}{12h} \]</div>
+  <p>很多高阶差分公式其实都是外推的产物。</p>
+
+  <h3>什么时候不能外推</h3>
+  <p>前提是误差真的长成 \(Q+Ch^p+\cdots\)。函数不够光滑（如 \(\sqrt x\) 在 0 点）、有尖峰或间断、函数值带噪声、步长小到舍入误差占主导，前提都不成立，外推可能让结果更差。</p>
+  <p>一次外推消去 \(h^p\) 后剩下几阶，取决于展开式。展开式是 \(c_1h+c_2h^2+\cdots\) 时只升一阶；复化梯形和中心差分只有偶次项 \(c_2h^2+c_4h^4+\cdots\)，所以一次升两阶。</p>
+  <p class="remember"><span class="lbl">记住</span>外推 = 已知误差的形状，用两次计算把真值解出来。顺带得到的“两次结果之差”，就是不需要真值的误差估计。</p>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="romberg">
+  <div class="q-label">第 5 问 <b>龙贝格积分</b></div>
+  <h2>消掉 h<sup>2</sup> 之后，能不能接着消 h<sup>4</sup>、h<sup>6</sup>？</h2>
+  <p class="idea"><span class="tag">想法</span><span>能。f 足够光滑时，复化梯形的误差只含偶次幂，每多外推一次就消掉一项。把这些外推排成三角表，就是龙贝格积分。</span></p>
+  <div class="mathblock">\[ T(h)=\class{tg}{I}+\class{er}{c_2h^2+c_4h^4+c_6h^6+\cdots} \]</div>
+  <p>第一轮用分母 3 消 \(h^2\)，第二轮用分母 15 消 \(h^4\)，第三轮用分母 63 消 \(h^6\)，统一写成</p>
+  <div class="mathblock">\[ \boxed{\;R_{k,j}=R_{k,j-1}+\frac{R_{k,j-1}-R_{k-1,j-1}}{4^j-1}\;} \]</div>
+  <p>第一列 \(R_{k,0}\) 是步长逐次减半的梯形值。新的一行只需计算新插入的中点，旧点全部复用：</p>
+  <div class="mathblock">\[ R_{k,0}=\tfrac12R_{k-1,0}+h_k\sum_{i=1}^{2^{k-1}}f\big(a+(2i-1)h_k\big),\qquad h_k=\frac{b-a}{2^k} \]</div>
+  <p>往右的每一格只是把已有的数组合一下，<b>不需要任何新的函数值</b>。几何上，第 j 列相当于过 j+1 个点画一条关于 \(h^2\) 的 j 次多项式，取它在 \(h=0\) 处的值。</p>
+
+  <div class="demo" id="demoC">
+    <div class="demo-head"><span class="tag">演示</span><h4>一行一行搭龙贝格表</h4></div>
+    <p class="how">点“加一行”。每行只多算新插入的中点；往右每一格都不花新的函数值。深色数字是与真值一致的位数。</p>
+    <div class="controls">
+      <label class="ctl-label" for="cFn">被积函数（区间 [0,1]）</label>
+      <select id="cFn">
+        <option value="exp">eˣ，光滑</option>
+        <option value="pi">4/(1+x²)，光滑，积分为 π</option>
+        <option value="sqrt">√x，端点不光滑</option>
+      </select>
+      <button type="button" class="btn" id="cAdd">加一行</button>
+      <button type="button" class="btn ghost" id="cReset">重新开始</button>
+    </div>
+    <div class="tbl-wrap"><table class="romb" id="cTable"></table></div>
+    <div class="readout" id="cRead"></div>
+  </div>
+  <p>把函数换成 \(\sqrt x\) 再试：往右几乎不再变好。\(\sqrt x\) 在 \(x=0\) 处导数无穷大，梯形误差不再是 \(c_2h^2+c_4h^4+\cdots\) 的样子，外推的前提垮了。补救办法是先换元：令 \(x=t^2\)，</p>
+  <div class="mathblock">\[ \int_0^1\sqrt x\,dx=\int_0^1 2t^2\,dt \]</div>
+  <p>新的被积函数非常光滑，辛普森都能算得精确。</p>
+
+  <h3>手算一遍：\(\int_0^1e^x\,dx\)</h3>
+  <div class="steps-head"><span>#</span><span>计算</span><span>这一步在干什么</span></div>
+  <ol class="steps">
+    <li><div class="calc">\(R_{0,0}=\frac{1+e}{2}=1.859140914\)</div><div class="why">一段梯形，用 f(0)、f(1)。<b>2 个函数值</b>，误差 0.14。</div></li>
+    <li><div class="calc">\(R_{1,0}=\frac12R_{0,0}+\frac12e^{1/2}=1.753931092\)</div><div class="why">加入中点 x = ½，只多算 <b>1 个</b>函数值。</div></li>
+    <li><div class="calc">\(R_{1,1}=R_{1,0}+\frac{R_{1,0}-R_{0,0}}{3}=1.718861152\)</div><div class="why">第一次外推，消去 \(h^2\)。这一格就是辛普森。</div></li>
+    <li><div class="calc">\(R_{2,0}=\frac12R_{1,0}+\frac14\big(e^{1/4}+e^{3/4}\big)=1.727221905\)</div><div class="why">加入 x = ¼、¾，多算 <b>2 个</b>函数值。</div></li>
+    <li><div class="calc">\(R_{2,1}=R_{2,0}+\frac{R_{2,0}-R_{1,0}}{3}=1.718318842\)</div><div class="why">同一行做第一次外推，消去 \(h^2\)。</div></li>
+    <li><div class="calc">\(R_{2,2}=R_{2,1}+\frac{R_{2,1}-R_{1,1}}{15}=1.718282688\)</div><div class="why">第二次外推，消去 \(h^4\)。一共 <b>5 个函数值</b>，误差 \(8.6\times10^{-7}\)。</div></li>
+  </ol>
+  <p>再加一行（共 9 个函数值），\(R_{3,3}=1.718281829\)，误差 \(3.4\times10^{-10}\)。同样 9 个点的复化梯形 \(R_{3,0}\) 误差是 \(2.2\times10^{-3}\)。精度的提升来自组合已有结果，不是靠多采样。</p>
+
+  <h3>什么时候停</h3>
+  <p>常用规则是看对角线上相邻两项：\(|R_{k,k}-R_{k-1,k-1}|\le\max(\varepsilon_{\rm abs},\ \varepsilon_{\rm rel}|R_{k,k}|)\)。这是收敛指标，不是严格的误差界。程序还要限制最大行数，并留意数值是否开始停滞或来回摆动，那通常说明舍入误差接管了，或者函数不够光滑。</p>
+  <p><b>适合龙贝格的情形</b>：有限区间，函数光滑，可以在任意点求值，而且整个区间都值得均匀加密。最后一条不满足时，就是下一个问题。</p>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="adaptive">
+  <div class="q-label">第 6 问 <b>自适应积分</b></div>
+  <h2>函数有的地方难、有的地方容易，为什么要处处一样细？</h2>
+  <p class="idea"><span class="tag">想法</span><span>每一小段用“粗细两次之差”估计自己的误差。够准就收下，不够准就劈成两半，各自再检查。点会自动聚到难算的地方。</span></p>
+  <p>龙贝格在整个区间上统一加密。如果 f 大部分平缓、只在一处有尖峰，为了把尖峰算准而处处加密，平坦处的函数值就白算了。</p>
+
+  <h3>每一段怎么判断自己够不够准</h3>
+  <p>在一段 \([a,b]\) 上（中点 m）：</p>
+  <ul class="plain">
+    <li><b>粗</b>：整段一次辛普森 S，用 a、m、b 三个点；</li>
+    <li><b>细</b>：左右两半各一次辛普森，\(S_2=S_L+S_R\)，多用两个四分点。</li>
+  </ul>
+  <p>辛普森单段误差与段长的 5 次方成正比。劈成两半后，每半误差约为原来的 1/32，两半合计 1/16：</p>
+  <div class="mathblock">\[ I-S\approx 16\,(I-S_2)\quad\Longrightarrow\quad \class{er}{I-S_2}\approx\frac{S_2-S}{15} \]</div>
+  <p>这正是 p = 4 的理查森外推，分母 \(2^4-1=15\)。于是每一段的决策是：</p>
+  <ul class="plain">
+    <li>若 \(\frac{|S_2-S|}{15}\le\tau\)：接受，返回修正值 \(S_2+\frac{S_2-S}{15}\)；</li>
+    <li>否则：左右两半各自递归，各分到容差 \(\tau/2\)。</li>
+  </ul>
+  <p>容差对半分，是为了总误差不超过 τ：\(|E_L+E_R|\le|E_L|+|E_R|\le\tau/2+\tau/2\)。</p>
+
+  <div class="demo" id="demoD">
+    <div class="demo-head"><span class="tag">演示</span><h4>自适应辛普森如何把点放到尖峰上</h4></div>
+    <p class="how">被积函数 \(f(x)=0.1+\frac{0.0004}{0.0004+(x-0.7)^2}\) 在 x = 0.7 处有一个窄峰，其余地方几乎是平的。橙框是正在检查的段，绿色是已通过检验的段，底部短线是已经算过的函数值的位置。</p>
+    <div class="controls">
+      <label class="ctl-label" for="dTol">总容差</label>
+      <select id="dTol">
+        <option value="0.001">10⁻³</option>
+        <option value="0.0001" selected>10⁻⁴</option>
+        <option value="0.00001">10⁻⁵</option>
+        <option value="0.000001">10⁻⁶</option>
+      </select>
+      <button type="button" class="btn" id="dPlay">自动播放</button>
+      <button type="button" class="btn ghost" id="dStep">单步</button>
+      <button type="button" class="btn ghost" id="dEnd">直接看结果</button>
+      <button type="button" class="btn ghost" id="dReset">重置</button>
+    </div>
+    <svg id="figD" class="fig w640" viewBox="0 0 640 290" role="img" aria-label="自适应辛普森积分的逐步细分"></svg>
+    <div class="stats">
+      <div><span>步骤</span><b id="dCount">0 / 0</b></div>
+      <div><span>已接受的段</span><b id="dAcc">0</b></div>
+      <div><span>已用函数值</span><b id="dEval">0</b></div>
+      <div><span>已接受部分的积分</span><b id="dSum">0</b></div>
+    </div>
+    <p class="caption-live" id="dCap" aria-live="polite"></p>
+    <p class="compare" id="dCmp"></p>
+  </div>
+
+  <h3>手算一遍：\(\int_0^1x^4\,dx\)，容差 \(10^{-4}\)</h3>
+  <div class="steps-head"><span>#</span><span>计算</span><span>这一步在干什么</span></div>
+  <ol class="steps">
+    <li><div class="calc">\(S=\frac16\big[0+4(\tfrac12)^4+1\big]=\frac5{24}=0.2083333\)</div><div class="why">整段粗算，3 个函数值。</div></li>
+    <li><div class="calc">\(S_2=S_L+S_R=\frac{77}{384}=0.2005208\)</div><div class="why">左右两半各做一次辛普森，多算 x = ¼、¾ 两个函数值。</div></li>
+    <li><div class="calc">\(\frac{|S_2-S|}{15}=\frac1{1920}\approx5.2\times10^{-4}\)</div><div class="why">估计误差 &gt; \(10^{-4}\)，<b>整段不接受</b>。左右两半各分到 \(5\times10^{-5}\)。</div></li>
+    <li><div class="calc">每半段估计误差 \(\approx1.6\times10^{-5}\)</div><div class="why">都小于 \(5\times10^{-5}\)，<b>两半都接受</b>。共用 9 个不同的函数值。</div></li>
+  </ol>
+  <p>本例中修正值 \(S_2+\frac{S_2-S}{15}\) 恰好等于 0.2：\(x^4\) 的四阶导数是常数，更高阶误差项为零。注意 \(\frac{|S_2-S|}{15}\) 估计的是<b>未修正的</b> \(S_2\) 的误差；修正后的结果通常比这个估计还准得多，用它作接受门槛是偏保守的做法。</p>
+
+  <h3>自适应也会被骗</h3>
+  <ul class="plain">
+    <li><b>漏掉窄峰</b>：如果最初的几个采样点都落在峰外，粗细两次结果几乎一样，算法会以为已经很准。已知峰的位置时，先在那里分段。</li>
+    <li><b>振荡抵消</b>：几个采样点恰好落在相近的相位上，差值偶然很小。高频振荡需要专门方法。</li>
+    <li><b>积分接近零</b>：正负面积抵消时，相对容差没有意义，应设绝对容差。</li>
+  </ul>
+  <p>程序必须设最大递归深度、最小区间宽度和函数值预算；达到限制还没满足容差时，要如实报告“未达到容差”，不能假装成功。</p>
+  <p class="remember"><span class="lbl">记住</span>自适应不是某一个公式，而是一种控制策略：估计误差、分配预算、决定在哪里加点。底下用辛普森可以，用高斯也可以。</p>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="gauss">
+  <div class="q-label">第 7 问 <b>高斯求积</b></div>
+  <h2>只允许算 n 个函数值，点放在哪里最好？</h2>
+  <p class="idea"><span class="tag">想法</span><span>前面的点都是等距放的。把点的位置也当作未知数，n 个点就有 2n 个参数可调，能让公式对次数到 2n−1 的多项式都精确。</span></p>
+  <p>数一数未知数。等距公式里 n 个点的位置是定死的，只剩 n 个权重可调，最多满足 n 个条件（对 \(1,x,\dots,x^{n-1}\) 精确）。高斯求积把位置也放开：n 个位置 + n 个权重 = 2n 个未知数，可以满足 2n 个条件，对 \(1,t,\dots,t^{2n-1}\) 都精确。</p>
+
+  <h3>自己推两点公式</h3>
+  <p>在 \([-1,1]\) 上，利用对称性设两个点为 \(\pm c\)，权重都是 w：</p>
+  <div class="mathblock">\[ \int_{-1}^1 g(t)\,dt\approx w\big[g(-c)+g(c)\big] \]</div>
+  <ul class="plain">
+    <li>\(g=1\)：\(2=2w\)，所以 \(w=1\)；</li>
+    <li>\(g=t\) 与 \(g=t^3\)：精确积分为 0，左右两个值也正好抵消，自动满足；</li>
+    <li>\(g=t^2\)：\(\frac23=2c^2\)，所以 \(c=\frac1{\sqrt3}\approx0.5774\)。</li>
+  </ul>
+  <div class="mathblock">\[ \boxed{\;\int_{-1}^1 g(t)\,dt\approx g\Big(-\tfrac1{\sqrt3}\Big)+g\Big(\tfrac1{\sqrt3}\Big)\;} \]</div>
+  <p>两个函数值，就对所有三次多项式精确。辛普森要三个函数值才做到这一点。</p>
+
+  <div class="demo" id="demoE">
+    <div class="demo-head"><span class="tag">演示</span><h4>自己找最好的位置</h4></div>
+    <p class="how">拖动滑块移动两个节点 ±c。公式的值等于两个宽度为 1 的矩形面积之和，目标是让它等于曲线下的面积。点表格里的函数名，切换画出的函数。</p>
+    <div class="controls">
+      <label class="ctl-label" for="eC">节点位置 c</label>
+      <input type="range" id="eC" min="0.05" max="1" step="0.001" value="0.8">
+      <b id="eCv" style="font-family:var(--f-mono);font-weight:500">0.800</b>
+      <button type="button" class="btn ghost" id="eSnap">放到 1/√3</button>
+    </div>
+    <svg id="figE" class="fig w640" viewBox="0 0 640 260" role="img" aria-label="两点高斯求积：两个矩形面积与曲线下面积比较"></svg>
+    <div class="readout" id="eRead"></div>
+    <div class="tbl-wrap"><table class="gt" id="eTable"></table></div>
+  </div>
+  <p>只有 \(c=1/\sqrt3\) 时 \(t^2\) 那一行误差为零，这时 \(1, t, t^2, t^3\) 全部精确，而 \(t^4\) 仍不精确：两个点最多管到三次。\(e^t\) 的误差在这附近也很小。不同的函数最“喜欢”的 c 略有不同（\(e^t\) 是 0.584），\(1/\sqrt3\) 的好处是对所有三次多项式同时精确，与具体的 f 无关。</p>
+
+  <h3>常用节点与权重</h3>
+  <div class="tbl-wrap tbl-narrow"><table>
+    <thead><tr><th class="num">点数 m</th><th>节点 \(t_i\)</th><th>权重 \(w_i\)</th><th class="num">代数精度</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>\(0\)</td><td>\(2\)</td><td class="num">1</td></tr>
+      <tr><td class="num">2</td><td>\(\pm1/\sqrt3\)</td><td>\(1,\ 1\)</td><td class="num">3</td></tr>
+      <tr><td class="num">3</td><td>\(0,\ \pm\sqrt{3/5}\)</td><td>\(8/9,\ 5/9,\ 5/9\)</td><td class="num">5</td></tr>
+      <tr><td class="num">m</td><td>\(P_m(t)\) 的零点</td><td>由精确条件确定</td><td class="num">2m−1</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">每行权重之和都是 2，因为常数函数的积分必须精确。</p>
+
+  <h3>换到一般区间 [a, b]</h3>
+  <div class="mathblock">\[ \int_a^bf(x)\,dx\approx\frac{b-a}2\sum_{i=1}^m w_i\,f\Big(\frac{a+b}2+\frac{b-a}2\,t_i\Big) \]</div>
+  <p>最常见的两个漏洞：忘了乘 \(\frac{b-a}2\)；只变换了节点而没处理权重。检查方法：令 f = 1，结果应为 b − a。</p>
+  <div class="steps-head"><span>#</span><span>计算</span><span>这一步在干什么</span></div>
+  <ol class="steps">
+    <li><div class="calc">\(x_{1,2}=\frac12\mp\frac1{2\sqrt3}=0.2113249,\ 0.7886751\)</div><div class="why">把标准节点 \(\pm1/\sqrt3\) 映射到 [0, 1]。</div></li>
+    <li><div class="calc">\(G_2=\frac12\big(e^{0.2113249}+e^{0.7886751}\big)=1.717896\)</div><div class="why">加权求和，再乘 \(\frac{b-a}2=\frac12\)。</div></li>
+    <li><div class="calc">误差 \(3.9\times10^{-4}\)</div><div class="why">只用 <b>2 个</b>函数值。两段梯形用 3 个，误差却是 \(3.6\times10^{-2}\)。</div></li>
+  </ol>
+  <p>同样用 3 个函数值算 \(\int_0^1e^x\,dx\)：两段梯形误差 \(3.6\times10^{-2}\)，辛普森 \(5.8\times10^{-4}\)，三点高斯 \(8.2\times10^{-7}\)。点放得好，同样的成本可以准几万倍。</p>
+
+  <details class="ex" style="border-top:0">
+    <summary>为什么节点是勒让德多项式的零点？为什么到不了 2m 次？（选读）</summary>
+    <div class="ans">
+      <p>m 次勒让德多项式 \(P_m\) 与所有次数低于 m 的多项式正交：\(\int_{-1}^1P_m\,q\,dt=0\)。任取次数不超过 \(2m-1\) 的多项式 p，做除法 \(p=P_m\,s+r\)，其中 s、r 次数都不超过 \(m-1\)。</p>
+      <ul class="plain">
+        <li>精确积分：\(\int P_m s=0\)（正交性），只剩 \(\int r\)。</li>
+        <li>求积公式：节点是 \(P_m\) 的零点，\(P_m(t_i)s(t_i)=0\)，只剩 \(\sum w_i r(t_i)\)。</li>
+      </ul>
+      <p>权重已经保证 \(m-1\) 次以内的多项式精确，所以 \(\sum w_ir(t_i)=\int r\)，整个 p 就精确了。</p>
+      <p>到不了 2m 次：取 \(q(t)=\prod_{i=1}^m(t-t_i)^2\)，它是 2m 次，在每个节点上为零，求积结果是 0；但 \(q\ge0\) 且不恒为零，真积分大于 0。</p>
+    </div>
+  </details>
+
+  <h3>代价与局限</h3>
+  <ul class="plain">
+    <li>节点是无理数。手里只有固定位置的测量数据时，用不上高斯公式；先插值再套公式会引入额外误差。</li>
+    <li>单次高斯计算不带误差估计。要么比较分段粗细的结果，要么用高斯–克朗罗德（Gauss–Kronrod）这类嵌套规则。</li>
+    <li>不同点数的高斯节点不嵌套，提高点数时旧的函数值用不上（龙贝格的旧点则全部复用）。</li>
+    <li>长区间或不够光滑时用复化高斯：分段后每段 m 点。单段误差 \(O(H^{2m+1})\)，整体 \(O(H^{2m})\)。</li>
+  </ul>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="diff">
+  <div class="q-label">第 8 问 <b>数值微分</b></div>
+  <h2>导数怎么算？思路相同，多了一个敌人</h2>
+  <p class="idea"><span class="tag">想法</span><span>用割线斜率代替切线斜率。误差阶、对称抵消、外推都照用；但步长不能无限缩小，太小时舍入误差会毁掉结果。</span></p>
+  <div class="mathblock">\[ D_+(h)=\frac{f(x+h)-f(x)}h=f'(x)+\class{er}{\tfrac h2f''(x)}+\cdots\qquad O(h) \]
+  \[ D_0(h)=\frac{f(x+h)-f(x-h)}{2h}=f'(x)+\class{er}{\tfrac{h^2}6f'''(x)}+\cdots\qquad O(h^2) \]</div>
+
+  <h3>为什么中心差分高一阶</h3>
+  <div class="mathblock">\[ f(x\pm h)=f(x)\pm hf'(x)+\frac{h^2}2f''(x)\pm\frac{h^3}6f'''(x)+\cdots \]</div>
+  <p>把 h 换成 −h，奇次项变号、偶次项不变。两式相减，偶次项全部抵消，含 \(f''\) 的那一项也没了，误差从 h 级降到 \(h^2\) 级。两式相加则奇次项抵消，得到二阶导数公式：</p>
+  <div class="mathblock">\[ f''(x)\approx\frac{f(x+h)-2f(x)+f(x-h)}{h^2}=f''(x)+\class{er}{\frac{h^2}{12}f^{(4)}(x)}+\cdots \]</div>
+  <p>端点处只有一侧数据时，用二阶单侧公式 \(f'(x_0)\approx\frac{-3f_0+4f_1-f_2}{2h}\)。NumPy 的 <code>numpy.gradient</code> 就是内部点用中心差分、边界用这类单侧公式。</p>
+  <p>例：\(e^x\) 在 0 处，\(h=0.1\)。\(D_+=1.051709\)，误差 \(5.2\times10^{-2}\)；\(D_0=1.001668\)，误差 \(1.7\times10^{-3}\)。同样两个函数值，对称放置准了 30 倍。</p>
+  <p class="small">分母最容易写错：前向、后向除以 h，一阶中心差分除以 2h，二阶中心差分除以 \(h^2\)。可以用简单函数检查：常数的导数应得 0，\(f=x\) 的一阶导应得 1，\(f=x^2\) 的二阶导应得 2。</p>
+
+  <h3>步长不是越小越好</h3>
+  <p>计算机里每个函数值都带着约 \(\varepsilon\approx10^{-16}\) 的相对舍入误差。h 很小时，\(f(x+h)\) 和 \(f(x)\) 几乎相等，相减后有效数字大量丢失，再除以很小的 h，误差被放大。总误差大致是</p>
+  <div class="mathblock">\[ E(h)\approx \class{er}{C\,h^p}+\frac{K\varepsilon}{h} \]</div>
+  <p>第一项随 h 变小而减小，第二项却变大。两项平衡处是最佳步长 \(h_{\rm opt}\sim\varepsilon^{1/(p+1)}\)：前向差分约 \(10^{-8}\)，中心差分约 \(10^{-5}\)。</p>
+
+  <div class="demo" id="demoF">
+    <div class="demo-head"><span class="tag">演示</span><h4>在你的浏览器里实测</h4></div>
+    <p class="how">这不是示意图。曲线是此刻用双精度浮点数实际算出的 \(f(x)=e^x\) 在 x = 1 处的导数误差。把指针移到图上读数（也可以聚焦后用方向键）。</p>
+    <div class="legend" id="fLegend"></div>
+    <div style="position:relative">
+      <svg id="figF" class="fig w640" viewBox="0 0 640 330" role="img" aria-label="数值微分误差随步长变化的双对数图" tabindex="0"></svg>
+      <div class="tip" id="fTip" hidden></div>
+    </div>
+    <details class="data"><summary>查看数据表</summary><div class="tbl-wrap"><table id="fData"></table></div></details>
+  </div>
+  <p>图的右半边（h 较大）是截断误差，直线的斜率就是阶数 p：前向差分斜率 1，中心差分 2，外推后 4。左半边（h 太小）舍入误差接管，三条线都以斜率 −1 反弹上去。阶数越高，谷底越深，谷底出现的 h 也越大。</p>
+  <div class="key">
+    <span class="tag">积分与微分的本质区别</span>
+    <p>积分是加权求和，各点的误差会互相平均，所以积分对噪声很宽容。微分是做差再除以 h，误差会被放大。所以对带噪声的测量数据求导，要先拟合或平滑，不能直接套差分，更不能把步长一路缩小。外推的线性组合也会放大输入误差，同样要小心。</p>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="choose">
+  <div class="q-label">全景</div>
+  <h2>放在一起看：同样的预算，谁更准？</h2>
+  <div class="demo" id="demoG">
+    <div class="demo-head"><span class="tag">对比</span><h4>\(\int_0^1e^x\,dx\)：误差与函数值个数</h4></div>
+    <p class="how">横轴是成本（函数值个数），纵轴是误差，都用对数刻度。越靠左下越好；线越陡，多花一倍的点误差降得越多。</p>
+    <div class="legend" id="gLegend"></div>
+    <div style="position:relative">
+      <svg id="figG" class="fig w640" viewBox="0 0 640 340" role="img" aria-label="四种积分方法误差与函数值个数的双对数图" tabindex="0"></svg>
+      <div class="tip" id="gTip" hidden></div>
+    </div>
+    <details class="data"><summary>查看数据表</summary><div class="tbl-wrap"><table id="gData"></table></div></details>
+  </div>
+  <p>同样 9 个函数值：复化梯形误差 \(2.2\times10^{-3}\)，复化辛普森 \(2.3\times10^{-6}\)，龙贝格 \(3.4\times10^{-10}\)。高斯只用 5 个函数值就到 \(6.5\times10^{-13}\)。</p>
+  <p class="small">这是光滑函数上的比较。遇到尖峰、奇点、噪声，或者只有固定位置的数据表时，排名会完全不同。</p>
+
+  <h3>四种改进，各自改了什么</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>改进方向</th><th>改了什么</th><th>函数值成本</th></tr></thead>
+    <tbody>
+      <tr><td>复化</td><td>增加分段，让每段更容易近似</td><td>成倍增加</td></tr>
+      <tr><td>外推、龙贝格</td><td>组合已有结果，消去可预测的误差项</td><td>几乎不增加</td></tr>
+      <tr><td>自适应</td><td>根据误差估计，决定在哪里多算</td><td>只花在需要的地方</td></tr>
+      <tr><td>高斯</td><td>优化点的位置和权重</td><td>每个点发挥最大作用</td></tr>
+    </tbody>
+  </table></div>
+  <p>它们可以组合。Python 里的 <code>scipy.integrate.quad</code> 底层是 QUADPACK：每一段用 21 点高斯–克朗罗德规则，用嵌套的高斯结果与克朗罗德结果之差估计误差，优先细分误差最大的段，必要时再用外推加速收敛。复化、外推、自适应、高斯，本章的四个想法全在里面。</p>
+
+  <h3>拿到问题，先问四件事</h3>
+  <p>能不能在任意位置计算函数值？函数够不够光滑？输入有多少噪声？要的是绝对精度还是相对精度？这些问题比挑一个阶数最高的公式更重要。</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>问题特征</th><th>优先考虑</th><th>主要注意</th></tr></thead>
+    <tbody>
+      <tr><td>只有等距函数值表</td><td>复化梯形；段数为偶数时可用辛普森</td><td>数据精度限制最终精度</td></tr>
+      <tr><td>只有不等距数据</td><td>分段梯形，或局部插值后积分</td><td>不能套等距权重</td></tr>
+      <tr><td>光滑函数，可任意取点</td><td>辛普森、龙贝格、高斯</td><td>比较目标精度与函数值成本</td></tr>
+      <tr><td>局部变化剧烈</td><td>自适应积分</td><td>防止漏掉窄峰</td></tr>
+      <tr><td>已知间断点或尖点</td><td>先在这些位置分段</td><td>跨间断点的高阶公式会失效</td></tr>
+      <tr><td>端点奇性或无穷区间</td><td>换元或专门求积</td><td>先分析可积性和端点行为</td></tr>
+      <tr><td>由精确函数求导</td><td>中心差分，必要时外推</td><td>步长别太小，留意舍入</td></tr>
+      <tr><td>由带噪数据求导</td><td>局部拟合或平滑后再求导</td><td>高阶差分会放大噪声</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ practice ============ -->
+<section id="practice">
+  <div class="q-label">练习</div>
+  <h2>用纸笔把整条线串起来</h2>
+  <p>先独立计算，再展开答案。中间结果至少保留 8 位有效数字。</p>
+
+  <div class="ex"><h4>1　权重与节点</h4>
+    <p>用 n = 4 的复化梯形与复化辛普森计算 \(\int_0^1x^3dx\)。写出节点、函数值和两组权重。哪一个精确？为什么？</p>
+    <details><summary>看答案</summary><div class="ans">
+      <p>\(h=\frac14\)，节点 \(0,\frac14,\frac12,\frac34,1\)，函数值 \(0,\frac1{64},\frac18,\frac{27}{64},1\)。</p>
+      <p>\(T_4=\frac14\big(\frac1{64}+\frac18+\frac{27}{64}+\frac12\big)=\frac{17}{64}=0.265625\)；\(S_4=\frac1{12}\big[0+4(\frac1{64}+\frac{27}{64})+2\cdot\frac18+1\big]=\frac14\)。</p>
+      <p>真值 \(\frac14\)。辛普森代数精度为 3，对 \(x^3\) 精确；梯形只到 1 次。</p>
+    </div></details>
+  </div>
+
+  <div class="ex"><h4>2　外推系数</h4>
+    <p>某二阶方法给出 \(A(h)=2.0400\)、\(A(h/2)=2.0100\)。求一次外推结果，并估计细步长结果的有符号误差 \(Q-A(h/2)\)。若细步长改为 h/3，外推分母应改成多少？</p>
+    <details><summary>看答案</summary><div class="ans">
+      <p>\((4\times2.0100-2.0400)/3=2.0000\)。细步长误差估计 \((2.0100-2.0400)/3=-0.0100\)。</p>
+      <p>步长比为 3 时，分母是 \(3^2-1=8\)，公式为 \(\frac{9A(h/3)-A(h)}8\)。</p>
+    </div></details>
+  </div>
+
+  <div class="ex"><h4>3　微分外推</h4>
+    <p>用 \(f(x)=\sin x\) 求 \(f'(0)\)。先算 h = 0.1 与 0.05 的中心差分，再做一次理查森外推，比较三者与真值 1 的误差。</p>
+    <details><summary>看答案</summary><div class="ans">
+      <p>\(D(0.1)=0.998334166468\)，\(D(0.05)=0.999583385414\)，外推得 \(0.999999791729\)。</p>
+      <p>误差依次约为 \(1.67\times10^{-3}\)、\(4.17\times10^{-4}\)、\(2.08\times10^{-7}\)。</p>
+    </div></details>
+  </div>
+
+  <div class="ex"><h4>4　填龙贝格表</h4>
+    <p>已知 \(T_1=0.5\)、\(T_2=0.375\)、\(T_4=0.34375\)，来自 \(\int_0^1x^2dx\)。计算 \(R_{1,1}, R_{2,1}, R_{2,2}\)，写明每次所用的分母。</p>
+    <details><summary>看答案</summary><div class="ans">
+      <p>\(R_{1,1}=(4\times0.375-0.5)/3=\frac13\)（分母 3）；\(R_{2,1}=(4\times0.34375-0.375)/3=\frac13\)（分母 3）；\(R_{2,2}=(16R_{2,1}-R_{1,1})/15=\frac13\)（分母 15）。</p>
+      <p>\(x^2\) 的梯形误差只有 \(h^2\) 一项，所以第一次外推就已精确。</p>
+    </div></details>
+  </div>
+
+  <div class="ex"><h4>5　自适应接受判据</h4>
+    <p>某区间的粗辛普森结果 \(S=0.80000\)，细分结果 \(S_2=0.79985\)，局部绝对容差 \(\tau=2\times10^{-5}\)。是否接受？校正结果是多少？若容差改成 \(5\times10^{-6}\)，又该如何处理？</p>
+    <details><summary>看答案</summary><div class="ans">
+      <p>\(\Delta=S_2-S=-0.00015\)，\(|\Delta|/15=1\times10^{-5}\le2\times10^{-5}\)，接受。校正结果 \(0.79985-0.00001=0.79984\)。</p>
+      <p>若容差为 \(5\times10^{-6}\)，则不接受，继续二分，左右各分到 \(2.5\times10^{-6}\)。</p>
+    </div></details>
+  </div>
+
+  <div class="ex"><h4>6　区间变换与高斯公式</h4>
+    <p>用两点高斯–勒让德公式计算 \(\int_2^4x^3dx\)。写出实际节点与实际权重，并解释为什么结果精确。</p>
+    <details><summary>看答案</summary><div class="ans">
+      <p>\(\frac{a+b}2=3\)，\(\frac{b-a}2=1\)，实际节点 \(3\pm\frac1{\sqrt3}\)，实际权重都是 1。</p>
+      <p>令 \(u=\frac1{\sqrt3}\)：\((3-u)^3+(3+u)^3=54+18u^2=60\)，与 \(\big[\frac{x^4}4\big]_2^4=60\) 一致。两点高斯对三次多项式精确。</p>
+    </div></details>
+  </div>
+
+  <div class="ex"><h4>7　找出不能机械套公式的地方</h4>
+    <p>分别说明以下做法的问题：(a) n = 5 时直接套复化辛普森的 1, 4, 2, …, 1 权重；(b) 对测量数据求导，把步长从 \(10^{-3}\) 一直降到 \(10^{-12}\)；(c) 看到两次求积结果相同，就断定绝对误差为零；(d) 计算 \(\int_2^6f(x)\,dx\)，变换节点后直接用标准高斯权重而不乘缩放因子。</p>
+    <details><summary>看答案</summary><div class="ans">
+      <p>(a) 复化辛普森两段一组，区间数必须为偶数。(b) 数据噪声被 1/h 放大，步长越小越糟。(c) 可能漏采样了窄峰，或误差偶然抵消；两次一致只说明误差估计小。(d) 漏乘 \(\frac{6-2}2=2\)，结果少一半。</p>
+    </div></details>
+  </div>
+</section>
+
+<!-- ============ sheet ============ -->
+<section id="sheet">
+  <div class="q-label">速查</div>
+  <h2>必须熟练的公式与交卷前的自检</h2>
+  <div class="sheet">
+    <div><span class="lbl">复化梯形</span>\[T_n=h\Big[\frac{f_0+f_n}2+\sum_{i=1}^{n-1}f_i\Big]\]</div>
+    <div><span class="lbl">复化辛普森（n 为偶数）</span>\[S_n=\frac h3\Big[f_0+f_n+4\!\!\sum_{i\,\text{奇}}\!f_i+2\!\!\sum_{i\,\text{偶}}\!f_i\Big]\]</div>
+    <div><span class="lbl">一阶中心差分</span>\[f'(x)\approx\frac{f(x+h)-f(x-h)}{2h}\]</div>
+    <div><span class="lbl">二阶中心差分</span>\[f''(x)\approx\frac{f(x+h)-2f(x)+f(x-h)}{h^2}\]</div>
+    <div><span class="lbl">理查森外推</span>\[A_R=A(h/2)+\frac{A(h/2)-A(h)}{2^p-1}\]</div>
+    <div><span class="lbl">龙贝格</span>\[R_{k,j}=R_{k,j-1}+\frac{R_{k,j-1}-R_{k-1,j-1}}{4^j-1}\]</div>
+    <div><span class="lbl">自适应辛普森误差估计</span>\[E\approx\frac{|S_L+S_R-S|}{15}\]</div>
+    <div><span class="lbl">高斯（区间 [a,b]）</span>\[G_m=\frac{b-a}2\sum_{i=1}^m w_if\Big(\frac{a+b}2+\frac{b-a}2t_i\Big)\]</div>
+  </div>
+  <h3>交卷或运行程序前，检查这八项</h3>
+  <ol class="plain">
+    <li>区间、步长与节点数一致吗？n 段应有 n+1 个节点。</li>
+    <li>数据等距吗？辛普森的段数是偶数吗？</li>
+    <li>端点、奇数下标、偶数下标的权重对吗？</li>
+    <li>微分的分母是 h、2h 还是 \(h^2\)？</li>
+    <li>外推用的阶数、粗细顺序、步长比对吗？</li>
+    <li>误差估计针对的是粗结果、细结果，还是修正后的结果？</li>
+    <li>高斯变换同时处理了节点和权重吗？</li>
+    <li>函数够光滑吗？有没有噪声、漏采样或舍入停滞？</li>
+  </ol>
+  <p class="closing">先弄清近似从哪来，再弄清误差长什么样。能预测误差，就能选步长、消误差、把计算花在该花的地方。遇到不满足前提的问题，先改变处理方式（分段、换元、平滑），不要机械地提高阶数。</p>
+</section>
+
+<footer>合并自三份讲义：交互网页讲义《理查森外推、龙贝格积分、自适应积分与高斯求积》与两份 PDF 讲义《数值积分与数值微分》。页面中的图表与演示均由浏览器实时计算。</footer>
+</main>
+</div>
+
+<script>
+window.MathJax={
+  loader:{load:['[tex]/html']},
+  tex:{packages:{'[+]':['html']},inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},
+  svg:{fontCache:'global'}
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<script>
+(function(){
+'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=s=>document.querySelector(s);
+function S(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function clear(svg){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+function sci(x,d){d=d==null?1:d;if(x===0)return '0';const s=x<0?'−':'';x=Math.abs(x);let e=Math.floor(Math.log10(x));let m=x/Math.pow(10,e);if(+m.toFixed(d)>=10){m/=10;e++;}if(e>=-2&&e<=0)return s+x.toPrecision(d+1);return s+m.toFixed(d)+'×10'+String(e).split('').map(c=>SUP[c]).join('');}
+function setPressed(btns,on){btns.forEach(b=>b.setAttribute('aria-pressed',b===on?'true':'false'));}
+
+const E=Math.exp, I_EXP=Math.E-1;
+function trap(f,n,a,b){a=a||0;b=b==null?1:b;const h=(b-a)/n;let s=(f(a)+f(b))/2;for(let i=1;i<n;i++)s+=f(a+i*h);return s*h;}
+function simp(f,n,a,b){a=a||0;b=b==null?1:b;const h=(b-a)/n;let s=f(a)+f(b);for(let i=1;i<n;i++)s+=(i%2?4:2)*f(a+i*h);return s*h/3;}
+
+/* ---------- hero ---------- */
+(function(){
+  const svg=$('#heroFig');const f=x=>1.25+0.42*Math.sin(5.2*x+0.3)+0.22*Math.sin(11*x+1);
+  const X=x=>30+x*410,Y=y=>215-y*95;
+  S('line',{x1:30,y1:215,x2:445,y2:215,class:'ax'},svg);
+  const pts=[];for(let i=0;i<=200;i++){const x=i/200;pts.push(X(x)+','+Y(f(x)));}
+  S('polygon',{points:X(0)+',215 '+pts.join(' ')+' '+X(1)+',215',fill:'var(--accent-wash)'},svg);
+  S('polyline',{points:pts.join(' '),fill:'none',stroke:'var(--muted)','stroke-width':1.6,'stroke-dasharray':'5 5'},svg);
+  for(let i=0;i<=4;i++){const x=i/4;S('line',{x1:X(x),y1:215,x2:X(x),y2:Y(f(x)),stroke:'var(--accent)','stroke-width':1.2},svg);S('circle',{cx:X(x),cy:Y(f(x)),r:5.5,class:'dot'},svg);S('text',{x:X(x),y:236,'text-anchor':'middle',class:'mono'},svg,'x'+['₀','₁','₂','₃','₄'][i]);}
+  S('text',{x:235,y:150,'text-anchor':'middle',style:'font-family:var(--f-display);font-size:26px;font-weight:700',class:'ink-text'},svg,'面积 = ?');
+})();
+
+/* ---------- rule drawing (sections 1 and 2) ---------- */
+function drawRule(svg,method,n,W,H){
+  clear(svg);
+  const m={l:40,r:14,t:12,b:28};const X=x=>m.l+x*(W-m.l-m.r);const Y=y=>H-m.b-(y/3)*(H-m.t-m.b);
+  for(const y of [0,1,2,3]){S('line',{x1:m.l,x2:W-m.r,y1:Y(y),y2:Y(y),class:y?'gl':'ax'},svg);S('text',{x:m.l-8,y:Y(y)+4,'text-anchor':'end',class:'mono'},svg,String(y));}
+  for(const x of [0,0.5,1])S('text',{x:X(x),y:H-8,'text-anchor':'middle',class:'mono'},svg,String(x));
+  const approxPts=[];const nodes=[];
+  if(method==='T'){
+    for(let i=0;i<=n;i++){const x=i/n;approxPts.push([x,E(x)]);nodes.push(x);}
+  }else{
+    for(let k=0;k<n;k+=2){const a=k/n,c=(k+1)/n,b=(k+2)/n;const fa=E(a),fc=E(c),fb=E(b);
+      for(let j=0;j<=24;j++){if(k>0&&j===0)continue;const x=a+(b-a)*j/24;
+        const L0=(x-c)*(x-b)/((a-c)*(a-b)),L1=(x-a)*(x-b)/((c-a)*(c-b)),L2=(x-a)*(x-c)/((b-a)*(b-c));
+        approxPts.push([x,fa*L0+fc*L1+fb*L2]);}
+    }
+    for(let i=0;i<=n;i++)nodes.push(i/n);
+  }
+  const ap=approxPts.map(p=>X(p[0])+','+Y(p[1])).join(' ');
+  S('polygon',{points:X(0)+','+Y(0)+' '+ap+' '+X(1)+','+Y(0),class:'approx'},svg);
+  const curve=[];for(let i=0;i<=160;i++){const x=i/160;curve.push([x,E(x)]);}
+  const back=approxPts.slice().reverse().map(p=>X(p[0])+','+Y(p[1])).join(' ');
+  S('polygon',{points:curve.map(p=>X(p[0])+','+Y(p[1])).join(' ')+' '+back,class:'errfill'},svg);
+  for(const x of nodes)S('line',{x1:X(x),x2:X(x),y1:Y(0),y2:Y(E(x)),stroke:'var(--accent)','stroke-width':1,'stroke-opacity':.5},svg);
+  S('polyline',{points:curve.map(p=>X(p[0])+','+Y(p[1])).join(' '),class:'curve'},svg);
+  if(nodes.length<=17)for(const x of nodes)S('circle',{cx:X(x),cy:Y(E(x)),r:4.2,class:'dot'},svg);
+  S('text',{x:X(0.06),y:Y(2.55),class:'ink-text'},svg,'f(x) = eˣ');
+}
+drawRule($('#figT1'),'T',1,400,230);
+drawRule($('#figS1'),'S',2,400,230);
+
+/* ---------- demo A ---------- */
+(function(){
+  const ns=[1,2,4,8,16];let method='T',n=4;
+  const segN=$('#aN');const nBtns=ns.map(k=>{const b=document.createElement('button');b.type='button';b.id='aN'+k;b.textContent=k;b.addEventListener('click',()=>{n=k;render();});segN.appendChild(b);return b;});
+  const bT=$('#aMethT'),bS=$('#aMethS');
+  bT.addEventListener('click',()=>{method='T';render();});
+  bS.addEventListener('click',()=>{method='S';if(n<2)n=2;render();});
+  const rows=ns.map(k=>{const t=trap(E,k),s=k>=2?simp(E,k):null;return {k,t,s,et:I_EXP-t,es:s==null?null:I_EXP-s};});
+  const tbl=$('#aTable');
+  function render(){
+    setPressed([bT,bS],method==='T'?bT:bS);
+    nBtns.forEach((b,i)=>{b.setAttribute('aria-pressed',ns[i]===n?'true':'false');b.disabled=(method==='S'&&ns[i]<2);});
+    drawRule($('#figA'),method,n,640,260);
+    const v=method==='T'?trap(E,n):simp(E,n);
+    $('#aRead').innerHTML='';
+    const items=[['近似值',v.toFixed(9)],['真值',I_EXP.toFixed(9)],['误差',sci(I_EXP-v,2),'e'],['函数值个数',String(n+1)]];
+    for(const it of items){const s=document.createElement('span');s.textContent=it[0]+'　';const b=document.createElement('b');b.textContent=it[1];if(it[2])b.className=it[2];s.appendChild(b);$('#aRead').appendChild(s);}
+    let h='<thead><tr><th class="num">n</th><th class="num">h</th><th class="num">梯形误差</th><th class="num">缩小倍数</th><th class="num">辛普森误差</th><th class="num">缩小倍数</th></tr></thead><tbody>';
+    rows.forEach((r,i)=>{const p=rows[i-1];const sel=r.k===n;
+      h+='<tr'+(sel?' style="background:var(--accent-wash)"':'')+'><td class="num">'+r.k+'</td><td class="num">'+(1/r.k)+'</td><td class="num">'+sci(r.et,2)+'</td><td class="num">'+(p?(p.et/r.et).toFixed(2)+'×':'—')+'</td><td class="num">'+(r.es==null?'—':sci(r.es,2))+'</td><td class="num">'+(p&&p.es!=null?(p.es/r.es).toFixed(2)+'×':'—')+'</td></tr>';});
+    tbl.innerHTML=h+'</tbody>';
+  }
+  render();
+})();
+
+/* ---------- demo B: Richardson ---------- */
+(function(){
+  const svg=$('#figB');let axis='h2',pair=0;
+  const W=640,H=320,m={l:60,r:22,t:18,b:44};
+  const ymin=1.62,ymax=1.88,xmax=1.08;
+  const X=x=>m.l+x/xmax*(W-m.l-m.r),Y=y=>H-m.b-(y-ymin)/(ymax-ymin)*(H-m.t-m.b);
+  const halv=[1,2,4,8].map(k=>({k,h:1/k,T:trap(E,k)}));
+  const all=[];for(let k=1;k<=16;k++)all.push({h:1/k,T:trap(E,k)});
+  const bH2=$('#bAxH2'),bH=$('#bAxH'),bp=[$('#bP0'),$('#bP1'),$('#bP2')];
+  bH2.addEventListener('click',()=>{axis='h2';render();});bH.addEventListener('click',()=>{axis='h';render();});
+  bp.forEach((b,i)=>b.addEventListener('click',()=>{pair=i;render();}));
+  function render(){
+    setPressed([bH2,bH],axis==='h2'?bH2:bH);setPressed(bp,bp[pair]);
+    clear(svg);const xv=h=>axis==='h2'?h*h:h;
+    for(const y of [1.65,1.70,1.75,1.80,1.85]){S('line',{x1:m.l,x2:W-m.r,y1:Y(y),y2:Y(y),class:'gl'},svg);S('text',{x:m.l-8,y:Y(y)+4,'text-anchor':'end',class:'mono'},svg,y.toFixed(2));}
+    for(const x of [0,0.25,0.5,0.75,1]){S('text',{x:X(x),y:H-m.b+18,'text-anchor':'middle',class:'mono'},svg,String(x));}
+    S('line',{x1:m.l,x2:W-m.r,y1:H-m.b,y2:H-m.b,class:'ax'},svg);S('line',{x1:m.l,x2:m.l,y1:m.t,y2:H-m.b,class:'ax'},svg);
+    S('text',{x:(W+m.l)/2,y:H-6,'text-anchor':'middle'},svg,axis==='h2'?'横轴：h²':'横轴：h');
+    S('line',{x1:m.l,x2:W-m.r,y1:Y(I_EXP),y2:Y(I_EXP),class:'target-line'},svg);
+    S('text',{x:W-m.r,y:Y(I_EXP)+16,'text-anchor':'end',class:'target-text'},svg,'真值 e − 1 = 1.718282');
+    for(const p of all)S('circle',{cx:X(xv(p.h)),cy:Y(p.T),r:3,fill:'var(--muted)','fill-opacity':.55},svg);
+    const A=halv[pair],B=halv[pair+1];const x1=xv(A.h),x2=xv(B.h);
+    const slope=(A.T-B.T)/(x1-x2);const icpt=B.T-slope*x2;
+    S('line',{x1:X(0),y1:Y(icpt),x2:X(Math.min(xmax,x1+0.06)),y2:Y(icpt+slope*Math.min(xmax,x1+0.06)),stroke:'var(--accent)','stroke-width':2},svg);
+    for(const p of halv){const on=(p===A||p===B);S('circle',on?{cx:X(xv(p.h)),cy:Y(p.T),r:6,class:'dot-ink'}:{cx:X(xv(p.h)),cy:Y(p.T),r:4.5,fill:'var(--muted)'},svg);
+      if(on)S('text',{x:X(xv(p.h))+(p===A?8:10),y:Y(p.T)+(p===A?-10:-12),class:'ink-text'},svg,'T'+['₁','₂','₄','₈'][[1,2,4,8].indexOf(p.k)]);}
+    S('circle',{cx:X(0),cy:Y(icpt),r:6.5,class:'dot'},svg);
+    const ly=Math.min(icpt,I_EXP);
+    S('text',{x:X(0)+12,y:Math.min(Y(ly)+28,H-m.b-8),class:'acc-text'},svg,'截距 = '+icpt.toFixed(6));
+    const best=Math.min(Math.abs(I_EXP-A.T),Math.abs(I_EXP-B.T));
+    const r=$('#bRead');r.innerHTML='';
+    const add=(t,v,c)=>{const s=document.createElement('span');s.textContent=t+'　';const b=document.createElement('b');b.textContent=v;if(c)b.className=c;s.appendChild(b);r.appendChild(s);};
+    add('外推值（截距）',icpt.toFixed(9));add('外推后的误差',sci(I_EXP-icpt,2),'e');add('所用两次梯形中较好的误差',sci(best,2));
+    add('新增函数值','0');
+  }
+  render();
+})();
+
+/* ---------- demo C: Romberg ---------- */
+(function(){
+  const FN={exp:{f:E,I:I_EXP},pi:{f:x=>4/(1+x*x),I:Math.PI},sqrt:{f:Math.sqrt,I:2/3}};
+  let key='exp',R=[],fresh=null;const MAXR=7;
+  const sel=$('#cFn'),add=$('#cAdd'),reset=$('#cReset'),tbl=$('#cTable');
+  function addRow(){const F=FN[key].f;const k=R.length;let r0;
+    if(k===0)r0=(F(0)+F(1))/2;else{const h=1/Math.pow(2,k);let s=0;for(let i=1;i<=Math.pow(2,k-1);i++)s+=F((2*i-1)*h);r0=R[k-1][0]/2+h*s;}
+    const row=[r0];for(let j=1;j<=k;j++)row.push(row[j-1]+(row[j-1]-R[k-1][j-1])/(Math.pow(4,j)-1));R.push(row);fresh=k;}
+  function digits(v,I){const a=v.toFixed(10),b=I.toFixed(10);let i=0;while(i<a.length&&a[i]===b[i])i++;return '<span class="v"><span class="hit">'+a.slice(0,i)+'</span><span class="miss">'+a.slice(i)+'</span></span>';}
+  const colName=j=>j===0?'梯形（误差 h<sup>2</sup>）':'第 '+j+' 次外推（h<sup>'+(2*j+2)+'</sup>）';
+  function render(){const I=FN[key].I;const K=R.length;const cols=K;
+    let h='<thead><tr><th class="num">k</th><th class="num">函数值</th>';for(let j=0;j<cols;j++)h+='<th>'+colName(j)+(j?'　÷'+(Math.pow(4,j)-1):'')+'</th>';h+='</tr></thead><tbody>';
+    R.forEach((row,k)=>{h+='<tr><td class="num" style="font-family:var(--f-mono)">'+k+'</td><td class="num" style="font-family:var(--f-mono)">'+(Math.pow(2,k)+1)+'</td>';
+      for(let j=0;j<cols;j++){if(j<row.length){h+='<td'+(k===fresh?' class="new"':'')+'>'+digits(row[j],I)+'<span class="e">误差 '+sci(Math.abs(I-row[j]),1)+'</span></td>';}else h+='<td></td>';}
+      h+='</tr>';});
+    tbl.innerHTML=h+'</tbody>';
+    const last=R[K-1];const best=last[last.length-1];
+    const r=$('#cRead');r.innerHTML='';
+    const ad=(t,v,c)=>{const s=document.createElement('span');s.textContent=t+'　';const b=document.createElement('b');b.textContent=v;if(c)b.className=c;s.appendChild(b);r.appendChild(s);};
+    ad('真值',I.toFixed(10));ad('已用函数值',String(Math.pow(2,K-1)+1));ad('同样点数的梯形误差',sci(Math.abs(I-last[0]),1));ad('最右下角一格的误差',sci(Math.abs(I-best),1),'e');
+    add.disabled=K>=MAXR;add.textContent=K>=MAXR?'已到 7 行':'加一行（多算 '+(K===0?2:Math.pow(2,K-1))+' 个点）';
+  }
+  function start(){R=[];fresh=null;addRow();addRow();addRow();fresh=null;render();}
+  add.addEventListener('click',()=>{if(R.length<MAXR){addRow();render();}});
+  reset.addEventListener('click',start);
+  sel.addEventListener('change',()=>{key=sel.value;start();});
+  start();
+})();
+
+/* ---------- demo D: adaptive ---------- */
+(function(){
+  const svg=$('#figD');const W=640,H=290,m={l:40,r:14,t:14,b:40};
+  const f=x=>0.1+0.0004/(0.0004+(x-0.7)*(x-0.7));
+  const Iref=0.1+0.02*(Math.atan(0.3/0.02)+Math.atan(0.7/0.02));
+  const X=x=>m.l+x*(W-m.l-m.r),Y=y=>H-m.b-(y/1.2)*(H-m.t-m.b);
+  let frames=[],idx=0,timer=null,order=[];
+  const tolSel=$('#dTol'),play=$('#dPlay'),step=$('#dStep'),end=$('#dEnd'),rst=$('#dReset');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function build(){
+    const cache=new Map();order=[];
+    const F=x=>{const k=x.toPrecision(15);if(!cache.has(k)){cache.set(k,f(x));order.push(x);}return cache.get(k);};
+    const simp1=(a,b)=>{const c=(a+b)/2;return (b-a)*(F(a)+4*F(c)+F(b))/6;};
+    frames=[];const acc=[];const tol=+tolSel.value;
+    (function visit(a,b,eps,d){const c=(a+b)/2;const co=simp1(a,b),fi=simp1(a,c)+simp1(c,b);const err=Math.abs(fi-co)/15;const good=err<=eps||d>=20;
+      const st={a,b,d,err,eps,good};frames.push({st,acc:acc.slice(),n:order.length});
+      if(good){acc.push({a,b,v:fi+(fi-co)/15});frames.push({st,acc:acc.slice(),n:order.length,ok:true});}
+      else{visit(a,c,eps/2,d+1);visit(c,b,eps/2,d+1);}
+    })(0,1,tol,0);
+    frames.push({st:null,acc:acc.slice(),n:order.length,done:true});idx=frames.length-1;render();
+  }
+  function render(){
+    const fr=frames[idx];clear(svg);
+    for(const y of [0,0.5,1]){S('line',{x1:m.l,x2:W-m.r,y1:Y(y),y2:Y(y),class:y?'gl':'ax'},svg);S('text',{x:m.l-8,y:Y(y)+4,'text-anchor':'end',class:'mono'},svg,String(y));}
+    for(const x of [0,0.25,0.5,0.75,1])S('text',{x:X(x),y:H-6,'text-anchor':'middle',class:'mono'},svg,String(x));
+    for(const v of fr.acc){const pts=[];for(let i=0;i<=30;i++){const x=v.a+(v.b-v.a)*i/30;pts.push(X(x)+','+Y(f(x)));}
+      S('polygon',{points:X(v.a)+','+Y(0)+' '+pts.join(' ')+' '+X(v.b)+','+Y(0),fill:'var(--ok-wash)'},svg);
+      S('line',{x1:X(v.a),x2:X(v.a),y1:Y(0),y2:Y(f(v.a)),stroke:'var(--ok)','stroke-width':1},svg);}
+    if(fr.st){const v=fr.st;S('rect',{x:X(v.a),y:m.t,width:Math.max(1.5,X(v.b)-X(v.a)),height:Y(0)-m.t,fill:'var(--check-wash)',stroke:'var(--check)','stroke-width':1.6,'stroke-dasharray':'5 4'},svg);
+      const c=(v.a+v.b)/2;for(const x of [v.a,(v.a+c)/2,c,(c+v.b)/2,v.b])S('circle',{cx:X(x),cy:Y(f(x)),r:4.5,fill:'var(--check)',stroke:'var(--panel)','stroke-width':2},svg);}
+    const pts=[];for(let i=0;i<=600;i++){const x=i/600;pts.push(X(x)+','+Y(f(x)));}
+    S('polyline',{points:pts.join(' '),class:'curve'},svg);
+    for(let i=0;i<fr.n;i++){const x=order[i];S('line',{x1:X(x),x2:X(x),y1:Y(0)+3,y2:Y(0)+12,stroke:'var(--ink)','stroke-width':1.2},svg);}
+    const sum=fr.acc.reduce((z,v)=>z+v.v,0);
+    $('#dCount').textContent=(idx+1)+' / '+frames.length;$('#dAcc').textContent=fr.acc.length;$('#dEval').textContent=fr.n;$('#dSum').textContent=sum.toFixed(7);
+    const cap=$('#dCap');const cmp=$('#dCmp');
+    if(fr.done){cap.textContent='完成：共接受 '+fr.acc.length+' 段，用了 '+fr.n+' 个函数值，结果 '+sum.toFixed(8)+'。注意底部短线在尖峰附近最密。';stop();
+      const N=fr.n;let n=N-1;if(n%2)n--;const eu=Math.abs(Iref-simp(f,n));const ea=Math.abs(Iref-sum);
+      cmp.innerHTML='';const t1=document.createTextNode('对照：同样 '+N+' 个函数值若等距放置（复化辛普森，n = '+n+'），误差 ');const b1=document.createElement('b');b1.textContent=sci(eu,1);const t2=document.createTextNode('；自适应的实际误差 ');const b2=document.createElement('b');b2.textContent=sci(ea,1);const t3=document.createTextNode('，约小 '+Math.max(1,Math.round(eu/ea))+' 倍。');[t1,b1,t2,b2,t3].forEach(x=>cmp.appendChild(x));
+    }else{const v=fr.st;const rng='['+v.a.toFixed(4)+', '+v.b.toFixed(4)+']';
+      cap.textContent=fr.ok?('接受 '+rng+'：估计误差 '+sci(v.err,2)+' ≤ 该段容差 '+sci(v.eps,2)+'。'):('检查 '+rng+'（第 '+v.d+' 层）：估计误差 |S₂−S|/15 = '+sci(v.err,2)+'，该段容差 '+sci(v.eps,2)+'。'+(v.good?'满足，可以接受。':'超标，劈成两半，各分一半容差。'));
+      cmp.textContent='播放结束后，这里会对比同样数量的函数值等距放置时的误差。';}
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null;}play.textContent='自动播放';}
+  function next(){if(idx<frames.length-1){idx++;render();}else stop();}
+  play.addEventListener('click',()=>{if(timer){stop();return;}if(idx>=frames.length-1)idx=0;play.textContent='暂停';timer=setInterval(next,reduce?600:340);next();});
+  step.addEventListener('click',()=>{stop();if(idx>=frames.length-1){idx=0;render();}else next();});
+  end.addEventListener('click',()=>{stop();idx=frames.length-1;render();});
+  rst.addEventListener('click',()=>{stop();idx=0;render();});
+  tolSel.addEventListener('change',()=>{stop();build();});
+  build();
+})();
+
+/* ---------- demo E: Gauss ---------- */
+(function(){
+  const svg=$('#figE');const W=640,H=260,m={l:44,r:16,t:14,b:30};
+  const fns=[{k:'1',g:t=>1,I:2},{k:'t',g:t=>t,I:0},{k:'t²',g:t=>t*t,I:2/3},{k:'t³',g:t=>t*t*t,I:0},{k:'t⁴',g:t=>Math.pow(t,4),I:0.4},{k:'eᵗ',g:Math.exp,I:2*Math.sinh(1)}];
+  let sel=2,snapped=false;const slider=$('#eC'),cv=$('#eCv'),tbl=$('#eTable');
+  $('#eSnap').addEventListener('click',()=>{snapped=true;slider.value=(1/Math.sqrt(3)).toFixed(3);render();});
+  slider.addEventListener('input',()=>{snapped=false;render();});
+  tbl.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b){sel=+b.dataset.i;render();}});
+  function render(){
+    const c=snapped?1/Math.sqrt(3):+slider.value;cv.textContent=snapped?'1/√3 ≈ 0.57735':c.toFixed(3);const fn=fns[sel];
+    const vals=[];for(let i=0;i<=200;i++){const t=-1+2*i/200;vals.push(fn.g(t));}
+    let lo=Math.min(0,...vals),hi=Math.max(0,...vals,fn.g(c),fn.g(-c));if(hi-lo<1e-9){hi=lo+1;}const pad=(hi-lo)*0.08;lo-=lo<0?pad:0;hi+=pad;
+    const X=t=>m.l+(t+1)/2*(W-m.l-m.r),Y=y=>H-m.b-(y-lo)/(hi-lo)*(H-m.t-m.b);
+    clear(svg);
+    S('line',{x1:m.l,x2:W-m.r,y1:Y(0),y2:Y(0),class:'ax'},svg);
+    for(const t of [-1,0,1])S('text',{x:X(t),y:H-8,'text-anchor':'middle',class:'mono'},svg,String(t));
+    const ga=fn.g(-c),gb=fn.g(c);
+    S('rect',{x:X(-1),y:Math.min(Y(0),Y(ga)),width:X(0)-X(-1),height:Math.abs(Y(ga)-Y(0)),class:'approx'},svg);
+    S('rect',{x:X(0),y:Math.min(Y(0),Y(gb)),width:X(1)-X(0),height:Math.abs(Y(gb)-Y(0)),class:'approx'},svg);
+    const pts=vals.map((v,i)=>X(-1+2*i/200)+','+Y(v));
+    S('polyline',{points:pts.join(' '),class:'curve'},svg);
+    for(const t of [-c,c]){S('line',{x1:X(t),x2:X(t),y1:Y(0),y2:Y(fn.g(t)),stroke:'var(--accent)','stroke-width':1.2,'stroke-dasharray':'4 3'},svg);S('circle',{cx:X(t),cy:Y(fn.g(t)),r:6,class:'dot'},svg);}
+    S('text',{x:X(-c),y:Y(0)+(fn.g(-c)>=0?16:-8),'text-anchor':'middle',class:'acc-text mono'},svg,'−c');
+    S('text',{x:X(c),y:Y(0)+(fn.g(c)>=0?16:-8),'text-anchor':'middle',class:'acc-text mono'},svg,'+c');
+    const q=ga+gb;
+    const rd=$('#eRead');rd.innerHTML='';[['当前函数 g(t) =',fn.k],['曲线下面积',fn.I.toFixed(4)],['两矩形面积和 g(−c)+g(c)',q.toFixed(4)],['误差',Math.abs(fn.I-q)<5e-4?'0':(fn.I-q).toFixed(4),Math.abs(fn.I-q)<5e-4?'':'e']].forEach(it=>{const sp=document.createElement('span');sp.textContent=it[0]+'　';const b=document.createElement('b');b.textContent=it[1];if(it[2])b.className=it[2];sp.appendChild(b);rd.appendChild(sp);});
+    let h='<thead><tr><th>函数</th><th class="num">精确积分</th><th class="num">g(−c)+g(c)</th><th class="num">误差</th><th></th></tr></thead><tbody>';
+    fns.forEach((F,i)=>{const v=F.g(-c)+F.g(c);const e=F.I-v;const ok=Math.abs(e)<5e-4;
+      h+='<tr'+(i===sel?' class="sel"':'')+'><td><button type="button" data-i="'+i+'" aria-pressed="'+(i===sel)+'">'+F.k+'</button></td><td class="num">'+F.I.toFixed(4)+'</td><td class="num">'+v.toFixed(4)+'</td><td class="num'+(ok?'':' bad')+'">'+(ok?'0':(e>0?'+':'−')+Math.abs(e).toFixed(4))+'</td><td>'+(ok?'<span class="okmark">✓ 精确</span>':'')+'</td></tr>';});
+    tbl.innerHTML=h+'</tbody>';
+  }
+  render();
+})();
+
+/* ---------- generic log-log chart with crosshair ---------- */
+function logChart(o){
+  const svg=o.svg,W=o.W,H=o.H,m=o.m;
+  const lx=Math.log10(o.x[0]),hx=Math.log10(o.x[1]),ly=Math.log10(o.y[0]),hy=Math.log10(o.y[1]);
+  const X=v=>m.l+(Math.log10(v)-lx)/(hx-lx)*(W-m.l-m.r),Y=v=>H-m.b-(Math.log10(Math.max(v,o.y[0]))-ly)/(hy-ly)*(H-m.t-m.b);
+  clear(svg);
+  const lab=(x,y,anchor,v,pow)=>{const t=S('text',{x,y,'text-anchor':anchor,class:'mono'},svg,pow?'10':String(v));if(pow){S('tspan',{dy:'-0.55em','font-size':'0.72em'},t,String(Math.round(Math.log10(v))).replace('-','−'));}};
+  for(const t of o.yt){S('line',{x1:m.l,x2:W-m.r,y1:Y(t),y2:Y(t),class:'gl'},svg);lab(m.l-8,Y(t)+4,'end',t,o.ypow);}
+  for(const t of o.xt){S('line',{x1:X(t),x2:X(t),y1:m.t,y2:H-m.b,class:'gl'},svg);lab(X(t),H-m.b+20,'middle',t,o.xpow);}
+  S('line',{x1:m.l,x2:W-m.r,y1:H-m.b,y2:H-m.b,class:'ax'},svg);
+  S('text',{x:(W+m.l)/2,y:H-6,'text-anchor':'middle'},svg,o.xlabel);
+  S('text',{x:14,y:(H-m.b+m.t)/2,'text-anchor':'middle',transform:'rotate(-90 14 '+((H-m.b+m.t)/2)+')'},svg,o.ylabel);
+  for(const s of o.series){const d=s.pts.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+    S('path',{d,fill:'none',stroke:s.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    if(s.dots)for(const p of s.pts)S('circle',{cx:X(p[0]),cy:Y(p[1]),r:4,fill:s.color,stroke:'var(--panel)','stroke-width':2},svg);
+    if(s.label){const p=s.pts[s.labelAt==null?s.pts.length-1:s.labelAt];S('text',{x:X(p[0])+(s.dx||8),y:Y(p[1])+(s.dy||4),class:'ink-text','font-size':12.5},svg,s.label);}}
+  if(o.annot)o.annot(svg,X,Y);
+  const leg=o.legend;leg.innerHTML='';for(const s of o.series){const sp=document.createElement('span');const i=document.createElement('i');i.style.background=s.color;sp.appendChild(i);sp.appendChild(document.createTextNode(s.name));leg.appendChild(sp);}
+  const xs=[...new Set(o.series.flatMap(s=>s.pts.map(p=>p[0])))].sort((a,b)=>a-b);
+  const cross=S('line',{x1:0,x2:0,y1:m.t,y2:H-m.b,stroke:'var(--ink-2)','stroke-width':1,visibility:'hidden'},svg);
+  const tip=o.tip;let cur=-1;
+  function show(i){cur=i;const xv=xs[i];const px=X(xv);cross.setAttribute('x1',px);cross.setAttribute('x2',px);cross.setAttribute('visibility','visible');
+    tip.innerHTML='';const hd=document.createElement('div');hd.className='t-h';hd.textContent=o.tipHead(xv);tip.appendChild(hd);
+    for(const s of o.series){const p=s.pts.find(q=>Math.abs(q[0]-xv)<=xv*1e-9);if(!p)continue;const r=document.createElement('div');r.className='t-r';const k=document.createElement('i');k.style.background=s.color;const b=document.createElement('b');b.textContent=sci(p[1],2);const n=document.createElement('span');n.textContent=s.name;r.appendChild(k);r.appendChild(b);r.appendChild(n);tip.appendChild(r);}
+    tip.hidden=false;const box=svg.getBoundingClientRect();const sc=box.width/W;let left=px*sc+14;if(left+tip.offsetWidth>box.width)left=px*sc-tip.offsetWidth-14;tip.style.left=Math.max(0,left)+'px';tip.style.top=(m.t*sc+6)+'px';}
+  function hide(){cross.setAttribute('visibility','hidden');tip.hidden=true;}
+  svg.addEventListener('pointermove',e=>{const box=svg.getBoundingClientRect();const px=(e.clientX-box.left)*W/box.width;let bi=0,bd=1e9;xs.forEach((v,i)=>{const d=Math.abs(X(v)-px);if(d<bd){bd=d;bi=i;}});show(bi);});
+  svg.addEventListener('pointerleave',hide);svg.addEventListener('blur',hide);
+  svg.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();let i=cur<0?Math.floor(xs.length/2):cur+(e.key==='ArrowRight'?1:-1);i=Math.max(0,Math.min(xs.length-1,i));show(i);}});
+  svg.addEventListener('focus',()=>show(cur<0?Math.floor(xs.length/2):cur));
+}
+
+/* ---------- demo F: derivative V-curve ---------- */
+(function(){
+  const x0=1,ex=Math.E;const fw=[],ce=[],ri=[];const D0=h=>(Math.exp(x0+h)-Math.exp(x0-h))/(2*h);
+  for(let k=-150;k<=-10;k+=2){const h=Math.pow(10,k/10);
+    fw.push([h,Math.abs((Math.exp(x0+h)-Math.exp(x0))/h-ex)]);
+    ce.push([h,Math.abs(D0(h)-ex)]);
+    ri.push([h,Math.abs((4*D0(h/2)-D0(h))/3-ex)]);}
+  const floor=1e-14;[fw,ce,ri].forEach(a=>a.forEach(p=>{if(p[1]<floor)p[1]=floor;}));
+  const series=[{name:'前向差分 O(h)',color:'var(--s1)',pts:fw},{name:'中心差分 O(h²)',color:'var(--s2)',pts:ce},{name:'中心差分 + 一次外推 O(h⁴)',color:'var(--s3)',pts:ri}];
+  function draw(){logChart({svg:$('#figF'),W:640,H:330,m:{l:58,r:18,t:14,b:46},x:[1e-15,0.1],y:[1e-14,1],
+    xt:[1e-15,1e-13,1e-11,1e-9,1e-7,1e-5,1e-3,1e-1],yt:[1e-14,1e-11,1e-8,1e-5,1e-2],
+    xpow:true,ypow:true,xlabel:'步长 h（向右变大）',ylabel:'误差',
+    series,legend:$('#fLegend'),tip:$('#fTip'),tipHead:v=>'h = '+sci(v,1),
+    annot:(svg,X,Y)=>{
+      const mins=series.map(s=>s.pts.reduce((a,b)=>b[1]<a[1]?b:a));
+      mins.forEach((p,i)=>{S('circle',{cx:X(p[0]),cy:Y(p[1]),r:5,fill:'none',stroke:'var(--ink)','stroke-width':1.5},svg);});
+      S('text',{x:X(1e-12),y:Y(0.25),class:'ink-text'},svg,'← 舍入误差主导');
+      S('text',{x:X(1.2e-2),y:Y(0.25),'text-anchor':'end',class:'ink-text'},svg,'截断误差主导 →');
+    }});
+  }
+  draw();
+  let h='<thead><tr><th class="num">h</th>'+series.map(s=>'<th class="num">'+s.name+'</th>').join('')+'</tr></thead><tbody>';
+  for(let i=0;i<fw.length;i+=5)h+='<tr><td class="num">'+sci(fw[i][0],1)+'</td><td class="num">'+sci(fw[i][1],2)+'</td><td class="num">'+sci(ce[i][1],2)+'</td><td class="num">'+sci(ri[i][1],2)+'</td></tr>';
+  $('#fData').innerHTML=h+'</tbody>';
+  window.addEventListener('resize',()=>{$('#fTip').hidden=true;});
+})();
+
+/* ---------- demo G: summary ---------- */
+(function(){
+  const GL={1:[[0],[2]],2:[[-0.5773502691896257,0.5773502691896257],[1,1]],3:[[-0.7745966692414834,0,0.7745966692414834],[0.5555555555555556,0.8888888888888888,0.5555555555555556]],
+    4:[[-0.8611363115940526,-0.3399810435848563,0.3399810435848563,0.8611363115940526],[0.3478548451374538,0.6521451548625461,0.6521451548625461,0.3478548451374538]],
+    5:[[-0.906179845938664,-0.5384693101056831,0,0.5384693101056831,0.906179845938664],[0.2369268850561891,0.4786286704993665,0.5688888888888889,0.4786286704993665,0.2369268850561891]]};
+  const tr=[],si=[],ro=[],ga=[];
+  for(let n=1;n<=64;n*=2)tr.push([n+1,Math.abs(I_EXP-trap(E,n))]);
+  for(let n=2;n<=64;n*=2)si.push([n+1,Math.abs(I_EXP-simp(E,n))]);
+  const R=[];for(let k=0;k<=4;k++){const row=[trap(E,Math.pow(2,k))];for(let j=1;j<=k;j++)row.push(row[j-1]+(row[j-1]-R[k-1][j-1])/(Math.pow(4,j)-1));R.push(row);ro.push([Math.pow(2,k)+1,Math.max(1e-16,Math.abs(I_EXP-row[k]))]);}
+  for(let m=1;m<=5;m++){const [t,w]=GL[m];let s=0;for(let i=0;i<m;i++)s+=w[i]*E(0.5+0.5*t[i]);ga.push([m,Math.max(1e-16,Math.abs(I_EXP-s/2))]);}
+  const series=[{name:'复化梯形',color:'var(--s1)',pts:tr,dots:true,label:'梯形'},{name:'复化辛普森',color:'var(--s2)',pts:si,dots:true,label:'辛普森'},{name:'龙贝格（对角线）',color:'var(--s3)',pts:ro,dots:true,label:'龙贝格'},{name:'高斯–勒让德',color:'var(--s4)',pts:ga,dots:true,label:'高斯',dx:-10,dy:16}];
+  logChart({svg:$('#figG'),W:640,H:340,m:{l:58,r:64,t:14,b:46},x:[1,80],y:[1e-14,1],
+    xt:[1,2,3,5,9,17,33,65],yt:[1e-14,1e-11,1e-8,1e-5,1e-2],ypow:true,
+    xlabel:'函数值个数（成本）',ylabel:'误差',series,legend:$('#gLegend'),tip:$('#gTip'),tipHead:v=>v+' 个函数值'});
+  let h='<thead><tr><th class="num">函数值个数</th>'+series.map(s=>'<th class="num">'+s.name+'</th>').join('')+'</tr></thead><tbody>';
+  const xs=[...new Set(series.flatMap(s=>s.pts.map(p=>p[0])))].sort((a,b)=>a-b);
+  for(const x of xs)h+='<tr><td class="num">'+x+'</td>'+series.map(s=>{const p=s.pts.find(q=>q[0]===x);return '<td class="num">'+(p?sci(p[1],2):'—')+'</td>';}).join('')+'</tr>';
+  $('#gData').innerHTML=h+'</tbody>';
+})();
+
+/* ---------- rail scroll-spy ---------- */
+(function(){
+  const links=[...document.querySelectorAll('#railList a')];const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.remove('on'));const a=map.get(e.target.id);if(a)a.classList.add('on');}});},{rootMargin:'-30% 0px -60% 0px'});
+  document.querySelectorAll('main section[id]').forEach(s=>io.observe(s));
+})();
+})();
+</script>
