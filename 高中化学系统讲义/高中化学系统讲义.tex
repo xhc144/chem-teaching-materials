@@ -176,7 +176,7 @@
 \counterwithin{table}{chapter}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
 \renewcommand{\thetable}{\thechapter-\arabic{table}}
-\newcommand{\tu}[2]{\par\smallskip\noindent\begin{minipage}{\linewidth}\centering #1\par\captionof{figure}{#2}\end{minipage}\par\smallskip}
+\newcommand{\tu}[2]{\par\smallskip\noindent\begin{minipage}{\linewidth}\centering\color{black}#1\par\captionof{figure}{#2}\end{minipage}\par\smallskip\color{black}}
 
 % 轨道方框图：\orbs{2,1,1}  2=一对自旋相反电子，1=一个电子，0=空，3=一个向下电子
 \newcommand{\orbs}[1]{\begin{tikzpicture}[baseline={(0,-0.12)},x=0.46cm,y=0.46cm,line width=0.5pt]
@@ -247,6 +247,8 @@
 \AddToHook{env/zhenti/after}{\color{black}}
 \AddToHook{env/tuozhan/after}{\color{black}}
 \AddToHook{env/liti/after}{\color{black}}
+\AddToHook{env/tikzpicture/after}{\color{black}}
+\AddToHook{env/center/after}{\color{black}}
 
 \begin{document}
 \frontmatter
@@ -6024,7 +6026,7 @@ $N$：一个晶胞所含化学式单元数（用均摊法求）；$M$：摩尔�
 化合物Ⅲ的分子式为 \ce{C9H12O}。Ⅲ的同分异构体中，苯环上连有一个烷基且能与 \ce{FeCl3} 作用显色的共有\tk{}种。
 
 \tcblower
-\jie能与 \ce{FeCl3} 显色说明含酚羟基（\ce{-OH} 直接连在苯环上，下一章学习）。除去 \ce{C6H4} 和 \ce{-OH}，烷基为 \ce{-C3H7}，有正丙基、异丙基 2 种；苯环上两个不同的取代基有邻、间、对 3 种位置。共 $2\times3=6$ 种。
+\jie 能与 \ce{FeCl3} 显色说明含酚羟基（\ce{-OH} 直接连在苯环上，下一章学习）。除去 \ce{C6H4} 和 \ce{-OH}，烷基为 \ce{-C3H7}，有正丙基、异丙基 2 种；苯环上两个不同的取代基有邻、间、对 3 种位置。共 $2\times3=6$ 种。
 \end{liti}
 
 \section{研究有机物的一般方法}
@@ -6132,7 +6134,7 @@ $N$：一个晶胞所含化学式单元数（用均摊法求）；$M$：摩尔�
 一定条件下，\ce{Br2} 与丙酮发生反应，溴取代丙酮中的 1 个 H，生成化合物 3a（\ce{CH3COCH2Br}）。若用核磁共振氢谱监测该取代反应，则可推测：与丙酮相比，产物 3a 的氢谱图中\tk。
 
 \tcblower
-\jie丙酮 \ce{CH3COCH3} 两个甲基对称，6 个 H 等效，只有 1 组峰。\ce{CH3COCH2Br} 中 \ce{-CH3} 和 \ce{-CH2Br} 上的 H 不再等效，出现 2 组峰，面积比为 $3:2$。答案：丙酮的单一峰消失，出现两组新峰，面积比为 3:2。
+\jie 丙酮 \ce{CH3COCH3} 两个甲基对称，6 个 H 等效，只有 1 组峰。\ce{CH3COCH2Br} 中 \ce{-CH3} 和 \ce{-CH2Br} 上的 H 不再等效，出现 2 组峰，面积比为 $3:2$。答案：丙酮的单一峰消失，出现两组新峰，面积比为 3:2。
 \end{liti}
 
 \section{烃}
