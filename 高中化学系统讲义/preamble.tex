@@ -169,7 +169,7 @@
 \counterwithin{table}{chapter}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
 \renewcommand{\thetable}{\thechapter-\arabic{table}}
-\newcommand{\tu}[2]{\par\medskip{\centering #1\par\captionof{figure}{#2}}\medskip}
+\newcommand{\tu}[2]{\par\medskip\noindent\begin{minipage}{\linewidth}\centering #1\par\captionof{figure}{#2}\end{minipage}\par\medskip}
 
 % 轨道方框图：\orbs{2,1,1}  2=一对自旋相反电子，1=一个电子，0=空，3=一个向下电子
 \newcommand{\orbs}[1]{\begin{tikzpicture}[baseline={(0,-0.12)},x=0.46cm,y=0.46cm,line width=0.5pt]
