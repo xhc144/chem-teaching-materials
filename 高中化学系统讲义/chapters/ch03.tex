@@ -17,7 +17,7 @@
 \section{化学平衡状态}
 
 \subsection{可逆反应}
-必修二已经学过，在同一条件下，既能向正反应方向进行、又能向逆反应方向进行的反应叫\textbf{可逆反应}，方程式中用“\ce{<=>}”表示。例如 \ce{2SO2 + O2 <=>[\text{催化剂}][\triangle] 2SO3}，把 2 mol \ce{SO2} 和 1 mol \ce{O2} 放在一起，无论反应多长时间，都得不到 2 mol \ce{SO3}，容器里始终是 \ce{SO2}、\ce{O2}、\ce{SO3} 三者共存。可逆反应不能进行到底，这是本章一切讨论的出发点。“同一条件下”这几个字不能丢：\ce{2H2 + O2 ->[\text{点燃}] 2H2O} 与 \ce{2H2O ->[\text{电解}] 2H2 ^ + O2 ^} 的条件不同，不是可逆反应。
+必修二已经学过，在同一条件下，既能向正反应方向进行、又能向逆反应方向进行的反应叫\textbf{可逆反应}，方程式中用“\ce{<=>}”表示。例如 \ce{2SO2 + O2 <=>[\text{催化剂}][\text{加热}] 2SO3}，把 2 mol \ce{SO2} 和 1 mol \ce{O2} 放在一起，无论反应多长时间，都得不到 2 mol \ce{SO3}，容器里始终是 \ce{SO2}、\ce{O2}、\ce{SO3} 三者共存。可逆反应不能进行到底，这是本章一切讨论的出发点。“同一条件下”这几个字不能丢：\ce{2H2 + O2 ->[\text{点燃}] 2H2O} 与 \ce{2H2O ->[\text{电解}] 2H2 ^ + O2 ^} 的条件不同，不是可逆反应。
 
 \subsection{从速率—时间图看平衡的建立}
 以合成氨 \ce{N2 + 3H2 <=> 2NH3} 为例。在密闭容器中只充入 \ce{N2} 和 \ce{H2}，记录各物质浓度 $c$ 和正、逆反应速率 $v$ 随时间 $t$ 的变化，得到图~\ref{fig:03-build}。
@@ -62,7 +62,7 @@ $t_1$ 以后反应并没有停止。好比一个蓄水池同时进水和放水�
 
 \begin{center}
 \small
-\begin{tabularx}{\linewidth}{p{3.4cm}XXX}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}XXX}
 \toprule
 物理量（不变时） & \ce{N2(g) + 3H2(g) <=> 2NH3(g)}（气体分子数变化） & \ce{H2(g) + I2(g) <=> 2HI(g)}（气体分子数不变） & \ce{C(s) + H2O(g) <=> CO(g) + H2(g)}（有固体） \\
 \midrule
@@ -95,7 +95,7 @@ $t_1$ 以后反应并没有停止。好比一个蓄水池同时进水和放水�
 \subsection{温度一定时，什么量保持不变}
 平衡时各物质的浓度与起始投料有关，投料不同，平衡浓度也不同。那么，平衡浓度之间有没有固定的关系？表~\ref{tab:03-hi} 是 457.6 ℃ 时 \ce{H2(g) + I2(g) <=> 2HI(g)} 的四组实验数据，前三组从 \ce{H2} 和 \ce{I2} 开始，第四组只放入 HI。
 
-\begin{center}
+\begin{center}\begin{minipage}{\linewidth}\centering
 \small
 \captionof{table}{457.6 ℃ 时 \ce{H2(g) + I2(g) <=> 2HI(g)} 的平衡数据（浓度单位：$10^{-2}$ mol·L$^{-1}$）\label{tab:03-hi}}
 \begin{tabular}{cccccccc}
@@ -110,7 +110,7 @@ $t_1$ 以后反应并没有停止。好比一个蓄水池同时进水和放水�
 4 & 0 & 0 & 1.520 & 0.1696 & 0.1696 & 1.181 & 48.5 \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{minipage}\end{center}
 
 观察可以发现：四组平衡浓度各不相同，但最后一列的比值都约为 48.7，即使第4组是从逆反应方向开始的也一样。如果不取平方，改算 $\dfrac{c(\ce{HI})}{c(\ce{H2})\cdot c(\ce{I2})}$，四组结果分别约为 3800、2880、3330、4100，并不恒定。可见，只有按计量数取幂次的那个比值才是常数。大量实验表明这个规律是普遍的，而且换一个温度，这个常数也会改变。
 
@@ -151,7 +151,7 @@ $K$ 的大小表示反应进行的程度。$K$ 越大，平衡时生成物所占
 \tcblower
 \silu 已知生成物的平衡量，倒推转化量：生成 1.6 mol HI，需要消耗 \ce{H2}、\ce{I2} 各 0.8 mol。\\
 \jie \begin{tabular}[t]{lccc}
- & \ce{H2} & \ce{I2} & \ce{2HI} \\
+ & \ce{H2} & \ce{I2} & \ce{HI} \\
 起始/(mol·L$^{-1}$) & 1.0 & 1.0 & 0 \\
 转化/(mol·L$^{-1}$) & 0.8 & 0.8 & 1.6 \\
 平衡/(mol·L$^{-1}$) & 0.2 & 0.2 & 1.6
@@ -288,7 +288,7 @@ $K_p$ 同样只与温度有关。由 $p=cRT$ 可推出 $K_p=K\cdot(RT)^{\Delta\n
 
 每个小图左段的水平线表示原平衡（$\vz=\vn$），竖直虚线处改变条件。读这类图抓两点。第一，看条件改变的瞬间两条线是否“断开”：只有一条线跳变、另一条线从原值连续变化（图①），改变的是某一种物质的浓度；两条线同时跳变到不同的值（图②③），改变的是温度或压强；两条线同时跳到同一个值并保持水平（图④），是使用了催化剂，或者对气体分子数不变的反应改变了压强。第二，看改变后哪条线在上方：$\vz$ 在上，平衡正向移动；$\vn$ 在上，逆向移动。速率升高还是降低，则说明条件是增强还是减弱（如升温、降温）。
 
-\begin{liti}[多阶段 $v$–$t$ 图像]
+\begin{liti}[多阶段速率—时间图像]
 合成氨反应 \ce{N2(g) + 3H2(g) <=> 2NH3(g)} $\Delta H<0$ 在某时段内的 $v$–$t$ 图如图~\ref{fig:03-vtmulti}（$t_1$、$t_3$、$t_4$ 时刻各改变一个条件）。(1) 判断各时刻改变的条件；(2) 哪段时间内 \ce{NH3} 的百分含量最高？
 \tu{\begin{tikzpicture}[xscale=0.95,yscale=0.8,font=\scriptsize]
 \draw[c3ax] (0,0)--(8.4,0) node[below]{$t$}; \draw[c3ax] (0,0)--(0,3.6) node[left]{$v$};
@@ -335,7 +335,7 @@ $K_p$ 同样只与温度有关。由 $p=cRT$ 可推出 $K_p=K\cdot(RT)^{\Delta\n
 
 \tu{\begin{tikzpicture}[scale=0.75,font=\small]
 \draw[c3ax] (0,0)--(6,0) node[below]{$T$}; \draw[c3ax] (0,0)--(0,3.6) node[left]{$\alpha$};
-\draw[c3cv,mainblue,domain=0.4:5.2,samples=40] plot (\x,{3.2-0.09*\x*\x}) node[right]{平衡曲线};
+\draw[c3cv,mainblue,domain=0.4:5.2,samples=40] plot (\x,{3.2-0.09*\x*\x}); \node[mainblue,above,font=\footnotesize] at (1.0,3.15) {平衡曲线};
 \node[c3dot] (a) at (2.2,1.6) {}; \node[below right] at (a) {a};
 \draw[c3ax,warnred] (2.2,1.68)--(2.2,2.68);
 \node[c3dot] (b) at (4,2.7) {}; \node[above right] at (b) {b};
@@ -378,7 +378,7 @@ $K_p$ 同样只与温度有关。由 $p=cRT$ 可推出 $K_p=K\cdot(RT)^{\Delta\n
 
 使用这个判据要清楚它的适用范围。第一，它适用于恒温、恒压且除体积变化外不做其他功的过程；如果外界对体系做电功，$\Delta G>0$ 的反应也能发生，如电解水。第二，它只回答反应在该条件下能否发生，不回答快慢，$\Delta G<0$ 的反应可能很慢。第三，题目给出的 $\Delta H$、$\Delta S$ 通常是在标准状态（气体分压 100 kPa、溶液浓度 1 mol·L$^{-1}$）下的数据，高中计算时把它们近似看作不随温度变化，因此求出的转折温度是估算值；浓度改变时 $\Delta G$ 也会改变，这一点在大学化学中与 $Q$、$K$ 联系起来定量讨论。
 
-$\Delta G=\Delta H-T\Delta S$ 可以看成 $\Delta G$ 关于 $T$ 的一次函数：纵轴截距是 $\Delta H$，斜率是 $-\Delta S$。画成图~\ref{fig:03-dg}，四种情况一目了然：直线在横轴下方的温度范围内反应自发，直线与横轴的交点就是转折温度 $T=\dfrac{\Delta H}{\Delta S}$。
+$\Delta G=\Delta H-T\Delta S$ 可以看成 $\Delta G$ 关于 $T$ 的一次函数：纵轴截距是 $\Delta H$，斜率是 $-\Delta S$。按 $\Delta H$、$\Delta S$ 的正负可分为四种情况，画在图~\ref{fig:03-dg} 中。直线在横轴下方的温度范围内反应自发，直线与横轴的交点就是转折温度 $T=\dfrac{\Delta H}{\Delta S}$。
 
 \tu{\begin{tikzpicture}[scale=0.7,font=\small]
 \fill[mainblue!7] (0,-2.6) rectangle (6.2,0);
@@ -391,24 +391,10 @@ $\Delta G=\Delta H-T\Delta S$ 可以看成 $\Delta G$ 关于 $T$ 的一次函数
 \draw[c3cv,exorange] (0,1.4)--(5.5,-0.525) node[right]{④};
 \node[c3dot] at (2,0) {}; \node[below right,font=\footnotesize] at (2,0) {$T_\text{转}$};
 \node[c3dot] at (4,0) {}; \node[above right,font=\footnotesize] at (4,0) {$T_\text{转}$};
-\node[font=\footnotesize] at (4.6,-1.95+0.0) {};
 \node[font=\footnotesize,graytext] at (1.6,-2.25) {$\Delta G<0$ 自发区};
-\node[font=\footnotesize,align=left] at (9.4,1.2) {①$\Delta H<0,\ \Delta S>0$\\②$\Delta H>0,\ \Delta S<0$\\③$\Delta H<0,\ \Delta S<0$\\④$\Delta H>0,\ \Delta S>0$};
+\node[font=\footnotesize,align=left,anchor=west] at (7.2,1.0) {①$\Delta H<0,\ \Delta S>0$：任何温度都自发\\②$\Delta H>0,\ \Delta S<0$：任何温度都不自发\\③$\Delta H<0,\ \Delta S<0$：低温自发（如合成氨）\\④$\Delta H>0,\ \Delta S>0$：高温自发（如 \ce{CaCO3} 分解）};
 \end{tikzpicture}}{$\Delta G$ 随温度的变化（把 $\Delta H$、$\Delta S$ 看作常数，示意）\label{fig:03-dg}}
 
-\begin{center}
-\small
-\begin{tabular}{cccl}
-\toprule
-$\Delta H$ & $\Delta S$ & $\Delta G=\Delta H-T\Delta S$ & 自发性 \\
-\midrule
-$<0$ & $>0$ & 恒 $<0$ & 任何温度都自发（图中①） \\
-$>0$ & $<0$ & 恒 $>0$ & 任何温度都不自发（图中②） \\
-$<0$ & $<0$ & 低温 $<0$ & 低温自发，如合成氨（图中③） \\
-$>0$ & $>0$ & 高温 $<0$ & 高温自发，如 \ce{CaCO3} 分解（图中④） \\
-\bottomrule
-\end{tabular}
-\end{center}
 
 计算转折温度时注意单位：$\Delta H$ 常用 kJ·mol$^{-1}$，$\Delta S$ 常用 J·mol$^{-1}$·K$^{-1}$，需先统一。例如 \ce{CaCO3(s) = CaO(s) + CO2(g)}，$\Delta H=+178.5$ kJ·mol$^{-1}$，$\Delta S=+160.5$ J·mol$^{-1}$·K$^{-1}$，自发分解所需温度 $T>\dfrac{178.5\times10^3}{160.5}\ \mathrm{K}\approx1112$ K。
 
@@ -443,7 +429,7 @@ $>0$ & $>0$ & 高温 $<0$ & 高温自发，如 \ce{CaCO3} 分解（图中④） 
 \end{tabularx}
 \end{center}
 
-\begin{center}
+\begin{center}\begin{minipage}{\linewidth}\centering
 \small
 \captionof{table}{平衡混合物中 \ce{NH3} 的体积分数/\%（$n(\ce{N2}):n(\ce{H2})=1:3$）\label{tab:03-nh3}}
 \begin{tabular}{ccccccc}
@@ -457,7 +443,7 @@ $>0$ & $>0$ & 高温 $<0$ & 高温自发，如 \ce{CaCO3} 分解（图中④） 
 600 & 0.05 & 4.50 & 9.10 & 13.8 & 23.1 & 31.4 \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{minipage}\end{center}
 
 从表~\ref{tab:03-nh3} 看，同一温度下压强越大、同一压强下温度越低，\ce{NH3} 的平衡含量越高，与勒夏特列原理的预测一致。但 200 ℃ 时反应太慢，实际只能折中选择 400～500 ℃，再靠分离产物、循环原料弥补单程转化率的不足。工艺流程中，原料气先经净化，防止催化剂中毒；再由压缩机加压；热交换器用反应放出的热预热原料气，节约能源；冷却使氨液化分离，促使平衡正移；未反应的原料气循环使用，提高原料利用率。
 
