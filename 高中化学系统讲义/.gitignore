@@ -9,3 +9,16 @@
 *.xdv
 # 分文件版的编译输出（成书 PDF 为 高中化学系统讲义.pdf）
 main.pdf
+
+# 墨经书籍的目录、文献与索引中间文件
+*.bcf
+*.bbl
+*.blg
+*.run.xml
+*.idx
+*.ind
+*.ilg
+*.ptc
+*.lof
+*.lot
+mojing-book.ist
