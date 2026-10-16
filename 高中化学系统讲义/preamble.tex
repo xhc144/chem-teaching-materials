@@ -48,6 +48,11 @@
 \usepackage{siunitx}
 \sisetup{inter-unit-product=\ensuremath{\cdot},per-mode=symbol}
 \usepackage[hidelinks,bookmarksnumbered]{hyperref}
+\pdfstringdefDisableCommands{%
+  \def\sigma{σ}\def\pi{π}\def\Delta{Δ}\def\alpha{α}\def\beta{β}%
+  \def\rho{ρ}\def\lambda{λ}\def\mu{μ}\def\theta{θ}%
+  \def\mathrm#1{#1}\def\text#1{#1}\def\ensuremath#1{#1}\def\ce#1{#1}%
+}
 \hypersetup{bookmarksdepth=2,pdftitle={高中化学系统讲义},pdfsubject={选择性必修1、2、3与高考综合（面向广东新高考）},pdfkeywords={高中化学,选择性必修,广东高考,讲义}}
 
 % ---------- 颜色 ----------
