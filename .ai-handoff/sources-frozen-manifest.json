@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-16",
+  "pptx_slide_count": 293,
+  "picture_object_count": 364,
+  "low_text_image_count": 56,
+  "distinct_large_image_count": 153,
+  "records": [
+    {
+      "path": "sources-audit.md",
+      "sha256": "be9eb6fcb3f6199ce84f2f08deb6c349f3cdb36144ccc04348e61d1a58b55b30",
+      "bytes": 17313
+    },
+    {
+      "path": "ppt_extract/逐页覆盖索引.md",
+      "sha256": "671eed48ecab7639f9afe5a6b3aa5a165f5491c76c3750146b21c894988da49e",
+      "bytes": 119027
+    },
+    {
+      "path": "ppt_extract/summary.json",
+      "sha256": "66bb31d4a0880532101d9711262a42ad5e05b8720014e967f408438923142b7d",
+      "bytes": 1541
+    }
+  ]
+}

@@ -38,6 +38,7 @@
 \pgfplotsset{compat=1.18}
 \usepackage{booktabs,tabularx,multirow,array,makecell,colortbl}
 \usepackage{enumitem}
+\usepackage{needspace}
 \usepackage{multicol}
 \usepackage[skins,breakable,most]{tcolorbox}
 \usepackage{tasks}
@@ -117,12 +118,12 @@
 \setlength{\emergencystretch}{2.5em}
 
 % ---------- 栏目环境（统一为左侧细线样式，少用底色） ----------
-\tcbset{
+\tcbset{colupper=black,collower=black,coltitle=black,
   basestyle/.style={enhanced,breakable,frame hidden,interior hidden,boxrule=0pt,arc=0mm,
     left=3mm,right=0mm,top=0.5mm,bottom=0.5mm,before skip=0.6em,after skip=0.6em,
     borderline west={1.2pt}{0pt}{#1}},
   basestyle/.default=mainblue,
-  innertitle/.style={detach title,before upper={\tcbtitle\par\nobreak\smallskip}}
+  innertitle/.style={detach title,before upper={{\tcbtitle}\par\nobreak\smallskip}}
 }
 \newcommand{\boxtitle}[2]{{\heiti\bfseries\small\color{#1}#2}}
 % 定义与基本规律
@@ -184,7 +185,7 @@
 % 习题与解析
 \newlist{xiti}{enumerate}{1}
 \setlist[xiti]{label={\textbf{\arabic*}.},leftmargin=1.6em,itemsep=0.35em,topsep=0.3em,resume=xiti}
-\newcommand{\zu}[1]{\par\smallskip\noindent{\heiti\bfseries #1}\par\smallskip}
+\newcommand{\zu}[1]{\par\Needspace{5\baselineskip}\smallskip\noindent{\heiti\bfseries #1}\par\smallskip}
 \newcommand{\laiyuan}[1]{{\kaishu\small\color{graytext}（#1）}}
 \newenvironment{jiexilist}{\small\begin{enumerate}[label={\textbf{\arabic*}.},leftmargin=1.6em,itemsep=0.3em,topsep=0.2em]}{\end{enumerate}}
 \newcommand{\ans}[1]{{\heiti 答案：}#1\quad}
@@ -211,7 +212,7 @@
 \newcommand{\eqm}{\rightleftharpoons}
 
 % 小节标题“章末”样式
-\newcommand{\zhangmo}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+\newcommand{\zhangmo}[1]{\par\Needspace{6\baselineskip}\section*{#1}\addcontentsline{toc}{section}{#1}}
 
 % 表格行距
 \renewcommand{\arraystretch}{1.25}
@@ -231,3 +232,12 @@
 \newcommand{\xx}[4]{\begin{tasks}(4)\task #1 \task #2 \task #3 \task #4\end{tasks}}
 \newcommand{\xxb}[4]{\begin{tasks}(2)\task #1 \task #2 \task #3 \task #4\end{tasks}}
 \newcommand{\xxa}[4]{\begin{tasks}(1)\task #1 \task #2 \task #3 \task #4\end{tasks}}
+
+% 各题例环境结束后恢复正文颜色，兼容跨页盒子的颜色栈。
+\AddToHook{env/gainian/after}{\color{black}}
+\AddToHook{env/benzhi/after}{\color{black}}
+\AddToHook{env/fangfa/after}{\color{black}}
+\AddToHook{env/yicuo/after}{\color{black}}
+\AddToHook{env/zhenti/after}{\color{black}}
+\AddToHook{env/tuozhan/after}{\color{black}}
+\AddToHook{env/liti/after}{\color{black}}

@@ -5,7 +5,7 @@
   c4ion/.style={circle,draw,thin,inner sep=0pt,minimum size=0.52cm,font=\scriptsize},
   c4mol/.style={ellipse,draw,thin,inner sep=0pt,minimum width=0.95cm,minimum height=0.46cm,font=\scriptsize,fill=white},
   c4arr/.style={-{Stealth[length=2mm]},thick},
-  c4lab/.style={font=\scriptsize,align=left,anchor=west},
+  c4lab/.style={font=\footnotesize,align=left,anchor=west,text=black},
 }
 \newcommand{\cfourbeaker}[2]{% #1 = 左下角 x，#2 = 液面高度
   \fill[mainblue!7] (#1,0) rectangle ++(3.4,#2);
@@ -54,6 +54,7 @@
 醋酸溶于水后，\ce{CH3COOH} 分子不断电离成离子，离子也不断结合成分子。若暂不计水的电离，刚溶解时溶质主要以分子存在，电离过程占优势；随着离子增多，离子结合成分子的速率逐渐增大，最终两个速率相等，各粒子浓度不再变化，达到\textbf{电离平衡}。这与第3章的化学平衡完全一样，是动态平衡，同样服从勒夏特列原理。以 \ce{CH3COOH <=> CH3COO- + H+} 为例，恒温下改变浓度的影响见表~\ref{tab:04-shift}。改变温度时则要先看电离反应的吸放热：若题设电离吸热，升温使平衡正移、$K_\text{a}$ 增大；具体趋势以题给数据为准。电离同时涉及断键和水合等作用，不能仅凭“断键吸热”判断整个过程的热效应。
 
 \begin{center}
+\begin{minipage}{\linewidth}
 \small
 \captionof{table}{改变条件对醋酸电离平衡的影响\label{tab:04-shift}}
 \begin{tabular}{lccccc}
@@ -67,6 +68,7 @@
 加冰醋酸 & 正向 & 增大 & 增大 & 减小 & 不变 \\
 \bottomrule
 \end{tabular}
+\end{minipage}
 \end{center}
 
 表中最不直观的是加水稀释。把溶液稀释到原体积的 2 倍，各粒子浓度瞬间都变为原来的一半，此时的浓度商
@@ -82,6 +84,7 @@
 $K_\text{a}$ 衡量弱酸电离的程度：浓度相同时，$K_\text{a}$ 越大，平衡时离子所占比例越大，酸性越强。和其他平衡常数一样，对确定的弱酸及溶剂，$K_\text{a}$ 在高中采用的稀溶液模型中只随温度改变，不因稀释而改变；升温后的大小按题给热效应或数据判断。多元弱酸各步的电离常数相差很大，如 \ce{H2CO3} 的 $K_{\text{a}1}\gg K_{\text{a}2}$，因为要从带负电的 \ce{HCO3-} 中再拉走一个 \ce{H+} 困难得多，所以多元弱酸的酸性主要由第一步电离决定。本章常用的数据见表~\ref{tab:04-ka}。
 
 \begin{center}
+\begin{minipage}{\linewidth}
 \small
 \captionof{table}{25 ℃ 时一些弱电解质的电离常数\label{tab:04-ka}}
 \begin{tabular}{llll}
@@ -94,6 +97,7 @@ HClO & $K_\text{a}=4.0\times10^{-8}$ & \ce{NH3*H2O} & $K_\text{b}=1.8\times10^{-
 HCN & $K_\text{a}=6.2\times10^{-10}$ & & \\
 \bottomrule
 \end{tabular}
+\end{minipage}
 \end{center}
 
 $K_\text{a}$ 的第一个用途是计算弱酸溶液中的 $c(\ce{H+})$，方法与第3章用“三段式”求平衡浓度相同。
@@ -129,6 +133,7 @@ $K_\text{a}$ 的第二个用途是判断酸碱反应的主要方向，即“较�
 强酸和弱酸的差别，在“浓度相同”和“pH 相同”两种比较方式下表现不同（表~\ref{tab:04-cmp}），关键在于弱酸溶液中还“储存”着大量未电离的分子，反应中 \ce{H+} 被消耗后，平衡正移会不断补充。
 
 \begin{center}
+\begin{minipage}{\linewidth}
 \small
 \captionof{table}{盐酸与醋酸的比较\label{tab:04-cmp}}
 \begin{tabularx}{\linewidth}{lXX}
@@ -141,6 +146,7 @@ $c(\ce{H+})$ & 盐酸大 & 相等 \\
 稀释相同倍数后 & 盐酸 pH 仍较小 & 盐酸 pH 变化大，醋酸 pH 变化小 \\
 \bottomrule
 \end{tabularx}
+\end{minipage}
 \end{center}
 
 \section{水的电离与溶液的酸碱性}
@@ -237,7 +243,7 @@ $c(\ce{H+})$ & 盐酸大 & 相等 \\
 
 \par\medskip\noindent
 \begin{minipage}[b]{0.58\linewidth}\centering
-\begin{tikzpicture}[font=\scriptsize,scale=0.9]
+\begin{tikzpicture}[font=\footnotesize,scale=0.9]
 \fill[gray!25] (-0.2,0) rectangle (3.6,0.15); \draw (-0.2,0) rectangle (3.6,0.15);
 \draw[line width=1.4pt,gray!70!black] (0.2,0.15)--(0.2,6.4);
 \draw[thick] (0.2,5.0)--(1.42,5.0); \fill[gray!70!black] (1.32,4.9) rectangle (1.42,5.1);
@@ -254,8 +260,8 @@ $c(\ce{H+})$ & 盐酸大 & 相等 \\
 \draw[gray] (1.75,2.17)--(2.4,2.6) node[c4lab]{活塞};
 \draw[gray] (2.1,0.6)--(2.6,1.1) node[c4lab]{锥形瓶（待测酸＋\\2～3 滴指示剂）};
 \draw[gray] (2.4,0.2)--(2.8,0.45) node[c4lab]{白纸};
-\draw[gray] (0.2,5.6)--(-0.3,5.9) node[anchor=east]{铁架台};
-\draw[gray] (0.8,5.0)--(0.6,5.4) node[above]{滴定管夹};
+\draw[gray] (0.2,5.6)--(-0.3,5.9) node[anchor=east,text=black]{铁架台};
+\draw[gray] (0.8,5.0)--(0.6,5.4) node[above,text=black]{滴定管夹};
 \end{tikzpicture}
 \end{minipage}\hfill
 \begin{minipage}[b]{0.38\linewidth}\centering
@@ -368,6 +374,7 @@ NaCl、\ce{CH3COONa}、\ce{NH4Cl} 这些正盐不直接电离出 \ce{H+} 或 \ce
 常见盐的水解可看作相应弱酸、弱碱中和过程的逆过程，通常按吸热处理，升温促进水解；遇到题给热效应或实验数据时以题设为准。稀释也促进水解（理由与“越稀越电离”相同），但溶液中 $c(\ce{OH-})$ 或 $c(\ce{H+})$ 减小；加酸抑制弱碱阳离子的水解，加碱抑制弱酸根的水解。这些规律有许多应用，见表~\ref{tab:04-app}。
 
 \begin{center}
+\begin{minipage}{\linewidth}
 \small
 \captionof{table}{盐类水解的应用\label{tab:04-app}}
 \begin{tabularx}{\linewidth}{p{3.2cm}X}
@@ -382,6 +389,7 @@ NaCl、\ce{CH3COONa}、\ce{NH4Cl} 这些正盐不直接电离出 \ce{H+} 或 \ce
 化肥的使用 & 草木灰（含 \ce{K2CO3}）不能与铵态氮肥混用，二者相互促进水解，放出 \ce{NH3} \\
 \bottomrule
 \end{tabularx}
+\end{minipage}
 \end{center}
 
 \begin{zhenti}{2025年广东卷第17题(5)}
@@ -450,6 +458,7 @@ NaCl、\ce{CH3COONa}、\ce{NH4Cl} 这些正盐不直接电离出 \ce{H+} 或 \ce
 对混合溶液，先看两种溶质是否反应，再看“剩下什么、各剩多少”，最后比较电离与水解谁大，见表~\ref{tab:04-mix}。
 
 \begin{center}
+\begin{minipage}{\linewidth}
 \small
 \captionof{table}{两种溶质等物质的量混合时的浓度比较（浓度不很低）\label{tab:04-mix}}
 \begin{tabularx}{\linewidth}{lp{3.9cm}X}
@@ -461,6 +470,7 @@ NaCl、\ce{CH3COONa}、\ce{NH4Cl} 这些正盐不直接电离出 \ce{H+} 或 \ce
 HCN 与 NaCN & $K_\text{a}=6.2\times10^{-10}<K_\text{h}=1.6\times10^{-5}$，水解为主 & 碱性；$c(\ce{HCN})>c(\ce{Na+})>c(\ce{CN-})>c(\ce{OH-})>c(\ce{H+})$ \\
 \bottomrule
 \end{tabularx}
+\end{minipage}
 \end{center}
 
 滴定过程中粒子浓度的变化，可以借助图~\ref{fig:04-titr} 中 NaOH 滴定醋酸的曲线分段分析。起点只有 \ce{CH3COOH}；半中和点 \ce{CH3COOH} 与 \ce{CH3COONa} 等量，电离为主，呈酸性；pH$=7$ 的点 $c(\ce{H+})=c(\ce{OH-})$，由电荷守恒得 $c(\ce{Na+})=c(\ce{CH3COO-})$，此时醋酸略过量；恰好中和点溶质只有 \ce{CH3COONa}，水解使溶液呈碱性，水的电离程度最大；此后 NaOH 过量，抑制水解和水的电离。
