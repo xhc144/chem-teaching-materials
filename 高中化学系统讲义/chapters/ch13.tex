@@ -4,7 +4,7 @@
 \tikzset{
   c13sp/.style={draw=mainblue!60,fill=lightblue,rounded corners=1.5pt,inner sep=2pt,font=\small},
   c13ar/.style={-{Stealth[length=1.8mm]},semithick},
-  c13lb/.style={font=\scriptsize,inner sep=1pt},
+  c13lb/.style={font=\scriptsize,inner sep=1pt,text=black},
   c13ax/.style={-{Stealth[length=2mm]},thin},
   c13grid/.style={dashed,gray!45,thin},
   c13st/.style={draw,rounded corners=2pt,fill=lightblue,align=center,minimum height=0.95cm,inner sep=2pt,font=\small},
@@ -98,7 +98,7 @@ $+2$ 价处于中间价态，所以 \ce{Fe^2+} 既能被氧化又能被还原，
 \draw[c13ar] (hno3) -- node[c13lb,right,pos=0.55]{⑥稀} (no);
 \draw[c13ar] (nh3.east) -| node[c13lb,pos=0.75,right]{⑦ \ce{O2}} (no.south);
 \draw[c13ar] (hno3) -- node[c13lb,above]{⑧碱} (nit);
-\draw[c13ar,{Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (nh3.south) -- ++(0,-0.45) -| node[c13lb,pos=0.25,below]{⑨ 加酸 / 加碱、△} (nh4.south);
+\draw[c13ar,{Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (nh3.south) -- ++(0,-0.45) -| node[c13lb,pos=0.25,above]{⑨ 加酸 / 加碱、△} (nh4.south);
 \end{tikzpicture}
 \captionof{figure}{氮的价类二维图\label{fig:13-n}}
 \end{minipage}\hfill
