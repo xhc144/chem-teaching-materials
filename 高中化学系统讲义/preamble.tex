@@ -48,7 +48,7 @@
 \usepackage{siunitx}
 \sisetup{inter-unit-product=\ensuremath{\cdot},per-mode=symbol}
 \usepackage[hidelinks,bookmarksnumbered]{hyperref}
-\hypersetup{pdftitle={高中化学系统讲义},pdfsubject={以选择性必修1课件为主线 贯通高考化学知识体系（面向广东新高考）},pdfkeywords={高中化学,选择性必修1,广东高考,讲义}}
+\hypersetup{pdftitle={高中化学系统讲义},pdfsubject={选择性必修1、2、3与高考综合（面向广东新高考）},pdfkeywords={高中化学,选择性必修,广东高考,讲义}}
 
 % ---------- 颜色 ----------
 \definecolor{mainblue}{RGB}{0,84,147}
@@ -83,7 +83,7 @@
     afterskip={0.6ex}
   },
   subsection={
-    format={\large\heiti\color{deepgreen}\raggedright},
+    format={\large\heiti\raggedright},
     number={\arabic{chapter}.\arabic{section}.\arabic{subsection}},
     beforeskip={0.8ex plus .2ex},
     afterskip={0.4ex}
@@ -103,7 +103,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small\heiti\color{mainblue}\leftmark}
-\fancyhead[R]{\small\kaishu\color{graytext}高中化学系统讲义}
+\fancyhead[R]{\small\heiti\color{graytext}高中化学系统讲义}
 \fancyfoot[C]{\small\thepage}
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\chaptermark}[1]{\markboth{第\,\thechapter\,章\quad #1}{}}
@@ -111,66 +111,80 @@
 
 % ---------- 列表 ----------
 \setlist{nosep,leftmargin=2em}
-\setlist[itemize]{label=\textcolor{mainblue}{\small$\blacktriangleright$}}
+\setlist[itemize]{label=\textbullet}
 \setlist[enumerate,1]{label=(\arabic*)}
 \settasks{label=\Alph*．,label-width=2.4em,item-indent=2.8em,before-skip=0.1em,after-skip=0.1em,column-sep=0.5em}
 \setlength{\emergencystretch}{2.5em}
 
-% ---------- 栏目环境 ----------
+% ---------- 栏目环境（统一为左侧细线样式，少用底色） ----------
 \tcbset{
-  basestyle/.style={enhanced,breakable,boxrule=0.6pt,arc=1.5mm,left=2mm,right=2mm,top=1mm,bottom=1mm,
-    before skip=0.55em,after skip=0.55em,fonttitle=\heiti\bfseries\small}
+  basestyle/.style={enhanced,breakable,frame hidden,interior hidden,boxrule=0pt,arc=0mm,
+    left=3mm,right=0mm,top=0.5mm,bottom=0.5mm,before skip=0.6em,after skip=0.6em,
+    borderline west={1.2pt}{0pt}{#1}},
+  basestyle/.default=mainblue,
+  innertitle/.style={detach title,before upper={\tcbtitle\par\nobreak\smallskip}}
 }
-% 概念：核心概念与定义
-\newtcolorbox{gainian}[1][]{basestyle,colback=lightblue,colframe=mainblue,
-  title={\faicon 核心概念\ifx\relax#1\relax\else：#1\fi},attach boxed title to top left={xshift=3mm,yshift=-2mm},
-  boxed title style={colback=mainblue,arc=1mm,boxrule=0pt},top=2.5mm}
-% 本质：追本溯源（为什么）
-\newtcolorbox{benzhi}[1][]{basestyle,colback=lightgreen,colframe=deepgreen,
-  title={追本溯源\ifx\relax#1\relax\else：#1\fi},attach boxed title to top left={xshift=3mm,yshift=-2mm},
-  boxed title style={colback=deepgreen,arc=1mm,boxrule=0pt},top=2.5mm}
-% 方法：方法提炼
-\newtcolorbox{fangfa}[1][]{basestyle,colback=lightorange,colframe=exorange,
-  title={方法提炼\ifx\relax#1\relax\else：#1\fi},attach boxed title to top left={xshift=3mm,yshift=-2mm},
-  boxed title style={colback=exorange,arc=1mm,boxrule=0pt},top=2.5mm}
-% 易错：易错警示
-\newtcolorbox{yicuo}[1][]{basestyle,colback=lightred,colframe=warnred,boxrule=0pt,leftrule=2.5pt,arc=0mm,
-  title={易错警示\ifx\relax#1\relax\else：#1\fi},coltitle=warnred,colbacktitle=lightred,
-  fonttitle=\heiti\bfseries\small,toptitle=0.5mm,bottomtitle=0mm}
-% 勘误：原课件勘误
-\newtcolorbox{kanwu}[1][]{basestyle,colback=white,colframe=warnred,boxrule=0.6pt,arc=0mm,
-  borderline={0.3pt}{1.2pt}{warnred,dashed},
-  title={课件勘误\ifx\relax#1\relax\else：#1\fi},coltitle=white,colbacktitle=warnred}
-% 真题：真题链接（参数为来源）
-\newtcolorbox{zhenti}[1]{basestyle,colback=lightpurple,colframe=gkpurple,
-  title={真题链接\quad{\normalfont\small #1}},coltitle=white,colbacktitle=gkpurple}
-% 拓展：视野拓展（高考不作要求或仅作了解）
-\newtcolorbox{tuozhan}[1][]{basestyle,colback=white,colframe=graytext,boxrule=0.4pt,
-  title={视野拓展\ifx\relax#1\relax\else：#1\fi},coltitle=graytext,colbacktitle=white,fonttitle=\heiti\small}
-% 导学
-\newtcolorbox{daoxue}{basestyle,colback=white,colframe=mainblue,boxrule=1pt,arc=2mm,
-  title={本章导学},coltitle=white,colbacktitle=mainblue,fonttitle=\heiti\bfseries}
+\newcommand{\boxtitle}[2]{{\heiti\bfseries\small\color{#1}#2}}
+% 定义与基本规律
+\newtcolorbox{gainian}[1][]{basestyle=mainblue,colback=white,
+  title={\boxtitle{mainblue}{\ifx\relax#1\relax 概念\else #1\fi}},innertitle}
+% 原理解释
+\newtcolorbox{benzhi}[1][]{basestyle=graytext,
+  title={\boxtitle{black}{\ifx\relax#1\relax 原理\else #1\fi}},innertitle}
+% 方法
+\newtcolorbox{fangfa}[1][]{basestyle=graytext,
+  title={\boxtitle{black}{\ifx\relax#1\relax 方法\else #1\fi}},innertitle}
+% 注意
+\newtcolorbox{yicuo}[1][]{basestyle=warnred,
+  title={\boxtitle{warnred}{注意\ifx\relax#1\relax\else：#1\fi}},innertitle}
+% 真题（参数为来源）
+\newtcolorbox{zhenti}[1]{enhanced,breakable,colback=white,colframe=graytext,boxrule=0.4pt,arc=0.5mm,
+  left=2.5mm,right=2.5mm,top=1mm,bottom=1mm,before skip=0.6em,after skip=0.6em,
+  title={\heiti\bfseries\small 真题\quad{\normalfont\small #1}},coltitle=black,colbacktitle=black!6,
+  toptitle=0.6mm,bottomtitle=0.6mm}
+% 拓展阅读（高考不作要求）
+\newtcolorbox{tuozhan}[1][]{basestyle=black!35,fontupper=\small,
+  title={\boxtitle{graytext}{阅读\ifx\relax#1\relax\else：#1\fi}},innertitle}
 
-\def\faicon{}
-
-% 例题：编号随章；上半题目、下半解析
+% 例题：编号随章；上半题目、下半解析（下半以虚线分隔）
 \newcounter{liti}[chapter]
 \renewcommand{\theliti}{\thechapter-\arabic{liti}}
-\newtcolorbox{liti}[1][]{enhanced,breakable,colback=white,colframe=exorange,boxrule=0.5pt,arc=1mm,
-  left=2mm,right=2mm,top=1mm,bottom=1mm,before skip=0.6em,after skip=0.6em,
-  segmentation style={dashed,exorange},colbacklower=white,
-  before upper={\stepcounter{liti}{\heiti\color{exorange}【例\,\theliti】}\ifx\relax#1\relax\else{\kaishu\small（#1）}\fi\ },
-  before lower={\small}}
-\newcommand{\silu}{{\heiti\color{exorange}【思路】}}
-\newcommand{\jie}{{\heiti\color{exorange}【解析】}}
-\newcommand{\daan}{{\heiti\color{exorange}【答案】}}
-\newcommand{\xianjing}{{\heiti\color{warnred}【陷阱】}}
-\newcommand{\dianbo}{{\heiti\color{deepgreen}【点拨】}}
+\newtcolorbox{liti}[1][]{enhanced,breakable,frame hidden,interior hidden,boxrule=0pt,arc=0mm,
+  left=0mm,right=0mm,top=0.5mm,bottom=0.5mm,before skip=0.7em,after skip=0.7em,
+  borderline north={0.4pt}{0pt}{black!45},borderline south={0.4pt}{0pt}{black!45},
+  segmentation style={dashed,black!45},lowerbox=visible,
+  before upper={\stepcounter{liti}{\heiti\bfseries 例\,\theliti}\ifx\relax#1\relax\else{\kaishu\small（#1）}\fi\quad},
+  before lower={}}
+\newcommand{\silu}{{\heiti 分析\quad}}
+\newcommand{\jie}{{\heiti 解\quad}}
+\newcommand{\daan}{{\heiti 答案\quad}}
+\newcommand{\xianjing}{{\heiti 注意\quad}}
+\newcommand{\dianbo}{{\heiti 说明\quad}}
+
+% 图：不浮动，用 \tu{tikz 内容}{图题} 或 \captionof{figure}{...}
+\captionsetup{font=small,labelfont={bf,sf},labelsep=quad,skip=3pt}
+\captionsetup[figure]{name=图}
+\captionsetup[table]{name=表}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+\newcommand{\tu}[2]{\par\medskip{\centering #1\par\captionof{figure}{#2}}\medskip}
+
+% 轨道方框图：\orbs{2,1,1}  2=一对自旋相反电子，1=一个电子，0=空，3=一个向下电子
+\newcommand{\orbs}[1]{\begin{tikzpicture}[baseline={(0,-0.12)},x=0.46cm,y=0.46cm,line width=0.5pt]
+  \foreach \s [count=\i from 0] in {#1}{%
+    \draw (\i,-0.5) rectangle ++(1,1);
+    \ifnum\s=2 \draw[-{Stealth[length=1.1mm]}] (\i+0.33,-0.35)--(\i+0.33,0.38);
+               \draw[-{Stealth[length=1.1mm]}] (\i+0.67,0.35)--(\i+0.67,-0.38);\fi
+    \ifnum\s=1 \draw[-{Stealth[length=1.1mm]}] (\i+0.5,-0.35)--(\i+0.5,0.38);\fi
+    \ifnum\s=3 \draw[-{Stealth[length=1.1mm]}] (\i+0.5,0.35)--(\i+0.5,-0.38);\fi
+  }\end{tikzpicture}}
 
 % 习题与解析
 \newlist{xiti}{enumerate}{1}
 \setlist[xiti]{label={\textbf{\arabic*}.},leftmargin=1.6em,itemsep=0.35em,topsep=0.3em,resume=xiti}
-\newcommand{\zu}[1]{\par\smallskip\noindent{\heiti\color{mainblue}\large #1}\par\smallskip}
+\newcommand{\zu}[1]{\par\smallskip\noindent{\heiti\bfseries #1}\par\smallskip}
 \newcommand{\laiyuan}[1]{{\kaishu\small\color{graytext}（#1）}}
 \newenvironment{jiexilist}{\small\begin{enumerate}[label={\textbf{\arabic*}.},leftmargin=1.6em,itemsep=0.3em,topsep=0.2em]}{\end{enumerate}}
 \newcommand{\ans}[1]{{\heiti 答案：}#1\quad}
