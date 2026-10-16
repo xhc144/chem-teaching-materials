@@ -21,7 +21,7 @@
 \def\songti{\CJKfamily{zhsong}}
 \def\heiti{\CJKfamily{zhhei}}
 \def\kaishu{\CJKfamily{zhkai}}
-\linespread{1.22}
+\linespread{1.16}
 \xeCJKsetcharclass{"2460}{"24FF}{1}   % ①②③ 等按中文字符处理
 \xeCJKsetcharclass{"2160}{"217F}{1}   % Ⅰ Ⅱ Ⅲ 罗马数字
 \xeCJKsetcharclass{"25A0}{"25FF}{1}   % △ ○ 等几何符号用中文字体
@@ -162,14 +162,14 @@
 \newcommand{\dianbo}{{\heiti 说明\quad}}
 
 % 图：不浮动，用 \tu{tikz 内容}{图题} 或 \captionof{figure}{...}
-\captionsetup{font=small,labelfont={bf,sf},labelsep=quad,skip=3pt}
+\captionsetup{hypcap=false,font=small,labelfont={bf,sf},labelsep=quad,skip=3pt}
 \captionsetup[figure]{name=图}
 \captionsetup[table]{name=表}
 \counterwithin{figure}{chapter}
 \counterwithin{table}{chapter}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
 \renewcommand{\thetable}{\thechapter-\arabic{table}}
-\newcommand{\tu}[2]{\par\medskip\noindent\begin{minipage}{\linewidth}\centering #1\par\captionof{figure}{#2}\end{minipage}\par\medskip}
+\newcommand{\tu}[2]{\par\smallskip\noindent\begin{minipage}{\linewidth}\centering #1\par\captionof{figure}{#2}\end{minipage}\par\smallskip}
 
 % 轨道方框图：\orbs{2,1,1}  2=一对自旋相反电子，1=一个电子，0=空，3=一个向下电子
 \newcommand{\orbs}[1]{\begin{tikzpicture}[baseline={(0,-0.12)},x=0.46cm,y=0.46cm,line width=0.5pt]

@@ -122,7 +122,7 @@ $K_\text{a}=\dfrac{x^2}{0.10-x}=1.75\times10^{-5}$。$K_\text{a}$ 很小，电�
 (2) 温度不变，$K_\text{a}$ 不变，$c(\ce{H+})\approx\sqrt{1.0\times10^{-5}\times0.0010}=1.0\times10^{-4}$ mol·L$^{-1}$，$\alpha\approx\dfrac{1.0\times10^{-4}}{0.0010}=10\%$。浓度变为原来的 $\frac1{100}$，电离度增大到原来的 10 倍，但 $c(\ce{H+})$ 只有原来的 $\frac1{10}$。此时 $\alpha$ 已超过 5\%，精确解一元二次方程得 $\alpha\approx9.5\%$，结论不变。
 \end{liti}
 
-$K_\text{a}$ 的第二个用途是判断复分解反应能否发生，即“较强的酸制较弱的酸”。由表~\ref{tab:04-ka}，酸性 \ce{H2CO3}$>$HClO$>$\ce{HCO3-}，所以向 NaClO 溶液中通入 \ce{CO2}，不论 \ce{CO2} 多少都只生成 \ce{HCO3-}：\ce{ClO- + CO2 + H2O = HClO + HCO3-}；若生成 \ce{CO3^2-}，就成了酸性更弱的 \ce{HCO3-} 制取酸性更强的 HClO，不能发生。
+$K_\text{a}$ 的第二个用途是判断酸碱反应的主要方向，即“较强的酸制较弱的酸”。由表~\ref{tab:04-ka}，\ce{H2CO3} 的酸性强于 HClO，而 HClO 又强于 \ce{HCO3-}。向 NaClO 溶液中通入 \ce{CO2}，高中通常按生成 \ce{HCO3-} 书写：\ce{ClO- + CO2 + H2O = HClO + HCO3-}。若再由 \ce{HCO3-} 提供质子生成 HClO，平衡明显不利，故不能因“\ce{CO2} 少量”就机械地把主要产物写成 \ce{CO3^2-}。
 
 第三个用途是判断浓度比值的变化。把 $K_\text{a}$ 的表达式变形为 $\dfrac{c(\ce{A-})}{c(\ce{HA})}=\dfrac{K_\text{a}}{c(\ce{H+})}$，比值就只取决于 $c(\ce{H+})$。例如稀释醋酸时 $c(\ce{H+})$ 减小，$\dfrac{c(\ce{CH3COO-})}{c(\ce{CH3COOH})}$ 增大。遇到“某比值如何变化”的问题，先设法把它改写成“常数$\div$某一浓度”。
 
@@ -397,7 +397,10 @@ NaCl、\ce{CH3COONa}、\ce{NH4Cl} 这些正盐不直接电离出 \ce{H+} 或 \ce
 盐溶液中同时存在电离和水解，粒子种类多，浓度又都很小，怎样找出它们之间的定量关系？下面以 0.10 mol·L$^{-1}$ \ce{Na2CO3} 溶液为例，一步一步地推导。
 
 第一步，写出溶液中发生的全部过程：
-\[\ce{Na2CO3 = 2Na+ + CO3^2-},\quad \ce{CO3^2- + H2O <=> HCO3- + OH-},\quad \ce{HCO3- + H2O <=> H2CO3 + OH-},\quad \ce{H2O <=> H+ + OH-}\]
+\[\begin{aligned}
+\ce{Na2CO3 = 2Na+ + CO3^2-}&\qquad \ce{H2O <=> H+ + OH-}\\
+\ce{CO3^2- + H2O <=> HCO3- + OH-}&\qquad \ce{HCO3- + H2O <=> H2CO3 + OH-}
+\end{aligned}\]
 第二步，列出除水分子外的全部粒子：\ce{Na+}、\ce{CO3^2-}、\ce{HCO3-}、\ce{H2CO3}、\ce{H+}、\ce{OH-}。
 
 第三步，\textbf{电荷守恒}。溶液整体不带电，单位体积内阳离子所带正电荷总数等于阴离子所带负电荷总数。1 个 \ce{CO3^2-} 带 2 个单位负电荷，浓度为 $c(\ce{CO3^2-})$ 的 \ce{CO3^2-} 提供的负电荷相当于 $2c(\ce{CO3^2-})$，所以
@@ -511,7 +514,7 @@ HCN 与 NaCN & $K_\text{a}=6.2\times10^{-10}<K_\text{h}=1.6\times10^{-5}$，水�
 
 工业上常通过调节 pH 使杂质离子生成氢氧化物沉淀。以除去 0.10 mol·L$^{-1}$ \ce{MgCl2} 溶液中少量 \ce{Fe^3+} 为例（$K_\text{sp}[\ce{Fe(OH)3}]=2.8\times10^{-39}$，$K_\text{sp}[\ce{Mg(OH)2}]=5.6\times10^{-12}$）：\ce{Fe^3+} 沉淀完全时 $c(\ce{OH-})=\sqrt[3]{\dfrac{2.8\times10^{-39}}{1.0\times10^{-5}}}\approx6.5\times10^{-12}$ mol·L$^{-1}$，pH$\approx2.8$；\ce{Mg^2+} 开始沉淀时 $c(\ce{OH-})=\sqrt{\dfrac{5.6\times10^{-12}}{0.10}}\approx7.5\times10^{-6}$ mol·L$^{-1}$，pH$\approx8.9$。所以应控制 $2.8\le\text{pH}<8.9$，实际调到 3～4 即可，并用 MgO 等不引入新杂质的物质调节。计算时注意：“开始沉淀”用溶液中原有的离子浓度，“沉淀完全”用 $1.0\times10^{-5}$ mol·L$^{-1}$。
 
-使沉淀溶解，就要设法减小溶液中某种离子的浓度，使 $Q<K_\text{sp}$。如 \ce{CaCO3} 溶于盐酸（\ce{H+} 结合 \ce{CO3^2-}）；\ce{Mg(OH)2} 溶于 \ce{NH4Cl} 溶液（\ce{NH4+} 结合 \ce{OH-}）；AgCl 溶于氨水（\ce{Ag+} 生成 \ce{[Ag(NH3)2]+}）。
+使沉淀溶解，就要设法减小溶液中某种离子的浓度，使 $Q<K_\text{sp}$。如 \ce{CaCO3} 溶于盐酸（\ce{H+} 结合 \ce{CO3^2-}）；\ce{Mg(OH)2} 溶于 \ce{NH4Cl} 溶液（\ce{NH4+} 结合 \ce{OH-}）；AgCl 溶于氨水（\ce{Ag+} 与氨分子结合成可溶的配离子 \ce{[Ag(NH3)2]+}，自由 \ce{Ag+} 减少；配位平衡见本章末节）。
 
 沉淀的转化一般由溶解度小的向溶解度更小的方向进行。当原、新沉淀在转化式中的系数均为 1，且消去相同的共用离子时，转化反应的平衡常数 $K=\dfrac{K_\text{sp}(\text{原沉淀})}{K_\text{sp}(\text{新沉淀})}$。例如 \ce{AgCl(s) + I-(aq) <=> AgI(s) + Cl-(aq)}，$K=\dfrac{1.8\times10^{-10}}{8.5\times10^{-17}}\approx2\times10^6$，转化很彻底，所以白色 AgCl 能依次转化为浅黄色 AgBr、黄色 AgI。锅炉水垢中的 \ce{CaSO4} 用 \ce{Na2CO3} 溶液处理：\ce{CaSO4(s) + CO3^2-(aq) <=> CaCO3(s) + SO4^2-(aq)}，$K=\dfrac{4.9\times10^{-5}}{3.4\times10^{-9}}\approx1.4\times10^4$，生成的 \ce{CaCO3} 再用酸除去。用 FeS 除去废水中的 \ce{Cu^2+}、\ce{Hg^2+}，原理也是沉淀转化：\ce{FeS(s) + Cu^2+(aq) <=> CuS(s) + Fe^2+(aq)}。
 
