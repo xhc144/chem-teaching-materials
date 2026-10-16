@@ -1,0 +1,513 @@
+% ============================================================
+% 第13章 元素化合物与化工流程（必修元素化学 + 高三工艺流程，对应广东卷第18题）
+% ============================================================
+\tikzset{
+  c13sp/.style={draw=mainblue!60,fill=lightblue,rounded corners=1.5pt,inner sep=2pt,font=\small},
+  c13ar/.style={-{Stealth[length=1.8mm]},semithick},
+  c13lb/.style={font=\scriptsize,inner sep=1pt,text=black},
+  c13ax/.style={-{Stealth[length=2mm]},thin},
+  c13grid/.style={dashed,gray!45,thin},
+  c13st/.style={draw,rounded corners=2pt,fill=lightblue,align=center,minimum height=0.95cm,inner sep=2pt,font=\small},
+  c13main/.style={-{Stealth[length=2.2mm]},line width=1.1pt,mainblue},
+  c13side/.style={-{Stealth[length=1.6mm]},thin},
+  c13cyc/.style={-{Stealth[length=2mm]},dashed,deepgreen,semithick},
+  c13in/.style={font=\scriptsize,align=center,inner sep=1pt}
+}
+
+\chapter{元素化合物与化工流程}
+
+本章把必修的元素化学和高三的工艺流程题放在一起讲。高一学过的 Na、Al、Fe、Cu、Cl、S、N、Si 等元素的物质，数量多、方程式多，单靠记忆容易混乱；如果按“化合价”和“物质类别”两条线索把它们排进一张坐标图（价类二维图），每个转化就有了位置和理由。化工流程题以这些转化为基础，再用上前面各章的反应原理（速率、平衡、$K_\text{sp}$、电化学）和实验方法（分离提纯），解决“从原料怎样得到产品”的实际问题。广东卷选择题考过价类二维图（2024年第14题、2026年第13题）、物质转化（2025年第7题）和陈述因果（2025年第8题）；第18题是 14 分的工艺流程题，三年分别是从炭渣中提镓（2024）、从多金属精矿提取 Fe、Cu、Ni（2025）、从金精矿提金（2026），综合考查预处理、陌生方程式、$K_\text{sp}$ 计算、配合物与晶胞。本章先用价类二维图整理元素化合物，再讲流程图的读法和各操作的作用，然后讲流程中的方程式书写与调 pH 计算，最后完整分析 2025年第18题。
+
+\section{用价类二维图整理元素化合物}
+
+\subsection{价类二维图怎样读}
+价类二维图研究的是\textbf{同一种元素}组成的各种物质。高一学过两种给物质归类的办法：一是按组成分为单质、氧化物、酸、碱、盐；二是按元素的化合价，化合价改变的反应是氧化还原反应，化合价升高的物质是还原剂、需要氧化剂才能实现，化合价降低则需要还原剂。把这两种办法合在一张图上，横轴是物质类别，纵轴是化合价，每种物质就是图上的一个点，每个转化就是一个箭头。可以把它看成一张“地图”：沿水平方向走，换的是物质类别；沿竖直或斜向走，换的是价态。
+
+\begin{gainian}[价类二维图的读法]
+(1) 水平箭头：所考查元素的化合价不变，常靠酸、碱、盐、水之间的反应实现（如酸性氧化物与水化合、酸碱中和）。还须检查其他元素；例如 \ce{Na2O2} 与水反应时，钠价态不变，氧却发生歧化。\\
+(2) 竖直或斜向箭头：化合价改变，是氧化还原反应。向上需要氧化剂（\ce{O2}、\ce{Cl2}、\ce{H2O2}、\ce{HNO3} 等），向下需要还原剂（\ce{H2}、CO、C、Fe、\ce{SO2} 等）。\\
+(3) 就所讨论元素的变价而言，最高常见价态只能降低、表现氧化性，最低常见价态只能升高、表现还原性，中间价态可能升高或降低。具体能否反应，还要看反应物和条件；这也不能排除同一物质中其他元素参加氧化还原反应。\\
+(4) 同一元素不同价态发生归中反应时，要检查是否有条件下稳定的中间价态产物，不能见到“高价加低价”就断言反应。例如高中常见条件下 \ce{SO2} 与浓硫酸不发生氧化还原反应，因而可用浓硫酸干燥 \ce{SO2}。
+\end{gainian}
+
+\subsection{铁的价类二维图}
+铁有 0、$+2$、$+3$ 三种常见价态，每种价态都有氧化物，$+2$、$+3$ 价还有碱和盐，所以铁的价类二维图是一个比较完整的“方格”（图~\ref{fig:13-fe}）。\ce{Fe3O4} 中铁的平均化合价为 $+\frac{8}{3}$，可看作 \ce{FeO.Fe2O3}，画在 $+2$ 与 $+3$ 之间。
+
+\tu{\begin{tikzpicture}[x=1cm,y=1cm]
+\draw[c13ax] (0,-0.65)--(0,3.75) node[above,font=\small]{化合价};
+\draw[c13ax] (0,-0.65)--(10.6,-0.65) node[below left,font=\small]{物质类别};
+\foreach \y/\t in {0/0,2/+2,3/+3} {\draw[c13grid] (0,\y)--(10.3,\y); \node[left,font=\small] at (0,\y) {$\t$};}
+\foreach \x/\t in {0.8/单质,2.6/氧化物,5.6/碱,8.4/盐} \node[below,font=\small] at (\x,-0.65) {\t};
+\node[c13sp] (fe) at (0.8,0) {Fe};
+\node[c13sp] (feo) at (2.6,2) {FeO};
+\node[c13sp] (fe2o3) at (2.6,3) {\ce{Fe2O3}};
+\node[c13sp] (fe3o4) at (3.95,2.5) {\ce{Fe3O4}};
+\node[c13sp] (feoh2) at (5.6,2) {\ce{Fe(OH)2}};
+\node[c13sp] (feoh3) at (5.6,3) {\ce{Fe(OH)3}};
+\node[c13sp] (fe2) at (8.4,2) {\ce{Fe^2+} 盐};
+\node[c13sp] (fe3) at (8.4,3) {\ce{Fe^3+} 盐};
+\draw[c13ar] (fe.east) -| node[c13lb,pos=0.3,above]{① \ce{H+}、\ce{Cu^2+}、\ce{Fe^3+}} ([xshift=-2mm]fe2.south);
+\draw[c13ar] (fe.south) -- (0.8,-0.38) -- (10.05,-0.38) |- node[c13lb,pos=0.3,right,align=left]{②\\\ce{Cl2}} (fe3.east);
+\draw[c13ar] ([xshift=-2.5mm]fe2.north) -- node[c13lb,left]{③ \ce{Cl2}、\ce{H2O2}} ([xshift=-2.5mm]fe3.south);
+\draw[c13ar] ([xshift=2.5mm]fe3.south) -- node[c13lb,right]{Fe、Cu} ([xshift=2.5mm]fe2.north);
+\draw[c13ar] (fe2.west) -- node[c13lb,above]{④ \ce{OH-}} (feoh2.east);
+\draw[c13ar] (feoh2.north) -- node[c13lb,right]{⑤ \ce{O2}} (feoh3.south);
+\draw[c13ar] ([yshift=1mm]feoh3.east) -- node[c13lb,above]{⑥ \ce{H+}} ([yshift=1mm]fe3.west);
+\draw[c13ar] ([yshift=-1mm]fe3.west) -- node[c13lb,below]{\ce{OH-}} ([yshift=-1mm]feoh3.east);
+\draw[c13ar] (feoh3.west) -- node[c13lb,above]{⑦ △} (fe2o3.east);
+\draw[c13ar] (fe2o3.south west) -- node[c13lb,left,align=right,pos=0.55]{⑧ CO\\高温} (fe.north);
+\draw[c13ar] (fe.north east) -- node[c13lb,below right,align=left,pos=0.5]{⑨ \ce{O2}（点燃）\\ 或 \ce{H2O}(g)（高温）} (fe3o4.south west);
+\end{tikzpicture}}{铁的价类二维图（方框为物质，箭头为转化，箭头旁为所需试剂）\label{fig:13-fe}}
+
+读这张图时，先看水平箭头。$+3$ 价一行中，\ce{Fe(OH)3} 与酸反应得到 \ce{Fe^3+} 盐，\ce{Fe^3+} 盐与碱反应得到 \ce{Fe(OH)3}（⑥），\ce{Fe(OH)3} 受热分解为 \ce{Fe2O3}（⑦），都不涉及价态变化；$+2$ 价一行的 \ce{Fe^2+} 盐与碱反应生成 \ce{Fe(OH)2}（④）也是如此。再看竖直和斜向箭头，它们都是氧化还原反应：
+\begin{itemize}
+\item 向上（需要氧化剂）：①\ce{Fe + 2H+ = Fe^2+ + H2 ^}，弱氧化剂只把铁氧化到 $+2$ 价；②\ce{2Fe + 3Cl2 ->[\text{点燃}] 2FeCl3}，强氧化剂把铁直接氧化到 $+3$ 价；③\ce{2Fe^2+ + Cl2 = 2Fe^3+ + 2Cl-}，\ce{2Fe^2+ + H2O2 + 2H+ = 2Fe^3+ + 2H2O}；⑤\ce{4Fe(OH)2 + O2 + 2H2O = 4Fe(OH)3}，现象是白色沉淀迅速变为灰绿色，最后变为红褐色；⑨\ce{3Fe + 2O2 ->[\text{点燃}] Fe3O4}，\ce{3Fe + 4H2O(g) ->[\text{高温}] Fe3O4 + 4H2}。
+\item 向下（需要还原剂）：③的反方向 \ce{2Fe^3+ + Fe = 3Fe^2+}，\ce{2Fe^3+ + Cu = 2Fe^2+ + Cu^2+}（腐蚀铜电路板）；⑧\ce{Fe2O3 + 3CO ->[\text{高温}] 2Fe + 3CO2}（高炉炼铁）。
+\end{itemize}
+$+2$ 价处于中间价态，所以 \ce{Fe^2+} 既能被氧化又能被还原，而且容易被空气中的 \ce{O2} 氧化，这就是 \ce{FeSO4} 溶液要加少量铁粉保存、制 \ce{Fe(OH)2} 要隔绝空气的原因。两种离子的检验也要记住：\ce{Fe^3+} 遇 KSCN 溶液变红；\ce{Fe^2+} 与 \ce{K3[Fe(CN)6]} 溶液生成蓝色沉淀。
+
+\begin{liti}[基础\quad 原创]
+结合图~\ref{fig:13-fe} 回答：(1) 图中 $+2$ 价与 $+3$ 价物质之间的转化，哪些需要加氧化剂？(2) 除去 \ce{FeCl2} 溶液中的少量 \ce{FeCl3}、除去 \ce{FeCl3} 溶液中的少量 \ce{FeCl2}，各加什么试剂？(3) 制取 \ce{Fe(OH)2} 时，为什么用煮沸过的 NaOH 溶液，并把滴管伸到 \ce{FeSO4} 溶液液面以下再挤出？
+\tcblower
+\silu 先判断箭头是向上还是向下，再选试剂；除杂时要求不引入新杂质。\\
+\jie (1) 由 $+2$ 价到 $+3$ 价的转化（③向上、⑤）需要氧化剂。(2) 加入过量铁粉后过滤：\ce{2Fe^3+ + Fe = 3Fe^2+}；通入适量 \ce{Cl2}：\ce{2Fe^2+ + Cl2 = 2Fe^3+ + 2Cl-}（产物只有 \ce{FeCl3}，不引入杂质）。(3) \ce{Fe(OH)2} 处于中间价态，很容易被 \ce{O2} 氧化；煮沸除去溶解的 \ce{O2}，液面下挤出避免 NaOH 溶液滴落时带入空气。
+\end{liti}
+
+\subsection{氮和硫的价类二维图}
+氮和硫是非金属，常见物质有氢化物、单质、氧化物、含氧酸和盐，价态跨度大（图~\ref{fig:13-n}、图~\ref{fig:13-s}）。读这两张图，抓住一条“向上的主线”和一条“向下的支线”即可。
+
+\par\medskip\noindent
+\begin{minipage}[b]{0.49\linewidth}\centering
+\begin{tikzpicture}[x=0.88cm,y=0.6cm]
+\draw[c13ax] (0,-3.9)--(0,5.9) node[above,font=\small]{化合价};
+\draw[c13ax] (0,-3.9)--(8.1,-3.9);
+\foreach \y/\t in {-3/-3,0/0,2/+2,4/+4,5/+5} {\draw[c13grid] (0,\y)--(7.9,\y); \node[left,font=\scriptsize] at (0,\y) {$\t$};}
+\foreach \x/\t in {0.8/氢化物,2.3/单质,3.9/氧化物,5.5/酸,7.1/盐} \node[below,font=\scriptsize] at (\x,-3.9) {\t};
+\node[c13sp] (nh3) at (0.8,-3) {\ce{NH3}};
+\node[c13sp] (nh4) at (7.1,-3) {铵盐};
+\node[c13sp] (n2) at (2.3,0) {\ce{N2}};
+\node[c13sp] (no) at (3.9,2) {NO};
+\node[c13sp] (no2) at (3.9,4) {\ce{NO2}};
+\node[c13sp] (hno3) at (5.5,5) {\ce{HNO3}};
+\node[c13sp] (nit) at (7.1,5) {硝酸盐};
+\draw[c13ar] (n2) -- node[c13lb,above left]{① \ce{H2}} (nh3);
+\draw[c13ar] (n2) -- node[c13lb,above left]{② \ce{O2}} (no);
+\draw[c13ar] (no) -- node[c13lb,left]{③ \ce{O2}} (no2);
+\draw[c13ar] (no2) to[bend left=28] node[c13lb,above left]{④ \ce{H2O}} (hno3);
+\draw[c13ar] (hno3) to[bend left=28] node[c13lb,below,pos=0.4]{⑤浓} (no2);
+\draw[c13ar] (hno3) -- node[c13lb,right,pos=0.55]{⑥稀} (no);
+\draw[c13ar] (nh3.east) -| node[c13lb,pos=0.75,right]{⑦ \ce{O2}} (no.south);
+\draw[c13ar] (hno3) -- node[c13lb,above]{⑧碱} (nit);
+\draw[c13ar,{Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (nh3.south) -- ++(0,-0.45) -| node[c13lb,pos=0.25,above]{⑨ 加酸 / 加碱、△} (nh4.south);
+\end{tikzpicture}
+\captionof{figure}{氮的价类二维图\label{fig:13-n}}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.49\linewidth}\centering
+\begin{tikzpicture}[x=0.88cm,y=0.6cm]
+\draw[c13ax] (0,-3.9)--(0,6.8) node[above,font=\small]{化合价};
+\draw[c13ax] (0,-3.9)--(8.1,-3.9);
+\foreach \y/\t in {-2/-2,0/0,4/+4,6/+6} {\draw[c13grid] (0,\y)--(7.9,\y); \node[left,font=\scriptsize] at (0,\y) {$\t$};}
+\foreach \x/\t in {0.8/氢化物,2.3/单质,3.9/氧化物,5.5/酸,7.1/盐} \node[below,font=\scriptsize] at (\x,-3.9) {\t};
+\node[c13sp] (h2s) at (0.8,-2) {\ce{H2S}};
+\node[c13sp] (s) at (2.3,0) {S};
+\node[c13sp] (so2) at (3.9,4) {\ce{SO2}};
+\node[c13sp] (so3) at (3.9,6) {\ce{SO3}};
+\node[c13sp] (h2so3) at (5.5,4) {\ce{H2SO3}};
+\node[c13sp] (h2so4) at (5.5,6) {\ce{H2SO4}};
+\node[c13sp] (na2so3) at (7.1,4) {\ce{Na2SO3}};
+\node[c13sp] (na2so4) at (7.1,6) {\ce{Na2SO4}};
+\draw[c13ar] (h2s) -- node[c13lb,above left]{① \ce{O2}} (s);
+\draw[c13ar] (s) to[bend left=14] node[c13lb,above left]{② \ce{O2}} (so2);
+\draw[c13ar] (so2) to[bend left=14] node[c13lb,below right]{\ce{H2S}} (s);
+\draw[c13ar] (so2) -- node[c13lb,left]{③ \ce{O2}} (so3);
+\draw[c13ar] (so3) -- node[c13lb,above]{④ \ce{H2O}} (h2so4);
+\draw[c13ar] (so2) -- node[c13lb,below]{⑤ \ce{H2O}} (h2so3);
+\draw[c13ar] (h2so3) -- node[c13lb,right]{⑥} (h2so4);
+\draw[c13ar] (h2so3) -- node[c13lb,below]{⑦碱} (na2so3);
+\draw[c13ar] (na2so3) -- node[c13lb,right]{⑧ \ce{O2}} (na2so4);
+\draw[c13ar] (h2so4.south west) -- node[c13lb,above left,pos=0.35,inner sep=0pt]{⑨} (so2.north east);
+\end{tikzpicture}
+\captionof{figure}{硫的价类二维图\label{fig:13-s}}
+\end{minipage}\par\medskip
+
+\textbf{氮。}向上的主线是 \ce{N2 -> NO -> NO2 -> HNO3}：②\ce{N2 + O2 ->[\text{放电}] 2NO}（雷电固氮），③\ce{2NO + O2 = 2NO2}，④\ce{3NO2 + H2O = 2HNO3 + NO}（\ce{NO2} 中氮从 $+4$ 价一部分升到 $+5$、一部分降到 $+2$，是歧化反应）。工业制硝酸则从氨出发：①\ce{N2 + 3H2 <=>[\text{高温、高压}][\text{催化剂}] 2NH3}，⑦\ce{4NH3 + 5O2 ->[\text{催化剂}][\text{△}] 4NO + 6H2O}，再走③④。向下的支线是硝酸作氧化剂：⑤\ce{Cu + 4HNO3}（浓）\ce{= Cu(NO3)2 + 2NO2 ^ + 2H2O}，⑥\ce{3Cu + 8HNO3}（稀）\ce{= 3Cu(NO3)2 + 2NO ^ + 4H2O}；硝酸见光易分解（\ce{4HNO3 ->[\text{光照}] 4NO2 ^ + O2 ^ + 2H2O}），所以保存在棕色瓶中。$-3$ 价一行是水平转化⑨：\ce{NH3 + HCl = NH4Cl}（白烟）；铵盐与碱共热放出氨，\ce{2NH4Cl + Ca(OH)2 ->[\text{△}] CaCl2 + 2NH3 ^ + 2H2O} 是实验室制氨的反应，氨能使湿润的红色石蕊试纸变蓝。
+
+\textbf{硫。}向上的主线是 \ce{H2S -> S -> SO2 -> SO3 -> H2SO4}，工业制硫酸走的就是后三步：②\ce{S + O2 ->[\text{点燃}] SO2}，③\ce{2SO2 + O2 <=>[\text{催化剂}][\text{△}] 2SO3}，④\ce{SO3 + H2O = H2SO4}。$+4$ 价一行是 \ce{SO2} 作为酸性氧化物的水平转化（⑤\ce{SO2 + H2O <=> H2SO3}，⑦与碱生成亚硫酸盐）；$+4$ 价处于中间价态，亚硫酸及其盐容易被空气氧化（⑥⑧），\ce{SO2} 还能使溴水、酸性 \ce{KMnO4} 溶液褪色（还原性）。\ce{SO2} 与 \ce{H2S} 相遇生成 S：\ce{SO2 + 2H2S = 3S + 2H2O}，$+4$ 价和 $-2$ 价向中间的 0 价靠拢，这时 \ce{SO2} 表现氧化性。向下的支线⑨是浓硫酸的强氧化性：\ce{Cu + 2H2SO4}（浓）\ce{->[\text{△}] CuSO4 + SO2 ^ + 2H2O}，浓硫酸还能在常温下使 Fe、Al 钝化。浓硫酸的吸水性（作干燥剂）、脱水性（使蔗糖变黑）不改变硫的价态。注意 \ce{SO2} 的漂白性是与有色物质化合成不稳定的无色物质，加热又恢复原色，它也不能漂白酸碱指示剂，所以 \ce{SO2} 使紫色石蕊溶液只变红、不褪色。
+
+\begin{liti}[典型\quad 原创]
+结合图~\ref{fig:13-s}，下列说法正确的是\xz
+\xxa{\ce{H2S} 与 \ce{SO2} 混合生成淡黄色固体，体现了 \ce{SO2} 的还原性}{将 \ce{SO2} 通入 \ce{BaCl2} 溶液中，生成 \ce{BaSO3} 白色沉淀}{久置的 \ce{Na2SO3} 溶液，先加足量盐酸、再加 \ce{BaCl2} 溶液，若有白色沉淀则已变质}{Cu 与浓硫酸反应时，浓硫酸只体现强氧化性}
+\tcblower
+\silu 先在图上找到物质所在的点，判断转化方向，再看具体反应。\\
+\jie A：S 从 $+4$ 价降为 0 价，\ce{SO2} 是氧化剂，体现氧化性，错。B：\ce{H2SO3} 的酸性比盐酸弱，\ce{SO2} 与 \ce{BaCl2} 溶液不反应，错。C：\ce{Na2SO3} 变质是被氧化为 \ce{Na2SO4}（⑧）；先加足量盐酸，可把 \ce{SO3^2-} 转化为 \ce{SO2} 除去，再加 \ce{BaCl2} 生成的白色沉淀只能是 \ce{BaSO4}，对。D：产物中有 \ce{CuSO4}，部分硫酸价态不变，还体现了酸性，错。\\
+\daan C
+\end{liti}
+
+\subsection{钠、铝、铜、氯、硅的重要转化}
+其余几种元素也可以放进价类二维图来理解，只是转化集中在少数几条线上。钠在化合物中只有 $+1$ 价，除了 Na 与水、与 \ce{O2} 的反应，其余转化都在 $+1$ 价这一水平线上（\ce{Na2O2} 中氧为 $-1$ 价，它与水、\ce{CO2} 的反应是氧的歧化）。铝只有 0 和 $+3$ 价，$+3$ 价一行的 \ce{Al2O3}、\ce{Al(OH)3} 既能与酸又能与强碱反应（两性），流程题中常用这一点把铝与其他金属分开。铜有 0、$+1$、$+2$ 价，常考 Cu 被氧化为 \ce{Cu^2+}。氯的价态最多（$-1$、0、$+1$、$+4$、$+5$、$+7$），含氯消毒剂（\ce{Cl2}、\ce{ClO-}、\ce{ClO2}）都利用氯的正价或 0 价的氧化性，$-1$ 价的 HCl 没有这种性质。硅的转化几乎都在 $+4$ 价一行：\ce{SiO2} 是酸性氧化物，但不溶于水，在流程中“酸浸”时留在滤渣里，“碱浸”时则溶解为 \ce{SiO3^2-}。重要反应见表~\ref{tab:13-elem}。
+
+\begin{center}
+\begin{minipage}{\linewidth}\centering
+\small
+\captionof{table}{钠、铝、铜、氯、硅的重要转化\label{tab:13-elem}}
+\begin{tabularx}{\linewidth}{p{0.8cm}X}
+\toprule
+元素 & 重要转化 \\
+\midrule
+Na & \ce{2Na + 2H2O = 2NaOH + H2 ^}；\ce{2Na + O2 ->[\text{△}] Na2O2}；\ce{2Na2O2 + 2H2O = 4NaOH + O2 ^}，\ce{2Na2O2 + 2CO2 = 2Na2CO3 + O2}（\ce{Na2O2} 既是氧化剂又是还原剂，每生成 1 mol \ce{O2} 转移 2 mol 电子）；\ce{2NaHCO3 ->[\text{△}] Na2CO3 + CO2 ^ + H2O}；侯氏制碱 \ce{NaCl + NH3 + CO2 + H2O = NaHCO3 v + NH4Cl} \\
+Al & \ce{2Al + 2NaOH + 6H2O = 2Na[Al(OH)4] + 3H2 ^}；\ce{Al2O3 + 2OH- + 3H2O = 2[Al(OH)4]-}；\ce{Al^3+ + 3NH3.H2O = Al(OH)3 v + 3NH4+}；\ce{[Al(OH)4]- + CO2}（过量）\ce{= Al(OH)3 v + HCO3-}；常温下遇浓硫酸、浓硝酸钝化 \\
+Cu & \ce{2Cu + O2 + 2H2SO4 ->[\text{△}] 2CuSO4 + 2H2O}；\ce{Cu + H2O2 + H2SO4 = CuSO4 + 2H2O}；\ce{Cu2O} 在酸中歧化 \ce{Cu2O + 2H+ = Cu + Cu^2+ + H2O}；\ce{Cu^2+ + 4NH3 = [Cu(NH3)4]^2+}（深蓝色） \\
+Cl & \ce{Cl2 + H2O <=> HCl + HClO}；\ce{Cl2 + 2NaOH = NaCl + NaClO + H2O}；\ce{2Cl2 + 2Ca(OH)2 = CaCl2 + Ca(ClO)2 + 2H2O}（漂白粉）；HClO 有强氧化性、漂白性，见光分解；“84”消毒液与洁厕灵（含盐酸）不能混用：\ce{ClO- + Cl- + 2H+ = Cl2 ^ + H2O} \\
+Si & \ce{SiO2 + 2C ->[\text{高温}] Si + 2CO ^}（制粗硅）；\ce{SiO2 + 2NaOH = Na2SiO3 + H2O}；\ce{SiO2 + 4HF = SiF4 ^ + 2H2O}（刻蚀玻璃）；\ce{Na2SiO3 + 2HCl = H2SiO3 v + 2NaCl}；Si 是半导体材料，\ce{SiO2} 制光导纤维 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+物质推断题常从颜色、现象等特征入手，先锁定一种物质，再在价类二维图上向前后推。常用的特征：淡黄色固体 S、\ce{Na2O2}、AgBr；红棕色气体 \ce{NO2}；黄绿色气体 \ce{Cl2}；红褐色沉淀 \ce{Fe(OH)3}；蓝色沉淀 \ce{Cu(OH)2}；溶液中 \ce{Fe^3+} 黄色、\ce{Fe^2+} 浅绿色、\ce{Cu^2+} 蓝色、\ce{MnO4-} 紫红色；无色气体遇空气变红棕色的是 NO；使品红褪色、加热又复原的是 \ce{SO2}；两种气体相遇生成白烟的是 \ce{NH3} 和 HCl。在价类二维图题中，特征点也很有用：$-1$ 价的酸是 HCl；同时有 $+2$、$+3$ 价氧化物和碱的金属是 Fe。
+
+\begin{zhenti}{2025年广东卷第7题}
+能满足下列物质间直接转化关系，且推理成立的是\\
+\centerline{单质 X $\xrightarrow{\ce{O2}}$ 氧化物1 $\xrightarrow{\ce{O2}}$ 氧化物2 $\xrightarrow{\ce{H2O}}$ 酸（或碱）$\xrightarrow{\text{NaOH（或 HCl）}}$ 盐}
+\xxb{X 可为铝，盐的水溶液一定显酸性}{X 可为硫，氧化物1可使品红溶液褪色}{X 可为钠，氧化物2可与水反应生成 \ce{H2}}{X 可为碳，盐的热稳定性：\ce{NaHCO3}$>$\ce{Na2CO3}}
+
+\textbf{解析：}这条转化链在价类二维图上是“单质$\to$低价氧化物$\to$高价氧化物”两次向上，再沿水平线走到酸（碱）和盐。A：\ce{Al2O3} 不能再被 \ce{O2} 氧化，也不与水反应，错；B：\ce{S -> SO2 -> SO3 -> H2SO4 -> Na2SO4}，\ce{SO2} 能使品红褪色，对；C：\ce{Na2O2} 与水反应生成 \ce{O2}，错；D：\ce{Na2CO3} 比 \ce{NaHCO3} 稳定，错。答案：B。
+\end{zhenti}
+
+\section{化工流程题的读法}
+
+\subsection{流程图的结构与物质流向}
+化工流程图是把一个工业生产过程简化成“方框加箭头”的示意图：方框是操作，箭头是物质的去向。读流程图，可以把要提取的元素（目标元素）想象成一件包裹，沿着箭头追踪它在每一步以什么形式存在、在固体里还是在溶液里，其他元素（杂质）则在某一步被“卸下”。大多数流程都可以归入图~\ref{fig:13-flow} 的结构。
+
+\tu{\begin{tikzpicture}[node distance=0.95cm]
+\node[font=\small] (raw) {原料};
+\node[c13st,right=0.55cm of raw,text width=1.6cm] (pre) {预处理\\\scriptsize 粉碎、焙烧};
+\node[c13st,right=of pre,text width=1.6cm] (lea) {浸出\\\scriptsize 酸浸、碱浸};
+\node[c13st,right=of lea,text width=1.6cm] (pur) {除杂\\\scriptsize 氧化、调 pH};
+\node[c13st,right=of pur,text width=1.6cm] (sep) {分离提纯\\\scriptsize 萃取、结晶};
+\node[font=\small,right=0.55cm of sep] (prod) {产品};
+\draw[c13main] (raw)--(pre); \draw[c13main] (pre)--node[c13in,above]{固体}(lea);
+\draw[c13main] (lea)--node[c13in,above]{浸出液}(pur); \draw[c13main] (pur)--node[c13in,above]{滤液}(sep);
+\draw[c13main] (sep)--(prod);
+\node[c13in,above=0.45cm of pre] (r1) {空气等}; \draw[c13side] (r1)--(pre);
+\node[c13in,above=0.45cm of lea] (r2) {酸或碱}; \draw[c13side] (r2)--(lea);
+\node[c13in,above=0.45cm of pur] (r3) {氧化剂、调 pH 试剂}; \draw[c13side] (r3)--(pur);
+\node[c13in,above=0.45cm of sep] (r4) {萃取剂等}; \draw[c13side] (r4)--(sep);
+\node[c13in,below=0.45cm of pre] (w1) {尾气\\(\ce{SO2}、\ce{CO2} 等)}; \draw[c13side] (pre)--(w1);
+\node[c13in,below=0.45cm of lea] (w2) {浸出渣\\(\ce{SiO2} 等)}; \draw[c13side] (lea)--(w2);
+\node[c13in,below=0.45cm of pur] (w3) {滤渣\\(\ce{Fe(OH)3} 等)}; \draw[c13side] (pur)--(w3);
+\node[c13in,below=0.45cm of sep] (w4) {母液}; \draw[c13side] (sep)--(w4);
+\draw[c13cyc] (w4.south) -- ++(0,-0.55) -| node[c13in,pos=0.25,below]{循环使用（如母液中的酸、再生的萃取剂）} ([xshift=6mm]lea.south);
+\node[c13in,anchor=west] at ([yshift=-2.25cm]raw.west) {粗箭头：目标元素所在的主线；细箭头：加入或分出的物质；虚线：循环物质};
+\end{tikzpicture}}{化工流程的一般结构与物质流向\label{fig:13-flow}}
+
+图中粗箭头是主线，目标元素一直沿着它走；方框上方的细箭头是加入的试剂和条件，下方的细箭头是分出去的物质（尾气、滤渣、母液），它们或者是要除去的杂质，或者是副产品；虚线是循环物质，即在后面的步骤中生成（或剩余）、又能回到前面作为试剂的物质。读一道新流程题，可以按下面的顺序：
+\begin{enumerate}
+\item 读题头，写出原料的主要成分和目标产品，分清哪种元素是目标、哪些是杂质。
+\item 沿主线逐个方框看“进”和“出”：加了什么、在什么条件下、得到了什么、分出了什么。分出的固体叫“滤渣”或“浸出渣”，溶液叫“滤液”，要判断目标元素此时在固体中还是在溶液中。
+\item 看“已知”信息是为哪一步准备的：$K_\text{sp}$ 或沉淀 pH 表对应调 pH，溶解度曲线对应结晶，配合物信息对应浸出或萃取。
+\item 找循环物质：某物质既出现在前面某步的“进”中，又出现在后面某步的“出”中。
+\end{enumerate}
+流程题的各小问常可分别利用局部信息作答；遇到暂时不明的步骤，可先完成有充分依据的小问，再回来核对物质流向。
+
+\subsection{各操作的作用与答题依据}
+回答“某步操作的目的”时，主要依据是反应速率（第2章）、化学平衡与溶解平衡（第3、4章）、物质的性质（本章第一节），还要兼顾收率、成本和安全。下面按流程顺序逐一说明。
+
+\textbf{粉碎（研磨）}增大了固体与气体或溶液的接触面积，使反应速率加快，反应也更充分，所以答“增大接触面积，加快反应速率，提高浸出率”。\textbf{焙烧（煅烧）}是在高温下让固体与空气或其他试剂反应，常见目的有：把硫化物氧化为氧化物（\ce{4FeS2 + 11O2 ->[\text{高温}] 2Fe2O3 + 8SO2}，同时产生的 \ce{SO2} 要处理或用来制硫酸）；除去碳和有机物；与纯碱等共同焙烧，把难溶矿物转化为可溶的盐（如铬铁矿转化为 \ce{Na2CrO4}）。
+
+\textbf{浸出}是用水、酸或碱溶液把固体中的可溶成分溶出。酸浸使金属氧化物溶解为金属离子（\ce{Fe2O3 + 6H+ = 2Fe^3+ + 3H2O}），\ce{SiO2} 等不溶物进入浸出渣；碱浸则可溶解 Al、\ce{Al2O3}、\ce{SiO2}，与不溶于碱的铁、铜等分开。要区分两种设问：提高浸出\emph{速率}的措施是粉碎、搅拌、适当升温、适当增大酸（碱）的浓度；提高浸出\emph{率}还可以延长浸出时间、多次浸取。“适当”二字有依据：温度过高，盐酸、氨会挥发，\ce{H2O2}、\ce{NH4HCO3} 会分解；酸过量太多，后面调 pH 时要消耗更多的碱。
+
+\textbf{除杂}常分两步。先用氧化剂（或还原剂）调整杂质的价态，最典型的是把 \ce{Fe^2+} 氧化为 \ce{Fe^3+}，因为 \ce{Fe^3+} 在 pH 较低时就能沉淀完全；氧化剂常用 \ce{H2O2}（还原产物是水，不引入杂质，但温度不能太高）、\ce{O2} 或与产品同元素的物质（如 \ce{MnO2} 用于制锰盐）。然后调 pH，使杂质离子沉淀完全而目标离子不沉淀；调 pH 的试剂要能消耗 \ce{H+}，又不引入新杂质，如含 \ce{Cu^2+} 的溶液用 CuO、\ce{Cu(OH)2} 或 \ce{Cu2(OH)2CO3}。pH 的范围怎样计算，见第~\ref{sec:13-ksp} 小节。
+
+\textbf{萃取与反萃取}用于分离性质相近的金属离子。有机萃取剂（记作 HR）与某种金属离子结合成能溶于有机溶剂的化合物，存在平衡
+\[\ce{M^2+(aq) + 2HR(org) <=> MR2(org) + 2H+(aq)}\]
+其中 aq 表示水相，org 表示有机相。水相酸度较低时平衡正向移动，M 进入有机相，与留在水相中的杂质分开（萃取）；分液后向有机相中加入较浓的酸，平衡逆向移动，M 又回到水相（反萃取），得到较纯、较浓的溶液，萃取剂再生后循环使用（图~\ref{fig:13-ext}）。题目问“为什么某离子易进入有机相”，从配位作用和配合物的疏水性回答；问“反萃取加什么”，从平衡移动回答。
+
+\textbf{结晶方式}由溶解度随温度的变化决定（图~\ref{fig:13-sol}）。溶解度受温度影响小的物质（如 NaCl）用蒸发结晶；溶解度随温度升高明显增大的物质（如 \ce{KNO3}），以及带结晶水的物质（如 \ce{CuSO4.5H2O}、\ce{FeSO4.7H2O}，蒸干会失去结晶水），用“蒸发浓缩、冷却结晶、过滤”。要在高温下除去溶解度小的杂质或析出溶解度随温度升高而减小的产品（如 \ce{Li2CO3}），用“趁热过滤”。易水解的盐（如由 \ce{MgCl2.6H2O} 制无水 \ce{MgCl2}）要在 HCl 气流中加热，以抑制水解（第4章）。
+
+\par\medskip\noindent
+\begin{minipage}[b]{0.5\linewidth}\centering
+\begin{tikzpicture}[font=\scriptsize,x=0.94cm,y=1cm]
+\node[c13st,text width=1.3cm,minimum height=0.8cm] (e1) at (0,0) {萃取};
+\node[c13st,text width=1.3cm,minimum height=0.8cm] (e2) at (3.3,0) {反萃取};
+\node[c13in] (aq) at (-1.75,0) {水相\\\ce{M^2+}、杂质};
+\draw[c13main] (aq)--(e1);
+\draw[c13main] (e1)--node[c13in,above]{有机相 \ce{MR2}}(e2);
+\node[c13in] (raf) at (0,-1.25) {萃余液（杂质）}; \draw[c13side] (e1)--(raf);
+\node[c13in] (acid) at (3.3,1.15) {较浓的酸}; \draw[c13side] (acid)--(e2);
+\node[c13in] (pro) at (5.0,0) {水相\\较纯的\ce{M^2+}}; \draw[c13main] (e2)--(pro);
+\draw[c13cyc] (e2.south) -- ++(0,-0.65) -| node[c13in,pos=0.25,below]{再生的萃取剂 HR} ([xshift=4mm]e1.south);
+\node[c13in] (hr) at (0,1.15) {萃取剂 HR}; \draw[c13side] (hr)--(e1);
+\end{tikzpicture}
+\captionof{figure}{萃取与反萃取\label{fig:13-ext}}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.46\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=6.0cm,height=4.4cm,xmin=0,xmax=100,ymin=0,ymax=260,xlabel={温度/℃},ylabel={溶解度/g},
+ tick label style={font=\scriptsize},label style={font=\scriptsize},xtick={0,20,40,60,80,100},ytick={0,50,100,150,200,250}]
+\addplot[mainblue,thick,smooth,mark=none] coordinates {(0,13.3)(10,20.9)(20,31.6)(30,45.8)(40,63.9)(50,85.5)(60,110)(70,138)(80,169)(90,202)(100,246)};
+\addplot[exorange,thick,smooth,mark=none] coordinates {(0,35.7)(20,36.0)(40,36.6)(60,37.3)(80,38.4)(100,39.8)};
+\node[font=\scriptsize,mainblue] at (axis cs:62,175) {\ce{KNO3}};
+\node[font=\scriptsize,exorange] at (axis cs:80,58) {NaCl};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{\ce{KNO3} 与 NaCl 的溶解度曲线（每 100 g 水）\label{fig:13-sol}}
+\end{minipage}\par\medskip
+
+读图~\ref{fig:13-ext} 时注意，目标元素先“搭乘”有机相离开水相，再被酸“送回”水相，萃取剂本身绕了一圈回到起点。读图~\ref{fig:13-sol} 时注意曲线的陡缓：\ce{KNO3} 的曲线很陡，从 80 ℃ 冷却到 20 ℃，每 100 g 水可析出约 137 g \ce{KNO3}；NaCl 的曲线几乎是平的，冷却析出很少，因此更适合蒸发结晶。
+
+\textbf{洗涤与干燥。}过滤得到的晶体表面附着母液，洗涤是为了除去表面的可溶性杂质。洗涤剂的选择要说出依据：冰水洗，降低晶体的溶解损失；乙醇洗，晶体在乙醇中溶解度小，而且乙醇易挥发，晶体容易干燥；用产品的饱和溶液洗，几乎不溶解产品。操作是向漏斗中加洗涤剂至浸没晶体，待其自然流下，重复 2～3 次；检验是否洗净，取最后一次洗涤液，检验其中是否还有母液中的某种离子（如加 \ce{BaCl2} 溶液检验 \ce{SO4^2-}）。受热易分解或易被氧化的产品，要低温烘干或真空干燥。
+
+\begin{liti}[基础\quad 原创]
+用硫铁矿烧渣（主要含 \ce{Fe2O3}、FeO 和 \ce{SiO2}）制备绿矾（\ce{FeSO4.7H2O}），其流程为：烧渣 $\xrightarrow{\text{粉碎}}$ $\xrightarrow{\text{稀硫酸，酸浸}}$ 过滤（得滤渣1）$\to$ 滤液 $\xrightarrow{\text{过量铁粉}}$ 过滤（得滤渣2）$\to$ 滤液 $\to$ 蒸发浓缩、冷却结晶 $\to$ 过滤、洗涤、干燥 $\to$ 绿矾。(1) 酸浸前粉碎的目的是什么？写出 \ce{Fe2O3} 溶解的离子方程式。(2) 滤渣1、滤渣2的主要成分各是什么？(3) 加入铁粉的作用是什么？怎样检验铁粉是否已把杂质离子除尽？(4) 为什么不能把溶液直接蒸干？洗涤晶体宜选冰水还是热水？
+\tcblower
+\silu 先确定目标元素是铁，产品是 $+2$ 价的 \ce{FeSO4}；原料中有 $+3$ 价铁，所以流程中必须有还原步骤。\\
+\jie (1) 增大接触面积，加快酸浸速率，提高浸出率；\ce{Fe2O3 + 6H+ = 2Fe^3+ + 3H2O}。(2) 滤渣1是不溶于稀硫酸的 \ce{SiO2}；滤渣2是剩余的铁粉。(3) 把 \ce{Fe^3+} 还原为 \ce{Fe^2+}：\ce{2Fe^3+ + Fe = 3Fe^2+}（同时消耗多余的酸）；取少量溶液，滴加 KSCN 溶液，不变红说明 \ce{Fe^3+} 已除尽。(4) 绿矾含结晶水，蒸干会失去结晶水，\ce{Fe^2+} 在加热时也更易被氧化，所以用蒸发浓缩、冷却结晶；用冰水洗涤，以减少晶体的溶解损失。
+\end{liti}
+
+\section{流程中的方程式与计算}
+
+\subsection{陌生氧化还原（离子）方程式的书写}
+流程题中的方程式多数没有在课本上出现过，但都必须满足三个守恒：氧化剂得到的电子数等于还原剂失去的电子数（电子守恒），离子方程式两边电荷相等（电荷守恒），各元素原子数相等（原子守恒）。按这个顺序依次配平，就是下面的四步法。
+\begin{enumerate}
+\item \textbf{定物质}：根据题给信息和价态规律，写出氧化剂、还原剂、氧化产物、还原产物。
+\item \textbf{配电子}：标出变价元素的化合价，按得失电子的最小公倍数确定这四种物质的系数。
+\item \textbf{配电荷}：看介质。酸性介质用 \ce{H+} 配平电荷，碱性介质用 \ce{OH-}；中性介质一般在左边补 \ce{H2O}，右边生成 \ce{H+} 或 \ce{OH-}。酸性条件下方程式中不能出现 \ce{OH-}，碱性条件下不能出现 \ce{H+}。
+\item \textbf{配原子}：用 \ce{H2O} 配平 H、O，最后用 O 原子数检查。
+\end{enumerate}
+
+\begin{liti}[基础\quad 原创]
+将 \ce{SO2} 通入酸性 \ce{KMnO4} 溶液，溶液紫红色褪去，生成 \ce{Mn^2+}。写出该反应的离子方程式。
+\tcblower
+\jie ①定物质：\ce{MnO4- -> Mn^2+}，\ce{SO2 -> SO4^2-}。②配电子：Mn 由 $+7\to+2$，得 5 个电子；S 由 $+4\to+6$，失 2 个电子；最小公倍数 10，得 2 \ce{MnO4-}、5 \ce{SO2}、2 \ce{Mn^2+}、5 \ce{SO4^2-}。③配电荷：左边 $-2$，右边 $2\times(+2)+5\times(-2)=-6$，右边比左边少 4 个正电荷，在右边补 4 \ce{H+}。④配原子：右边 4 个 H，左边补 2 \ce{H2O}；O：左 $8+10+2=20$，右 20。\\
+\daan \ce{5SO2 + 2MnO4- + 2H2O = 5SO4^2- + 2Mn^2+ + 4H+}。说明：“酸性”溶液中也可以在产物一侧生成 \ce{H+}，配电荷时由计算决定 \ce{H+} 写在哪一边。
+\end{liti}
+
+\begin{zhenti}{改编自2026年广东卷第18题(5)，所附网络收集版}
+从金精矿提金的流程中，“沉金”时 \ce{[AuCl4]-} 在弱酸性条件下被亚硫酸盐还原为 Au。写出生成 Au 的离子方程式（弱酸性溶液中，+4 价硫主要以 \ce{HSO3-} 存在）。
+
+\textbf{解析：}①定物质：氧化剂 \ce{[AuCl4]-}$\to$Au，还原剂 \ce{HSO3-}$\to$\ce{SO4^2-}；配体 Cl 以 \ce{Cl-} 形式进入溶液。②配电子：Au 由 $+3\to0$，每个得 3 个电子；S 由 $+4\to+6$，每个失 2 个电子；最小公倍数 6，得 2 \ce{[AuCl4]-}、3 \ce{HSO3-}、2 Au、3 \ce{SO4^2-}、8 \ce{Cl-}。③配电荷：左边 $2\times(-1)+3\times(-1)=-5$，右边 $3\times(-2)+8\times(-1)=-14$，弱酸性介质用 \ce{H+} 配平，右边加 9 \ce{H+}。④配原子：右边 9 个 H，左边 3 \ce{HSO3-} 只有 3 个 H，左边补 3 \ce{H2O}；检查 O：左 $3\times3+3=12$，右 $3\times4=12$。
+\[\ce{2[AuCl4]- + 3HSO3- + 3H2O = 2Au v + 3SO4^2- + 8Cl- + 9H+}\]
+若把还原剂写作 \ce{SO3^2-}，同样配平得 \ce{2[AuCl4]- + 3SO3^2- + 3H2O = 2Au v + 3SO4^2- + 8Cl- + 6H+}。
+\end{zhenti}
+
+\begin{liti}[综合\quad 原创]
+高铁酸钠（\ce{Na2FeO4}）是一种新型净水剂。在 NaOH 溶液中用 NaClO 氧化 \ce{Fe(OH)3} 可制得 \ce{Na2FeO4}，NaClO 被还原为 NaCl。(1) 写出该反应的离子方程式。(2) \ce{Na2FeO4} 既能消毒又能净水，说明原因。
+\tcblower
+\silu 介质是碱性，配电荷只能用 \ce{OH-}。\\
+\jie (1) Fe 由 $+3\to+6$，每个失 3 个电子；Cl 由 $+1\to-1$，每个得 2 个电子；最小公倍数 6：2 \ce{Fe(OH)3}、3 \ce{ClO-}、2 \ce{FeO4^2-}、3 \ce{Cl-}。电荷：左 $-3$，右 $2\times(-2)+3\times(-1)=-7$，左边补 4 \ce{OH-}；H：左 $6+4=10$，右边补 5 \ce{H2O}；O：左 $6+3+4=13$，右 $8+5=13$。
+\[\ce{2Fe(OH)3 + 3ClO- + 4OH- = 2FeO4^2- + 3Cl- + 5H2O}\]
+(2) \ce{FeO4^2-} 中铁为 $+6$ 价，有强氧化性，能杀菌消毒；它的还原产物 \ce{Fe^3+} 水解生成 \ce{Fe(OH)3} 胶体，能吸附水中的悬浮杂质。
+\end{liti}
+
+\subsection{\texorpdfstring{$K_\text{sp}$}{Ksp} 与调 pH 的计算}\label{sec:13-ksp}
+调 pH 的计算以第4章“沉淀溶解平衡”一节为基础。某离子“开始沉淀”时，在忽略体积变化和其他平衡的模型下，用它的原浓度代入 $K_\text{sp}$；“沉淀完全”则是浓度已低于题给的允许限值，并非浓度等于零。本书未另作说明时采用 $c\le1.0\times10^{-5}$ mol·L$^{-1}$。由 $K_\text{sp}$ 求出 $c(\ce{OH-})$，再由 $\text{pH}=14+\lg c(\ce{OH-})$（25 ℃）换算成 pH。要使杂质离子 A 沉淀完全而目标离子 B 不沉淀，pH 应满足
+\[\text{pH}(\text{A 沉淀完全})\le\text{pH}<\text{pH}(\text{B 开始沉淀}).\]
+把各离子的沉淀 pH 范围画在一条 pH 数轴上（图~\ref{fig:13-ph}），能否分离、为什么要先氧化，就一目了然。
+
+\tu{\begin{tikzpicture}[x=1.25cm,y=1cm,font=\small]
+\fill[deepgreen!15] (2.8,-0.15) rectangle (4.7,2.55);
+\node[font=\scriptsize,deepgreen,align=center] at (3.75,2.3) {可选 pH 范围};
+\draw[c13ax] (0,0)--(9.4,0) node[right]{pH};
+\foreach \x in {0,1,...,9} {\draw (\x,0)--(\x,-0.1) node[below,font=\scriptsize]{\x};}
+\foreach \a/\b/\y/\t/\c in {1.8/2.8/0.55/\ce{Fe^3+}/exorange, 4.7/6.7/1.15/\ce{Cu^2+}/mainblue, 6.8/8.3/1.75/\ce{Fe^2+}/gkpurple}{
+  \fill[\c!35] (\a,\y-0.17) rectangle (\b,\y+0.17);
+  \draw[\c] (\a,\y-0.17) rectangle (\b,\y+0.17);
+  \node[left,font=\scriptsize] at (\a,\y) {\t};
+  \node[above,font=\tiny] at (\a,\y+0.15) {\a};
+  \node[above,font=\tiny] at (\b,\y+0.15) {\b};}
+\draw[dashed,gray] (2.8,0)--(2.8,2.55); \draw[dashed,gray] (4.7,0)--(4.7,2.55);
+\end{tikzpicture}}{\ce{Cu^2+}（0.10 mol·L$^{-1}$）、\ce{Fe^3+} 和 \ce{Fe^2+}（各 0.010 mol·L$^{-1}$）的沉淀 pH 范围（条形左端为开始沉淀，右端为沉淀完全）\label{fig:13-ph}}
+
+\begin{liti}[典型\quad 原创]
+某 \ce{CuSO4} 溶液中 $c(\ce{Cu^2+})=0.10$ mol·L$^{-1}$，含杂质 \ce{Fe^3+}、\ce{Fe^2+} 各约 0.010 mol·L$^{-1}$。已知 25 ℃ 时 $K_\text{sp}[\ce{Fe(OH)3}]=2.8\times10^{-39}$，$K_\text{sp}[\ce{Cu(OH)2}]=2.2\times10^{-20}$，$K_\text{sp}[\ce{Fe(OH)2}]=4.9\times10^{-17}$；$\lg6.5\approx0.81$，$\lg4.7\approx0.67$，$\lg7\approx0.85$。(1) 计算 \ce{Fe^3+} 沉淀完全、\ce{Cu^2+} 开始沉淀、\ce{Fe^2+} 开始沉淀时的 pH。(2) 为什么要先加 \ce{H2O2}，再调 pH？(3) 应控制的 pH 范围是多少？选用什么试剂调 pH？
+\tcblower
+\jie (1) \ce{Fe^3+} 沉淀完全：$c(\ce{OH-})=\sqrt[3]{\dfrac{2.8\times10^{-39}}{1.0\times10^{-5}}}\approx6.5\times10^{-12}$ mol·L$^{-1}$，pH$\approx2.8$。\ce{Cu^2+} 开始沉淀：$c(\ce{OH-})=\sqrt{\dfrac{2.2\times10^{-20}}{0.10}}\approx4.7\times10^{-10}$ mol·L$^{-1}$，pH$\approx4.7$。\ce{Fe^2+} 开始沉淀：$c(\ce{OH-})=\sqrt{\dfrac{4.9\times10^{-17}}{0.010}}=7.0\times10^{-8}$ mol·L$^{-1}$，pH$\approx6.8$。\\
+(2) 由图~\ref{fig:13-ph} 可见，\ce{Fe^2+} 要到 pH$\approx6.8$ 才开始沉淀，此时 \ce{Cu^2+} 早已大量沉淀，无法分离；把 \ce{Fe^2+} 氧化为 \ce{Fe^3+} 后，铁在 pH$\approx2.8$ 时就已沉淀完全。\ce{2Fe^2+ + H2O2 + 2H+ = 2Fe^3+ + 2H2O}。\\
+(3) $2.8\le$pH$<4.7$。用 CuO、\ce{Cu(OH)2} 或 \ce{Cu2(OH)2CO3}，它们能消耗 \ce{H+}，过量的固体可随 \ce{Fe(OH)3} 一起滤去，不引入新杂质。
+\end{liti}
+
+\section{流程综合：金属分离与绿色冶铁}
+
+\begin{zhenti}{改编自2025年广东卷第18题}
+我国是金属材料生产大国，绿色生产是必由之路。一种从多金属精矿中提取 Fe、Cu、Ni 等并探究新型绿色冶铁方法的工艺如图~\ref{fig:13-2025}。已知：多金属精矿中主要含有 Fe、Al、Cu、Ni、O 等元素；298 K 时 $K_\text{sp}$：\ce{Fe(OH)3} $2.8\times10^{-39}$，\ce{Al(OH)3} $1.3\times10^{-33}$，\ce{Cu(OH)2} $2.2\times10^{-20}$，\ce{Ni(OH)2} $5.5\times10^{-16}$。
+
+\tu{\begin{tikzpicture}[font=\scriptsize,node distance=0.45cm and 0.95cm,
+ st/.style={draw,rounded corners=1.5pt,fill=lightblue,minimum height=0.6cm,inner sep=2.5pt,align=center},
+ pr/.style={inner sep=1pt,align=center}]
+\node[pr] (ore) {矿粉};
+\node[st,right=0.6cm of ore] (leach) {酸浸};
+\node[st,right=1.25cm of leach] (hp) {高压加热};
+\node[st,right=of hp] (al) {沉铝};
+\node[st,right=of al] (ext) {选择萃取};
+\node[pr,right=0.7cm of ext] (cu) {Cu 配合物\\Ni 配合物};
+\node[pr,below=0.55cm of cu] (nicun) {\ce{Ni_xCu_yN_z}};
+\draw[c13main] (ore)--(leach);
+\draw[c13main] (leach)--node[above]{浸取液}node[below]{调 pH$=3.0$}(hp);
+\draw[c13main] (hp)--node[above]{滤液1}(al);
+\draw[c13main] (al)--node[above]{滤液2}node[below]{常温}(ext);
+\draw[c13main] (ext)--(cu);
+\draw[c13side] (cu)--node[right]{……}(nicun);
+\node[pr,above=0.35cm of leach] (so2) {\ce{SO2}}; \draw[c13side] (so2)--(leach);
+\node[pr,above=0.35cm of hp] (air) {空气}; \draw[c13side] (air)--(hp);
+\node[pr,below=0.4cm of leach] (res) {固体残渣}; \draw[c13side] (leach)--(res);
+\node[pr,below=0.4cm of al] (cake) {滤饼}; \draw[c13side] (al)--(cake);
+\node[pr,below=0.4cm of ext] (so4) {含 \ce{SO4^2-} 的溶液}; \draw[c13side] (ext)--(so4);
+\node[pr,below=0.4cm of hp] (fe2o3) {\ce{Fe2O3}}; \draw[c13main] (hp)--(fe2o3);
+\node[st,below left=0.5cm and -0.3cm of fe2o3] (h700) {700 ℃ 加热};
+\node[st,below right=0.5cm and -0.3cm of fe2o3] (elec) {电解};
+\draw[c13main] (fe2o3)--(h700); \draw[c13main] (fe2o3)--(elec);
+\node[pr,left=0.4cm of h700] (gas) {\ce{NH3}、\ce{H2}}; \draw[c13side] (gas)--(h700);
+\node[pr,right=0.4cm of elec] (naoh) {NaOH 溶液}; \draw[c13side] (naoh)--(elec);
+\node[pr,below=0.35cm of h700] (fe1) {Fe}; \node[pr,below=0.35cm of elec] (fe2) {Fe};
+\draw[c13main] (h700)--(fe1); \draw[c13main] (elec)--(fe2);
+\end{tikzpicture}}{2025年广东卷第18题工艺流程\label{fig:13-2025}}
+
+(1)“酸浸”中，提高浸取速率的措施有\tk（写一条）。\\
+(2)“高压加热”时，生成 \ce{Fe2O3} 的离子方程式为\tk。\\
+(3)“沉铝”时，pH 最高可调至\tk（溶液体积变化可忽略）。已知“滤液1”中 $c(\ce{Cu^2+})=0.022$ mol·L$^{-1}$，$c(\ce{Ni^2+})=0.042$ mol·L$^{-1}$。\\
+(4)“选择萃取”中，镍形成的配合物中 Ni 与吡啶环上的 N、磺酸根上的 O、水分子中的 O 配位，配体带有长烷基链。镍易进入有机相的原因有\tk（填字母）。\\
+\hspace*{1em}A．镍与 N、O 形成配位键\quad B．配位时 \ce{Ni^2+} 被还原\quad C．配合物与水能形成分子间氢键\quad D．烷基链具有疏水性\\
+(5) \ce{Ni_xCu_yN_z} 晶体的立方晶胞中，原子位于顶点、面心和体心（图~\ref{fig:13-cell}），同种位置的原子相同，相邻原子间的最近距离之比 $d(\text{Cu–Ni}):d(\text{Ni–N})=\sqrt2:1$，则 $x:y:z=$\tk；晶体中与 Cu 原子最近且等距离的 Ni 原子的数目为\tk。\\
+(6) ①“700 ℃ 加热”步骤中，混合气体中仅加少量 \ce{H2}，但借助工业合成氨的逆反应，可使 Fe 不断生成。该步骤发生反应的化学方程式为\tk{}和\tk。②“电解”时，\ce{Fe2O3} 颗粒分散于 NaOH 溶液中，以 Fe 片、石墨棒为电极，画出电解池示意图并做相应标注。③与传统高炉炼铁工艺相比，上述两种新型冶铁方法所体现“绿色化学”思想的共同点是\tk（写一条）。
+\end{zhenti}
+
+\textbf{读流程。}原料含 Fe、Al、Cu、Ni 四种金属元素，目标是把 Fe 和 Cu、Ni 分别提取出来，Al 是要除去的杂质。沿图~\ref{fig:13-2025} 的主线追踪各元素：“酸浸”时金属溶解为离子，通入的 \ce{SO2} 是还原剂，把 \ce{Fe^3+} 还原为 \ce{Fe^2+}（\ce{2Fe^3+ + SO2 + 2H2O = 2Fe^2+ + SO4^2- + 4H+}），不溶物成为固体残渣；“高压加热”时铁以 \ce{Fe2O3} 形式分出，转入下方的冶铁支线；“沉铝”时铝以滤饼（\ce{Al(OH)3}）形式分出；“选择萃取”把 Cu、Ni 分别转入有机相，硫酸根留在水相。可见，分离利用的是不同金属在特定条件下反应或分配行为的差异；要逐步确认目标金属进入了哪一相，不能只背操作名称。
+
+(1) 依据是影响速率的因素：搅拌、粉碎精矿、适当提高酸浸温度或酸的浓度（任写一条）。
+
+(2) 浸取液中铁以 \ce{Fe^2+} 存在。高压加热时，\ce{O2} 把 \ce{Fe^2+} 氧化为 $+3$ 价，并在高温下以 \ce{Fe2O3} 析出。按四步法：Fe 失 1 个电子，\ce{O2} 得 4 个电子，得 4 \ce{Fe^2+}、1 \ce{O2}、2 \ce{Fe2O3}；左边电荷 $+8$，酸性介质右边补 8 \ce{H+}；左边补 4 \ce{H2O}。
+\[\ce{4Fe^2+ + O2 + 4H2O ->[\text{高压}][\text{△}] 2Fe2O3 v + 8H+}\]
+这里铁转入 \ce{Fe2O3} 固体、铝仍留在滤液，是流程及后续“沉铝”步骤提供的信息。高压加热条件下，水的离子积、溶度积和水解平衡均可能改变，不能直接把 298 K 的 $K_\text{sp}$ 和 $\text{pH}+\text{pOH}=14$ 套用于这一高温步骤。下一问已回到常温，才使用题给的室温数据计算。
+
+(3) “沉铝”要使 \ce{Al^3+} 沉淀，而 \ce{Cu^2+}、\ce{Ni^2+} 不沉淀，所以 pH 的上限由两者中较早开始沉淀的一种决定。\ce{Cu^2+} 开始沉淀：$c^2(\ce{OH-})=\dfrac{2.2\times10^{-20}}{0.022}=1.0\times10^{-18}$，$c(\ce{OH-})=10^{-9}$ mol·L$^{-1}$，pH$=5$；\ce{Ni^2+} 开始沉淀：$c^2(\ce{OH-})=\dfrac{5.5\times10^{-16}}{0.042}\approx1.3\times10^{-14}$，pH$\approx7.1$。\ce{Cu^2+} 先沉淀，pH 最高调至 5。此时 $c(\ce{Al^3+})=\dfrac{1.3\times10^{-33}}{(10^{-9})^3}=1.3\times10^{-6}$ mol·L$^{-1}<10^{-5}$ mol·L$^{-1}$，铝已沉淀完全，说明这个 pH 上限是合理的。答案：5。
+
+(4) 配位键使 \ce{Ni^2+} 与萃取剂结合（A 对）；长烷基链是疏水的，使整个配合物易溶于有机溶剂（D 对）。配位时镍仍为 $+2$ 价，没有被还原（B 错）；能与水形成氢键反而有利于留在水相（C 错）。答案：AD。
+
+\tu{\begin{tikzpicture}[scale=1.15,font=\scriptsize]
+\coordinate (O) at (0,0); \def\dx{0.75} \def\dy{0.55}
+\draw[thin] (0,0) rectangle (2,2);
+\draw[thin] (2,0)--(2+\dx,\dy)--(2+\dx,2+\dy)--(\dx,2+\dy)--(0,2); \draw[thin] (2,2)--(2+\dx,2+\dy);
+\draw[thin,dashed] (0,0)--(\dx,\dy)--(2+\dx,\dy); \draw[thin,dashed] (\dx,\dy)--(\dx,2+\dy);
+\foreach \p in {(0,0),(2,0),(2,2),(0,2),(\dx,\dy),(2+\dx,\dy),(2+\dx,2+\dy),(\dx,2+\dy)} \fill[black] \p circle (2.2pt);
+\foreach \p in {(1,1),(1+\dx,1+\dy),(1+0.5*\dx,0.5*\dy),(1+0.5*\dx,2+0.5*\dy),(0.5*\dx,1+0.5*\dy),(2+0.5*\dx,1+0.5*\dy)} \filldraw[fill=mainblue!45,draw=mainblue] \p circle (2.6pt);
+\filldraw[fill=white,draw=exorange,thick] (1+0.5*\dx,1+0.5*\dy) circle (3pt);
+\draw[densely dotted] (2,2)--(1,1) node[pos=0.45,above left=-1pt]{$\frac{\sqrt2}{2}a$};
+\draw[densely dotted] (1,1)--(1+0.5*\dx,1+0.5*\dy);
+\node[anchor=west,align=left] at (3.2,1.9) {\tikz\fill[black] (0,0) circle (2.2pt); 顶点};
+\node[anchor=west,align=left] at (3.2,1.3) {\tikz\filldraw[fill=mainblue!45,draw=mainblue] (0,0) circle (2.6pt); 面心};
+\node[anchor=west,align=left] at (3.2,0.7) {\tikz\filldraw[fill=white,draw=exorange,thick] (0,0) circle (3pt); 体心};
+\end{tikzpicture}}{\ce{Ni_xCu_yN_z} 晶胞中的三种原子位置（边长 $a$；点线示意面心到顶点、面心到体心的距离）\label{fig:13-cell}}
+
+(5) 设晶胞边长为 $a$。由图~\ref{fig:13-cell}，面心到顶点的距离为 $\frac{\sqrt2}{2}a$，面心到体心的距离为 $\frac{a}{2}$，二者之比恰为 $\sqrt2:1$，而顶点到体心的距离为 $\frac{\sqrt3}{2}a$。两个比值中都出现 Ni，说明 Ni 在面心，Cu 在顶点，N 在体心。晶胞中 Ni：$6\times\frac12=3$，Cu：$8\times\frac18=1$，N：1，所以 $x:y:z=3:1:1$。一个顶点为 12 个面所共有（每个面心离它 $\frac{\sqrt2}{2}a$），所以与 Cu 最近且等距离的 Ni 有 12 个。答案：3:1:1；12。
+
+(6) ① \ce{H2} 还原 \ce{Fe2O3} 时被消耗，使氨的分解平衡不断正向移动，持续提供 \ce{H2}：
+\[\ce{2NH3 <=>[700\,\text{℃}] N2 + 3H2}\qquad \ce{Fe2O3 + 3H2 ->[700\,\text{℃}] 2Fe + 3H2O}\]
+② \ce{Fe2O3} 要在阴极得电子被还原为 Fe，所以 Fe 片接电源负极作阴极，石墨棒接正极作阳极（图~\ref{fig:13-elec}）。阴极：\ce{Fe2O3 + 3H2O + 6e- = 2Fe + 6OH-}；阳极：\ce{4OH- - 4e- = O2 ^ + 2H2O}。③两种方法都不用焦炭作还原剂，没有 CO 等污染性气体产生（产物只有 Fe 和 \ce{N2}、\ce{H2O} 或 \ce{O2}）。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\draw[thick] (0,2.2)--(0,0)--(3.6,0)--(3.6,2.2);
+\fill[lightblue] (0.03,0.03) rectangle (3.57,1.7); \draw[mainblue!60] (0,1.7)--(3.6,1.7);
+\foreach \p in {(0.5,0.3),(1.3,0.55),(2.1,0.25),(2.9,0.5),(1.7,1.0),(0.9,1.2),(2.5,1.1),(3.2,1.3),(1.2,0.15)} \fill[brown!70!black] \p circle (1.3pt);
+\fill[gray!60] (0.65,0.35) rectangle (0.85,2.5); \draw (0.65,0.35) rectangle (0.85,2.5);
+\fill[black!80] (2.75,0.35) rectangle (2.95,2.5);
+\draw (0.75,2.5)--(0.75,3.1)--(1.55,3.1); \draw (2.85,2.5)--(2.85,3.1)--(2.05,3.1);
+\draw[line width=1.2pt] (1.55,2.97)--(1.55,3.23); \draw (2.05,2.85)--(2.05,3.35);
+\node[above] at (1.45,3.35) {$-$}; \node[above] at (2.15,3.35) {$+$};
+\node[above] at (1.8,3.45) {直流电源};
+\node[left,align=right] at (0.6,2.3) {Fe 片\\（阴极）};
+\node[right,align=left] at (3.0,2.3) {石墨棒\\（阳极）};
+\node[align=center] at (1.8,-0.35) {NaOH 溶液（分散有 \ce{Fe2O3} 颗粒）};
+\end{tikzpicture}}{\ce{Fe2O3} 电解制铁的电解池示意图（第(6)②问答案）\label{fig:13-elec}}
+
+做完这道题再回头看，各小问用到的知识分属不同章节：(1) 是反应速率，(2) 是陌生氧化还原方程式，(3) 是 $K_\text{sp}$，(4) 是配合物与相似相溶，(5) 是晶胞，(6) 是化学平衡移动、电解池和绿色化学。流程本身只是把这些知识串在一条生产线上，所以看懂“每一步卸下了什么”之后，各小问都可以按对应章节的方法独立作答。
+
+% ---------------- 章末 ----------------
+\zhangmo{本章小结}
+\subsection*{一、知识总结}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.2cm}X}
+\toprule
+价类二维图 & 水平箭头表示所考查元素价态不变；向上需氧化剂、向下需还原剂。结合具体反应检查其他元素是否变价，归中反应须有适当的产物和条件 \\
+金属 & Na（\ce{Na2O2}、\ce{Na2CO3}/\ce{NaHCO3}）、Al（两性）、Fe（\ce{Fe^2+}/\ce{Fe^3+} 转化与检验）、Cu（与浓硫酸、硝酸、\ce{H2O2} 的反应） \\
+非金属 & Cl（\ce{Cl2}、HClO、含氯消毒剂）、S（\ce{SO2} 的酸性氧化物通性、漂白性、还原性和氧化性；浓硫酸三性）、N（氮氧化物、硝酸、氨与铵盐）、Si（\ce{SiO2}、硅酸盐） \\
+流程结构 & 预处理（粉碎、焙烧）$\to$浸出（酸浸、碱浸）$\to$除杂（氧化、调 pH）$\to$分离提纯（萃取、结晶、洗涤、干燥）$\to$产品；分出滤渣、尾气、母液，找循环物质 \\
+方程式与计算 & 定物质$\to$配电子$\to$配电荷（看介质）$\to$配原子；调 pH：pH(杂质沉淀完全)$\le$pH$<$pH(目标离子开始沉淀) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\subsection*{二、方法提升}
+做元素化合物题，先在价类二维图上给物质定位，再判断转化方向和所需试剂，比逐条回忆方程式可靠。做流程题，先写出原料成分和目标产品，再沿主线看每个方框加入了什么、分出了什么，判断目标元素此时的存在形式；回答“目的”类设问时，说出依据（速率、平衡或物质性质），而不是只写结论。
+
+\subsection*{三、易错点归纳}
+\begin{enumerate}
+\item 酸性条件下的离子方程式中出现 \ce{OH-}，或碱性条件下出现 \ce{H+}。
+\item 调 pH 时选用会引入杂质的试剂（如用 NaOH 调含 \ce{Cu^2+} 溶液的 pH 以制纯净的 \ce{CuSO4}）。
+\item 混淆“开始沉淀”与“沉淀完全”所用的浓度：前者用原浓度，后者用 $1.0\times10^{-5}$ mol·L$^{-1}$。
+\item 认为 \ce{SO2} 能使紫色石蕊溶液先变红后褪色（只变红不褪色）。
+\item 认为 \ce{Na2O2} 是碱性氧化物；或认为 \ce{Na2O2} 与 \ce{CO2} 反应时 \ce{CO2} 是氧化剂（实际是 \ce{Na2O2} 自身歧化）。
+\item 带结晶水的产品或受热易分解的产品用蒸发结晶（应蒸发浓缩、冷却结晶）。
+\end{enumerate}
+
+\zhangmo{分层练习}
+\zu{A组\quad 基础巩固}
+\begin{xiti}[start=1]
+\item \laiyuan{2025年广东卷第8题}\ 下列陈述Ⅰ与陈述Ⅱ均正确，且两者间具有因果关系的是\xz
+\xxa{浓硝酸保存在棕色试剂瓶中——浓硝酸具有强氧化性}{向蔗糖中加适量浓硫酸，蔗糖变黑——浓硫酸具有脱水性}{\ce{Fe^2+} 与 \ce{K3[Fe(CN)6]} 可生成蓝色物质——KSCN 溶液可用于检验 \ce{Fe^3+}}{\ce{MnO2} 与浓盐酸共热，生成黄绿色气体——\ce{Cl2 + SO2 + 2H2O = H2SO4 + 2HCl}}
+
+\item \laiyuan{原创}\ 下列关于 \ce{SO2} 的说法正确的是\xz
+\xxa{\ce{SO2} 能使品红溶液和酸性 \ce{KMnO4} 溶液褪色，原理相同}{\ce{SO2} 通入 \ce{BaCl2} 溶液中产生白色沉淀}{\ce{SO2} 与 \ce{H2S} 反应生成 S，体现 \ce{SO2} 的氧化性}{将 \ce{SO2} 和 \ce{Cl2} 等体积混合后通入品红溶液，漂白效果更好}
+
+\item \laiyuan{原创}\ 写出下列反应的离子方程式：(1) \ce{FeCl3} 溶液腐蚀铜电路板；(2) \ce{Na[Al(OH)4]} 溶液中通入过量 \ce{CO2}；(3) 酸性条件下 \ce{KMnO4} 溶液氧化 \ce{H2O2}。
+
+\item \laiyuan{原创}\ 将 7.8 g \ce{Na2O2} 投入足量水中，生成 \ce{O2} 在标准状况下的体积为\tk L，转移电子\tk mol；若改为通入足量 \ce{CO2}，固体质量增加\tk g。
+
+\item \laiyuan{原创}\ 向 \ce{FeCl3}、\ce{CuCl2} 的混合溶液中加入一定量铁粉，充分反应后过滤，滤渣中只有 Cu。则滤液中一定含有的金属阳离子是\tk，可能含有的是\tk，一定不含的是\tk。
+\end{xiti}
+
+\zu{B组\quad 高考典型}
+\begin{xiti}
+\item \laiyuan{改编自2024年广东卷第14题}\ 部分含 Mg 或 Al 或 Fe 物质的分类与相应化合价关系：a 为 0 价单质；b、g 分别为 $+3$、$+2$ 价氧化物；c、f 分别为 $+3$、$+2$ 价的盐；d、e 分别为 $+3$、$+2$ 价的碱。下列推断合理的是\xz
+\xxa{若 a 在沸水中可生成 e，则 a$\to$f 的反应一定是化合反应}{在 g$\to$f$\to$e$\to$d 转化过程中，一定存在物质颜色的变化}{加热 c 的饱和溶液，一定会形成能产生丁达尔效应的红棕色分散系}{若 b 和 d 均能与同一物质反应生成 c，则组成 a 的元素一定位于周期表 p 区}
+
+\item \laiyuan{改编自2024年广东卷第18题(2)～(5)}\ 镓（Ga）在半导体等领域有重要应用。从电解铝的副产品炭渣（含 C、Na、Al、F 和少量的 Ga、Fe、K、Ca 等元素）中提取镓及循环利用铝的工艺：炭渣焙烧（尾气处理）$\to$ 用盐酸浸取 $\to$ 浸取液加铝片“还原”$\to$ 原料液用 LAEM（一种新型阴离子交换膜，允许带负电荷的配离子从高浓度区扩散至低浓度区）提取：Ⅰ室原料液中的 \ce{[GaCl4]-} 进入Ⅱ室（pH$=2$）转化为 \ce{Ga^3+} 和 \ce{Cl-}，Ⅱ室溶液进一步处理得镓；Ⅰ室溶液加入含 \ce{F-} 的废液“调 pH”后结晶，得冰晶石 \ce{Na3[AlF6]} 用于电解铝。已知：①p$K_\text{a}$(HF)$=3.2$；②$K_\text{sp}$(\ce{Na3[AlF6]})$=4.0\times10^{-10}$；③浸取液中，Ga(Ⅲ) 和 Fe(Ⅲ) 以 \ce{[MCl_m]^{(m-3)-}}（$m=0\sim4$）微粒形式存在，\ce{Fe^2+} 最多可与 2 个 \ce{Cl-} 配位，其他金属离子与 \ce{Cl-} 的配位可忽略。
+(1)“浸取”中，由 \ce{Ga^3+} 形成 \ce{[GaCl4]-} 的离子方程式为\tk。
+(2)“还原”的目的：避免\tk{}元素以\tk（填化学式）微粒的形式通过 LAEM，从而有利于 Ga 的分离。
+(3)“LAEM 提取”中，原料液的 \ce{Cl-} 浓度越\tk，越有利于 Ga 的提取；研究表明，原料液酸度过高会降低 Ga 的提取率。因此，在不提高原料液酸度的前提下，可向Ⅰ室中加入\tk（填化学式），以进一步提高 Ga 的提取率。
+(4)“调 pH”中，pH 至少应大于\tk，使溶液中 $c(\ce{F-})>c(\ce{HF})$，有利于 \ce{[AlF6]^3-} 配离子及 \ce{Na3[AlF6]} 晶体的生成。若“结晶”后溶液中 $c(\ce{Na+})=0.10$ mol·L$^{-1}$，则 \ce{[AlF6]^3-} 浓度为\tk mol·L$^{-1}$。
+
+\item \laiyuan{改编自2026年广东卷第18题(4)}\ 从金精矿提金流程中，含金银粉体需经步骤“X”处理，X 包含多个步骤，需同时用到 HCl 和 \ce{H2O2} 溶液（Au、Ag 在一定条件下均可与 \ce{Cl-} 形成可溶于水的配离子）。一定条件下，Au、Ag 浸取率随溶液中 $c(\ce{H2O2})$ 的变化为：$c(\ce{H2O2})=x_1$ 时 Ag 浸取率接近 100\%、Au 浸取率很低；$c(\ce{H2O2})=x_3$（$x_3>x_2>x_1$）时 Au 浸取率接近 100\%。Au 在滤液2中主要以 \ce{[AuCl4]-} 存在。为尽可能提高金的提取率和纯度，“X”包括的步骤为\tk。
+
+\item \laiyuan{改编自2026年广东卷第13题}\ 部分含 C 或 N 或 Cl 物质的分类与相应化合价关系：a 为 0 价单质；b、c 分别为 $+2$、$+4$ 价氧化物；d 为 $+5$ 价的酸；f 为 $-1$ 价的酸；e 为 $+4$ 价的盐。下列说法\textbf{错误}的是\xz
+\xxb{a 分子中可存在 $\pi$ 键和 $\sigma$ 键}{c 可由 e 受热分解产生}{可存在 a$\to$b$\to$c$\to$d 的转化}{a、c、f 均可用于自来水消毒}
+
+\item \laiyuan{原创}\ 以软锰矿（主要成分 \ce{MnO2}，含少量 \ce{Fe2O3}、\ce{SiO2}）为原料，用 \ce{SO2} 还原浸出制备 \ce{MnSO4}：(1) 写出浸出时 \ce{MnO2} 与 \ce{SO2} 反应的化学方程式。(2) 浸出液中的铁主要以 \ce{Fe^2+} 存在，除铁时先加 \ce{MnO2}（适量）再调 pH，加 \ce{MnO2} 的作用是什么？写出离子方程式。(3) 若浸出充分、所加 \ce{MnO2} 已完全反应，且酸浸后未立即过滤，而在调 pH 后统一过滤，滤渣的主要成分是什么？
+\end{xiti}
+
+\zu{C组\quad 冲刺高分}
+\begin{xiti}
+\item \laiyuan{原创}\ 从废旧锂离子电池正极材料（主要成分 \ce{LiCoO2}，含少量 Al、Fe 杂质）中回收钴和锂的流程：正极材料 $\xrightarrow{\text{NaOH 溶液}}$ 滤渣 $\xrightarrow{\text{稀硫酸、}\ce{H2O2}}$ 浸出液 $\xrightarrow{\text{调 pH、过滤}}$ 除铁后的溶液 $\xrightarrow{\ce{(NH4)2C2O4}}$ \ce{CoC2O4} 沉淀；分离草酸钴后的滤液 $\xrightarrow{\ce{Na2CO3}}$ \ce{Li2CO3}。已知：调 pH 前，过量 \ce{H2O2} 已除去，铁已调整为 \ce{Fe^3+}；25 ℃ 时 $K_\text{sp}[\ce{Fe(OH)3}]=2.8\times10^{-39}$，$K_\text{sp}[\ce{Co(OH)2}]=1.6\times10^{-15}$，离子浓度低于 $1.0\times10^{-5}$ mol·L$^{-1}$ 视为沉淀完全；\ce{Li2CO3} 的溶解度随温度升高而减小。
+(1) 碱浸的目的是什么？写出相关反应的离子方程式。
+(2) 酸浸时 \ce{H2O2} 的作用是什么？写出 \ce{LiCoO2} 溶解的离子方程式。为何酸浸温度不宜过高？
+(3) 若浸出液中 $c(\ce{Co^2+})=0.16$ mol·L$^{-1}$，除铁时应控制的 pH 范围是多少？（$\lg6.5\approx0.8$）
+(4) 沉锂时为什么用热水洗涤 \ce{Li2CO3}？
+
+\item \laiyuan{原创}\ 由铬铁矿（主要成分 \ce{FeCr2O4}）制备重铬酸钾：铬铁矿与纯碱在空气中焙烧，生成 \ce{Na2CrO4}、\ce{Fe2O3} 和 \ce{CO2}；水浸、过滤后，滤液酸化使 \ce{Na2CrO4} 转化为 \ce{Na2Cr2O7}；再加入 KCl，经蒸发浓缩、冷却结晶得 \ce{K2Cr2O7}。已知低温下 \ce{K2Cr2O7} 的溶解度小于流程中其余几种盐，且随温度降低明显减小；\ce{2CrO4^2- + 2H+ <=> Cr2O7^2- + H2O}，25 ℃ 时 $K=1.0\times10^{14}$。(1) 写出焙烧反应的化学方程式。(2) 酸化后溶液中 $c(\ce{Cr2O7^2-})=0.25$ mol·L$^{-1}$，若要求 $c(\ce{CrO4^2-})\le1.0\times10^{-5}$ mol·L$^{-1}$，溶液的 $c(\ce{H+})$ 至少为多少？(3) 加入 KCl 能得到 \ce{K2Cr2O7} 的原因是什么？
+\end{xiti}
+
+\zhangmo{练习解析}
+\begin{jiexilist}
+\item \ans{B}A：浓硝酸见光易分解，所以保存在棕色瓶中，与强氧化性无因果关系；B：浓硫酸使蔗糖脱水炭化，正确；C：两陈述均正确但无因果关系；D：两陈述均正确但无因果关系。
+\item \ans{C}A：使品红褪色是漂白性，使 \ce{KMnO4} 褪色是还原性；B：\ce{H2SO3} 酸性弱于 HCl，不反应；C：\ce{SO2} 中 S 由 $+4$ 降为 0，体现氧化性，正确；D：\ce{SO2 + Cl2 + 2H2O = H2SO4 + 2HCl}，漂白性消失。
+\item (1) \ce{2Fe^3+ + Cu = 2Fe^2+ + Cu^2+}；(2) \ce{[Al(OH)4]- + CO2 = Al(OH)3 v + HCO3-}；(3) \ce{2MnO4^- + 5H2O2 + 6H+ = 2Mn^2+ + 5O2 ^ + 8H2O}（Mn 得 5 个电子，\ce{H2O2} 中两个 O 共失 2 个电子，最小公倍数 10）。
+\item 1.12；0.1；2.8。$n(\ce{Na2O2})=0.1$ mol；\ce{2Na2O2 + 2H2O = 4NaOH + O2 ^}，生成 0.05 mol \ce{O2}，每生成 1 mol \ce{O2} 转移 2 mol 电子，共 0.1 mol；\ce{2Na2O2 + 2CO2 = 2Na2CO3 + O2}，固体由 \ce{Na2O2} 变为 \ce{Na2CO3}，每摩尔增重相当于 1 mol “CO” 的质量：$0.1\times28=2.8$ g。
+\item \ce{Fe^2+}；\ce{Cu^2+}；\ce{Fe^3+}。氧化性 \ce{Fe^3+}$>$\ce{Cu^2+}，铁先还原 \ce{Fe^3+}，再置换 \ce{Cu^2+}；有 Cu 析出说明 \ce{Fe^3+} 已反应完（Cu 也能与 \ce{Fe^3+} 反应），滤渣中无 Fe 说明 \ce{Cu^2+} 可能有剩余。
+\item \ans{B}A：a 为 Mg，Mg 与盐酸生成 \ce{MgCl2} 是置换反应，不一定是化合反应；B：存在 $+2$ 价的碱 e 转化为 $+3$ 价的碱 d，只能是 Fe，\ce{FeO}（黑）$\to$\ce{Fe^2+}（浅绿）$\to$\ce{Fe(OH)2}（白）$\to$\ce{Fe(OH)3}（红褐），一定有颜色变化，正确；C：加热饱和 \ce{FeCl3} 溶液可能直接得到 \ce{Fe(OH)3} 沉淀，不一定是胶体；D：\ce{Fe2O3}、\ce{Fe(OH)3} 都能与盐酸反应生成 \ce{FeCl3}，Fe 位于 d 区。
+\item (1) \ce{Ga^3+ + 4Cl- = [GaCl4]-}。(2) 铁；\ce{[FeCl4]-}。加铝片将 \ce{Fe^3+} 还原为 \ce{Fe^2+}（\ce{Fe^2+} 最多结合 2 个 \ce{Cl-}，不能形成带负电荷的配离子），避免铁随 \ce{[FeCl4]-} 进入Ⅱ室。(3) 高；NaCl（增大 $c(\ce{Cl-})$ 而不增大酸度，使 \ce{Ga^3+ + 4Cl- <=> [GaCl4]-} 正向移动）。(4) 3.2；$4.0\times10^{-7}$。由 $K_\text{a}=\dfrac{c(\ce{H+})c(\ce{F-})}{c(\ce{HF})}=10^{-3.2}$，$c(\ce{F-})>c(\ce{HF})$ 要求 $c(\ce{H+})<10^{-3.2}$ mol·L$^{-1}$，pH$>3.2$；$c(\ce{[AlF6]^3-})=\dfrac{K_\text{sp}}{c^3(\ce{Na+})}=\dfrac{4.0\times10^{-10}}{0.10^3}=4.0\times10^{-7}$ mol·L$^{-1}$。
+\item 先控制 $c(\ce{H2O2})$ 为 $x_1$，与 HCl 溶液浸出 Ag 后过滤（Ag 进入溶液，Au 留在滤渣中），并洗涤滤渣以除去附着的含银浸出液；再控制 $c(\ce{H2O2})$ 为 $x_3$，与 HCl 溶液浸出 Au（得到含 \ce{[AuCl4]-} 的滤液2）。这样既除去了银、提高了金的纯度，又使金基本完全浸出。
+\item \ans{D}a 为 0 价单质，可为 \ce{N2}（含 $\sigma$ 键和 $\pi$ 键），A 对；c 为 $+4$ 价氧化物、e 为 $+4$ 价的盐，如 \ce{CaCO3 ->[\text{高温}] CaO + CO2 ^}，B 对；\ce{N2 -> NO -> NO2 -> HNO3}，C 对；f 为 $-1$ 价的酸 HCl，不能用于自来水消毒（a 可为 \ce{Cl2}、c 可为 \ce{ClO2}），D 错。
+\item (1) \ce{MnO2 + SO2 = MnSO4}。(2) 将 \ce{Fe^2+} 氧化为 \ce{Fe^3+}，便于在较低 pH 下沉淀完全，且不引入杂质（还原产物为 \ce{Mn^2+}）：\ce{MnO2 + 2Fe^2+ + 4H+ = Mn^2+ + 2Fe^3+ + 2H2O}。(3) \ce{SiO2}（浸出时不溶）和 \ce{Fe(OH)3}（调 pH 时生成）。
+\item (1) 溶解除去 Al：\ce{2Al + 2OH- + 6H2O = 2[Al(OH)4]- + 3H2 ^}（Al 若以 \ce{Al2O3} 存在：\ce{Al2O3 + 2OH- + 3H2O = 2[Al(OH)4]-}）。(2) 作还原剂，将 $+3$ 价 Co 还原为 \ce{Co^2+}：\ce{2LiCoO2 + H2O2 + 6H+ = 2Li+ + 2Co^2+ + O2 ^ + 4H2O}；温度过高 \ce{H2O2} 分解，还原效率降低。(3) \ce{Fe^3+} 沉淀完全：$c(\ce{OH-})=\sqrt[3]{2.8\times10^{-39}/10^{-5}}\approx6.5\times10^{-12}$ mol·L$^{-1}$，pH$\approx2.8$；\ce{Co^2+} 开始沉淀：$c(\ce{OH-})=\sqrt{1.6\times10^{-15}/0.16}=10^{-7}$ mol·L$^{-1}$，pH$=7$。控制 $2.8\le$pH$<7$。（若浸出液中铁以 \ce{Fe^2+} 存在，需先氧化为 \ce{Fe^3+}。）(4) \ce{Li2CO3} 溶解度随温度升高而减小，用热水洗涤可减少洗涤过程中的溶解损失。
+\item (1) Fe 由 $+2\to+3$，Cr 由 $+3\to+6$，每个 \ce{FeCr2O4} 失去 $1+2\times3=7$ 个电子，\ce{O2} 得 4 个电子：\ce{4FeCr2O4 + 8Na2CO3 + 7O2 ->[\text{高温}] 8Na2CrO4 + 2Fe2O3 + 8CO2}。(2) $K=\dfrac{c(\ce{Cr2O7^2-})}{c^2(\ce{CrO4^2-})\cdot c^2(\ce{H+})}$，$c^2(\ce{H+})=\dfrac{0.25}{1.0\times10^{14}\times(1.0\times10^{-5})^2}=2.5\times10^{-5}$，$c(\ce{H+})=5.0\times10^{-3}$ mol·L$^{-1}$（pH$\approx2.3$），即 $c(\ce{H+})\ge5.0\times10^{-3}$ mol·L$^{-1}$。(3) 低温下 \ce{K2Cr2O7} 的溶解度比 \ce{Na2Cr2O7}、NaCl、KCl 都小（且随温度降低明显减小），发生复分解 \ce{Na2Cr2O7 + 2KCl = K2Cr2O7 v + 2NaCl}，冷却结晶析出 \ce{K2Cr2O7}。
+\end{jiexilist}

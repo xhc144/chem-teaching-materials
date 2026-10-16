@@ -1,0 +1,769 @@
+% ============================================================
+% 第10章 烃的衍生物（必修二第七章、选必3第三章）
+% ============================================================
+\tikzset{
+  c10at/.style={inner sep=1.2pt,font=\small},
+  c10cut/.style={red!75!black,line width=0.9pt,densely dashed},
+  c10new/.style={blue!70!black,line width=1.4pt},
+  c10num/.style={font=\scriptsize,text=red!75!black,inner sep=0.5pt},
+  c10note/.style={font=\scriptsize,text=graytext,align=center},
+  c10arr/.style={-Stealth,thick},
+  c10box/.style={draw,rounded corners=2pt,fill=lightblue,minimum width=1.4cm,minimum height=0.65cm,font=\small},
+  c10lab/.style={font=\scriptsize,fill=white,inner sep=1pt},
+  c10step/.style={draw,rounded corners=2pt,font=\footnotesize,align=center,text width=2.0cm,minimum height=1.1cm,inner sep=2pt},
+  c10glass/.style={line width=0.6pt},
+  c10pipe/.style={double=white,double distance=1.1pt,line width=0.45pt}
+}
+\definecolor{c10water}{RGB}{214,234,248}
+\definecolor{c10copper}{RGB}{184,100,40}
+% 在两个原子（节点）之间的键上画断键记号
+\newcommand{\ctencut}[2]{\draw[c10cut] ($(#1)!0.5!(#2)!0.26cm!90:(#2)$)--($(#1)!0.5!(#2)!0.26cm!-90:(#2)$);}
+% 试管：\ctentube{x}{底部y}{高度}{液面高度}{液体颜色}
+\newcommand{\ctentube}[5]{%
+  \fill[#5] (#1-0.22,#2+#4) -- (#1-0.22,#2+0.22) arc (180:360:0.22) -- (#1+0.22,#2+#4) -- cycle;
+  \draw[c10glass] (#1-0.22,#2+#3) -- (#1-0.22,#2+0.22) arc (180:360:0.22) -- (#1+0.22,#2+#3);}
+% 酒精灯：\ctenlamp{x}{底部y}，总高约 1.15
+\newcommand{\ctenlamp}[2]{%
+  \draw[c10glass,fill=black!5] (#1-0.4,#2) -- (#1+0.4,#2) -- (#1+0.28,#2+0.5) -- (#1-0.28,#2+0.5) -- cycle;
+  \draw[c10glass] (#1-0.08,#2+0.5) rectangle (#1+0.08,#2+0.62);
+  \fill[orange!70] (#1,#2+0.62) .. controls (#1-0.18,#2+0.8) and (#1-0.05,#2+1.0) .. (#1,#2+1.15)
+    .. controls (#1+0.05,#2+1.0) and (#1+0.18,#2+0.8) .. (#1,#2+0.62);}
+
+\chapter{烃的衍生物}
+
+高一在必修二中我们认识了乙醇、乙酸和乙酸乙酯。它们都可以看成烃分子里的氢原子被其他原子或原子团取代后的产物，这类有机物叫做\textbf{烃的衍生物}。本章按官能团逐类学习卤代烃、醇、酚、醛、酮、羧酸、酯、胺和酰胺。学习每一类物质时都抓住两件事：官能团的结构有什么特点；发生反应时断开哪个键、形成哪个键。最后把各类物质串成转化网络，并学习按官能团计算试剂用量的方法。广东卷第20题的有机推断与合成、选择题中陌生有机物的性质判断，都建立在本章内容之上。
+
+\section{从结构认识性质：官能团与键的极性}
+
+\subsection{官能团决定性质}
+乙醇、1-丙醇、1-丁醇的碳链长短不同，却都能与钠反应放出氢气，都能被催化氧化，化学性质十分相似。原因是它们都含有羟基（\ce{-OH}），而碳链部分（烃基）和烷烃一样，性质不活泼。像这样决定有机物特殊性质的原子或原子团叫做\textbf{官能团}。高一学过的碳碳双键、羟基、羧基都是官能团。
+
+因此学习烃的衍生物可以“以一个代表物带一类”：弄清乙醇的反应，就能推出其他醇的反应；弄清乙醛的反应，就能推出其他醛的反应。本章各类物质的官能团见图~\ref{fig:10-fg}，其中 R、R$'$ 表示烃基。
+
+\tu{\small
+\begin{tabular}{ccccc}
+\chemfig{R-X} & \chemfig{R-OH} & \chemfig{*6(-=-(-OH)=-=)} & \chemfig{R-C(=[:90]O)-H} & \chemfig{R-C(=[:90]O)-R'}\\
+卤代烃（碳卤键） & 醇（羟基） & 酚（羟基连苯环） & 醛（醛基） & 酮（酮羰基）\\[6pt]
+\chemfig{R-C(=[:90]O)-OH} & \chemfig{R-C(=[:90]O)-O-R'} & \chemfig{R-NH_2} & \chemfig{R-C(=[:90]O)-NH_2} & \\
+羧酸（羧基） & 酯（酯基） & 胺（氨基） & 酰胺（酰胺基） &
+\end{tabular}}{烃的衍生物中常见的官能团（X 代表卤素原子）\label{fig:10-fg}}
+
+读图时注意两点。第一，醇和酚都含 \ce{-OH}，区别在于羟基连在饱和碳原子上还是直接连在苯环上；连接方式不同，性质差别很大（10.4 节）。第二，醛、酮、羧酸、酯、酰胺都含有碳氧双键（\ce{C=O}，叫羰基），但羰基旁边连的原子不同，性质也不同。同一个官能团周围的结构会影响它的性质，这叫基团之间的相互影响。
+
+\subsection{键的极性与断键位置}
+第 6 章学过电负性：两个不同原子形成共价键时，共用电子对偏向电负性大的原子，这个原子带部分负电荷（记作 $\delta^-$），另一个带部分正电荷（$\delta^+$），这样的键是极性键。几种原子的电负性为：O 3.5，Cl 3.0，N 3.0，Br 2.8，C 2.5，H 2.1。所以 \ce{C-X}、\ce{C-O}、\ce{O-H}、\ce{C=O} 都是极性较强的键，而 \ce{C-H}、\ce{C-C} 键几乎没有极性。
+
+电子分布不均匀有助于判断试剂可能接近的位置：带负电的试剂（如 \ce{OH-}）倾向于与带 $\delta^+$ 的碳作用，\ce{H+} 可与带 $\delta^-$ 的氧作用。但\textbf{有极性不等于容易断裂}，能否反应还取决于键强、相邻基团和条件。对本章常见反应，先从官能团定位，再用反应事实核对，不能单凭极性预测一切。此外，官能团还会使相邻碳上的 C—H 键变得活泼。为了方便描述，把与官能团直接相连的碳叫 \textbf{α-碳}，它上面的氢叫 α-H；再往外一个碳叫 β-碳，上面的氢叫 β-H。图~\ref{fig:10-polar} 以乙醇为例标出了这些键。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node (Hl) at (-1,0) {H}; \node (Cb) at (0,0) {C}; \node (Ca) at (1.2,0) {C}; \node (O) at (2.4,0) {O}; \node (Ho) at (3.4,0) {H};
+\node (Hb1) at (0,1) {H}; \node (Hb2) at (0,-1) {H}; \node (Ha1) at (1.2,1) {H}; \node (Ha2) at (1.2,-1) {H};
+\draw (Hl)--(Cb)--(Ca)--(O)--(Ho) (Hb1)--(Cb)--(Hb2) (Ha1)--(Ca)--(Ha2);
+\node[c10num] at (2.9,0.28) {①}; \node[c10num] at (1.8,-0.28) {②}; \node[c10num] at (1.45,-0.5) {③}; \node[c10num] at (-0.25,-0.5) {④};
+\node[font=\scriptsize] at (2.4,0.42) {$\delta^-$}; \node[font=\scriptsize] at (1.5,0.32) {$\delta^+$}; \node[font=\scriptsize] at (3.4,0.42) {$\delta^+$};
+\node[c10note] at (0,-1.45) {β-碳}; \node[c10note] at (1.2,-1.45) {α-碳}; \node[c10note] at (2.9,-0.55) {羟基};
+\node[c10note,anchor=west,align=left] at (4.1,0.1) {① O—H 键\quad ② C—O 键\\[2pt] ③ α-C—H 键\quad ④ β-C—H 键};
+\end{tikzpicture}}{乙醇分子中键的极性与常见的断键位置（模型示意）\label{fig:10-polar}}
+
+图中 ① O—H 键和 ② C—O 键是极性键，乙醇的大多数反应都从这里断开；③④ 两种 C—H 键本身极性不大，但受羟基影响，在某些反应中会和 ① 或 ② 一起断开。分析一个陌生反应时，可以按下面的步骤做：先找出官能团和其中的极性键；再对比反应物和产物，看哪个原子或原子团离开了、哪个进来了；最后写成“断……键、成……键”。本章所有断键示意图都用\textcolor{red!75!black}{红色虚线}表示断开的键，用\textcolor{blue!70!black}{蓝色粗线}表示新形成的键。
+
+\begin{liti}[基础]
+用“断键、成键”的观点分析下列反应：(1) 乙烯与溴的加成 \ce{CH2=CH2 + Br2 -> CH2BrCH2Br}；(2) 一氯甲烷与 NaOH 水溶液共热生成甲醇 \ce{CH3Cl + NaOH ->[\ce{H2O}][\text{△}] CH3OH + NaCl}。
+\tcblower
+\jie (1) 第 9 章学过，碳碳双键中有一个键（$\pi$ 键）较弱。加成时断开 \ce{C=C} 中的这个键和 Br—Br 键，两个碳原子各形成一个 C—Br 键，双键变为单键。(2) 产物中 Cl 被 OH 代替，说明断开的是极性的 C—Cl 键（C 带 $\delta^+$），\ce{OH-} 与碳原子形成 C—O 键，离开的 Cl 以 \ce{Cl-} 形式进入 NaCl。这是一个取代反应。
+\end{liti}
+
+\section{卤代烃}
+
+\subsection{结构特点}
+烃分子中的氢原子被卤素原子取代后的产物叫\textbf{卤代烃}，通式可写成 \ce{R-X}，官能团是碳卤键。由于 X 的电负性比 C 大，C—X 键是极性键，碳原子带部分正电荷，容易受到 \ce{OH-} 等带负电试剂的进攻，C—X 键随之断裂，这是卤代烃化学性质的来源。卤代烃一般难溶于水，易溶于有机溶剂；除一氟代烃、一氯代烃等少数外，液态卤代烃的密度大多比水大。
+
+\subsection{水解反应：断 C—X 键}
+溴乙烷与 NaOH 水溶液共热，生成乙醇和溴化钠：
+\[\ce{CH3CH2Br + NaOH ->[\ce{H2O}][\text{△}] CH3CH2OH + NaBr}\]
+从图~\ref{fig:10-rxhyd} 看，\ce{OH-} 进攻与 Br 相连的碳，Br 带着 C—Br 键的共用电子对以 \ce{Br-} 的形式离开，OH 占据了原来 Br 的位置。这个反应既是取代反应，也叫卤代烃的水解反应。本节主要讨论卤素连在饱和碳上的卤代烃。卤素直接连苯环（如氯苯）或双键碳时，C—X 键的反应活性不同，通常不能照搬上述温和条件；涉及这些结构应以题给信息为准。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node (R) at (0,0) {\ce{CH3CH2}}; \node (X) at (1.35,0) {Br}; \draw (R)--(X); \ctencut{R}{X}
+\node at (2.05,0) {$+$}; \node at (2.85,0) {\ce{Na+}\,\ce{OH-}};
+\draw[c10arr] (3.6,0) -- node[above,font=\scriptsize]{\ce{H2O}，△} (5.0,0);
+\node (R2) at (5.9,0) {\ce{CH3CH2}}; \node (O2) at (7.25,0) {OH}; \draw[c10new] (R2)--(O2);
+\node at (7.95,0) {$+$}; \node at (8.7,0) {\ce{NaBr}};
+\node[c10note] at (0.75,-0.55) {断 C—Br}; \node[c10note] at (6.6,-0.55) {成 C—O};
+\end{tikzpicture}}{溴乙烷水解：断开 C—Br 键，\ce{OH-} 与碳形成 C—O 键\label{fig:10-rxhyd}}
+
+\subsection{消去反应：断 C—X 和 β-C—H，成 \ce{C=C}}
+\begin{gainian}[消去反应]
+有机物在一定条件下，从一个分子中脱去一个或几个小分子（如 \ce{H2O}、HX 等），生成含不饱和键（双键或三键）化合物的反应，叫做消去反应。
+\end{gainian}
+溴乙烷与 NaOH 的乙醇溶液共热，生成乙烯：
+\[\ce{CH3CH2Br + NaOH ->[\text{乙醇}][\text{△}] CH2=CH2 ^ + NaBr + H2O}\]
+如图~\ref{fig:10-rxelim}，断开的是 α-碳上的 C—Br 键和 β-碳上的一个 C—H 键，H 和 Br 一起脱去（与 NaOH 结合为 NaBr 和 \ce{H2O}），两个碳原子之间多形成一个键，变成碳碳双键。由此得到消去反应的结构条件：与 X 相连碳的\textbf{相邻碳原子上必须有氢}（β-H）。\ce{CH3Br} 没有 β-碳，\ce{(CH3)3CCH2Br} 的 β-碳上没有氢，二者都不能发生消去反应。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node (Cb) at (0,0) {C}; \node (Ca) at (1.2,0) {C};
+\node (H1) at (-0.9,0) {H}; \node (H2) at (0,0.9) {H}; \node (Hb) at (0,-0.9) {H};
+\node (H3) at (2.1,0) {H}; \node (H4) at (1.2,0.9) {H}; \node (X) at (1.2,-0.9) {Br};
+\draw (H1)--(Cb)--(Ca)--(H3) (H2)--(Cb)--(Hb) (H4)--(Ca)--(X);
+\ctencut{Cb}{Hb} \ctencut{Ca}{X}
+\draw[red!75!black,densely dotted,rounded corners=2pt] (-0.28,-1.18) rectangle (1.52,-0.64);
+\node[c10note] at (0.6,-1.45) {脱去 H 和 Br};
+\node[c10note] at (-0.3,0.3) {β}; \node[c10note] at (1.5,0.3) {α};
+\draw[c10arr] (2.6,0) -- node[above,font=\scriptsize]{NaOH，乙醇} node[below,font=\scriptsize]{△} (4.2,0);
+\node (P1) at (5.0,0) {C}; \node (P2) at (6.0,0) {C};
+\draw ([yshift=1.6pt]P1.east)--([yshift=1.6pt]P2.west); \draw[c10new] ([yshift=-1.8pt]P1.east)--([yshift=-1.8pt]P2.west);
+\node (q1) at (4.4,0.6) {H}; \node (q2) at (4.4,-0.6) {H}; \node (q3) at (6.6,0.6) {H}; \node (q4) at (6.6,-0.6) {H};
+\draw (q1)--(P1)--(q2) (q3)--(P2)--(q4);
+\node at (7.2,0) {$+$}; \node at (8.5,0) {\ce{NaBr + H2O}};
+\node[c10note] at (5.5,-0.8) {成 \ce{C=C}};
+\end{tikzpicture}}{溴乙烷消去：断开 C—Br 键和 β-C—H 键，形成碳碳双键\label{fig:10-rxelim}}
+
+两个反应的试剂都是 NaOH，区别在溶剂：在水中以取代（水解）为主，在乙醇中以消去为主。高中阶段记住“水溶液水解、醇溶液消去”即可，不要求解释溶剂影响反应方向的原因。两者的比较见下表。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{1.6cm}XX}
+\toprule
+& 水解（取代）反应 & 消去反应 \\
+\midrule
+条件 & NaOH 水溶液、加热 & NaOH 乙醇溶液、加热 \\
+断键与成键 & 断 C—X，成 C—O & 断 C—X 与 β-C—H，成 \ce{C=C} \\
+结构要求 & 本节以卤素连饱和碳的卤代烃为主 & 必须有 β-H \\
+产物 & 醇 & 烯烃（卤代烃消去可能得到不止一种烯烃） \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{liti}[基础]
+写出 2-溴丁烷（\ce{CH3CHBrCH2CH3}）分别与 NaOH 水溶液、NaOH 乙醇溶液共热时的有机产物。
+\tcblower
+\silu 水解只断 C—Br，产物唯一；消去还要断 β-C—H，先数一数 Br 所连碳（2 号碳）有几个不同的相邻碳。\\
+\jie 水解生成 2-丁醇 \ce{CH3CH(OH)CH2CH3}。2 号碳两侧的 1 号碳和 3 号碳上都有 H，从 1 号碳脱 H 得 1-丁烯 \ce{CH2=CHCH2CH3}，从 3 号碳脱 H 得 2-丁烯 \ce{CH3CH=CHCH3}，所以消去产物有两种。
+\end{liti}
+
+\subsection{卤代烃中卤素的检验}
+卤代烃是共价化合物，本身不能电离出 \ce{X-}，直接加 \ce{AgNO3} 溶液不会产生沉淀。要检验其中的卤素，先要通过水解（或消去）把 X 变成 \ce{X-}，再用 \ce{AgNO3} 溶液检验，步骤见图~\ref{fig:10-xtest}。
+
+\tu{\begin{tikzpicture}[node distance=0.42cm]
+\node[c10step] (s1) {取少量卤代烃\\于试管中};
+\node[c10step,right=of s1] (s2) {加 NaOH 溶液\\加热（水解）};
+\node[c10step,right=of s2] (s3) {冷却，加稀硝酸\\至溶液呈酸性};
+\node[c10step,right=of s3] (s4) {滴加 \ce{AgNO3} 溶液};
+\node[c10step,right=of s4,text width=2.3cm] (s5) {白色沉淀：Cl\\淡黄色沉淀：Br\\黄色沉淀：I};
+\draw[c10arr] (s1)--(s2); \draw[c10arr] (s2)--(s3); \draw[c10arr] (s3)--(s4); \draw[c10arr] (s4)--(s5);
+\node[c10note,text=warnred,below=1mm of s3,text width=2.6cm] {中和过量的 NaOH};
+\end{tikzpicture}}{检验卤代烃中卤素原子的步骤\label{fig:10-xtest}}
+
+关键是第三步：水解后溶液中有过量的 NaOH，若不先用稀硝酸酸化，\ce{Ag+} 会与 \ce{OH-} 反应生成褐色的 \ce{Ag2O} 沉淀，掩盖卤化银的颜色。不能用盐酸或稀硫酸酸化，因为它们会引入 \ce{Cl-} 或生成微溶的 \ce{Ag2SO4}。
+
+\begin{liti}[据2026年广东卷第12题改编]
+用图~\ref{fig:10-zt2612} 所示装置探究卤代烃的性质：烧瓶Ⅰ中加入物质 a 和 NaOH 溶液（溶剂为 b）及碎瓷片加热，产生的气体依次通过Ⅱ、Ⅲ、Ⅳ。对应的叙述正确的是：A．a 为 2-溴丁烷、b 为乙醇：Ⅰ中发生消去反应，Ⅳ中溶液褪色，发生取代反应；B．a 为 2-溴丁烷、b 为水：Ⅰ中生成 2-丁醇，Ⅲ中石英棉和Ⅳ中溶液均褪色；C．a 为溴乙烷、b 为水：Ⅱ中注入少量 \ce{K2Cr2O7} 溶液后，溶液颜色无明显变化；D．a 为溴乙烷、b 为乙醇：冷却后向烧瓶中加过量稀硝酸，再加 \ce{AgNO3} 溶液，生成沉淀。
+
+\tu{\begin{tikzpicture}[every node/.style={font=\scriptsize}]
+\begin{scope}\clip (0,0) circle (0.6); \fill[c10water] (-0.7,-0.7) rectangle (0.7,0.05); \end{scope}
+\draw[c10glass] (-0.175,1.2) -- (-0.175,0.574) arc (107:433:0.6) -- (0.175,1.2);
+\fill[black!55] (-0.22,1.2) rectangle (0.22,1.36);
+\ctenlamp{0}{-1.95}
+\draw[c10pipe] (0,1.36) -- (0,1.8) -- (1.72,1.8) -- (1.72,0.1);
+\ctentube{1.8}{-0.6}{2.0}{0.9}{c10water}
+\fill[black!55] (1.53,1.4) rectangle (2.07,1.55);
+\draw[c10pipe] (1.9,1.25) -- (1.9,1.8) -- (2.5,1.8);
+\draw[c10glass] (2.5,1.6) rectangle (4.1,2.0);
+\fill[pattern=crosshatch dots,pattern color=purple] (2.9,1.62) rectangle (3.7,1.98);
+\draw[c10pipe] (4.1,1.8) -- (4.9,1.8) -- (4.9,-0.2);
+\ctentube{4.9}{-0.6}{2.0}{0.9}{orange!30}
+\fill[black!55] (4.63,1.4) rectangle (5.17,1.55);
+\node at (0,-2.2) {Ⅰ}; \node at (1.8,-0.85) {Ⅱ}; \node at (3.3,2.25) {Ⅲ}; \node at (4.9,-0.85) {Ⅳ};
+\node[anchor=west,align=left] at (5.6,0.6) {Ⅰ：a、NaOH、溶剂 b、碎瓷片\\Ⅱ：水（可注入酸性 \ce{K2Cr2O7} 溶液）\\Ⅲ：浸有酸性 \ce{KMnO4} 溶液的石英棉\\Ⅳ：溴的 \ce{CCl4} 溶液};
+\end{tikzpicture}}{2026 年广东卷第 12 题装置（示意图，据题意绘制）\label{fig:10-zt2612}}
+
+\tcblower
+\silu 先由溶剂判断Ⅰ中的反应（水→水解生成醇，乙醇→消去生成烯），再看气体经过各装置时会发生什么。\\
+\jie A：消去生成丁烯，丁烯使溴的 \ce{CCl4} 溶液褪色发生的是加成反应，错。B：水解生成 2-丁醇，醇不能使溴的 \ce{CCl4} 溶液褪色，错。C：水解生成乙醇，乙醇蒸气溶于Ⅱ的水中，能被酸性 \ce{K2Cr2O7} 氧化，溶液由橙色变为绿色，错。D：无论水解还是消去，Br 都转化为 \ce{Br-}，用稀硝酸中和过量 NaOH 后加 \ce{AgNO3}，生成淡黄色 AgBr 沉淀，正确。\daan D
+\end{liti}
+
+\section{醇}
+
+\subsection{结构特点与物理性质}
+羟基与饱和碳原子相连的化合物叫\textbf{醇}。按羟基数目可分为一元醇（如乙醇）、二元醇（如乙二醇 \ce{HOCH2CH2OH}）和三元醇（如丙三醇，俗称甘油）。醇分子之间能形成氢键（第 7 章），所以醇的沸点比相对分子质量相近的烃高得多；低级醇与水分子之间也能形成氢键，甲醇、乙醇、丙醇能与水以任意比互溶。
+
+乙醇的结构和可能的断键位置已标在图~\ref{fig:10-polar} 中。下表按断键位置归纳乙醇的反应，后面逐个说明。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.3cm}Xp{2.6cm}}
+\toprule
+反应 & 化学方程式 & 断开的键 \\
+\midrule
+与活泼金属 & \ce{2CH3CH2OH + 2Na -> 2CH3CH2ONa + H2 ^} & ① \\
+与氢卤酸取代 & \ce{CH3CH2OH + HBr ->[\text{△}] CH3CH2Br + H2O} & ② \\
+分子内脱水（消去） & \ce{CH3CH2OH ->[\text{浓硫酸}][170\ \text{℃}] CH2=CH2 ^ + H2O} & ② 和 ④ \\
+分子间脱水（取代） & \ce{2CH3CH2OH ->[\text{浓硫酸}][140\ \text{℃}] CH3CH2OCH2CH3 + H2O} & 一分子断①，另一分子断② \\
+催化氧化 & \ce{2CH3CH2OH + O2 ->[\ce{Cu}][\text{△}] 2CH3CHO + 2H2O} & ① 和 ③ \\
+酯化 & 见 10.6 节 & ① \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{与钠反应和与氢卤酸反应}
+乙醇与钠反应时断开极性的 O—H 键，H 原子两两结合成 \ce{H2}（图~\ref{fig:10-alc1}(a)）。这个反应比钠与水的反应缓和，说明乙醇羟基上的氢不如水分子中的氢活泼，乙醇不显酸性，不能与 NaOH 反应。乙醇与浓氢溴酸共热时断开的是 C—O 键，羟基被溴原子取代（图~\ref{fig:10-alc1}(b)），这是由醇制卤代烃的方法，与卤代烃的水解方向相反。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node[c10note] at (-1.1,0) {(a)};
+\node (R) at (0,0) {\ce{CH3CH2}}; \node (O) at (1.15,0) {O}; \node (H) at (1.95,0) {H};
+\draw (R)--(O)--(H); \ctencut{O}{H}
+\node at (2.55,0) {$+$}; \node at (3.05,0) {Na};
+\draw[c10arr] (3.5,0) -- (4.6,0);
+\node (R2) at (5.5,0) {\ce{CH3CH2}}; \node (O2) at (6.7,0) {O$^-$}; \node at (7.45,0) {\ce{Na+}};
+\draw (R2)--(O2);
+\node at (8.1,0) {$+$}; \node at (8.8,0) {$\frac12$\ce{H2}};
+\node[c10note] at (1.55,-0.5) {断 O—H};
+\node[c10note] at (-1.1,-1.4) {(b)};
+\node (R3) at (0,-1.4) {\ce{CH3CH2}}; \node (O3) at (1.3,-1.4) {OH}; \draw (R3)--(O3); \ctencut{R3}{O3}
+\node at (1.95,-1.4) {$+$}; \node (Hh) at (2.45,-1.4) {H}; \node (Bh) at (3.25,-1.4) {Br}; \draw (Hh)--(Bh); \ctencut{Hh}{Bh}
+\draw[c10arr] (3.75,-1.4) -- node[above,font=\scriptsize]{△} (4.6,-1.4);
+\node (R4) at (5.5,-1.4) {\ce{CH3CH2}}; \node (B4) at (6.8,-1.4) {Br}; \draw[c10new] (R4)--(B4);
+\node at (7.45,-1.4) {$+$}; \node (H5) at (7.95,-1.4) {H}; \node (O5) at (8.75,-1.4) {OH}; \draw[c10new] (H5)--(O5);
+\node[c10note] at (0.65,-1.9) {断 C—O}; \node[c10note] at (6.15,-1.9) {成 C—Br};
+\end{tikzpicture}}{(a) 乙醇与钠反应断 O—H 键；(b) 乙醇与 HBr 反应断 C—O 键\label{fig:10-alc1}}
+
+\subsection{脱水反应}
+乙醇与浓硫酸共热会脱水，温度不同，脱水方式不同（图~\ref{fig:10-alc2}）。加热到 170 ℃ 时发生分子内脱水，断开 C—O 键和 β-C—H 键，生成乙烯，这是消去反应，与卤代烃消去的断键方式完全对应，同样要求有 β-H。加热到 140 ℃ 时发生分子间脱水：一个乙醇分子断 C—O 键，另一个断 O—H 键，生成乙醚，这是取代反应。所以实验室制乙烯时要使温度\textbf{迅速}升到 170 ℃，温度计的水银球要插入反应液中，并加碎瓷片防止暴沸；浓硫酸作催化剂和脱水剂。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node[c10note] at (-1.6,0) {(a)};
+\node (Cb) at (0,0) {C}; \node (Ca) at (1.2,0) {C};
+\node (H1) at (-0.9,0) {H}; \node (H2) at (0,0.9) {H}; \node (Hb) at (0,-0.9) {H};
+\node (H3) at (2.1,0) {H}; \node (H4) at (1.2,0.9) {H}; \node (X) at (1.2,-0.9) {OH};
+\draw (H1)--(Cb)--(Ca)--(H3) (H2)--(Cb)--(Hb) (H4)--(Ca)--(X);
+\ctencut{Cb}{Hb} \ctencut{Ca}{X}
+\node[c10note] at (-0.3,0.3) {β}; \node[c10note] at (1.5,0.3) {α};
+\draw[c10arr] (2.6,0) -- node[above,font=\scriptsize]{浓硫酸} node[below,font=\scriptsize]{170 ℃} (4.2,0);
+\node (P1) at (5.0,0) {C}; \node (P2) at (6.0,0) {C};
+\draw ([yshift=1.6pt]P1.east)--([yshift=1.6pt]P2.west); \draw[c10new] ([yshift=-1.8pt]P1.east)--([yshift=-1.8pt]P2.west);
+\node (q1) at (4.4,0.6) {H}; \node (q2) at (4.4,-0.6) {H}; \node (q3) at (6.6,0.6) {H}; \node (q4) at (6.6,-0.6) {H};
+\draw (q1)--(P1)--(q2) (q3)--(P2)--(q4);
+\node at (7.2,0) {$+$}; \node at (7.85,0) {\ce{H2O}};
+\node[c10note] at (-1.6,-2.0) {(b)};
+\node (A1) at (-0.4,-2.0) {\ce{CH3CH2}}; \node (A2) at (0.9,-2.0) {OH}; \draw (A1)--(A2); \ctencut{A1}{A2}
+\node at (1.55,-2.0) {$+$}; \node (B1) at (2.0,-2.0) {H}; \node (B2) at (2.75,-2.0) {O}; \node (B3) at (3.8,-2.0) {\ce{CH2CH3}};
+\draw (B1)--(B2)--(B3); \ctencut{B1}{B2}
+\draw[c10arr] (4.6,-2.0) -- node[above,font=\scriptsize]{浓硫酸} node[below,font=\scriptsize]{140 ℃} (5.9,-2.0);
+\node (P3) at (6.8,-2.0) {\ce{CH3CH2}}; \node (P4) at (7.95,-2.0) {O}; \node (P5) at (9.0,-2.0) {\ce{CH2CH3}};
+\draw[c10new] (P3)--(P4); \draw (P4)--(P5);
+\node at (9.8,-2.0) {$+$}; \node at (10.4,-2.0) {\ce{H2O}};
+\end{tikzpicture}}{乙醇的两种脱水方式：(a) 170 ℃ 分子内脱水（消去）；(b) 140 ℃ 分子间脱水（取代）\label{fig:10-alc2}}
+
+\subsection{催化氧化：断 O—H 和 α-C—H，成 \ce{C=O}}
+高一做过这样的实验（图~\ref{fig:10-cuwire}）：把一端绕成螺旋状的铜丝在酒精灯外焰上灼烧，红色铜丝表面变黑；趁热插入盛乙醇的试管中，铜丝又变成红色，反复几次，试管中能闻到刺激性气味（乙醛）。两步反应为
+\[\ce{2Cu + O2 ->[\text{△}] 2CuO}\qquad \ce{CH3CH2OH + CuO ->[\text{△}] CH3CHO + Cu + H2O}\]
+两式相加，铜在反应前后不变，是催化剂，总反应是乙醇被氧气氧化为乙醛。
+
+\tu{\begin{tikzpicture}[every node/.style={font=\scriptsize}]
+\ctenlamp{0}{0}
+\draw[c10copper,thick] (-1.5,1.7) -- (-0.32,1.1);
+\foreach \x in {-0.25,-0.12,0,0.12,0.25} \draw[black!80,thick] (\x,1.05) ellipse (0.05 and 0.16);
+\node[align=center] at (0,-0.45) {(a) 外焰上灼烧\\红色 $\to$ 黑色};
+\ctentube{2.8}{0}{2.0}{0.8}{c10water}
+\draw[c10copper,thick] (2.8,2.3) -- (2.8,0.6);
+\foreach \y in {0.25,0.38,0.51} \draw[c10copper,thick] (2.8,\y) ellipse (0.15 and 0.05);
+\node[align=center] at (2.8,-0.45) {(b) 趁热插入乙醇中\\黑色 $\to$ 红色};
+\node[font=\small] (cu) at (5.6,1.8) {Cu（红）}; \node[font=\small] (cuo) at (5.6,0.3) {CuO（黑）};
+\draw[c10arr] (cu.west) to[bend right=50] node[left]{\ce{O2}，△} (cuo.west);
+\draw[c10arr] (cuo.east) to[bend right=50] node[right]{乙醇，△} (cu.east);
+\node[align=center] at (5.6,-0.45) {(c) 铜在反应前后不变\\是催化剂};
+\end{tikzpicture}}{乙醇催化氧化实验：铜丝颜色的变化（示意）\label{fig:10-cuwire}}
+
+从断键角度看（图~\ref{fig:10-alcox}），乙醇断开 O—H 键和 α-碳上的一个 C—H 键，脱下的两个 H 与氧结合成水，碳和氧之间多形成一个键，\ce{C-O} 变成 \ce{C=O}。这种“去氢”的过程是氧化反应：有机反应中，加氧或去氢叫氧化反应，加氢或去氧叫还原反应。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node (Me) at (0,0) {\ce{CH3}}; \node (C) at (1.1,0) {C}; \node (O) at (2.2,0) {O}; \node (H) at (3.0,0) {H};
+\node (Ht) at (1.1,0.9) {H}; \node (Hb) at (1.1,-0.9) {H};
+\draw (Me)--(C)--(O)--(H) (Ht)--(C)--(Hb); \ctencut{O}{H} \ctencut{C}{Hb}
+\node[c10note] at (1.55,-1.0) {α-H};
+\draw[c10arr] (3.5,0) -- node[above,font=\scriptsize]{\ce{O2}，Cu} node[below,font=\scriptsize]{△} (5.0,0);
+\node (Me2) at (5.8,0) {\ce{CH3}}; \node (C2) at (6.9,0) {C}; \node (O2) at (8.0,0) {O}; \node (H2) at (6.9,0.9) {H};
+\draw (Me2)--(C2) (C2)--(H2);
+\draw ([yshift=1.6pt]C2.east)--([yshift=1.6pt]O2.west); \draw[c10new] ([yshift=-1.8pt]C2.east)--([yshift=-1.8pt]O2.west);
+\node at (8.6,0) {$+$}; \node at (9.25,0) {\ce{H2O}};
+\node[c10note] at (1.6,-1.45) {断 O—H 和 α-C—H}; \node[c10note] at (7.4,-0.6) {成 \ce{C=O}};
+\end{tikzpicture}}{乙醇催化氧化：断开 O—H 键和 α-C—H 键，形成碳氧双键\label{fig:10-alcox}}
+
+由此可以判断任意一种醇能否被催化氧化、得到什么产物，关键看羟基所连碳（α-碳）上有几个氢：有 2 个或 3 个 H（含 \ce{-CH2OH}）时氧化为醛；只有 1 个 H（含 \ce{-CH(OH)-}）时氧化为酮，如 2-丙醇氧化为丙酮；没有 H（如 \ce{(CH3)3COH}）时不能被催化氧化。2025 年广东卷第 11 题 C 项就考查了铜丝“由黑变红说明乙醇被氧化”。醇还能被酸性 \ce{KMnO4} 溶液、酸性 \ce{K2Cr2O7} 溶液等强氧化剂氧化，后者由橙色变为绿色，可用于检测司机是否饮酒。
+
+\begin{liti}[基础]
+写出 1-丙醇分别与 Na、HBr（△）、浓硫酸（加热，分子内脱水）、\ce{O2}（Cu，△）反应的化学方程式，并指出断键位置。
+\tcblower
+\jie \ce{2CH3CH2CH2OH + 2Na -> 2CH3CH2CH2ONa + H2 ^}，断 O—H；\ce{CH3CH2CH2OH + HBr ->[\text{△}] CH3CH2CH2Br + H2O}，断 C—O；\ce{CH3CH2CH2OH ->[\text{浓硫酸}][\text{△}] CH3CH=CH2 ^ + H2O}，断 C—O 和 β-C—H；\ce{2CH3CH2CH2OH + O2 ->[\ce{Cu}][\text{△}] 2CH3CH2CHO + 2H2O}，断 O—H 和 α-C—H。\\
+\dianbo 写方程式时，只需把乙醇的反应中的 \ce{CH3} 换成 \ce{CH3CH2}，这正是“官能团决定性质”的用法。
+\end{liti}
+
+\begin{liti}[典型]
+分子式为 \ce{C4H10O} 的醇有 4 种。(1) 哪些能被催化氧化为醛？哪种被氧化为酮？哪种不能被催化氧化？(2) 哪种醇发生消去反应能得到两种烯烃？
+\tcblower
+\silu 先写全 4 种醇，再分别数 α-H（看能否氧化、生成什么）和 β-H 的种类（看消去产物有几种）。\\
+\jie 4 种醇为 ① \ce{CH3CH2CH2CH2OH}、② \ce{CH3CH(OH)CH2CH3}、③ \ce{(CH3)2CHCH2OH}、④ \ce{(CH3)3COH}。(1) ①③ 的 α-碳上有 2 个 H，氧化为醛；② 的 α-碳上有 1 个 H，氧化为丁酮；④ 的 α-碳上没有 H，不能被催化氧化。(2) ② 的 α-碳两侧连着两个不同的 β-碳（\ce{CH3} 和 \ce{CH2}），都有 H，消去得到 1-丁烯和 2-丁烯；① 只得 1-丁烯；③④ 都只得 2-甲基丙烯。\daan (1) ①③；②；④\quad (2) 2-丁醇
+\end{liti}
+
+\section{酚}
+
+\subsection{结构与物理性质}
+羟基与苯环直接相连的化合物叫\textbf{酚}，最简单的是苯酚 \ce{C6H5OH}。注意苯甲醇 \ce{C6H5CH2OH} 中羟基连在苯环侧链的饱和碳上，属于醇而不是酚。纯净的苯酚是无色晶体，露置在空气中会因被氧化而呈粉红色；常温下在水中溶解度不大，温度高于 65 ℃ 时能与水互溶；苯酚有毒，对皮肤有腐蚀性，操作时应避免接触；发生接触应立即按实验室应急规程处理。
+
+苯酚中苯环与羟基直接相连，彼此影响：苯环使羟基上的氢更活泼，羟基使苯环上的氢更活泼。这两方面的影响分别带来苯酚的弱酸性和苯环上容易发生的取代反应。
+
+\subsection{弱酸性及其来源}
+苯酚能与 NaOH 溶液反应，浑浊的苯酚溶液加入 NaOH 后变澄清，乙醇则不能与 NaOH 反应：
+\[\ce{C6H5OH + NaOH -> C6H5ONa + H2O}\]
+酸性的来源可以这样理解（图~\ref{fig:10-phacid}(a)）：苯酚的羟基与苯环直接相连，存在电子的相互作用；尤其在失去 \ce{H+} 后，苯氧负离子的负电荷能在一定程度上分散，生成的离子得到稳定，因而电离比乙醇容易。苯甲醇的羟基与苯环隔着 \ce{CH2}，不能直接套用这一结论。这是高中采用的定性解释，更深入的讨论需要大学有机化学的知识。
+
+苯酚的酸性很弱（俗称石炭酸），不能使石蕊溶液变色。把几种含 O—H 的物质按酸性排列，就得到图~\ref{fig:10-phacid}(b)。读这张图要用到高一学过的“强酸制弱酸”：一种酸能与比它弱的酸所对应的盐反应。苯酚比 \ce{HCO3-} 强，所以能与 \ce{Na2CO3} 反应，但只生成 \ce{NaHCO3}；苯酚比 \ce{H2CO3} 弱，所以不能与 \ce{NaHCO3} 反应，反过来向苯酚钠溶液中通入 \ce{CO2}，溶液变浑浊，析出苯酚：
+\[\ce{C6H5OH + Na2CO3 -> C6H5ONa + NaHCO3}\qquad \ce{C6H5ONa + CO2 + H2O -> C6H5OH + NaHCO3}\]
+后一个反应无论 \ce{CO2} 是否过量都生成 \ce{NaHCO3}，因为生成的 \ce{CO3^2-} 会继续与苯酚反应变成 \ce{HCO3-}。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\begin{scope}[shift={(0,0.2)}]
+\draw (90:0.6) \foreach \a in {30,-30,-90,-150,150} {-- (\a:0.6)} -- cycle; \draw (0,0) circle (0.36);
+\node (O) at (0,1.25) {O}; \node (H) at (0.9,1.25) {H}; \draw (90:0.6)--(O)--(H);
+\node[font=\scriptsize] at (0.9,1.6) {$\delta^+$}; \node[font=\scriptsize] at (-0.3,1.55) {$\delta^-$};
+\draw[-Stealth,red!70!black,thick] (-0.25,1.15) to[bend right=50] (-0.25,0.15);
+\node[c10note,anchor=west,align=left] at (1.4,1.25) {苯环与羟基相互作用，\\H 较易以 \ce{H+} 形式电离};
+\node[c10note,anchor=west,align=left] at (1.4,0.15) {失去 \ce{H+} 后的负电荷\\可一定程度分散};
+\node[c10note] at (0,-0.85) {(a)};
+\end{scope}
+\begin{scope}[shift={(5.4,-0.2)}]
+\draw[-Stealth,thick] (0,0) -- (7.6,0) node[right,font=\scriptsize]{酸性增强};
+\foreach \x/\t in {0.4/乙醇,1.6/水,2.8/\ce{HCO3-},4.0/苯酚,5.2/\ce{H2CO3},6.4/乙酸}
+  {\draw (\x,0)--(\x,0.1); \node[font=\scriptsize,below] at (\x,0) {\t};}
+\draw[|-|] (0.4,1.35) -- node[above,font=\scriptsize]{能与 Na 反应} (6.4,1.35);
+\draw[|-|] (4.0,0.85) -- node[above,font=\scriptsize]{能与 NaOH、\ce{Na2CO3} 反应} (6.4,0.85);
+\draw[|-|] (6.1,0.35) -- node[above,font=\scriptsize]{\ce{NaHCO3}} (6.7,0.35);
+\node[c10note] at (3.4,-0.75) {(b)};
+\end{scope}
+\end{tikzpicture}}{(a) 苯酚酸性的来源（模型示意）；(b) 几种物质的酸性强弱与能反应的试剂\label{fig:10-phacid}}
+
+\subsection{取代反应：羟基活化邻、对位}
+向苯酚稀溶液中滴加浓溴水，常温下立即产生白色沉淀 2,4,6-三溴苯酚。苯与溴反应却需要液溴和 \ce{FeBr3} 催化剂，且只取代一个氢。这说明羟基使苯环上的氢变活泼了，而且活化的是与羟基处于邻位和对位的氢。如图~\ref{fig:10-phbr}，反应断开的是苯环上邻、对位的三个 C—H 键，形成三个 C—Br 键，间位的 H 不被取代：
+\[\ce{C6H5OH + 3Br2 -> C6H2Br3OH v + 3HBr}\]
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\draw (90:0.6) \foreach \a in {30,-30,-90,-150,150} {-- (\a:0.6)} -- cycle; \draw (0,0) circle (0.36);
+\draw (90:0.6) -- (90:0.98); \node at (90:1.2) {OH};
+\foreach \a in {30,150,-90} {\draw (\a:0.6) -- (\a:0.98); \node[text=red!75!black] at (\a:1.18) {H};
+  \draw[c10cut] ($(\a:0.79)+({\a+90}:0.2)$) -- ($(\a:0.79)+({\a-90}:0.2)$);}
+\foreach \a in {-30,-150} {\draw (\a:0.6) -- (\a:0.98); \node at (\a:1.18) {H};}
+\node[c10note] at (30:1.62) {邻}; \node[c10note] at (150:1.62) {邻}; \node[c10note] at (-30:1.62) {间}; \node[c10note] at (-150:1.62) {间}; \node[c10note] at (-90:1.58) {对};
+\draw[c10arr] (1.9,0) -- node[above,font=\scriptsize]{\ce{3Br2}} node[below,font=\scriptsize]{浓溴水} (3.4,0);
+\begin{scope}[shift={(5.0,0)}]
+\draw (90:0.6) \foreach \a in {30,-30,-90,-150,150} {-- (\a:0.6)} -- cycle; \draw (0,0) circle (0.36);
+\draw (90:0.6) -- (90:0.98); \node at (90:1.2) {OH};
+\foreach \a in {30,150,-90} {\draw[c10new] (\a:0.6) -- (\a:0.95); \node[text=blue!70!black] at (\a:1.2) {Br};}
+\foreach \a in {-30,-150} {\draw (\a:0.6) -- (\a:0.98); \node at (\a:1.18) {H};}
+\end{scope}
+\node at (6.6,0) {$+$}; \node at (7.3,0) {\ce{3HBr}};
+\node[c10note] at (5.0,-1.6) {2,4,6-三溴苯酚（白色沉淀）};
+\end{tikzpicture}}{苯酚与浓溴水反应：断开邻、对位的 C—H 键，形成 C—Br 键\label{fig:10-phbr}}
+
+这个反应灵敏且定量，可用于苯酚的检验和含量测定。此外，苯酚遇 \ce{FeCl3} 溶液显紫色，这是检验酚羟基的常用方法；苯酚与甲醛在酸或碱催化下发生缩聚反应生成酚醛树脂（2024 年广东卷第 13 题 D 项：该反应是缩聚反应，不是加聚反应；缩聚反应见第 11 章）。
+
+\begin{liti}[典型]
+苯中混有少量苯酚。甲同学提出加入浓溴水后过滤，乙同学提出加入 NaOH 溶液振荡后分液。(1) 哪种方案合理？说明另一种不合理的原因。(2) 若要从分液得到的水层中回收苯酚，应怎样操作？写出化学方程式。
+\tcblower
+\silu 除杂既要除去杂质，又不能引入新杂质；还要注意生成物溶在哪一层。\\
+\jie (1) 乙方案合理：苯酚转化为易溶于水的苯酚钠，苯不溶于水，分液即可分开。甲方案不合理：生成的三溴苯酚和过量的溴都易溶于苯，过滤除不掉，反而引入新杂质。(2) 向水层中通入足量 \ce{CO2}（或加入稀盐酸），苯酚析出，溶液变浑浊并分层，再分液：\ce{C6H5ONa + CO2 + H2O -> C6H5OH + NaHCO3}。
+\end{liti}
+
+\section{醛和酮}
+
+\subsection{结构特点}
+醛的官能团是醛基 \ce{-CHO}，其中碳氧双键（羰基）的一端连烃基（甲醛连 H），另一端连 H；酮的羰基两端都连烃基，如丙酮 \ce{CH3COCH3}。羰基 \ce{C=O} 是极性很强的双键，碳带 $\delta^+$，氧带 $\delta^-$，其中有一个键（$\pi$ 键）较弱，能够发生加成。醛基中与羰基相连的那个 C—H 键也较活泼，容易被氧化。所以醛既能被还原（加氢），又能被氧化，见图~\ref{fig:10-ald}。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node (m0) at (-1.0,0) {\ce{CH3}}; \node (c0) at (0,0) {C}; \node (o0) at (0,1.0) {O}; \node (h0) at (0.85,0) {H};
+\draw (m0)--(c0)--(h0); \draw ([xshift=-1.6pt]c0.north)--([xshift=-1.6pt]o0.south); \draw ([xshift=1.6pt]c0.north)--([xshift=1.6pt]o0.south);
+\draw[c10cut] (0.02,0.5) -- (0.3,0.5); \node[c10num] at (0.42,0.55) {①};
+\ctencut{c0}{h0} \node[c10num] at (0.45,-0.45) {②};
+\node[c10note] at (0,-0.85) {乙醛};
+\node (m1) at (-5.6,0) {\ce{CH3}}; \node (c1) at (-4.6,0) {C}; \node (o1) at (-4.6,1.0) {O}; \node (ho1) at (-3.85,1.0) {H};
+\node (h1a) at (-3.75,0) {H}; \node (h1b) at (-4.6,-0.85) {H};
+\draw (m1)--(c1)--(h1a) (c1)--(o1); \draw[c10new] (o1)--(ho1) (c1)--(h1b);
+\node[c10note] at (-5.2,-0.85) {乙醇};
+\draw[c10arr] (-1.6,0.15) -- node[above,font=\scriptsize]{\ce{H2}，Ni，△} node[below,font=\scriptsize]{还原（①）} (-3.3,0.15);
+\node (m2) at (3.6,0) {\ce{CH3}}; \node (c2) at (4.6,0) {C}; \node (o2) at (4.6,1.0) {O}; \node (oh2) at (5.5,0) {O}; \node (h2) at (6.25,0) {H};
+\draw (m2)--(c2); \draw ([xshift=-1.6pt]c2.north)--([xshift=-1.6pt]o2.south); \draw ([xshift=1.6pt]c2.north)--([xshift=1.6pt]o2.south);
+\draw[c10new] (c2)--(oh2)--(h2);
+\node[c10note] at (4.6,-0.85) {乙酸};
+\draw[c10arr] (1.4,0.15) -- node[above,font=\scriptsize,align=center]{银氨溶液、新制\\\ce{Cu(OH)2}、\ce{O2} 等} node[below,font=\scriptsize]{氧化（②）} (3.0,0.15);
+\end{tikzpicture}}{乙醛的还原与氧化：① 断开 \ce{C=O} 中较弱的键，加上两个 H；② 在醛基的 C—H 键之间插入 O\label{fig:10-ald}}
+
+\subsection{还原反应（加氢）}
+在镍催化、加热条件下，乙醛与 \ce{H2} 加成生成乙醇：\ce{CH3CHO + H2 ->[\ce{Ni}][\text{△}] CH3CH2OH}。从图~\ref{fig:10-ald} 左半部分看，断开的是 \ce{C=O} 中较弱的一个键（①），H 分别加到 C 和 O 上，形成新的 C—H 键和 O—H 键。它既是加成反应，又是还原反应。醛加氢得伯醇（含 \ce{-CH2OH}），酮加氢得仲醇，正好是醇催化氧化的逆过程。
+
+\subsection{氧化反应与醛基的检验}
+醛基很容易被氧化：在催化剂作用下能被 \ce{O2} 氧化为羧酸（\ce{2CH3CHO + O2 ->[\text{催化剂}][\text{△}] 2CH3COOH}），也能被银氨溶液、新制 \ce{Cu(OH)2} 这类弱氧化剂氧化，还能使溴水、酸性 \ce{KMnO4} 溶液褪色。从图~\ref{fig:10-ald} 右半部分看，醛基氧化就是在 C—H 键之间“插入”一个氧原子（②），\ce{-CHO} 变成 \ce{-COOH}（在碱性溶液中实际得到羧酸盐）。丙酮等简单酮的羰基两端都是烃基，没有这个 C—H 键，在本节条件下不被上述弱氧化剂氧化，这是区分简单醛、酮的依据。多官能团分子还须检查其他结构；如果糖在碱性条件下可发生转化而表现还原性，第 11 章再讨论。用弱氧化剂检验醛基的两个实验见图~\ref{fig:10-agcu}。
+
+\tu{\begin{tikzpicture}[every node/.style={font=\scriptsize}]
+\fill[c10water!70] (-0.9,0) rectangle (0.9,1.1);
+\draw[c10glass] (-0.9,1.6) -- (-0.9,0) -- (0.9,0) -- (0.9,1.6);
+\fill[white] (-0.22,0.15) rectangle (0.22,1.1);
+\ctentube{0}{0.15}{2.4}{0.85}{gray!12}
+\draw[black!60,line width=1.6pt] (-0.19,0.45) -- (-0.19,0.95); \draw[black!60,line width=1.6pt] (0.19,0.45) -- (0.19,0.95);
+\node[anchor=west] at (1.0,2.2) {银氨溶液 $+$ 乙醛};  \draw[gray] (0.95,2.2) -- (0.1,0.8);
+\node[anchor=west] at (1.0,1.3) {管壁出现银镜}; \draw[gray] (0.95,1.3) -- (0.22,0.8);
+\node[anchor=west] at (1.0,0.5) {热水浴（静置，不振荡）};
+\node at (0.8,-0.4) {(a) 银镜反应};
+\ctenlamp{6.0}{-0.3}
+\ctentube{6.0}{0.95}{2.0}{0.8}{c10water}
+\fill[red!55!brown] (5.78,1.17) -- (5.78,1.25) -- (6.22,1.25) -- (6.22,1.17) arc (0:-180:0.22) -- cycle;
+\node[anchor=west,align=left] at (6.4,2.4) {2 mL 10\% NaOH 溶液\\$+$ 4～6 滴 2\% \ce{CuSO4} 溶液\\$+$ 0.5 mL 乙醛};
+\node[anchor=west] at (6.4,1.2) {砖红色沉淀 \ce{Cu2O}}; \draw[gray] (6.35,1.2) -- (6.1,1.15);
+\node[anchor=west] at (6.4,0.5) {加热至沸腾};
+\node at (6.6,-0.65) {(b) 与新制 \ce{Cu(OH)2} 反应};
+\end{tikzpicture}}{检验醛基的两个实验（示意）\label{fig:10-agcu}}
+
+\textbf{银镜反应}。在洁净的试管中加入 \ce{AgNO3} 溶液，边振荡边逐滴加入稀氨水，先生成沉淀，继续滴加到最初产生的沉淀恰好溶解为止，得到银氨溶液。氨水不能过量太多。加入乙醛后放在热水浴中静置加热，试管内壁上生成光亮的银镜：
+\[\ce{CH3CHO + 2[Ag(NH3)2]OH ->[\text{△}] CH3COONH4 + 2Ag v + 3NH3 + H2O}\]
+用水浴而不用酒精灯直接加热，是为了受热均匀、温度平稳；加热时不能振荡，否则得到黑色的银粉而不是银镜。
+
+\textbf{与新制 \ce{Cu(OH)2} 反应}。在试管中加入过量 NaOH 溶液，再滴入少量 \ce{CuSO4} 溶液，得到新制的 \ce{Cu(OH)2} 悬浊液（必须保证碱过量），加入乙醛后加热至沸腾，生成砖红色的 \ce{Cu2O} 沉淀：
+\[\ce{CH3CHO + 2Cu(OH)2 + NaOH ->[\text{△}] CH3COONa + Cu2O v + 3H2O}\]
+其离子方程式 \ce{CH3CHO + 2Cu(OH)2 + OH- ->[\text{△}] CH3COO- + Cu2O v + 3H2O} 就是 2026 年广东卷第 14 题 D 项（该项书写正确）。两个反应中都有 1 mol \ce{-CHO} 对应 2 mol Ag 或 1 mol \ce{Cu2O}。甲醛 HCHO 只有一个羰基，不能在结构上说它有两个醛基。它可先被氧化成甲酸（盐），甲酸（盐）在该条件下还能继续被氧化，碳最终到 $+4$ 价；因此 1 mol HCHO 与足量银氨溶液充分反应可生成 4 mol Ag，碱性溶液中的含碳终产物用碳酸盐表示。
+
+\subsection{其他反应与酮}
+醛和酮的羰基都能与 HCN 加成，CN 加到碳上、H 加到氧上：\ce{CH3CHO + HCN -> CH3CH(OH)CN}。这个反应使碳链增长一个碳原子，所得羟基腈水解可得 α-羟基酸。2026 年广东卷第 20 题(5)的合成路线中就有“酮 $\to$ 羟基腈”一步。丙酮等简单酮不能发生银镜反应，但能加氢还原为醇、能与 HCN 加成。羰基相邻碳上的 α-H 较活泼，可被卤素取代，如 2025 年广东卷第 20 题(4)中丙酮与 \ce{Br2} 取代生成 \ce{CH3COCH2Br}。
+
+\begin{liti}[基础]
+写出丙醛（\ce{CH3CH2CHO}）与 \ce{H2}（Ni，△）、银氨溶液（水浴加热）反应的化学方程式。
+\tcblower
+\jie \ce{CH3CH2CHO + H2 ->[\ce{Ni}][\text{△}] CH3CH2CH2OH}；\ce{CH3CH2CHO + 2[Ag(NH3)2]OH ->[\text{△}] CH3CH2COONH4 + 2Ag v + 3NH3 + H2O}。\\
+\dianbo 银镜反应方程式的系数可以这样记：1 个醛基对应 2 个 Ag，生成的羧酸与 \ce{NH3} 成铵盐，其余 3 个 \ce{NH3} 和 1 个 \ce{H2O} 由原子守恒配出。
+\end{liti}
+
+\begin{yicuo}
+醛基能被溴水、酸性 \ce{KMnO4} 溶液氧化而使它们褪色。所以检验 \ce{CH2=CHCHO} 中的碳碳双键时，要先用银氨溶液或新制 \ce{Cu(OH)2} 把醛基氧化，酸化后再加溴水。
+\end{yicuo}
+
+\begin{liti}[典型]
+设计实验检验丙烯醛（\ce{CH2=CHCHO}）中的两种官能团，写出操作要点和化学方程式。
+\tcblower
+\jie ① 检验醛基：取少量样品，加入足量新制 \ce{Cu(OH)2} 悬浊液（碱性），加热至沸腾，产生砖红色沉淀：\ce{CH2=CHCHO + 2Cu(OH)2 + NaOH ->[\text{△}] CH2=CHCOONa + Cu2O v + 3H2O}。② 检验碳碳双键：取 ① 反应后的上层清液，先加稀硫酸酸化（中和 NaOH），再加溴水，溴水褪色：\ce{CH2=CHCOOH + Br2 -> CH2BrCHBrCOOH}。\\
+\xianjing 不能直接用溴水或酸性 \ce{KMnO4} 检验双键，因为醛基也会使它们褪色；不酸化时溴水会与 NaOH 反应而褪色，造成误判。
+\end{liti}
+
+\section{羧酸和酯}
+
+\subsection{羧基的结构与酸性}
+羧基 \ce{-COOH} 由羰基和羟基组成，但它的性质并不是二者的简单相加：受羰基影响，羟基的 O—H 键极性更强，在水中能部分电离出 \ce{H+}，所以羧酸具有酸的通性；而羧基中的 \ce{C=O} 一般不能与 \ce{H2} 加成。乙酸的酸性比碳酸强（图~\ref{fig:10-phacid}(b)），能与碳酸盐、碳酸氢盐反应放出 \ce{CO2}：
+\[\ce{2CH3COOH + Na2CO3 -> 2CH3COONa + CO2 ^ + H2O}\]
+\[\ce{CH3COOH + NaHCO3 -> CH3COONa + CO2 ^ + H2O}\]
+在常见的含 O—H 物质中，只有羧基能与 \ce{NaHCO3} 反应放出 \ce{CO2}，这是区分羧基与酚羟基的常用方法。
+
+\subsection{酯化反应：酸脱羟基、醇脱氢}
+乙酸与乙醇在浓硫酸催化、加热下生成乙酸乙酯和水。生成的水中的氧来自乙酸还是乙醇？若乙酸断 O—H 键、乙醇断 C—O 键，水中的 O 来自乙醇；若乙酸断 C—O 键、乙醇断 O—H 键，水中的 O 来自乙酸。用同位素 \ce{^{18}O} 标记乙醇中的氧原子做实验，发现 \ce{^{18}O} 只出现在乙酸乙酯中，水中没有 \ce{^{18}O}，说明是后一种方式（图~\ref{fig:10-ester}(a)）。
+
+\begin{gainian}[酯化反应]
+酸与醇作用生成酯和水的反应叫酯化反应，属于取代反应。羧酸与醇酯化时，羧酸脱去羟基，醇脱去羟基上的氢（酸脱羟基、醇脱氢）：
+\[\ce{CH3COOH + CH3CH2{}^{18}OH <=>[\text{浓硫酸}][\text{△}] CH3CO{}^{18}OCH2CH3 + H2O}\]
+反应可逆；浓硫酸作催化剂和吸水剂，吸收生成的水可使平衡向生成酯的方向移动。
+\end{gainian}
+
+\tu{\begin{tikzpicture}[x=0.92cm,every node/.style={c10at}]
+\node[c10note] at (-1.0,0) {(a)};
+\node (m) at (0,0) {\ce{CH3}}; \node (c) at (1.0,0) {C}; \node (o) at (1.0,0.95) {O}; \node (oh) at (2.05,0) {OH};
+\draw (m)--(c)--(oh); \draw ([xshift=-1.6pt]c.north)--([xshift=-1.6pt]o.south); \draw ([xshift=1.6pt]c.north)--([xshift=1.6pt]o.south);
+\ctencut{c}{oh}
+\node at (2.75,0) {$+$}; \node (h) at (3.3,0) {H}; \node (o18) at (4.1,0) {\textcolor{red!75!black}{$^{18}$O}}; \node (et) at (5.3,0) {\ce{CH2CH3}};
+\draw (h)--(o18)--(et); \ctencut{h}{o18}
+\node at (6.7,0.05) {\ce{<=>[\text{浓硫酸}][\text{△}]}};
+\node (m2) at (8.1,0) {\ce{CH3}}; \node (c2) at (9.1,0) {C}; \node (o2) at (9.1,0.95) {O}; \node (o218) at (10.05,0) {\textcolor{red!75!black}{$^{18}$O}}; \node (et2) at (11.2,0) {\ce{CH2CH3}};
+\draw (m2)--(c2); \draw ([xshift=-1.6pt]c2.north)--([xshift=-1.6pt]o2.south); \draw ([xshift=1.6pt]c2.north)--([xshift=1.6pt]o2.south);
+\draw[c10new] (c2)--(o218); \draw (o218)--(et2);
+\node at (12.15,0) {$+$}; \node at (12.75,0) {\ce{H2O}};
+\node[c10note] at (1.5,-0.5) {酸脱羟基}; \node[c10note] at (3.7,-0.5) {醇脱氢};
+\node[c10note] at (-1.0,-1.9) {(b)};
+\node (n) at (0,-1.9) {\ce{CH3}}; \node (d) at (1.0,-1.9) {C}; \node (p) at (1.0,-0.95) {O}; \node (oe) at (1.95,-1.9) {O}; \node (ee) at (3.0,-1.9) {\ce{CH2CH3}};
+\draw (n)--(d)--(oe)--(ee); \draw ([xshift=-1.6pt]d.north)--([xshift=-1.6pt]p.south); \draw ([xshift=1.6pt]d.north)--([xshift=1.6pt]p.south);
+\ctencut{d}{oe}
+\node at (3.95,-1.9) {$+$}; \node (hw) at (4.45,-1.9) {H}; \node (ow) at (5.25,-1.9) {OH}; \draw (hw)--(ow); \ctencut{hw}{ow}
+\node at (6.7,-1.85) {\ce{<=>[\text{稀硫酸}][\text{△}]}};
+\node (n3) at (8.1,-1.9) {\ce{CH3}}; \node (d3) at (9.1,-1.9) {C}; \node (p3) at (9.1,-0.95) {O}; \node (oh3) at (10.15,-1.9) {OH};
+\draw (n3)--(d3); \draw ([xshift=-1.6pt]d3.north)--([xshift=-1.6pt]p3.south); \draw ([xshift=1.6pt]d3.north)--([xshift=1.6pt]p3.south);
+\draw[c10new] (d3)--(oh3);
+\node at (10.9,-1.9) {$+$}; \node (h4) at (11.4,-1.9) {H}; \node (o4) at (12.55,-1.9) {\ce{OCH2CH3}}; \draw[c10new] (h4)--(o4);
+\end{tikzpicture}}{(a) 酯化反应：酸断 C—O 键、醇断 O—H 键（\ce{^{18}O} 示踪）；(b) 酯的水解：断酯基中的 C—O 键，正好是酯化的逆过程\label{fig:10-ester}}
+
+\subsection{乙酸乙酯的制备}
+实验装置见图~\ref{fig:10-esterapp}。在试管 A 中先加入乙醇，再边振荡边缓慢加入浓硫酸，冷却后加入乙酸（与稀释浓硫酸一样，要把密度大的浓硫酸加到密度小的液体中，防止液体飞溅），再加几片碎瓷片防止暴沸。用酒精灯小心加热，产生的蒸气经长导管通到盛有饱和 \ce{Na2CO3} 溶液的试管 B 的液面上方。
+
+\tu{\begin{tikzpicture}[every node/.style={font=\scriptsize}]
+\begin{scope}
+\clip[rotate around={35:(0,0.9)}] (2.5,1.15) -- (0.25,1.15) arc (90:270:0.25) -- (2.5,0.65) -- cycle;
+\fill[c10water] (-1,-1) rectangle (3,1.32);
+\end{scope}
+\draw[c10glass,rotate around={35:(0,0.9)}] (2.5,1.15) -- (0.25,1.15) arc (90:270:0.25) -- (2.5,0.65);
+\fill[black!55,rotate around={35:(0,0.9)}] (2.35,0.62) rectangle (2.65,1.18);
+\draw[c10pipe] (2.1,2.37) -- (2.55,2.68) -- (5.0,2.68) -- (5.0,1.35);
+\ctenlamp{0.35}{-0.6}
+\ctentube{5.0}{0}{2.2}{1.0}{c10water}
+\node at (1.75,1.3) {A}; \node at (5.0,-0.3) {B};
+\node[anchor=east,align=right] (lab1) at (-0.5,1.6) {乙醇、浓硫酸、\\乙酸、碎瓷片}; \draw[gray] (lab1.east) -- (0.45,1.15);
+\node[anchor=west] (lab2) at (5.5,0.5) {饱和 \ce{Na2CO3} 溶液}; \draw[gray] (lab2.west) -- (5.1,0.5);
+\node[anchor=west,align=left] (lab3) at (5.5,1.6) {导管口在液面上方\\（防止倒吸）}; \draw[gray] (lab3.west) -- (5.05,1.35);
+\node[anchor=south] at (3.8,2.75) {长导管兼起冷凝作用};
+\end{tikzpicture}}{实验室制备乙酸乙酯的装置（示意，铁架台略）\label{fig:10-esterapp}}
+
+对照装置图理解几个要点。
+
+饱和 \ce{Na2CO3} 溶液有三个作用：中和蒸出的乙酸；溶解蒸出的乙醇；降低乙酸乙酯在水中的溶解度，使它容易分层析出。乙酸乙酯密度比水小，浮在上层，可用分液漏斗分离。不能用 NaOH 溶液代替，因为乙酸乙酯在强碱中会较快地水解。
+
+导管口不能伸入液面以下，是为了防止倒吸。加热不均匀或停止加热时，试管 A 中的气压会下降；乙醇、乙酸蒸气又极易溶于 B 中溶液（乙酸还会与 \ce{Na2CO3} 反应），如果导管插在液面下，B 中液体就会被吸入热的试管 A 中。
+
+因为酯化反应可逆，加热一方面加快反应速率，另一方面把生成的乙酸乙酯及时蒸出，使平衡正向移动；但温度不能太高，否则乙酸、乙醇大量挥发，还会发生副反应。
+
+\subsection{酯的水解}
+酯化反应的逆反应就是酯的水解。从图~\ref{fig:10-ester}(b) 看，断开的是酯基中羰基碳与氧之间的 C—O 键，水中的 OH 连到羰基碳上生成羧酸，H 连到氧上生成醇，正好和酯化“怎么连上的就怎么断开”。在酸性条件下水解是可逆的；在碱性条件下，生成的羧酸立即被碱中和成羧酸盐，平衡被破坏，水解比较彻底：
+\[\ce{CH3COOC2H5 + H2O <=>[\text{稀硫酸}][\text{△}] CH3COOH + C2H5OH}\qquad \ce{CH3COOC2H5 + NaOH ->[\text{△}] CH3COONa + C2H5OH}\]
+如果酯基的氧直接连在苯环上（酚酯，如乙酸苯酯 \ce{CH3COOC6H5}），水解生成的是酚，酚还能继续与 NaOH 反应，所以 1 mol 酚酯基最多消耗 2 mol NaOH：
+\[\ce{CH3COOC6H5 + 2NaOH ->[\text{△}] CH3COONa + C6H5ONa + H2O}\]
+
+\textbf{油脂}是高级脂肪酸与甘油形成的酯。油脂在碱性条件下的水解叫\textbf{皂化反应}，生成高级脂肪酸钠（肥皂的主要成分）和甘油。液态的油含较多碳碳双键，经催化加氢可变为固态的脂肪（油脂的氢化或硬化）。油脂的相对分子质量不大，不是高分子；含 C、H、O 三种元素，也不是芳香烃（2024 年广东卷第 4 题 B 项）。
+
+\begin{liti}[典型]
+按本节酯化断键模型、忽略其他同位素交换，将 \ce{CH3COOH} 与 \ce{CH3CH2{}^{18}OH} 在浓硫酸作用下共热，反应一段时间后，体系中含 \ce{^{18}O} 的物质有哪些？若改用羟基氧被标记的乙酸 \ce{CH3CO{}^{18}OH} 与普通乙醇反应，\ce{^{18}O} 又会进入哪种生成物？
+\tcblower
+\silu 抓住“酸脱羟基、醇脱氢”，同时注意反应可逆：生成的酯水解时，按原路断开。\\
+\jie 第一种情况：醇中的 \ce{^{18}O} 保留在酯中，生成 \ce{CH3CO{}^{18}OCH2CH3}；酯水解时 \ce{^{18}O} 又回到乙醇中，所以含 \ce{^{18}O} 的物质是乙醇和乙酸乙酯，水和乙酸中都没有。第二种情况：乙酸脱去的是 \ce{-{}^{18}OH}，\ce{^{18}O} 进入生成的水 \ce{H2{}^{18}O} 中。
+\end{liti}
+
+\section{胺和酰胺}
+
+胺可以看成氨分子中的氢原子被烃基取代的产物，如甲胺 \ce{CH3NH2}、苯胺 \ce{C6H5NH2}（图~\ref{fig:10-amide}(a)）。胺分子中的 N 原子和氨中一样有一对孤电子对，能结合 \ce{H+}，所以胺显碱性，能与酸反应生成盐：\ce{C6H5NH2 + HCl -> C6H5NH3Cl}。
+
+酰胺可以看成羧酸中的羟基被氨基（或取代氨基）代替的产物，官能团是酰胺基 \ce{-CO-NH-}。酰胺在酸或碱存在并加热时水解，断开的是羰基碳与氮之间的 C—N 键（图~\ref{fig:10-amide}(b)），这与酯的水解断 C—O 键相似：
+\[\ce{RCONH2 + H2O + HCl ->[\text{△}] RCOOH + NH4Cl}\qquad \ce{RCONH2 + NaOH ->[\text{△}] RCOONa + NH3 ^}\]
+蛋白质分子中的肽键就是酰胺基，第 11 章讲蛋白质的水解时还要用到。
+
+\tu{\begin{tikzpicture}[every node/.style={c10at}]
+\node[c10note] at (-1.2,0) {(a)};
+\node (m) at (0,0) {\ce{CH3}}; \node (n) at (1.0,0) {N}; \node (h1) at (1.6,0.5) {H}; \node (h2) at (1.6,-0.5) {H};
+\draw (m)--(n)--(h1) (n)--(h2); \node[c10note] at (0.7,-0.9) {甲胺};
+\begin{scope}[shift={(3.2,0)}]
+\draw (0:0.55) \foreach \a in {60,120,180,240,300} {-- (\a:0.55)} -- cycle; \draw (0,0) circle (0.33);
+\draw (0:0.55) -- (0:0.95); \node[anchor=west] at (0:0.95) {\ce{NH2}};
+\node[c10note] at (0.4,-0.9) {苯胺};
+\end{scope}
+\node (c) at (6.6,0) {C}; \node (o) at (6.6,0.9) {O}; \node (nn) at (7.5,0) {N}; \node (hh) at (7.5,-0.75) {H};
+\draw (5.9,0)--(c)--(nn)--(8.2,0) (nn)--(hh);
+\draw ([xshift=-1.6pt]c.north)--([xshift=-1.6pt]o.south); \draw ([xshift=1.6pt]c.north)--([xshift=1.6pt]o.south);
+\node[c10note] at (7.05,-1.0) {酰胺基};
+\node[c10note] at (-1.2,-2.2) {(b)};
+\node (am) at (0,-2.2) {\ce{CH3}}; \node (ac) at (1.0,-2.2) {C}; \node (ao) at (1.0,-1.25) {O}; \node (an) at (2.1,-2.2) {\ce{NH2}};
+\draw (am)--(ac)--(an); \draw ([xshift=-1.6pt]ac.north)--([xshift=-1.6pt]ao.south); \draw ([xshift=1.6pt]ac.north)--([xshift=1.6pt]ao.south);
+\ctencut{ac}{an}
+\node at (2.85,-2.2) {$+$}; \node (wh) at (3.35,-2.2) {H}; \node (wo) at (4.15,-2.2) {OH}; \draw (wh)--(wo); \ctencut{wh}{wo}
+\draw[c10arr] (4.7,-2.2) -- node[above,font=\scriptsize]{酸或碱} node[below,font=\scriptsize]{△} (5.9,-2.2);
+\node (bm) at (6.6,-2.2) {\ce{CH3}}; \node (bc) at (7.6,-2.2) {C}; \node (bo) at (7.6,-1.25) {O}; \node (boh) at (8.65,-2.2) {OH};
+\draw (bm)--(bc); \draw ([xshift=-1.6pt]bc.north)--([xshift=-1.6pt]bo.south); \draw ([xshift=1.6pt]bc.north)--([xshift=1.6pt]bo.south);
+\draw[c10new] (bc)--(boh);
+\node at (9.35,-2.2) {$+$}; \node at (10.0,-2.2) {\ce{NH3}};
+\node[c10note] at (1.55,-2.7) {断 C—N};
+\end{tikzpicture}}{(a) 胺与酰胺基的结构；(b) 乙酰胺水解断开 C—N 键（酸性条件下 \ce{NH3} 转化为 \ce{NH4+}，碱性条件下羧酸转化为羧酸盐）\label{fig:10-amide}}
+
+\section{官能团之间的转化}
+把前面各节的反应连起来，就得到图~\ref{fig:10-net} 的转化网络。读图时先看中间一行：烷烃（经卤代烃）、醇、醛、羧酸从左到右，碳原子与氧结合得越来越多，是一条“氧化”主线，向右的箭头是氧化，醛到醇向左的箭头是还原（加氢）；酮在这条线上的位置和醛相同，由仲醇氧化得到。卤代烃、醇与烯烃之间是加成和消去的互相转化，羧酸与醇生成酯、酯又水解回去是一对可逆过程。每个箭头旁的条件就是写方程式或合成路线时必须标明的条件。
+
+\tu{\begin{tikzpicture}[font=\small]
+\node[c10box] (alkene) at (1.8,2.3) {烯烃};
+\node[c10box] (rx) at (0,0) {卤代烃};
+\node[c10box] (alc) at (3.6,0) {醇};
+\node[c10box] (ald) at (6.8,0) {醛};
+\node[c10box] (acid) at (9.8,0) {羧酸};
+\node[c10box] (ester) at (6.8,-2.0) {酯};
+\node[c10box] (alkane) at (0,-2.0) {烷烃};
+\draw[c10arr] (alkane)--node[c10lab,left]{\ce{X2}，光照} (rx);
+\draw[c10arr] (alkene.215) to[bend right=12] node[c10lab,left,pos=0.45]{HX 加成} (rx.70);
+\draw[c10arr] (rx.40) to[bend right=12] node[c10lab,pos=0.55,below right=-1pt]{NaOH/醇，△} (alkene.250);
+\draw[c10arr] (alkene.290) to[bend left=12] node[c10lab,pos=0.55,below left=-1pt]{\ce{H2O} 加成} (alc.140);
+\draw[c10arr] (alc.110) to[bend left=12] node[c10lab,right,pos=0.45]{浓硫酸，170 ℃} (alkene.325);
+\draw[c10arr] ([yshift=1.5mm]rx.east)--node[c10lab,above]{NaOH/\ce{H2O}，△} ([yshift=1.5mm]alc.west);
+\draw[c10arr] ([yshift=-1.5mm]alc.west)--node[c10lab,below]{HX，△} ([yshift=-1.5mm]rx.east);
+\draw[c10arr] ([yshift=1.5mm]alc.east)--node[c10lab,above]{\ce{O2}/Cu，△} ([yshift=1.5mm]ald.west);
+\draw[c10arr] ([yshift=-1.5mm]ald.west)--node[c10lab,below]{\ce{H2}/Ni，△} ([yshift=-1.5mm]alc.east);
+\draw[c10arr] (ald)--node[c10lab,above]{\ce{O2}/催化剂} node[c10lab,below]{银氨溶液等} (acid);
+\draw[c10arr] (acid.south) |- node[c10lab,pos=0.75,below]{醇，浓硫酸，△（酯化）} (ester.east);
+\draw[c10arr] (ester.west) -| node[c10lab,pos=0.3,below]{稀硫酸或 NaOH，△（水解）} (alc.south);
+\end{tikzpicture}}{常见官能团之间的转化关系\label{fig:10-net}}
+
+做有机推断时，常用三条线索在图中定位：一是反应条件，如“NaOH/醇，△”通常指卤代烃消去（还须检查 β-H），“浓硫酸，△”可能是醇的消去或酯化，“\ce{O2}/Cu，△”是醇的催化氧化；二是转化关系的形状，如 A 能连续两次被氧化（A$\to$B$\to$C），A 多半是含 \ce{-CH2OH} 的醇，B 是醛，C 是羧酸，而 A 与 C 又能生成酯；三是分子式的变化，如少 2 个 H 是醇氧化为醛，多 1 个 O 是醛氧化为酸，少 1 个 \ce{H2O} 是消去或酯化。设计合成路线时，从起点出发在图中沿箭头找通往终点的路径，或者从目标物逆着箭头倒推（2026 年广东卷第 20 题(5)就是“羟基腈 $\Leftarrow$ 酮 $\Leftarrow$ 醇 $\Leftarrow$ 卤代烃 $\Leftarrow$ 环烷烃”的逆推）。
+
+\begin{liti}[综合]
+A 的分子式为 \ce{C3H8O}，存在如下转化：A 在 Cu 催化下被 \ce{O2} 氧化得 B，B 能发生银镜反应；B 进一步氧化得 C；A 与 C 在浓硫酸、加热条件下生成 D（\ce{C6H12O2}）；A 与浓硫酸共热（分子内脱水）得 E。(1) 写出 A～E 的结构简式。(2) 写出生成 D 的化学方程式。(3) 若 A 换成它的同分异构体 2-丙醇，B 还能发生银镜反应吗？
+\tcblower
+\silu \ce{C3H8O} 符合饱和一元醇（或醚）的通式，能被催化氧化，是醇。B 能发生银镜反应，说明 B 是醛，A 的 α-碳上有 2 个 H，即含 \ce{-CH2OH}。\\
+\jie (1) A \ce{CH3CH2CH2OH}，B \ce{CH3CH2CHO}，C \ce{CH3CH2COOH}，D \ce{CH3CH2COOCH2CH2CH3}，E \ce{CH3CH=CH2}。验证：\ce{C3H6O2 + C3H8O - H2O = C6H12O2}，与 D 的分子式相符。(2) \ce{CH3CH2COOH + CH3CH2CH2OH <=>[\text{浓硫酸}][\text{△}] CH3CH2COOCH2CH2CH3 + H2O}。(3) 2-丙醇的 α-碳上只有 1 个 H，氧化得丙酮，丙酮不能发生银镜反应，也不能继续被氧化为酸。
+\end{liti}
+
+\section{官能团性质的定量关系}
+多官能团有机物与 Na、NaOH、\ce{H2}、\ce{Br2} 等试剂反应时，用量的计算思路是：先把分子中的官能团一个个圈出来，再逐个判断它与该试剂是否反应、1 mol 官能团消耗多少试剂，最后相加。下表是常见的对应关系，每一条都可以从前面讲过的反应推出来，不必死记。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{1.6cm}X}
+\toprule
+试剂 & 能反应的官能团（按高中常用反应模型，1 mol 官能团消耗试剂的物质的量） \\
+\midrule
+Na & 醇羟基、酚羟基、羧基各 1（每 1 mol 生成 0.5 mol \ce{H2}） \\
+NaOH & 酚羟基 1；羧基 1；普通酯基 1；酚酯基 2；卤代烃中的 C—X 1（若水解生成酚还要再加 1） \\
+\ce{NaHCO3} & 只有羧基 1（放出 1 mol \ce{CO2}） \\
+\ce{Na2CO3} & 羧基；酚羟基（生成 \ce{NaHCO3}） \\
+\ce{H2} & 碳碳双键 1；碳碳三键 2；苯环 3；醛基 1；酮羰基 1；羧基、酯基一般不与 \ce{H2} 加成 \\
+\ce{Br2} & 碳碳双键 1；碳碳三键 2；酚羟基邻、对位上的每个 H 1；醛基被溴水氧化 1 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{liti}[基础]
+1 mol 下列物质分别与足量 NaOH 溶液共热，最多消耗多少 NaOH？(1) 乙酸乙酯；(2) 乙酸苯酯 \ce{CH3COOC6H5}；(3) 对羟基苯甲酸 \ce{HO-C6H4-COOH}。
+\tcblower
+\jie (1) 普通酯基水解生成 \ce{CH3COOH} 和乙醇，只有羧酸消耗 NaOH，1 mol。(2) 水解生成 \ce{CH3COOH} 和苯酚，二者都与 NaOH 反应，2 mol。(3) 酚羟基 1 $+$ 羧基 1 $=2$ mol。
+\end{liti}
+
+\begin{liti}[典型]
+阿司匹林（乙酰水杨酸）的结构如下。1 mol 阿司匹林最多能与多少摩尔 NaOH、\ce{NaHCO3}、\ce{H2}（一定条件）反应？
+\begin{center}\chemfig{*6(-=-(-COOH)=(-O-[:-30]C(=[:-90]O)-[:30]CH_3)-=)}\end{center}
+\tcblower
+\silu 圈出官能团：羧基和酯基。酯基的单键氧直接连在苯环上，是酚酯基。\\
+\jie NaOH：羧基 1 $+$ 酚酯基 2 $=3$ mol。\ce{NaHCO3}：只与羧基反应，1 mol。\ce{H2}：只有苯环加成，3 mol（羧基、酯基中的 \ce{C=O} 不加氢）。
+\end{liti}
+
+\begin{liti}[综合]
+有机物 M 的结构如下。1 mol M 分别与足量的 NaOH 溶液、\ce{H2}（Ni，加热）、浓溴水反应，最多消耗各试剂多少摩尔？
+\begin{center}
+\chemfig{HO-[:0]*6(-(-CHO)=-=(-O-[:-30]C(=[:-90]O)-[:30]CH=[:-30]CH-[:30]COOH)-=)}
+\end{center}
+\tcblower
+\silu 先圈出官能团：酚羟基、醛基、酚酯基（酯基的 O 直接连在苯环上）、碳碳双键、羧基。再看苯环上还剩哪些 H：与酚羟基相邻的两个碳一个连醛基、一个连 H；对位碳连 H；连酯基的碳在酚羟基的间位。\\
+\jie NaOH：酚羟基 1 $+$ 羧基 1 $+$ 酚酯基 2（水解生成的酚羟基再中和 1）$=4$ mol。\ce{H2}：苯环 3 $+$ 碳碳双键 1 $+$ 醛基 1 $=5$ mol（羧基、酯基不加氢）。\ce{Br2}：酚羟基的另一个邻位和对位上的 2 个 H 被取代，消耗 2；碳碳双键加成 1；醛基被溴水氧化 1；共 4 mol。\\
+\xianjing 最容易漏算的是两点：酚酯基消耗 2 mol NaOH；醛基也能被溴水氧化。
+\end{liti}
+
+% ---------------- 章末 ----------------
+\zhangmo{本章小结}
+\subsection*{一、知识总结}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{1.8cm}X}
+\toprule
+卤代烃 & NaOH 水溶液水解成醇（断 C—X）；NaOH 醇溶液消去成烯（断 C—X 与 β-C—H，需 β-H）；检验 X 先酸化 \\
+醇 & 与 Na（断 O—H）；与 HX（断 C—O）；浓硫酸 170 ℃ 消去、140 ℃ 成醚；催化氧化（断 O—H 与 α-C—H，看 α-H 数目）；酯化 \\
+酚 & 弱酸性（\ce{H2CO3}$>$苯酚$>$\ce{HCO3-}）；浓溴水取代邻、对位生成白色沉淀；\ce{FeCl3} 显紫色；与 HCHO 缩聚 \\
+醛、酮 & 醛：银镜、新制 \ce{Cu(OH)2}、加氢、加 HCN；HCHO 充分银镜反应可生成 4 mol Ag/mol；简单酮不发生银镜反应 \\
+羧酸及衍生物 & 酸性强于碳酸；酯化（酸脱羟基醇脱氢）；酯水解（碱性彻底，酚酯耗 2 NaOH）；胺显碱性，酰胺水解断 C—N \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\subsection*{二、方法提升}
+\begin{enumerate}
+\item 分析反应先找极性键，再对比反应物和产物，写出“断什么键、成什么键”；由断键位置可以推出结构条件（消去要 β-H，催化氧化要 α-H）。
+\item 由条件推反应：NaOH/水$\to$水解；NaOH/醇$\to$消去；浓硫酸/△$\to$消去、酯化、成醚；Cu 或 Ag/\ce{O2}$\to$醇氧化；银氨或新制 \ce{Cu(OH)2}$\to$醛氧化；\ce{H2}/Ni$\to$加成（还原）；稀硫酸/△$\to$酯或酰胺水解。
+\item 官能团互相干扰时，先检验（或消除）易被氧化的醛基，再检验碳碳双键。
+\end{enumerate}
+\subsection*{三、易错点归纳}
+\begin{enumerate}
+\item 卤代烃水解、消去条件混淆；检验卤素忘记酸化。
+\item 苯酚钠溶液通 \ce{CO2} 写成生成 \ce{Na2CO3}。
+\item 银镜反应方程式中漏写 \ce{NH3}，或系数配错；配制银氨溶液时氨水过量太多。
+\item 酯化反应中水的 O 来源弄错；忘记写“\ce{<=>}”。
+\item 计算 NaOH 用量时把酚酯基按 1 mol 算。
+\end{enumerate}
+
+\zhangmo{分层练习}
+\zu{A组\quad 基础巩固}
+\begin{xiti}[start=1]
+\item 下列卤代烃中，既能发生水解反应，又能发生消去反应且消去产物只有一种的是\xz
+\xx{\ce{CH3Cl}}{\ce{(CH3)3CCH2Br}}{\ce{CH3CHBrCH3}}{\ce{CH3CH2CHBrCH3}}
+
+\item 下列醇中，能被催化氧化生成醛的是\xz
+\xxb{\ce{(CH3)3COH}}{\ce{CH3CH(OH)CH3}}{\ce{(CH3)2CHCH2OH}}{\ce{(CH3)2C(OH)CH2CH3}}
+
+\item 下列关于苯酚的说法正确的是\xz
+\xxa{苯酚的酸性比碳酸强}{向苯酚钠溶液中通入少量 \ce{CO2}，生成苯酚和 \ce{Na2CO3}}{苯酚与浓溴水反应生成白色沉淀，可用于苯酚的定性检验和定量测定}{苯酚和乙醇都能与 NaOH 溶液反应}
+
+\item 实验室制备乙酸乙酯时，下列操作或说法正确的是\xz
+\xxa{先加浓硫酸，再加乙醇和乙酸}{用 NaOH 溶液代替饱和 \ce{Na2CO3} 溶液收集产品效果更好}{导气管末端伸入饱和 \ce{Na2CO3} 溶液液面以下，使产品充分吸收}{饱和 \ce{Na2CO3} 溶液的作用之一是降低乙酸乙酯的溶解度}
+
+\item 0.1 mol HCHO 与 \ce{CH3CHO} 的混合物与足量银氨溶液反应，生成 0.3 mol Ag，则混合物中 $n(\ce{HCHO}):n(\ce{CH3CHO})=$\tk。
+
+\item 用新制 \ce{Cu(OH)2} 鉴别乙醇、乙醛、乙酸三种无色样品。分别向少量悬浊液中加入足量样品，比较常温和加热后的现象，说明判断依据（检验乙醛时须保持碱性）。
+
+\item 乙醇分子中的化学键如图~\ref{fig:10-polar} 所示（①～④）。下列关于乙醇反应时断键位置的说法\textbf{错误}的是\xz
+\xxb{与钠反应时断 ①}{与 HBr 反应时断 ②}{在 Cu 催化下与 \ce{O2} 反应时断 ① 和 ③}{与浓硫酸共热至 170 ℃ 时断 ② 和 ③}
+
+\item 乙酸乙酯中羰基碳与氧之间单键上的 O 用 \ce{^{18}O} 标记（\ce{CH3CO{}^{18}OCH2CH3}），在 NaOH 溶液中加热使其完全水解，\ce{^{18}O} 存在于\tk（填物质名称）中，写出化学方程式。
+\end{xiti}
+
+\zu{B组\quad 高考典型}
+\begin{xiti}
+\item \laiyuan{据2025年广东卷第11题改编}\ 利用图~\ref{fig:10-zt2511} 所示装置实验：b 中为 \ce{MnO2}，分液漏斗中为 10\% \ce{H2O2} 溶液；a 中为酸化的淀粉-KI 溶液；c 中为铜丝（加热，可向其中滴入无水乙醇）；d 中为银氨溶液。打开 \ce{K1}、\ce{K2}，一段时间后，a 中溶液变蓝；关闭 \ce{K1}，打开 \ce{K3}，点燃酒精灯加热数分钟后，滴入无水乙醇。下列说法\textbf{错误}的是\xz
+\xxb{a 中现象体现了 \ce{I-} 的还原性}{b 中 \ce{H2O2} 既作氧化剂也作还原剂}{乙醇滴加过程中，c 中的铜丝由黑变红，说明乙醇被氧化}{d 中有银镜反应发生，说明 c 中产物有乙酸}
+
+\tu{\begin{tikzpicture}[every node/.style={font=\scriptsize}]
+\fill[black!70] (-0.48,0) rectangle (0.48,0.1);
+\draw[c10glass] (-0.18,1.2) -- (-0.18,0.9) -- (-0.55,0) -- (0.55,0) -- (0.18,0.9) -- (0.18,1.2);
+\fill[black!55] (-0.24,1.2) rectangle (0.24,1.35);
+\draw[c10glass] (-0.08,0.7) -- (-0.08,1.75); \draw[c10glass,fill=c10water] (-0.08,1.75) -- (-0.4,2.15) -- (-0.4,2.4) -- (0.24,2.4) -- (0.24,2.15) -- cycle;
+\node[anchor=east] at (-0.45,2.25) {\ce{H2O2} 溶液}; \node at (0,-0.3) {b（\ce{MnO2}）};
+\draw[c10pipe] (0.1,1.35) -- (0.1,1.6) -- (3.2,1.6);
+\node[draw,circle,inner sep=1.2pt,fill=white] at (-0.08,1.5) {}; \node at (-0.58,1.5) {\ce{K2}};
+\draw[c10pipe] (1.3,1.6) -- (1.3,3.4) -- (2.2,3.4) -- (2.2,2.5);
+\node[draw,circle,inner sep=1.2pt,fill=white] at (1.75,3.4) {}; \node at (1.75,3.65) {\ce{K1}};
+\ctentube{2.2}{2.1}{1.1}{0.6}{c10water}
+\node[anchor=west] at (2.5,2.45) {a（酸化的淀粉-KI 溶液）};
+\node[draw,circle,inner sep=1.2pt,fill=white] at (2.5,1.6) {}; \node at (2.5,1.35) {\ce{K3}};
+\draw[c10glass] (3.2,1.4) rectangle (5.4,1.8);
+\foreach \x in {4.0,4.15,4.3,4.45,4.6} \draw[c10copper,thick] (\x,1.6) ellipse (0.05 and 0.15);
+\draw[c10glass] (3.5,1.8) -- (3.5,2.2); \draw[c10glass] (3.5,2.2) -- (3.3,2.5) -- (3.7,2.5) -- cycle;
+\node[anchor=south] at (3.5,2.5) {无水乙醇};
+\ctenlamp{4.3}{0.05}
+\node at (5.0,1.1) {c};
+\draw[c10pipe] (5.4,1.6) -- (6.4,1.6) -- (6.4,0.5);
+\fill[c10water!70] (5.8,-0.1) rectangle (7.0,0.7);
+\draw[c10glass] (5.8,1.0) -- (5.8,-0.1) -- (7.0,-0.1) -- (7.0,1.0);
+\fill[white] (6.18,0.12) rectangle (6.62,0.7);
+\ctentube{6.4}{-0.0}{1.4}{0.7}{gray!12}
+\node[anchor=west] at (7.1,0.3) {d（银氨溶液）};
+\end{tikzpicture}}{据2025年广东卷第11题改编的实验装置（示意）\label{fig:10-zt2511}}
+
+\item \laiyuan{原创}\ 有机物 N 的结构简式为 \ce{HO-C6H4-CH2-CH=CH-COOCH3}（\ce{-OH} 与侧链在苯环对位）。(1) N 中含有的官能团名称为\tk。(2) 1 mol N 最多与\tk mol NaOH、\tk mol \ce{H2}、\tk mol \ce{Br2}（浓溴水）反应。(3) 写出 N 与足量 NaOH 溶液共热的化学方程式。
+
+\item \laiyuan{据2024年广东卷第20题(3)(4)改编}\ 将 3D 打印制备的固载铜离子陶瓷催化材料用于化学催化和生物催化一体化技术，实现化合物Ⅲ的绿色合成：苯乙烯（Ⅰ）在固载铜离子催化体系中与 \ce{H2O}、\ce{O2} 转化为苯乙酮（Ⅱ），Ⅱ在有机酶催化体系中被葡萄糖还原为手性醇Ⅲ（\ce{C6H5CH(OH)CH3}，同时葡萄糖转化为葡萄糖酸内酯）。(3) 关于上述物质及转化，下列说法正确的有\tk。A．由化合物Ⅰ到Ⅱ的转化中，有 $\pi$ 键的断裂与形成\quad B．由葡萄糖到葡萄糖酸内酯的转化中，葡萄糖被还原\quad C．葡萄糖易溶于水，是因为其分子中有多个羟基，能与水分子形成氢键\quad D．由化合物Ⅱ到Ⅲ的转化中，存在 C、O 原子杂化方式的改变，有手性碳原子形成。(4) 对化合物Ⅲ分析预测其可能的化学性质：① 若苯环转化为饱和六元环，所需反应试剂、条件为\tk，反应类型为\tk；② 若发生取代反应生成溴代物，所需反应试剂、条件为\tk，生成的新结构为\tk。
+
+\item \laiyuan{原创}\ 酯 X 的分子式为 \ce{C4H8O2}，在酸性条件下水解得到 A 和 B。A 能发生银镜反应；B 能被催化氧化，但产物不能发生银镜反应。写出 X、A、B 的结构简式及 X 在 NaOH 溶液中水解的化学方程式。
+\end{xiti}
+
+\zu{C组\quad 冲刺高分}
+\begin{xiti}
+\item \laiyuan{原创}\ 以乙烯为原料可合成乙二酸二乙酯：\ce{CH2=CH2 ->[\text{①}] A ->[\text{②}] B ->[\text{③}] C ->[\text{④}] D}，再由 D 与乙醇反应得到产品。已知 A 为 1,2-二溴乙烷，B 为乙二醇，D 为乙二酸。(1) 写出 ①～④ 的试剂与条件及反应类型。(2) 写出 D 与乙醇反应生成乙二酸二乙酯的化学方程式。(3) 若用 B 与 D 在一定条件下反应，可能得到哪些产物？（写出环状酯和高分子的结构简式）
+
+\item \laiyuan{原创}\ 咖啡酸存在于咖啡、蔬菜中，结构简式为
+\begin{center}\chemfig{HO-[:0]*6(-(-OH)=-(-CH=CH-COOH)=-=)}\end{center}
+(1) 咖啡酸的分子式为\tk，含氧官能团名称为\tk。(2) 1 mol 咖啡酸分别与足量 Na、NaOH、\ce{NaHCO3}、浓溴水、\ce{H2}（一定条件）反应，最多消耗的物质的量分别为多少？(3) 咖啡酸与乙醇发生酯化反应的产物分子式为\tk。
+\end{xiti}
+
+\zhangmo{练习解析}
+\begin{jiexilist}
+\item \ans{C}A：\ce{CH3Cl} 无 β-C，不能消去；B：与 Br 相连碳的相邻碳上无 H，不能消去；C：两侧 β-H 等效，消去只得丙烯；D：消去可得 1-丁烯和 2-丁烯两种。
+\item \ans{C}A、D 为叔醇，不能催化氧化；B 为仲醇，氧化得丙酮；C 含 \ce{-CH2OH}，氧化得醛。
+\item \ans{C}A：苯酚酸性弱于碳酸；B：生成 \ce{NaHCO3}；C 正确；D：乙醇不与 NaOH 反应。
+\item \ans{D}A：应先加乙醇，再缓慢加浓硫酸（类似稀释浓硫酸），最后加乙酸；B：NaOH 会使乙酸乙酯水解；C：会倒吸；D 正确。
+\item 1:1。设 HCHO $x$ mol、\ce{CH3CHO} $y$ mol：$x+y=0.1$，$4x+2y=0.3$，解得 $x=y=0.05$。
+\item 乙酸：加入足量样品后 \ce{Cu(OH)2} 溶解，形成蓝色溶液，这是酸与碱的反应。乙醛：常温下无上述溶解现象，在碱性条件下加热有砖红色 \ce{Cu2O}，这是醛基的还原性。乙醇：不出现砖红色沉淀；若加热导致 \ce{Cu(OH)2} 分解，得到的是黑色 CuO，不能误认作醛基的阳性现象。
+\item \ans{D}与钠反应断 O—H（①）；与 HBr 反应羟基被 Br 取代，断 C—O（②）；催化氧化断 O—H 和 α-C—H（① 和 ③）；170 ℃ 消去断 C—O 和 β-C—H，应为 ② 和 ④，D 错。
+\item 乙醇。酯水解断开的正是羰基碳与 \ce{^{18}O} 之间的键，\ce{^{18}O} 留在醇的一侧：\ce{CH3CO{}^{18}OCH2CH3 + NaOH ->[\text{△}] CH3COONa + CH3CH2{}^{18}OH}。
+\item \ans{D}A：\ce{O2} 将 \ce{I-} 氧化为 \ce{I2}，\ce{I-} 体现还原性，对；B：\ce{2H2O2 ->[\ce{MnO2}] 2H2O + O2 ^}，O 元素化合价既升又降，对；C：铜丝先被 \ce{O2} 氧化为黑色 CuO，CuO 被乙醇还原为红色 Cu，乙醇被氧化，对；D：银镜反应说明有乙醛，乙酸不能发生银镜反应，错。
+\item (1) 羟基（酚羟基）、碳碳双键、酯基。(2) 2；4；3。NaOH：酚羟基 1 $+$ 酯基 1（醇酯，生成甲醇）$=2$；\ce{H2}：苯环 3 $+$ 碳碳双键 1 $=4$（酯基不加氢）；\ce{Br2}：酚羟基的 2 个邻位 H（对位已被占据）取代 2 $+$ 碳碳双键加成 1 $=3$。(3) \ce{HO-C6H4-CH2CH=CHCOOCH3 + 2NaOH ->[\text{△}] NaO-C6H4-CH2CH=CHCOONa + CH3OH + H2O}。
+\item (3) ACD。A：Ⅰ中碳碳双键（含 $\pi$ 键）断裂，Ⅱ中形成碳氧双键（含 $\pi$ 键），对；B：葡萄糖的醛基被氧化，葡萄糖被氧化，错；C 对；D：Ⅱ中羰基 C、O 为 $\mathrm{sp}^2$ 杂化，Ⅲ中对应 C、O 为 $\mathrm{sp}^3$ 杂化，且与羟基相连的碳为手性碳，对。(4) ① \ce{H2}，催化剂、加热；加成反应（还原反应）。② HBr，加热；\ce{C6H5CHBrCH3}（羟基被溴原子取代）。
+\item A 能发生银镜反应，A 为甲酸 HCOOH；B 为 \ce{C3H7OH}，催化氧化产物不能发生银镜反应（为酮），B 为 2-丙醇 \ce{CH3CH(OH)CH3}。X 为甲酸异丙酯 \ce{HCOOCH(CH3)2}。\ce{HCOOCH(CH3)2 + NaOH ->[\text{△}] HCOONa + (CH3)2CHOH}。
+\item (1) ① \ce{Br2} 的 \ce{CCl4} 溶液（或溴水），加成反应；② NaOH 水溶液、加热，水解（取代）反应；③ \ce{O2}、Cu（或 Ag）、加热，氧化反应，C 为乙二醛 \ce{OHC-CHO}；④ \ce{O2}、催化剂、加热（或用银氨溶液、新制 \ce{Cu(OH)2} 氧化后酸化），氧化反应。(2) \ce{HOOC-COOH + 2CH3CH2OH <=>[\text{浓硫酸}][\text{△}] CH3CH2OOC-COOCH2CH3 + 2H2O}。(3) 环状酯：乙二酸乙二酯（六元环，\ce{-OOC-COO-CH2CH2-} 首尾相连成环）；高分子：\ce{H-[OCH2CH2OOC-CO]_{$n$}-OH}（缩聚，同时生成 $(2n-1)$ \ce{H2O}）；还可能生成链状的单酯 \ce{HOCH2CH2OOC-COOH}。
+\item (1) \ce{C9H8O4}；（酚）羟基、羧基。(2) Na：2 个酚羟基 $+$ 1 个羧基，3 mol（生成 1.5 mol \ce{H2}）；NaOH：3 mol；\ce{NaHCO3}：只与羧基反应，1 mol；浓溴水：苯环上与酚羟基处于邻、对位的 3 个 H 都可被取代（3 mol）$+$ 碳碳双键加成（1 mol），共 4 mol；\ce{H2}：苯环 3 mol $+$ 碳碳双键 1 mol，共 4 mol（羧基不加氢）。(3) \ce{C11H12O4}（\ce{C9H8O4 + C2H6O - H2O}）。
+\end{jiexilist}

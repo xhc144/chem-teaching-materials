@@ -1,0 +1,470 @@
+% ============================================================
+% 第7章 分子结构与性质
+% ============================================================
+% 本章专用的 p 轨道上瓣路径；下瓣通过 y 方向反射得到。
+\newcommand{\csevenpupper}[1]{(#1,0)..controls({#1-.65},.3)and({#1-.65},1.05)..(#1,1.2)..controls({#1+.65},1.05)and({#1+.65},.3)..cycle}
+\chapter{分子结构与性质}
+
+原子的价层电子决定它能怎样参与成键，但“哪些原子相连”还不足以说明分子的性质。例如，\ce{CO2} 和 \ce{H2O} 都有极性的化学键，为什么前者是非极性分子，后者却有极性？乙烷可以围绕碳碳单键转动，乙烯为什么不能同样自由地转动？本章依次研究共价键的重叠方式、原子在空间中的排列，以及分子间的作用。学习时始终分清三个尺度：一个键怎样形成、整个分子是什么形状、不同分子之间怎样相互作用。
+
+\section{共价键：从轨道重叠到分子骨架}
+
+\subsection{共用电子对与轨道图怎样对应}
+高一用电子式表示共价键：两个原子共用一对电子，使成键后的体系通常比相互远离的原子能量低。上一章又告诉我们，电子不是沿固定路线运行，而是有一定的空间概率分布。现在把两种表示联系起来：当原子接近、具有合适方向的轨道发生有效重叠时，共用电子在两个原子核之间出现的概率增大，核与电子的吸引等作用使体系总能量降低，便可能形成稳定的共价键。原子过分接近时排斥也会增强，因此稳定的键有一定的键长。
+
+图中的轨道轮廓只表示空间分布模型，不是电子运动轨迹，也不是分子的硬壳。两核之间的连线叫\textbf{键轴}。图上蓝、橙两色以及“$+$、$-$”表示轨道波函数的两种相位，\textbf{不表示正、负电荷}；电子云所代表的电子都带负电。高中只需利用“同相位有效重叠有利于成键”的图像，不必计算波函数。
+
+\subsection{$\sigma$ 键：沿键轴形成的重叠}
+先看最简单的 \ce{H2}：两个 H 的 1s 轨道均为球形，沿两核连线接近，在核间产生重叠区域，形成一个 \textbf{$\sigma$ 键}。p 轨道沿着自身伸展方向相向接近，也能形成 $\sigma$ 键。判断的依据是重叠相对于键轴的空间关系，而不是轨道必须为某一种形状。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\node[anchor=west,font=\small] at (-1.4,1.15) {(a) 两个 s 轨道};
+\draw[dashed,black!55,-Stealth] (-1.5,0)--(3.0,0) node[right]{键轴};
+\foreach \x/\t in {-0.8/A,1.7/B}{\filldraw[fill=mainblue!15,draw=mainblue] (\x,0) circle (0.48);\fill (\x,0) circle (1.1pt);\node[below=15pt] at (\x,0) {核 \t};\node at (\x,0.25) {$+$};}
+\draw[-Stealth] (-0.1,0.65)--(0.7,0.65);\node at (0.3,0.93){相向接近};
+\draw[-Stealth,thick] (3.5,0.15)--(4.3,0.15);
+\begin{scope}[xshift=5.9cm]
+\filldraw[fill=mainblue!15,draw=mainblue] (-0.37,0) circle (0.64);
+\filldraw[fill=mainblue!15,fill opacity=.6,draw=mainblue] (0.37,0) circle (0.64);
+\begin{scope}\clip (-0.37,0) circle (0.64);\fill[mainblue!55] (0.37,0) circle (0.64);\end{scope}
+\draw[dashed,-Stealth,black!55] (-1.5,0)--(1.7,0) node[right]{键轴};
+\fill (-0.37,0) circle (1.2pt);\fill (0.37,0) circle (1.2pt);
+\node[below=19pt] at (0,0){成键后：核间重叠区域};
+\end{scope}
+\node[anchor=west,font=\small] at (-1.4,-1.6) {(b) 两个沿键轴伸展的 p 轨道};
+\begin{scope}[yshift=-2.6cm]
+\draw[dashed,black!55,-Stealth] (-1.6,0)--(3.0,0) node[right]{键轴};
+\foreach \x in {-0.5,1.8}{
+\begin{scope}[shift={(\x,0)}]
+\filldraw[fill=mainblue!18,draw=mainblue] (0,0)..controls(.3,.45)and(.85,.45)..(1,0)..controls(.85,-.45)and(.3,-.45)..cycle;
+\filldraw[fill=exorange!16,draw=exorange] (0,0)..controls(-.3,.45)and(-.85,.45)..(-1,0)..controls(-.85,-.45)and(-.3,-.45)..cycle;
+\fill (0,0) circle (1.2pt);\node[below=12pt] at (0,0){核};
+\end{scope}}
+% 相对原子整体相位可反号；将右原子面向核间的一瓣重画为同相
+\filldraw[fill=mainblue!18,draw=mainblue] (1.8,0)..controls(1.5,.45)and(.95,.45)..(.8,0)..controls(.95,-.45)and(1.5,-.45)..cycle;
+\filldraw[fill=exorange!16,draw=exorange] (1.8,0)..controls(2.1,.45)and(2.65,.45)..(2.8,0)..controls(2.65,-.45)and(2.1,-.45)..cycle;
+\fill (1.8,0) circle (1.2pt);\node at (0.1,.16){$+$};\node at (1.2,.16){$+$};
+\draw[-Stealth,thick] (3.5,0.1)--(4.3,0.1);
+\begin{scope}[xshift=5.9cm]
+\filldraw[fill=mainblue!22,draw=mainblue] (-.85,0)..controls(-.5,.6)and(.5,.6)..(.85,0)..controls(.5,-.6)and(-.5,-.6)..cycle;
+\fill[mainblue!50] (0,0) ellipse (.25 and .36);
+\draw[dashed,black!55,-Stealth] (-1.5,0)--(1.7,0) node[right]{键轴};
+\foreach \x in {-.55,.55}{\fill (\x,0) circle (1.2pt);\node[below=12pt]at(\x,0){核};}
+\node[below=30pt,align=center]at(0,0){沿键轴的有效重叠\\（只突出中间相向的两瓣）};
+\end{scope}
+\end{scope}
+\end{tikzpicture}}{$\sigma$ 键形成前后的轨道模型：深色表示核间重叠区域，图形不表示电子的运行路线\label{fig:07-sigma}}
+
+读图~\ref{fig:07-sigma} 时，先找到两个黑点所示的原子核，再沿虚线找到键轴，最后看重叠区域是否沿键轴展开。$\sigma$ 键的电子云对键轴呈轴对称。沿轴观察，绕轴改变一个原子上其他基团的取向，一般不会使这部分轴向重叠消失。因而普通碳碳单键允许相对转动；实际转动还会受到相邻原子或原子团的排斥影响，并非完全没有能量变化。
+
+\subsection{$\pi$ 键：键轴两侧的侧向重叠}
+若两个 p 轨道都垂直于键轴，且彼此平行，原子接近时就会在键轴的两侧分别发生侧向重叠，形成 \textbf{$\pi$ 键}。图~\ref{fig:07-pi} 的上方和下方两块重叠区域属于\textbf{同一个} $\pi$ 键，不是两个键。包含键轴、把上下两部分分开的平面是该 $\pi$ 轨道的节面，平面上这部分 $\pi$ 电子出现的概率为零。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\foreach \X/\D/\T in {0/2.8/{成键前：p 轨道彼此平行},6.2/.6/{成键后：上、下两侧均有效重叠}}{
+\begin{scope}[xshift=\X cm]
+\foreach \sy/\col in {1/mainblue,-1/exorange}{
+\begin{scope}[yscale=\sy]
+\foreach \x in {0,\D}{\filldraw[fill=\col!15,draw=\col] \csevenpupper{\x};}
+\ifdim\X pt>0pt
+\begin{scope}\clip \csevenpupper{0};\fill[\col!55] \csevenpupper{\D};\end{scope}
+\fi
+\end{scope}}
+\draw[dashed,-Stealth,black!55] (-.9,0)--(\D+1,0) node[right]{键轴};
+\foreach \x in {0,\D}{\node at(\x,.72){$+$};\node at(\x,-.72){$-$};\fill(\x,0)circle(1.3pt);\node[below right]at(\x,0){核};}
+\node[align=center]at(\D/2,-1.6){\T};
+\end{scope}}
+\draw[-Stealth,thick](4.2,.1)--(5,.1);
+\draw[-Stealth](8.7,1.5)node[above,align=center]{深色为两瓣相交的区域\\上、下合计为一个 $\pi$ 键}--(6.5,.7);
+\end{tikzpicture}}{$\pi$ 键的形成模型：p 轨道方向与键轴垂直，原子接近后上、下两侧同相位分别重叠\label{fig:07-pi}}
+
+在高中通常讨论的局域共价键中，两原子间首先有一个 $\sigma$ 键，再以 $\pi$ 键增加结合。单键由一个 $\sigma$ 键构成；双键由一个 $\sigma$ 键和一个 $\pi$ 键构成；三键由一个 $\sigma$ 键和两个 $\pi$ 键构成。同一对原子形成的多重键中，侧向重叠通常弱于轴向重叠，因此相关反应较容易改变 $\pi$ 键，而保留 $\sigma$ 骨架。这个比较不表示任意分子的一切 $\sigma$ 键都比任意 $\pi$ 键牢固。
+
+2024 年山东卷第 3 题把 p—p 的 $\pi$ 重叠模型、轨道名称和激发态方框图放在同一道判断题中（题源见书末资料[4]）。读图时先核对轨道是否存在，再区分轨道方向、自旋箭头和概率分布，不能只凭“像哑铃”判断正误。
+
+\begin{liti}[从结构式数键]
+分别求一个 \ce{H2}、\ce{N2} 和 \ce{HC#N} 中 $\sigma$ 键与 $\pi$ 键的数目。
+\tcblower
+\jie \ce{H2} 只有一个单键，含 1 个 $\sigma$ 键、无 $\pi$ 键。\ce{N2} 中一个三键含 1 个 $\sigma$ 键和 2 个 $\pi$ 键。\ce{HC#N} 的结构为 H—C$\equiv$N：H—C 单键给出 1 个 $\sigma$，C$\equiv$N 再给出 1 个 $\sigma$ 和 2 个 $\pi$，合计 2 个 $\sigma$、2 个 $\pi$。数键时先把每一对直接相连的原子计为一个 $\sigma$ 键，再补上多重键中的 $\pi$ 键。
+\end{liti}
+
+\subsection{键能、键长和键角}
+\textbf{键长}是成键的两个原子核之间的平衡距离；\textbf{键角}是同一中心原子所连的两根键之间的夹角。\textbf{键能}用气态粒子断开 1 mol 指定共价键所吸收的能量来描述；教材常用同类键的平均键能。断键吸热，逆向成键放热。比较结构相似的键时，通常键长越短、键能越大，键越牢固。例如 HF、HCl、HBr、HI 的键长总体增大、键能减小，相应气态氢化物的热稳定性减弱。
+
+键角描述分子空间结构，键能主要联系化学稳定性，分子间作用力则主要联系熔沸点。\ce{H2O} 的热稳定性较强应联系 O—H 共价键；水的沸点反常较高要联系水分子之间的氢键。这两种问题不能混答。
+
+\section{分子的形状：先数电子域，再看原子位置}
+
+\subsection{从电子式到价层电子对互斥模型}
+分子的形状指\textbf{原子核在空间中的排列}。在 \ce{CH4} 中，四个 H 并不和 C 排在同一平面；在 \ce{H2O} 中，两个 O—H 键也不排成直线。预测形状前，要先知道中心原子周围有几组电子向不同方向分布。
+
+在价层电子对互斥模型（VSEPR）中，把中心原子周围的一根单键、双键或三键各看作\textbf{一个成键电子域}，把一对不参与成键的价层电子看作\textbf{一个孤电子对域}。多重键虽然有多对共用电子，但对空间排布的方向计为一个域。高中也常把电子域数称为“价层电子对数”，按“$\sigma$ 键电子对数加孤电子对数”计算；这里的名称不要误解为把多重键中的所有电子对逐对相加。
+
+同带负电的电子域相互排斥，倾向于尽可能分开。2 个域分列两侧，夹角为 $180^\circ$；3 个域指向平面三角形的三个顶点，理想夹角为 $120^\circ$；4 个域在空间中指向四面体四个顶点，理想夹角约为 $109.5^\circ$。四面体排布比平面正方形能更有效地减少四组电子域间的排斥。VSEPR 是解释和预测常见分子形状的近似模型，高中主要使用 2、3、4 个电子域的情形。
+
+\textbf{先直接数熟悉分子的电子式。}C 有 4 个价电子，在 \ce{CH4} 中形成四个 C—H 键，没有孤电子对，所以为 4 域；N 有 5 个价电子，在 \ce{NH3} 中形成三个 N—H 键，还余一对孤电子，为 $3+1=4$ 域；O 有 6 个价电子，在 \ce{H2O} 中形成两个 O—H 键，还余两对孤电子，为 $2+2=4$ 域。三者的电子域都大体按四面体排列，但画实际分子形状时只连接原子核：甲烷是正四面体形，氨是三角锥形，水是 V 形。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\foreach \X/\M/\E/\P/\A in {0/{\ce{CH4}}/4/0/{109.5^\circ},4.2/{\ce{NH3}}/3/1/{107^\circ},8.4/{\ce{H2O}}/2/2/{104.5^\circ}}{
+\begin{scope}[xshift=\X cm]
+\coordinate(O)at(0,0);\coordinate(A)at(0,1.08);\coordinate(B)at(-1,-.65);\coordinate(C)at(.8,-.6);\coordinate(D)at(.82,.35);
+\draw[black!20,dashed](A)--(B)--(C)--cycle (A)--(D)--(B) (C)--(D);
+\draw[black,thick](O)--(B);
+\fill[black!70](O)--(.73,-.68)--(.86,-.51)--cycle;
+\ifnum\P=0
+\draw[black,thick](O)--(A);\draw[black,densely dashed,thick](O)--(D);
+\node[fill=white,inner sep=1pt]at(A){H};\node[fill=white,inner sep=1pt]at(D){H};\node[fill=white,inner sep=1pt]at(O){C};
+\else
+\draw[deepgreen,dashed](O)--(A);\filldraw[fill=deepgreen!10,draw=deepgreen](0,.85)ellipse(.26 and .32);\node at(0,.88){$\bullet\,\bullet$};
+\ifnum\P=1
+\draw[black,densely dashed,thick](O)--(D);\node[fill=white,inner sep=1pt]at(D){H};\node[fill=white,inner sep=1pt]at(O){N};
+\else
+\draw[deepgreen,dashed](O)--(D);\filldraw[fill=deepgreen!10,draw=deepgreen](.74,.31)ellipse(.34 and .22);\node at(.74,.31){$\bullet\,\bullet$};\node[fill=white,inner sep=1pt]at(O){O};
+\fi\fi
+\node[fill=white,inner sep=1pt]at(B){H};\node[fill=white,inner sep=1pt]at(C){H};
+\node[align=center]at(0,1.65){\M：\E 个成键域，\P 对孤电子};
+\ifnum\P=0\node[align=center]at(0,-1.2){原子核：正四面体形\\$\angle\mathrm{HCH}\approx\A$};\fi
+\ifnum\P=1\node[align=center]at(0,-1.2){原子核：三角锥形\\$\angle\mathrm{HNH}\approx\A$};\fi
+\ifnum\P=2\node[align=center]at(0,-1.2){原子核：V 形\\$\angle\mathrm{HOH}\approx\A$};\fi
+\end{scope}}
+\end{tikzpicture}}{四个电子域的近似四面体排布与三种实际分子形状。淡虚线帮助看四面体；绿色椭圆是孤电子对域，实楔朝向读者、虚键伸向纸后，图中投影角不等于真实键角\label{fig:07-vsepr}}
+
+读图~\ref{fig:07-vsepr} 时，先把成键域和孤电子对域都计入，确认均为四面体式的\textbf{电子域排布}；再遮住绿色孤电子对，只看中心原子与 H 的位置，才得到\textbf{分子形状}。孤电子对主要受一个原子核吸引，相比成键电子对在中心原子附近占据较大的空间；在这三个相关分子中，孤电子对对成键域的排斥会压小 H—中心原子—H 键角。因此键角为 \ce{CH4}$>$\ce{NH3}$>$\ce{H2O}。这是一组有适用条件的比较，不能推成“一切 $\mathrm{sp}^3$ 分子的键角都相同”。
+
+\subsection{不熟悉粒子怎样计算孤电子对}
+对高中常见、满足相应价层电子计数的主族分子或离子，可用
+\[
+ \text{孤电子对数}=\frac{a-\sum x_i b_i}{2},\qquad
+ \text{电子域数}=\text{相连原子数}+\text{孤电子对数}.
+\]
+其中 $a$ 为中心原子的价电子数，阴离子加上负电荷数、阳离子减去正电荷数；$x_i$ 为第 $i$ 种周围原子数；$b_i$ 为该种原子为达到相应稳定结构最多需接受的电子数，H 取 1，常见 O 取 2，F、Cl 取 1。若只连同种原子，求和项写成 $xb$。该简式不是任意奇电子分子或过渡金属配合物的通用公式；遇到题目给出特殊结构时以题给成键和电子信息为准。
+
+例如 \ce{CO2} 中，$a=4$，两个 O 使 $\sum x_i b_i=2\times2=4$，C 上无孤电子对；两根 C=O 各占一个域，所以为 2 域、直线形。\ce{SO2} 中，$a=6$，孤电子对数为 $(6-2\times2)/2=1$，域数为 $2+1=3$，电子域近似平面三角形，实际分子为 V 形。\ce{NH4+} 中，$a=5-1=4$，孤电子对数为 0，四根键对应 4 域，为正四面体形。
+
+\begin{liti}[从原子数过渡到离子形状]
+判断 \ce{PCl3}、\ce{ClO3-}、\ce{NO2-}、\ce{BF4-}、\ce{SO2Cl2}（S 为中心原子）、\ce{H3O+} 的空间结构。
+\tcblower
+\jie 先数相连原子，再计算孤电子对，最后去掉孤电子对看形状。
+\begin{center}\small\begin{tabular}{lcccl}
+\toprule
+粒子 & 成键域 & 孤电子对数 & 电子域总数 & 实际空间结构\\\midrule
+\ce{PCl3}&3&$(5-3)/2=1$&4&三角锥形\\
+\ce{ClO3-}&3&$(7+1-3\times2)/2=1$&4&三角锥形\\
+\ce{NO2-}&2&$(5+1-2\times2)/2=1$&3&V 形\\
+\ce{BF4-}&4&$(3+1-4)/2=0$&4&正四面体形\\
+\ce{SO2Cl2}&4&$(6-2\times2-2)/2=0$&4&四面体形\\
+\ce{H3O+}&3&$(6-1-3)/2=1$&4&三角锥形\\\bottomrule
+\end{tabular}\end{center}
+\ce{SO2Cl2} 虽有四个成键域，但 S—O 与 S—Cl 不同，键长、键角不全相等，不能说正四面体。
+\end{liti}
+
+\subsection{杂化轨道：怎样描述有方向的成键}
+为什么 \ce{CH4} 有四根等同、指向四面体顶点的 C—H 键，而游离碳原子的价层却写成 $2s^22p^2$？孤立原子的电子排布与分子中的成键环境不同，不能把游离原子的两枚未成对电子直接当成“碳只能成两根键”。高中用\textbf{杂化轨道模型}描述成键环境中的原子轨道：同一原子能量相近的若干原子轨道重新组合，得到数目相同、方向适宜的杂化轨道。它是对分子中成键的描述，不应理解为先把孤立原子机械地激发、再按时间顺序完成几步动作。
+
+一个 s 与三个 p 组合，得到四个 $\mathrm{sp}^3$ 杂化轨道，其理想方向为四面体。\ce{CH4} 的四个轨道分别与 H 的 1s 有效重叠形成四个 $\sigma$ 键；\ce{NH3} 可用四个 $\mathrm{sp}^3$ 轨道描述，其中三个形成 N—H 的 $\sigma$ 键、一个容纳孤电子对；\ce{H2O} 则是两个用于 O—H 成键、两个容纳孤电子对。因此“$\mathrm{sp}^3$”说的是中心原子的轨道模型，不能直接代替分子形状名称。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\node[align=center]at(0,1.0){一个 s 轨道\\与三个 p 轨道};
+\node at(0,-.1){s\quad $p_x$\quad $p_y$\quad $p_z$};
+\draw[-Stealth,thick] (1.8,.1)--(3,.1) node[midway,above]{组合};
+\begin{scope}[xshift=4.5cm]
+\foreach \a in {90,205,320,25}{
+\begin{scope}[rotate=\a]
+\filldraw[fill=mainblue!20,draw=mainblue](0,0)..controls(.2,.4)and(.86,.5)..(1.04,0)..controls(.86,-.5)and(.2,-.4)..cycle;
+\filldraw[fill=exorange!15,draw=exorange](0,0)..controls(-.08,.13)and(-.24,.13)..(-.28,0)..controls(-.24,-.13)and(-.08,-.13)..cycle;
+\end{scope}}
+\fill(0,0)circle(1.3pt);\node[below=21pt,align=center]at(0,0){四个 $\mathrm{sp}^3$ 轨道的投影\\每个轨道有一大瓣、一小瓣};
+\end{scope}
+\draw[-Stealth,thick](6.1,.1)--(7.2,.1)node[midway,above]{取一方向};
+\begin{scope}[xshift=8cm]
+\filldraw[fill=mainblue!20,draw=mainblue](0,0)..controls(.4,.55)and(1.3,.55)..(1.5,0)..controls(1.3,-.55)and(.4,-.55)..cycle;
+\filldraw[fill=exorange!15,draw=exorange](0,0)..controls(-.1,.15)and(-.3,.15)..(-.35,0)..controls(-.3,-.15)and(-.1,-.15)..cycle;
+\filldraw[fill=mainblue!20,fill opacity=.6,draw=mainblue](1.3,0)circle(.45);
+\draw[dashed,-Stealth,black!55](-.6,0)--(2.2,0)node[right]{键轴};
+\fill(0,0)circle(1.3pt);\node[below=13pt]at(0,0){中心核};\fill(1.3,0)circle(1.3pt);\node[below=13pt]at(1.3,0){H 核};
+\node[align=center]at(.7,1){杂化轨道大瓣与 H 的 1s\\沿轴重叠形成 $\sigma$ 键};
+\end{scope}
+\end{tikzpicture}}{杂化轨道用于描述定向成键：四个轨道实际指向空间四面体，纸面投影不保持真实夹角；颜色表示相位\label{fig:07-hybrid}}
+
+类似地，一个 s 与两个 p 组合得到三个 $\mathrm{sp}^2$ 轨道，理想方向在同一平面内、彼此约 $120^\circ$，另留下一个垂直于该平面的未杂化 p 轨道；一个 s 与一个 p 组合得到两个 sp 轨道，方向相反、夹角 $180^\circ$，留下两个相互垂直的未杂化 p 轨道。注意轨道数守恒：1 个 s 加 2 个 p 得 3 个杂化轨道，不是 2 个；$\mathrm{sp}^2$ 中的“2”表示参与组合的 p 轨道数。
+
+\begin{center}\small\begin{tabularx}{\linewidth}{llllX}
+\toprule
+类型&杂化轨道数&理想方向&未杂化 p 数&常见中心原子\\\midrule
+sp&2&直线，$180^\circ$&2&\ce{CO2} 的 C、乙炔的 C\\
+$\mathrm{sp}^2$&3&平面三角，$120^\circ$&1&\ce{BF3} 的 B、乙烯和羰基的 C\\
+$\mathrm{sp}^3$&4&四面体，$109.5^\circ$&0&\ce{CH4} 的 C、\ce{NH3} 的 N、\ce{H2O} 的 O\\\bottomrule
+\end{tabularx}\end{center}
+
+对本章常见的主族粒子，可由 2、3、4 个电子域依次对应 sp、$\mathrm{sp}^2$、$\mathrm{sp}^3$ 模型。这是高中常用的判断方法；对题给的共轭结构或特殊配合物，不能仅凭“单键数”硬套。VSEPR 预测电子域怎样排，杂化模型描述中心原子怎样提供定向轨道，两种模型可以相互配合，但它们都不是电子运动的照片。
+
+\subsection{乙烯、乙炔与转动受限}
+乙烯 \ce{CH2=CH2} 中，每个 C 周围有三个成键方向，采用 $\mathrm{sp}^2$ 模型：两个杂化轨道与两个 H 的 1s 形成 C—H 的 $\sigma$ 键，第三个与另一 C 的杂化轨道沿核间轴重叠，形成 C—C 的 $\sigma$ 键。两 C 各留下一个垂直于分子平面的 p 轨道，彼此平行、侧向重叠，形成一个 $\pi$ 键。因此六个原子共平面，C=C 为 $1\sigma+1\pi$，整个分子有 5 个 $\sigma$ 键和 1 个 $\pi$ 键。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\begin{scope}
+\node at(-.2,0){C};\node at(1.7,0){C};\draw[thick] (0,0)--(1.5,0)node[midway,below]{$\sigma$};
+\foreach \x/\dx in {-.2/-.58,1.7/.58}{\foreach \y in {-1,1}{\draw[thick](\x,0)--(\x+\dx,\y);\node at(\x+1.15*\dx,1.12*\y){H};}}
+\node[align=center]at(.75,-1.7){(a) 平面内的 $\sigma$ 骨架\\四根 C—H 加一根 C—C};
+\end{scope}
+\begin{scope}[xshift=6cm]
+\foreach \sy/\col in {1/mainblue,-1/exorange}{
+\begin{scope}[yscale=\sy]
+\foreach \x in {0,.6}{\filldraw[fill=\col!15,draw=\col]\csevenpupper{\x};}
+\begin{scope}\clip\csevenpupper{0};\fill[\col!55]\csevenpupper{.6};\end{scope}
+\end{scope}}
+\draw[thick](0,0)--(.6,0)node[midway,above]{$\sigma$};
+\draw[dashed,-Stealth](-.9,0)--(2,0)node[right]{C—C 轴};
+\foreach \x in {0,.6}{\fill(\x,0)circle(1.3pt);\node[below right]at(\x,0){C};\node at(\x,.72){$+$};\node at(\x,-.72){$-$};}
+\draw[-Stealth](-.75,.8)node[left]{$\pi$}--(.3,.7);
+\node[align=center]at(.3,-1.7){(b) 从侧面看 p 轨道重叠\\分子平面在此侧视为一条线};
+\end{scope}
+\end{tikzpicture}}{乙烯：先看平面内的 $\sigma$ 骨架，再看分子平面上、下方的同一个 $\pi$ 键\label{fig:07-ethene}}
+
+若让乙烯的一端绕 C—C 轴转动，相应 p 轨道也随之转动，两 p 不再平行，侧向重叠减弱；转至互相垂直时，原来这组 p 轨道的有效 $\pi$ 成键重叠消失。要完成这样的转动必须付出较大能量，所以双键不能像普通碳碳单键那样自由转动。这是有机化学中讨论烯烃顺反异构的结构依据。不是说分子永远静止，而是通常条件下越过这种转动障碍困难。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\foreach \X/\a/\t in {0/90/{平行：侧向重叠有效},5/35/{转动：有效重叠减弱},10/0/{垂直：原有 $\pi$ 重叠消失}}{
+\begin{scope}[xshift=\X cm]
+\draw[black!25](-1,0)--(1,0)(0,-1)--(0,1);
+\fill[mainblue!12](0,.55)ellipse(.24 and .5);\fill[exorange!10](0,-.55)ellipse(.24 and .5);
+\begin{scope}[rotate=\a-90]
+\draw[mainblue,thick](0,.55)ellipse(.24 and .5);\draw[exorange,thick](0,-.55)ellipse(.24 and .5);
+\end{scope}
+\fill(0,0)circle(1.6pt);\node[below right,fill=white,inner sep=.5pt]at(0,0){轴};
+\node[align=center]at(0,-1.4){\t};
+\end{scope}}
+\end{tikzpicture}}{沿 C—C 键轴看乙烯两端 p 轨道的方向（两核投影重合）：浅色为一端、轮廓线为另一端，表示相对转动，非电子轨迹\label{fig:07-rotation}}
+
+乙炔 \ce{HC#CH} 中，每个 C 采用 sp 模型：两个杂化轨道分处轴的两侧，用于形成 C—H 与 C—C 的 $\sigma$ 键，四个原子共线。每个 C 剩下两条彼此垂直的 p 轨道；两 C 的同方向 p 分别侧向重叠，形成\textbf{两个相互垂直的 $\pi$ 键}。因此 C$\equiv$C 为 $1\sigma+2\pi$，整个乙炔分子有 3 个 $\sigma$ 键、2 个 $\pi$ 键。两组 $\pi$ 电子云都围绕同一条 C—C 轴分布，不能把两个 $\pi$ 键误画成沿轴前后串联。乙炔的四个原子共线，绕这条轴并不产生乙烯那样可区分的两组取代基构象；不能把乙烯只含一组 $\pi$ 重叠的转动图直接套成乙炔的完整描述。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\foreach \X/\L in {0/{(a) 从 $y$ 方向看 $p_z$ 重叠},4.7/{(b) 从 $z$ 方向看 $p_y$ 重叠}}{
+\begin{scope}[xshift=\X cm]
+\foreach \sy/\col in {1/mainblue,-1/exorange}{
+\begin{scope}[yscale=\sy]
+\foreach \x in {0,.6}{\filldraw[fill=\col!15,draw=\col]\csevenpupper{\x};}
+\begin{scope}\clip\csevenpupper{0};\fill[\col!55]\csevenpupper{.6};\end{scope}
+\end{scope}}
+\draw[thick](-.9,0)--(1.5,0);\node[left]at(-.9,0){H};\node[right]at(1.5,0){H};
+\foreach \x in {0,.6}{\fill(\x,0)circle(1.3pt);\node[below right]at(\x,0){C};\node at(\x,.72){$+$};\node at(\x,-.72){$-$};}
+\node[above=2pt]at(.3,0){$\sigma$};\node[align=center]at(.3,-1.55){\L};
+\end{scope}}
+\begin{scope}[xshift=9.7cm]
+\draw[-Stealth](-.95,0)--(1.1,0)node[right]{$y$};\draw[-Stealth](0,-1.05)--(0,1.1)node[above]{$z$};
+\draw[mainblue,thick](0,.52)ellipse(.2 and .42);\draw[exorange,thick](0,-.52)ellipse(.2 and .42);
+\draw[mainblue,thick](.52,0)ellipse(.42 and .2);\draw[exorange,thick](-.52,0)ellipse(.42 and .2);
+\node at(0,.52){$+$};\node at(0,-.52){$-$};\node at(.52,0){$+$};\node at(-.52,0){$-$};
+\fill(0,0)circle(1.4pt);\node[align=center]at(0,-1.55){(c) 沿 C—C 轴看\\两组 p 方向互相垂直};
+\end{scope}
+\end{tikzpicture}}{乙炔两个 $\pi$ 键分别由两组 p 轨道重叠形成；(a)(b) 是同一分子从两个方向的分解示意，不能重复计数 $\sigma$ 键，颜色仍表示相位\label{fig:07-ethyne}}
+
+苯中六个 C 均可用 $\mathrm{sp}^2$ 描述，各留下一个垂直于环平面的 p 轨道。六个 p 轨道连续侧向重叠，使相关电子的分布不局限在某两 C 之间，称为离域或共轭的大 $\pi$ 体系。由此可以理解苯的六根碳碳键等同、键长介于通常单键与双键之间，不能把凯库勒式的三根双线当作三根彼此独立的普通碳碳双键。大 $\pi$ 键有时记为 $\Pi_n^m$，$n$ 为参与原子数、$m$ 为参与电子数，如苯为 $\Pi_6^6$。遇到陌生离域结构，高考通常提供所需信息，不必在高中展开大学分子轨道理论。
+
+\begin{liti}[同时判断杂化与数键]
+丙烯腈的结构为 \ce{CH2=CH-C#N}。求 1 mol 丙烯腈中 $\sigma$ 键、$\pi$ 键的物质的量，并指出三种 C 的杂化方式。
+\tcblower
+\jie 先画出完整骨架：有三个 C—H 连接、一组 C=C、一根 C—C、一组 C$\equiv$N，因此 $\sigma$ 键为 $3+1+1+1=6$ mol；双键贡献 1 mol $\pi$，三键贡献 2 mol $\pi$，合计 3 mol。双键两端的 C 各有三个成键方向，为 $\mathrm{sp}^2$；氰基的 C 只有两个成键方向，为 sp。不能把“三键中的三个键”都算成三个电子域。
+\end{liti}
+
+\subsection{键角比较的适用条件}
+先用电子域数判断大致结构，再在相近结构中分析排斥。例如 \ce{SO4^2-} 无孤电子对而 \ce{SO3^2-} 有一对，后者的 O—S—O 键角通常较小；\ce{NH3} 与 \ce{NF3} 都为三角锥形，F 吸引成键电子对，使其离 N 较远，中心附近成键域间排斥减弱，所以 \ce{NF3} 的键角较小。
+
+跨周期分子不能只凭“杂化相同”认定键角接近。\ce{PH3} 的键角约 $93.5^\circ$，明显小于 \ce{NH3} 的 $107^\circ$，\ce{H2S} 也远小于 \ce{H2O}；其轨道参与成键的细节超出简单的等性杂化图像。高中可记住这些常见实验顺序及近似模型的范围，不把“中心电负性越大键角必定越大”当作任意分子的定律。
+
+\section{由键的极性到分子的性质}
+
+\subsection{键有极性，整个分子是否也有极性}
+不同原子吸引共用电子的能力不同，共用电子对偏向电负性较大的原子，就形成极性共价键。可在键两端标出 $\delta+$、$\delta-$，表示部分正、负电性，不是完整离子的电荷。例如 O—H 键的电子偏向 O，O 端为 $\delta-$，H 端为 $\delta+$。
+
+\textbf{分子极性}要比较整个分子的正、负电荷中心：两者重合为非极性分子，不重合为极性分子。可把各键的极性方向作几何合成：\ce{CO2} 为直线形，两个相同 C=O 键的极性作用大小相同、方向相反，整体抵消；\ce{H2O} 为 V 形，两个 O—H 的作用不能抵消，故为极性分子。
+
+\tu{\begin{tikzpicture}[font=\small]
+\node at(0,0){O};\node at(1.6,0){C};\node at(3.2,0){O};
+\draw[double,thick](.2,0)--(1.4,0) (1.8,0)--(3,0);
+\draw[mainblue,-Stealth,thick](1.4,.5)--(.3,.5);\draw[mainblue,-Stealth,thick](1.8,.5)--(2.9,.5);
+\node[align=center,font=\scriptsize]at(1.6,-.7){\ce{CO2}：两方向相反，合成抵消};
+\begin{scope}[xshift=7cm]
+\node at(0,.5){O};\node at(-.9,-.3){H};\node at(.9,-.3){H};\draw[thick](-.72,-.15)--(-.15,.36)(.72,-.15)--(.15,.36);
+\draw[mainblue,-Stealth,thick](-1,.15)--(-.28,.77);\draw[mainblue,-Stealth,thick](1,.15)--(.28,.77);
+\draw[warnred,-Stealth,thick](0,.85)--(0,1.5)node[above,font=\scriptsize]{合成不为零};
+\node[align=center,font=\scriptsize]at(0,-.7){\ce{H2O}：V 形，作用不能抵消};
+\end{scope}
+\end{tikzpicture}}{按本图约定，蓝箭头指向吸引键合电子较强的一端；先看每根键，再结合形状看能否抵消\label{fig:07-polar}}
+
+同理，\ce{BF3} 的三根 B—F 在平面三角形中对称分布，\ce{CH4}、\ce{CCl4} 的四根相同键在正四面体中对称分布，均为非极性分子；\ce{CH3Cl} 虽有四面体骨架，但四个连接原子不相同，不能抵消，为极性分子。\ce{NH3} 为三角锥形，也是极性分子。\ce{O3}、\ce{H2O2} 的整体电荷分布不对称，均为极性分子，不能仅由“组成元素相同”推成非极性。
+
+\begin{liti}[先形状后极性]
+比较 \ce{CO2}、\ce{SO2}、\ce{BF3}、\ce{NH3} 的空间结构和分子极性。
+\tcblower
+\jie \ce{CO2}：中心无孤对、2 域，直线形，两根相同键的作用抵消，非极性。\ce{SO2}：3 域含一对孤对，V 形，不能抵消，极性。\ce{BF3}：3 域无孤对，平面三角形，相同键对称抵消，非极性。\ce{NH3}：4 域含一对孤对，三角锥形，极性。解题不能只写“有极性键所以有极性”，必须补上空间结构这一步。
+\end{liti}
+
+\subsection{范德华力与氢键}
+分子内部靠共价键把原子结合起来，分子之间还存在较弱的吸引，统称\textbf{分子间作用力}。其中范德华力普遍存在。对于组成和结构相似的分子，相对分子质量越大，电子云越容易发生相应变化，范德华力通常越强，沸点通常越高，如 \ce{CH4}$<$\ce{SiH4}$<$\ce{GeH4}。不能用分子质量单一因素跨越一切不同结构比较熔沸点；特别是熔点还明显受晶体排列影响。
+
+当 H 已与 N、O、F 等电负性很大的原子形成共价键时，该 H 可与另一有孤电子对的 N、O、F 等原子产生较强的定向作用，称为\textbf{氢键}，写作 X—H$\cdots$Y。实线 X—H 是原有共价键，虚点 H$\cdots$Y 才表示氢键。高中常见氢键比通常的范德华力强、比共价键弱，有方向性和饱和性；形成氢键并不意味着两个分子之间又形成了普通共价键。
+
+\tu{\begin{tikzpicture}[font=\small]
+\node (o1)at(0,0){O};\node(h1)at(.9,0){H};\node(h0)at(-.4,-.7){H};\draw[thick](o1)--(h1)(o1)--(h0);
+\node(o2)at(2.5,0){O};\node(h2)at(3.3,.5){H};\node(h3)at(3,-.7){H};\draw[thick](o2)--(h2)(o2)--(h3);
+\draw[mainblue,very thick,densely dotted](h1)--(o2)node[midway,above,font=\scriptsize]{氢键};
+\node[font=\scriptsize]at(1.5,-1.3){(a) 分子间：O—H$\cdots$O};
+\begin{scope}[xshift=6.3cm,yshift=.3cm,scale=.8]
+\draw[thick](0,0)--(1,0)--(1.5,-.866)--(1,-1.732)--(0,-1.732)--(-.5,-.866)--cycle;
+\draw[black!65](.5,-.866)circle(.55);
+\node(o)at(-.2,.8){O};\node(h)at(.43,1.06){H};\node(c)at(1.3,.8){C};\node(ao)at(1.02,1.53){O};\node(ah)at(2.1,.8){H};
+\draw[thick](0,0)--(o)(o)--(h) (1,0)--(c)(c)--(ah);
+\draw[double,thick](c)--(ao);
+\draw[mainblue,very thick,densely dotted](h)--(ao);
+\node[align=left,font=\scriptsize]at(4,-.2){(b) 同一分子内：\\相邻酚羟基 H 与醛基 O\\形成 O—H$\cdots$O 氢键};
+\end{scope}
+\end{tikzpicture}}{读氢键先找供氢的 X—H，再找受氢键的孤电子对原子 Y；(b) 邻羟基苯甲醛中虚点线示分子内氢键，苯环圆圈示芳香性\label{fig:07-hbond}}
+
+\textbf{分子间氢键}加强分子之间的结合，汽化时要克服这些作用，因此水、HF、氨的沸点比同族类似氢化物反常地高。乙醇的羟基能使乙醇分子彼此形成氢键，沸点高于同分异构体二甲醚；二甲醚虽有 O 的孤电子对，却没有直接连在 O 上的 H，纯二甲醚分子间不能以这种方式互相提供氢键。
+
+\textbf{分子内氢键}发生在同一个分子中。例如邻羟基苯甲醛中相邻基团可形成环状的分子内氢键，减少参与分子间氢键的机会；与结构适当可比的异构体相比，这往往使沸点降低。但不能据此断言“一有分子内氢键就比水更易沸腾”或“一定降低所有物质的熔点”，仍要考虑分子大小、其他作用和晶体排列。
+
+水结冰时，普通冰中的水分子与周围约四个水分子按氢键形成较空旷的网络，所以冰的密度通常小于液态水。这里讨论的是分子间排列的改变，不是水分子内部 O—H 键断裂。
+
+\subsection{溶解性：把“相似相溶”作为起点}
+溶解需要拆开部分溶质间、溶剂间作用，同时建立溶质与溶剂的新作用，因此极性相近通常有利于溶解：\ce{I2} 易溶于非极性溶剂，乙醇的羟基可与水形成氢键，乙醇与水互溶。但“相似相溶”是经验判断，溶解还涉及粒子排列和反应，不能替代所有具体事实。
+
+乙酸乙酯的两个 O 都能\textbf{接受}来自水的氢键，并非“酯不能与水形成氢键”；不过它没有羟基，烃基部分较大，整体水溶性有限。\ce{NH3} 极易溶于水，则既有氢键等作用，也有 \ce{NH3 + H2O <=> NH4+ + OH-} 的反应。回答溶解性问题时，应说明是哪一个原子或基团形成什么作用，不只写“有极性”。
+
+\begin{liti}[把性质与对应作用联系起来]
+解释：(1) 水的沸点高于硫化氢；(2) 乙醇与水互溶，而乙酸乙酯在水中溶解度有限；(3) 邻羟基苯甲醛不能因为有分子内氢键，就据此断言其沸点低于水。
+\tcblower
+\jie (1) 水分子之间有较强氢键，\ce{H2S} 分子之间无这类典型氢键，汽化水需克服的分子间作用较强。(2) 乙醇的羟基与水形成氢键且烃基较小；乙酸乙酯虽能接受水的氢键，但疏水部分较大，综合作用不同。(3) 分子内氢键的比较一般要放在相近结构中；邻羟基苯甲醛分子比水大得多，范德华力等因素不可忽略。一个结构因素不能代替完整的比较。
+\end{liti}
+
+\subsection{手性与取代基对酸性的影响}
+在乳酸 \ce{CH3CH(OH)COOH} 中，中间的饱和 C 连着 H、OH、\ce{CH3}、COOH 四种不同基团，这种 C 叫\textbf{手性碳原子}。把它所连的四组放在四面体方向上，可以得到像左右手一样互为镜像、却不能只靠旋转完全重合的两种排列，叫对映异构体。找手性碳时，先找四根单键的 C，再逐组比较；两条看起来相同的碳链要继续向外比较，直到出现差异。含一个这种手性中心的常见分子有一对对映异构体；多个手性中心时还需考虑对称性，不能简单断言含手性碳的分子必定整体手性。
+
+酸在水中给出 \ce{H+} 后形成相应阴离子，电离难易与 O—H 以及产物稳定性等有关。高中比较相关羧酸时，可用取代基的电子效应作定性解释：Cl、F 等吸电子基团会使电子分布改变，通常有利于羧酸电离，且能稳定相应羧酸根，因此 \ce{CH2ClCOOH} 酸性强于 \ce{CH3COOH}；在取代位置、数目相同的比较中，F 的吸电子作用通常强于 Cl。烷基常有推电子效应，简单实例中酸性为甲酸$>$乙酸$>$丙酸；不能把“碳链越长酸性必越弱”当作各种羧酸的无限外推规律。
+
+对于\textbf{同一中心元素}的相近含氧酸，非羟基 O 更多，通常有利于电离及共轭碱稳定，所以同系列酸性按以下顺序增强：\ce{HClO}、\ce{HClO2}、\ce{HClO3}、\ce{HClO4}。把它们写成 \ce{(HO)_mRO_n} 有助于看清非羟基氧数 $n$。中心元素不同时还要考虑其吸电子能力等因素，不能只数 O。HF 键很强但在水中为弱酸、HCl 在水中为强酸，也说明水溶液酸性不能只由一个孤立气态键能决定。
+
+\section{配位键、配合物与分子识别}
+
+\subsection{从氨到铵离子：一对电子由谁提供}
+\ce{NH3} 的 N 上有一对孤电子，\ce{H+} 没有电子、可以接受这对电子；二者结合成 \ce{NH4+} 时，可用 N$\to$H 标出原先这对电子由 N 一方提供。\textbf{成键电子对由一方提供、另一方接受}的共价键叫配位键，箭头从提供孤电子对的一方向接受方。它说明成键来源；形成 \ce{NH4+} 后四根 N—H 等同，不能再挑出一根说它“格外弱”或“可单独电离”。
+
+高中常见的配位键按轴向重叠计为 $\sigma$ 键，配位原子常为具有孤电子对的 N、O、S、Cl 等，接受方常为金属离子或缺电子中心。先找孤电子对和可接受的轨道，再画箭头；不要把箭头方向画成电荷流向。
+
+\subsection{配合物的组成与溶液中的变化}
+由中心原子或离子与若干配体通过配位作用结合形成的配位单元，可构成配合物。以 \ce{[Cu(NH3)4]SO4} 的高中简化表示为例：\ce{Cu^2+} 为中心离子，\ce{NH3} 为配体，N 为\textbf{配位原子}，直接与 Cu 配位的原子数为\textbf{配位数}，这里为 4；方括号中的 \ce{[Cu(NH3)4]^2+} 是内界，\ce{SO4^2-} 是外界。配位数数的是配位原子，不一定等于配体个数，多齿配体可提供多个配位原子。
+
+易溶的离子型配合物溶于水时，外界离子通常易解离；配离子内的配体在具体条件下相对稳定。例如在短时间、规定条件下向 \ce{[Co(NH3)5Cl]Cl2} 的水溶液加入 \ce{AgNO3}，每摩尔配合物可由外界的两摩尔 \ce{Cl-} 迅速生成两摩尔 AgCl，内界 Cl 通常不按普通自由 \ce{Cl-} 计。不能把“内界永不变化”作为定律，配体仍可随条件发生交换。
+
+氨水逐滴加入 \ce{CuSO4} 溶液时，先由碱性生成蓝色 \ce{Cu(OH)2} 沉淀；氨过量时，Cu 与氨配位，沉淀溶解，得到深蓝色溶液：
+\begin{align*}
+&\ce{Cu^2+ + 2NH3*H2O = Cu(OH)2 v + 2NH4+},\\
+&\ce{Cu(OH)2 + 4NH3 <=> [Cu(NH3)4]^2+ + 2OH-}.
+\end{align*}
+后加入适量乙醇，可改变混合溶剂环境、降低相应盐的溶解度，利于析出深蓝色 \ce{[Cu(NH3)4]SO4*H2O} 晶体。水溶液中 Cu 的配位还涉及水分子；上式是高中保留关键配位数与配体的简化写法。蓝色水合铜离子通常用 \ce{[Cu(H2O)6]^2+} 表示，不能把一切水溶液中的铜都绝对写成四配位。
+
+另一些熟悉事实也与配位有关：\ce{Fe^3+} 与 \ce{SCN-} 形成红色配合物，可用于检验；\ce{AgCl + 2NH3 <=> [Ag(NH3)2]+ + Cl-} 使 AgCl 可溶于氨水。银氨溶液中的主要配离子为 \ce{[Ag(NH3)2]+}，不是以孤立“\ce{[Ag(NH3)2]OH} 分子”存在。
+
+\begin{liti}[先确定内界电荷，再计数]
+对于 \ce{K3[Fe(CN)6]}，指出中心离子的价态、配体、配位原子与配位数；求 1 mol \ce{[Fe(CN)6]^3-} 中 $\sigma$ 键和 $\pi$ 键的物质的量。已知每个 \ce{CN-} 以 C 与 Fe 配位。
+\tcblower
+\jie 外界三个 \ce{K+} 说明内界带 $3-$ 电荷。设 Fe 为 $x$ 价，则 $x+6(-1)=-3$，得 $x=+3$。配体为 \ce{CN-}，配位原子为题给 C，配位数 6。每个 C$\equiv$N 含 $1\sigma+2\pi$，另有六根 Fe—C 配位键按 $\sigma$ 计，故 $n(\sigma)=6+6=12$ mol、$n(\pi)=6\times2=12$ mol。仅凭 C、N 的电负性大小不能普遍断定所有配体必须从哪端配位，应先用题给结构。
+\end{liti}
+
+\subsection{超分子：大小与作用位置共同匹配}
+多个分子或离子靠分子间相互作用形成具有一定结构和功能的聚集体，可用超分子观点研究。常见相互作用包括氢键、静电作用等；某些自组装体系也涉及配位作用，不能因此把一切配合物都等同于超分子。其重要特征是\textbf{分子识别}和\textbf{自组装}。
+
+以冠醚为例，环上的 O 有孤电子对，可以朝向空腔内的金属离子配位。空腔过小容不下离子，过大则各作用位置不易同时贴近；因此离子大小与空腔、配位原子种类及溶剂等共同影响选择性。高中题目通常给出结构或选择性实验，分析时应同时写出“存在合适作用位点”和“空间大小匹配”，不能只凭某一种离子的电荷断言任何冠醚都优先结合它。
+
+
+% ---------------- 章末 ----------------
+\zhangmo{本章小结}
+\subsection*{一、知识总结}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.4cm}X}
+\toprule
+共价键 & 沿键轴的轴向重叠形成 $\sigma$；平行 p 轨道在键轴两侧侧向重叠形成 $\pi$；常见单、双、三键依次为 $1\sigma$、$1\sigma+1\pi$、$1\sigma+2\pi$ \\
+空间结构 & 先数成键域和孤电子对域，再取原子核的位置得形状；常见 2、3、4 域对应 sp、$\mathrm{sp}^2$、$\mathrm{sp}^3$ 模型 \\
+键角 & 先判断电子域排布；相近结构中再比较孤电子对和电子分布；跨周期分子注意简单模型的范围 \\
+分子间作用 & 范德华力普遍存在；典型氢键为 X—H$\cdots$Y；分子间氢键常提高沸点，分子内氢键的影响须在适当可比结构中判断 \\
+性质 & 极性、相似相溶、手性碳、含氧酸非羟基氧数、羧酸取代基电子效应 \\
+配合物与超分子 & 中心离子提供空轨道、配体提供孤电子对；分子识别、自组装 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\subsection*{二、方法提升}
+\begin{enumerate}
+\item 判断空间结构：算价层电子对数$\to$得 VSEPR 模型$\to$去掉孤电子对得实际形状$\to$得杂化方式。
+\item 解释沸点差异，要指出需克服的是分子之间的哪种作用，并在组成和结构适当可比的前提下比较；不要把共价键强弱直接当作沸点原因。
+\item 解释相关酸的强弱，联系取代基对电子分布和电离后阴离子稳定性的影响，不把单一键能或氧原子总数当作通用判据。
+\end{enumerate}
+\subsection*{三、易错点归纳}
+\begin{enumerate}
+\item 把 VSEPR 模型当作实际空间结构（\ce{H2O} 的 VSEPR 模型是四面体形，实际为 V 形）。
+\item 计算孤电子对数时，离子忘记加减电荷数。
+\item 把分子之间的氢键当作普通共价键；忽略组成、结构的可比条件，单凭是否有氢键比较所有熔沸点。
+\item 认为含极性键的分子一定是极性分子（\ce{CO2}、\ce{CH4} 是非极性分子）。
+\item 统计 $\sigma$ 键时漏掉配位键和 C—H 键。
+\end{enumerate}
+
+\zhangmo{分层练习}
+\zu{A组\quad 基础巩固}
+\begin{xiti}[start=1]
+\item 下列分子或离子中，中心原子的杂化方式与空间结构均正确的是\xz
+\xxb{\ce{SO2}：sp，直线形}{\ce{NH3}：$\mathrm{sp}^2$，平面三角形}{\ce{CO3^2-}：$\mathrm{sp}^2$，平面三角形}{\ce{H3O+}：$\mathrm{sp}^3$，正四面体形}
+
+\item 1 mol 丙烯腈（\ce{CH2=CH-C#N}）中含 $\sigma$ 键\tk mol、$\pi$ 键\tk mol；其中碳原子的杂化方式有\tk。
+
+\item 下列说法正确的是\xz
+\xxa{\ce{H2O} 比 \ce{H2S} 稳定，是因为水分子间存在氢键}{\ce{CH4}、\ce{CCl4}、\ce{CO2} 都是含极性键的非极性分子}{键角：\ce{H2O}$>$\ce{NH3}$>$\ce{CH4}}{邻羟基苯甲醛的沸点高于对羟基苯甲醛}
+
+\item 下列各组酸中，酸性强弱比较正确的是\xz
+\xxa{\ce{HClO4}$<$\ce{HClO3}}{\ce{CH3COOH}$>$\ce{CH2ClCOOH}}{\ce{CF3COOH}$>$\ce{CCl3COOH}}{\ce{CH3CH2COOH}$>$\ce{CH3COOH}}
+
+\item 下列分子中，属于含极性键的非极性分子的是\xz
+\xx{\ce{H2O}}{\ce{NH3}}{\ce{BF3}}{\ce{CH3Cl}}
+
+\item 指出下列物质中加点原子的杂化方式：\ce{NH4+} 中的 N\tk；\ce{CO2} 中的 C\tk；甲醛（\ce{HCHO}）中的 C\tk；乙醇中与羟基相连的 C\tk。
+\end{xiti}
+
+\zu{B组\quad 高考典型}
+\begin{xiti}
+\item \laiyuan{基础练习}\ 比较下列键角大小并说明判断依据或模型限制：(1) \ce{NH3} 与 \ce{PH3}（已知实验值约为 $107^\circ$ 和 $93.5^\circ$）；(2) \ce{NH3} 与 \ce{NF3}；(3) \ce{SO4^2-} 与 \ce{SO3^2-}；(4) \ce{BF3} 与 \ce{NF3}。
+
+\item \laiyuan{综合练习}\ 向 \ce{CuSO4} 溶液中逐滴加入氨水至过量，再加入适量乙醇，析出深蓝色晶体。(1) 描述加氨水过程中的现象并写出相关离子方程式。(2) 加入乙醇的作用是什么？(3) \ce{[Cu(NH3)4]^2+} 中配位原子是\tk，1 mol 该离子中含 $\sigma$ 键\tk mol。(4) 用箭头表示 NH$_3$ 与 Cu$^{2+}$ 形成配位键时，箭头应由\tk{}指向\tk，依据是\tk。
+
+\item \laiyuan{综合练习}\ 有两种组成均为 \ce{CoCl3*5NH3*H2O} 的配合物 X、Y（配位数均为 6）。各取 1 mol 溶于水，加入足量 \ce{AgNO3} 溶液，X 生成 3 mol AgCl，Y 生成 2 mol AgCl。写出 X、Y 的化学式（用 [ ] 标明内界）。
+
+\item \laiyuan{改编自2024年广东卷第13题；来源见附录}\ 下列陈述Ⅰ与陈述Ⅱ均正确，且具有因果关系的是\xz
+\xxa{酸性：\ce{CF3COOH}$<$\ce{CCl3COOH}——电负性：F$>$Cl}{某冠醚与 \ce{Li+} 能形成超分子，与 \ce{K+} 则不能——\ce{Li+} 与 \ce{K+} 的离子半径不同}{由氨制硝酸：\ce{NH3 -> NO -> NO2 -> HNO3}——\ce{NH3} 和 \ce{NO2} 均具有氧化性}{苯酚与甲醛反应，可合成酚醛树脂——合成酚醛树脂的反应是加聚反应}
+
+\item \laiyuan{综合练习}\ 硼酸（\ce{H3BO3}）是一元弱酸，其电离方式为 \ce{H3BO3 + H2O <=> [B(OH)4]- + H+}。(1) 硼酸分子中 B 的杂化方式为\tk，\ce{[B(OH)4]-} 中 B 的杂化方式为\tk。(2) 硼酸为什么是一元酸？(3) 硼酸晶体呈片层状，层内分子间以\tk{}相连，层间为\tk，所以硼酸晶体有滑腻感。
+\end{xiti}
+
+\zu{C组\quad 冲刺高分}
+\begin{xiti}
+\item \laiyuan{综合练习}\ 尿素 \ce{CO(NH2)2} 是重要的氮肥，分子中 C 与 O 以双键相连，C 与两个 N 以单键相连。(1) 尿素中 C 原子的杂化方式为\tk，1 mol 尿素含 $\sigma$ 键\tk mol。(2) 实验测得尿素分子中所有原子共平面，N 原子的杂化方式应为\tk，这说明 N 原子上的孤电子对\tk。(3) 尿素易溶于水，熔点（133 ℃）比相对分子质量相近的乙酸（16.6 ℃）高得多，从分子间作用力角度解释原因。(4) 尿素与 \ce{H2O2} 可通过氢键形成加合物 \ce{CO(NH2)2*H2O2}，该加合物属于\tk（填“配合物”或“超分子”）。
+
+\item \laiyuan{综合练习}\ 比较并解释酸性强弱：(1) \ce{ClCH2COOH}、\ce{Cl2CHCOOH}、\ce{FCH2COOH}；(2) \ce{H3PO4} 与 \ce{HClO4}；(3) 甲酸、乙酸、丙酸；(4) 为什么 HF 的水溶液是弱酸，而 HCl 是强酸？
+\item \laiyuan{本书编写}\ 某同学把乙烯画成“两个 p 轨道沿 C—C 键轴相向重叠形成 $\pi$ 键”，又说“乙炔有两个 $\pi$ 键，因此需要两根不同的 C—C 键轴”。逐条纠正，并说明：(1) 乙烯绕 C—C 轴转动一端为什么要付出较大能量？(2) 乙烯、乙炔各有多少个 $\sigma$ 键？(3) $\pi$ 轨道图中的上、下两块区域是否代表两枚电子沿两条轨道绕核运动？
+\end{xiti}
+
+\zhangmo{练习解析}
+\begin{jiexilist}
+\item \ans{C}\ce{SO2}：价层电子对数 3，$\mathrm{sp}^2$，V 形；\ce{NH3}：4 对，$\mathrm{sp}^3$，三角锥形；\ce{CO3^2-}：$\frac12(4+2-3\times2)=0$，3 对，$\mathrm{sp}^2$，平面三角形，正确；\ce{H3O+}：4 对含 1 对孤电子对，三角锥形。
+\item 6；3；sp 和 $\mathrm{sp}^2$。C—H 3 个、C=C 1$\sigma$1$\pi$、C—C 1 个、C$\equiv$N 1$\sigma$2$\pi$：$\sigma$ 键 $3+1+1+1=6$，$\pi$ 键 3；双键碳 $\mathrm{sp}^2$，三键碳 sp。
+\item \ans{B}A：稳定性取决于键能（O—H$>$S—H），与氢键无关；B 正确；C：键角 \ce{CH4}$>$\ce{NH3}$>$\ce{H2O}；D：邻羟基苯甲醛形成分子内氢键，沸点较低。
+\item \ans{C}A：\ce{HClO4} 非羟基氧多，酸性更强；B：Cl 吸电子，\ce{CH2ClCOOH} 酸性更强；C：F 电负性大于 Cl，正确；D：乙基推电子能力强于甲基，丙酸酸性更弱。
+\item \ans{C}\ce{BF3} 为平面三角形，B—F 键有极性但分子对称，正负电荷中心重合；\ce{H2O}（V 形）、\ce{NH3}（三角锥形）、\ce{CH3Cl}（四面体但不对称）均为极性分子。
+\item $\mathrm{sp}^3$；sp；$\mathrm{sp}^2$；$\mathrm{sp}^3$。
+\item (1) \ce{NH3}$>$\ce{PH3}，由给定实验值直接可知。二者虽均有四个电子域，跨周期时原子轨道参与成键的情况不同，不能由理想四面体模型精确算出该差异。(2) \ce{NH3}$>$\ce{NF3}：F 的电负性大于 N，N—F 键的成键电子对偏向 F，远离 N，排斥减小，键角变小；而 N—H 键电子对偏向 N。(3) \ce{SO4^2-}$>$\ce{SO3^2-}：均为 $\mathrm{sp}^3$ 杂化，\ce{SO3^2-} 有 1 对孤电子对，排斥使键角减小。(4) \ce{BF3}$>$\ce{NF3}：\ce{BF3} 中 B 为 $\mathrm{sp}^2$ 杂化（120°），\ce{NF3} 中 N 为 $\mathrm{sp}^3$ 杂化且有孤电子对（约 102°）。
+\item (1) 先生成蓝色沉淀，后沉淀溶解，得到深蓝色溶液：\ce{Cu^2+ + 2NH3*H2O = Cu(OH)2 v + 2NH4+}；\ce{Cu(OH)2 + 4NH3 = [Cu(NH3)4]^2+ + 2OH-}。(2) 降低溶剂极性，减小 \ce{[Cu(NH3)4]SO4} 的溶解度，使其结晶析出。(3) N；16。(4) N；Cu$^{2+}$；N 提供孤电子对，Cu$^{2+}$ 接受电子对。箭头说明电子对的提供方向，不代表原子间真的有一根箭头或电子沿箭头轨迹运行。
+\item X：\ce{[Co(NH3)5(H2O)]Cl3}；Y：\ce{[Co(NH3)5Cl]Cl2*H2O}。X 中 3 个 \ce{Cl-} 都在外界；Y 中有 1 个 Cl 在内界作配体，故只有 2 个 \ce{Cl-} 能沉淀，此时配位数 6 由 5 个 \ce{NH3} 和 1 个 \ce{Cl-} 构成，水在外界。
+\item \ans{B}A：F 的电负性大，吸电子能力强，\ce{CF3COOH} 酸性强于 \ce{CCl3COOH}，陈述Ⅰ错；B：冠醚空腔与离子大小匹配才能形成超分子，正确且有因果关系；C：氨被氧化体现还原性，陈述Ⅱ错；D：酚醛树脂由缩聚反应生成，陈述Ⅱ错。
+\item (1) $\mathrm{sp}^2$；$\mathrm{sp}^3$。(2) 按题给水中反应，每个硼酸分子接受一个羟基，转为 \ce{[B(OH)4]-}，相应只产生一个 \ce{H+}，所以是一元酸。酸的元数看规定反应中可产生的质子数，不能看分子里一共写了几个 H。(3) 氢键；范德华力。
+\item (1) $\mathrm{sp}^2$；7（C=O 1 个、C—N 2 个、N—H 4 个）。(2) $\mathrm{sp}^2$；未参与杂化，处于未杂化的 p 轨道中，与 C=O 的 $\pi$ 键形成离域的大 $\pi$ 键（共轭），使分子共平面。(3) 尿素可由 N—H 提供氢键、羰基 O 接受氢键，在晶体中形成较强的分子间氢键网络，符合其较高熔点；不能只用数 H 原子的方法定量计算熔点。尿素与水之间也能形成氢键，促进溶解。N 的孤电子对参与共轭，不能一概把它当成普通胺那样的氢键接受位点。(4) 超分子（分子间通过氢键形成的聚集体，不含配位键）。
+\item (1) \ce{Cl2CHCOOH}$>$\ce{FCH2COOH}$>$\ce{ClCH2COOH}。吸电子基团越多、电负性越大，羧基中 O—H 键极性越强，越易电离。（两个 Cl 的吸电子总效应强于一个 F，这是实验事实：p$K_\text{a}$ 分别约为 1.3、2.6、2.9。）(2) \ce{HClO4}$>$\ce{H3PO4}。这是已知常见酸的比较，非羟基氧较多有利于电离及共轭碱稳定；由于中心元素不同，不能把这一个例子推广为所有含氧酸都只看非羟基氧数。(3) 甲酸$>$乙酸$>$丙酸。这组简单羧酸可用烷基推电子的影响理解，但更长或不同结构的烷基还受到溶剂和空间等因素影响，不能无限按碳数排序。(4) 实验上 HF 在水中部分电离，HCl 在稀水溶液中近乎完全电离。较强的 H—F 键有助于理解 HF 电离较难，但酸性还取决于离子与水的作用等总能量因素；F$^-$ 与水形成强作用本身并不能用来断言它阻碍电离。高中使用常见强弱酸结论，不要求展开水合自由能计算。
+\item $\pi$ 键来自两条都垂直于 C—C 轴、相互平行的 p 轨道的侧向重叠；沿轴相向的轴向重叠应描述 $\sigma$。乙炔两组 p 轨道彼此垂直，但两组 $\pi$ 键都围绕同一根 C—C 键轴形成。(1) 转动使 p 轨道不再平行，削弱甚至破坏原来的有效 $\pi$ 重叠，需要能量。(2) 乙烯 5 个：4 个 C—H 加 1 个 C—C；乙炔 3 个：2 个 C—H 加 1 个 C—C。(3) 不是；上、下两块属于一个 $\pi$ 成键轨道的空间概率分布，不是电子运行路线，不能按图中两瓣直接数电子。
+\end{jiexilist}

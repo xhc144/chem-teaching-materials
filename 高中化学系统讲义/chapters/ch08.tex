@@ -1,0 +1,791 @@
+% ============================================================
+% 第8章 晶体结构与性质（选必2第三章）
+% ============================================================
+\chapter{晶体结构与性质}
+
+% ---------- 本章绘图工具（前缀 c8 / \ceight） ----------
+% 晶胞斜二测画法：(x,y,z) 直接写分数坐标，x 向右，y 向纵深，z 向上；c8cell=<晶胞边长>
+\tikzset{c8cell/.style={x={(#1,0)},y={(0.4*#1,0.275*#1)},z={(0,#1)}},c8cell/.default=2cm,
+  c8bond/.style={line width=0.8pt,black!55},
+  c8lab/.style={font=\scriptsize,align=center}}
+% 单位立方体（隐藏的三条棱画虚线）
+\newcommand{\ceightcube}[1][black]{%
+ \draw[#1] (0,0,0)--(1,0,0)--(1,0,1)--(0,0,1)--cycle;
+ \draw[#1] (1,0,0)--(1,1,0)--(1,1,1)--(1,0,1);
+ \draw[#1] (0,0,1)--(0,1,1)--(1,1,1);
+ \draw[#1,dashed] (0,0,0)--(0,1,0)--(1,1,0);
+ \draw[#1,dashed] (0,1,0)--(0,1,1);}
+% 小球：\ceightball[半径(cm)]{颜色}{x,y,z}
+\newcommand{\ceightball}[3][0.13]{\shade[ball color=#2] (#3) circle (#1cm);}
+% 常用位置：顶点、面心、棱心、两组四面体空隙
+\newcommand{\ceightV}{{0,0,0},{1,0,0},{0,1,0},{1,1,0},{0,0,1},{1,0,1},{0,1,1},{1,1,1}}
+\newcommand{\ceightF}{{0.5,0.5,0},{0.5,0.5,1},{0.5,0,0.5},{0.5,1,0.5},{0,0.5,0.5},{1,0.5,0.5}}
+\newcommand{\ceightE}{{0.5,0,0},{0.5,1,0},{0.5,0,1},{0.5,1,1},{0,0.5,0},{1,0.5,0},{0,0.5,1},{1,0.5,1},{0,0,0.5},{1,0,0.5},{0,1,0.5},{1,1,0.5}}
+\newcommand{\ceightT}{{0.25,0.25,0.25},{0.75,0.75,0.25},{0.75,0.25,0.75},{0.25,0.75,0.75}}
+\newcommand{\ceightTT}{{0.75,0.25,0.25},{0.25,0.75,0.25},{0.25,0.25,0.75},{0.75,0.75,0.75}}
+% CO2 分子：\ceightcotwo{中心}{半轴向量}
+\newcommand{\ceightcotwo}[2]{%
+ \draw[line width=1.3pt,black!55] ($(#1)-(#2)$)--($(#1)+(#2)$);
+ \shade[ball color=warnred!80] ($(#1)-(#2)$) circle (0.055cm);
+ \shade[ball color=warnred!80] ($(#1)+(#2)$) circle (0.055cm);
+ \shade[ball color=black!60] (#1) circle (0.06cm);}
+% 图与图题不分页：\ceighttu 即放在 minipage 中的 \tu
+\newcommand{\ceighttu}[2]{\par\noindent\begin{minipage}{\linewidth}\tu{#1}{#2}\end{minipage}\par}
+% 图例：\ceightleg[半径]{画布坐标}{颜色}{文字}
+\newcommand{\ceightleg}[4][0.1]{\shade[ball color=#3] (#2) circle (#1cm); \node[right,font=\scriptsize] at (#2) {\hspace{0.6ex}#4};}
+
+前两章讨论了原子的结构和分子的结构，这一章研究固体，特别是晶体：大量原子、离子或分子在固体中怎样排列，这种排列又怎样决定物质的性质。我们先区分晶体与非晶体，引入描述晶体的“重复单元”晶胞和计算晶胞中粒子数的均摊法；然后按构成粒子和粒子间作用力把晶体分成分子晶体、共价晶体、离子晶体和金属晶体，认识几种典型晶胞；最后学习读晶胞图（分数坐标、分层图、投影图），并由几何关系求粒子间距离、配位数和晶体密度。晶胞问题常把计数、几何和化学组成放在同一情境中。本章先把每一步分别练熟，再合并处理陌生晶胞；已有结构图中的小球只标粒子的位置，通常没有按真实半径比例画出。
+
+\section{晶体与非晶体}
+
+这一节的研究对象是固体。食盐颗粒、明矾、天然水晶都有规则的几何外形，而玻璃、石蜡、松香没有。外形规则只是表面现象（玻璃也能磨成规则的形状），真正的区别在内部：固体中的原子、离子或分子是不是按一定规律排列。高一我们学过，物质由原子、分子或离子构成，粒子之间靠离子键、共价键或分子间作用力结合；这一章要进一步问，这些粒子在空间里是怎样摆放的。
+
+图~\ref{fig:08-order} 用平面上的点表示粒子。左图中每个点周围的情况都一样，沿任何一行走下去，点的间隔都相同，这就是周期性的有序排列；右图中点的位置杂乱，没有一个可以不断重复的“图案”。
+
+\ceighttu{\begin{tikzpicture}
+\begin{scope}
+\foreach \i in {0,...,6}{\foreach \j in {0,...,4}{\coordinate (a\i-\j) at (\i*0.45,\j*0.45);}}
+\foreach \i in {0,...,6}{\foreach \j in {0,...,4}{\fill[mainblue] (a\i-\j) circle (2.2pt);}}
+\draw[black!35] (0,0) grid[step=0.45] (2.7,1.8);
+\foreach \i in {0,...,6}{\foreach \j in {0,...,4}{\fill[mainblue] (a\i-\j) circle (2.2pt);}}
+\node[font=\small] at (1.35,-0.45) {(a) 晶体：粒子周期性有序排列};
+\end{scope}
+\begin{scope}[xshift=5cm]
+\pgfmathsetseed{8}
+\foreach \i in {0,...,6}{\foreach \j in {0,...,4}{\coordinate (b\i-\j) at ({\i*0.45+0.13*rand},{\j*0.45+0.13*rand});}}
+\foreach \i in {0,...,5}{\pgfmathtruncatemacro{\k}{\i+1}\foreach \j in {0,...,4}{\draw[black!35] (b\i-\j)--(b\k-\j);}}
+\foreach \i in {0,...,6}{\foreach \j in {0,...,3}{\pgfmathtruncatemacro{\k}{\j+1}\draw[black!35] (b\i-\j)--(b\i-\k);}}
+\foreach \i in {0,...,6}{\foreach \j in {0,...,4}{\fill[mainblue] (b\i-\j) circle (2.2pt);}}
+\node[font=\small] at (1.35,-0.45) {(b) 非晶体：粒子排列无序};
+\end{scope}
+\end{tikzpicture}}{晶体与非晶体中粒子排列的平面示意（点代表粒子，连线只为便于观察）\label{fig:08-order}}
+
+\begin{gainian}[晶体与非晶体]
+内部粒子（原子、离子或分子）在三维空间里按一定规律周期性重复排列而构成的固体叫\textbf{晶体}；粒子排列相对无序的固体叫\textbf{非晶体}。
+\end{gainian}
+
+内部排列的有序，带来了晶体的三个宏观特征。第一是\textbf{自范性}：在适宜条件下（如从溶液中缓慢析出），晶体能自发地呈现多面体外形，天然水晶呈六棱柱状，食盐小颗粒呈立方体，原因都是内部粒子周期性有序排列。第二是\textbf{各向异性}：沿不同方向，粒子排列的疏密不同，所以导电、导热、硬度、光学性质等可能随方向而变，例如石墨沿层的方向导电性远好于垂直于层的方向。第三是纯净晶体在一定压强下通常有\textbf{固定的熔点}：达到固、液两相共存的条件时，继续供热主要用于熔化，温度暂时不变；玻璃之类的非晶体受热时逐渐软化，没有这样的固定熔点。另有一些晶体会先分解或升华，不能硬套常压加热时“一定先熔化”。单晶某些性质呈各向异性，多晶聚集体的各晶粒取向不同，整体可能表现得近似各向同性。
+
+得到晶体的途径有三种：熔融态物质凝固（如液态硫冷却）；气态物质不经液态直接凝固，即凝华（如碘蒸气遇冷）；溶质从溶液中析出（如高一做过的蒸发结晶得到 \ce{NaCl}）。同一种物质在不同条件下可能得到晶体，也可能得到非晶体：光碟擦写就是利用材料在晶态和非晶态之间的可逆转换，这一过程没有生成新物质，属于物理变化（2025 年广东卷第 5 题 C 项）。
+
+判断一种固体是不是晶体，最可靠的方法是 \textbf{X 射线衍射}。粒子周期性排列的晶体对 X 射线的作用类似于“光栅”，会产生有规律的衍射信号，如单晶的分立衍射斑点，粉末晶体的明锐衍射峰；非晶体通常出现弥散的宽峰。高中用这一结果判断内部是否存在长程有序，不要求推导衍射条件。
+
+\begin{liti}[晶态与非晶态的基础判断]
+判断下列说法是否正确：①天然水晶呈现规则外形，是因为晶体中原子呈周期性有序排列；②玻璃可以制成规则外形，所以玻璃是晶体；③光碟擦写时材料在晶态和非晶态之间转换，属于化学变化；④可用 X 射线衍射区分晶体硅和无定形硅。
+\tcblower
+\jie ①正确，外形规则是内部有序排列的宏观表现。②错误，判断晶体看内部排列而不是外形，玻璃是非晶体，没有固定熔点。③错误，晶态与非晶态的转换只改变粒子排列方式，没有新物质生成，是物理变化。④正确，晶体硅有明锐的衍射峰，无定形硅只有弥散的宽峰。
+\end{liti}
+
+\section{晶胞与均摊法}
+
+\subsection{晶胞：晶体的“砖块”}
+
+1 g 食盐中大约有 $2\times10^{22}$ 个离子，不可能逐个描述它们的位置。好在晶体中的排列是周期性的，只要找出一个能不断重复的单元，就能描述整块晶体。这和砌墙相似：一面墙由同样的砖块按同一方式一块挨一块砌成，知道砖块的样子和砌法，就知道整面墙的样子（图~\ref{fig:08-brick}(a)）。晶体中的“砖块”就是晶胞。
+
+\ceighttu{\begin{tikzpicture}
+\begin{scope}
+\clip (0,0) rectangle (3.5,2);
+\foreach \r in {0,...,3}{\pgfmathsetmacro{\off}{mod(\r,2)*0.5}
+ \foreach \c in {-1,...,4}{\draw[fill=exorange!20] ({\c-\off},\r*0.5) rectangle ++(1,0.5);}}
+\draw[fill=exorange!70,thick] (1.5,0.5) rectangle (2.5,1);
+\end{scope}
+\draw (0,0) rectangle (3.5,2);
+\node[font=\small] at (1.75,-0.45) {(a) 砖墙：同样的砖块重复砌成};
+\begin{scope}[xshift=5.2cm,c8cell=0.75cm]
+\fill[mainblue!30] (2,0,1)--(3,0,1)--(3,0,2)--(2,0,2)--cycle;
+\fill[mainblue!45] (3,0,1)--(3,1,1)--(3,1,2)--(3,0,2)--cycle;
+\fill[mainblue!15] (2,0,2)--(3,0,2)--(3,1,2)--(2,1,2)--cycle;
+\foreach \x in {0,...,3} \draw (\x,0,0)--(\x,0,2);
+\foreach \z in {0,...,2} \draw (0,0,\z)--(3,0,\z);
+\foreach \x in {0,...,3} \draw (\x,0,2)--(\x,2,2);
+\foreach \y in {0,...,2} \draw (0,\y,2)--(3,\y,2);
+\foreach \y in {0,...,2} \draw (3,\y,0)--(3,\y,2);
+\foreach \z in {0,...,2} \draw (3,0,\z)--(3,2,\z);
+\draw[-Stealth] (4.3,0,2.4) node[right,font=\scriptsize]{一个晶胞} -- (3.05,0.5,1.6);
+\node[font=\small] at (1.9,0,-0.6) {(b) 晶体：晶胞无隙并置};
+\end{scope}
+\end{tikzpicture}}{用砖块砌墙类比晶胞的无隙并置\label{fig:08-brick}}
+
+\begin{gainian}[晶胞]
+描述晶体结构的基本单元叫\textbf{晶胞}。常见的晶胞是平行六面体，高中以立方体为主。整块晶体可以看作数量巨大的晶胞“无隙并置”而成：“无隙”指相邻晶胞之间没有空隙，“并置”指所有晶胞都平行排列、取向相同。
+\end{gainian}
+
+图~\ref{fig:08-brick}(b) 中每个小立方体代表一个晶胞，它们上下、左右、前后紧挨着，并且朝向一致，任何一个晶胞平移若干个边长，都能与另一个晶胞完全重合。正因为这样，一个晶胞里有什么，整块晶体就按同样的比例有什么，晶胞的组成就代表了晶体的组成。
+
+\subsection{均摊法}
+
+无隙并置带来一个问题：相邻晶胞共用顶点、棱和面，位于这些地方的粒子不只属于一个晶胞。好比四个同学合买一个西瓜，每人只分到 $\frac14$。计算一个晶胞“含有”多少个粒子，就要按共用的情况把每个粒子平均分给共有它的晶胞，这种方法叫\textbf{均摊法}。
+
+以立方晶胞为例，看图~\ref{fig:08-share}。图中细线是晶胞的棱，红球是被共用的粒子，蓝色粗线标出其中一个晶胞。(a) 中 8 个立方体围成一个大立方体，中心的红球同时是这 8 个晶胞的顶点，每个晶胞只分到它的 $\frac18$；(b) 中 4 个立方体围着一条竖直的棱，棱上的粒子被 4 个晶胞共有，每个占 $\frac14$；(c) 中两个晶胞共用一个面，面上的粒子每个晶胞占 $\frac12$；(d) 中粒子完全在晶胞内部，只属于这一个晶胞。
+
+\ceighttu{\begin{tikzpicture}[c8lab/.style={font=\scriptsize,align=center}]
+\begin{scope}[c8cell=0.75cm]
+\foreach \a in {0,1,2}{\foreach \b in {0,1,2}{
+ \draw[black!40] (0,\a,\b)--(2,\a,\b); \draw[black!40] (\a,0,\b)--(\a,2,\b); \draw[black!40] (\a,\b,0)--(\a,\b,2);}}
+\begin{scope}[shift={(1,0,1)}]\ceightcube[mainblue,thick]\end{scope}
+\ceightball[0.11]{warnred}{1,1,1}
+\node[c8lab] at (1,0,-0.75) {(a) 顶点：8 个晶胞共有\\每个晶胞占 $\frac18$};
+\end{scope}
+\begin{scope}[xshift=3.5cm,c8cell=0.75cm]
+\foreach \a in {0,1,2}{\foreach \b in {0,1}{\draw[black!40] (0,\a,\b)--(2,\a,\b); \draw[black!40] (\a,0,\b)--(\a,2,\b);}}
+\foreach \a in {0,1,2}{\foreach \b in {0,1,2}{\draw[black!40] (\a,\b,0)--(\a,\b,1);}}
+\begin{scope}[shift={(1,0,0)}]\ceightcube[mainblue,thick]\end{scope}
+\ceightball[0.11]{warnred}{1,1,0.5}
+\node[c8lab] at (1,0,-0.75) {(b) 棱上：4 个晶胞共有\\每个晶胞占 $\frac14$};
+\end{scope}
+\begin{scope}[xshift=7cm,c8cell=0.75cm]
+\foreach \a in {0,1}{\foreach \b in {0,1}{\draw[black!40] (0,\a,\b)--(2,\a,\b);}}
+\foreach \a in {0,1,2}{\foreach \b in {0,1}{\draw[black!40] (\a,0,\b)--(\a,1,\b); \draw[black!40] (\a,\b,0)--(\a,\b,1);}}
+\begin{scope}[shift={(1,0,0)}]\ceightcube[mainblue,thick]\end{scope}
+\ceightball[0.11]{warnred}{1,0.5,0.5}
+\node[c8lab] at (1,0,-0.75) {(c) 面上：2 个晶胞共有\\每个晶胞占 $\frac12$};
+\end{scope}
+\begin{scope}[xshift=10.6cm,c8cell=0.75cm]
+\ceightcube[mainblue,thick]
+\ceightball[0.11]{warnred}{0.5,0.5,0.5}
+\node[c8lab] at (0.5,0,-0.75) {(d) 体内：只属于本晶胞\\占 1};
+\end{scope}
+\end{tikzpicture}}{立方晶胞中不同位置的粒子被几个晶胞共有\label{fig:08-share}}
+
+把结果归纳起来：立方晶胞中，顶点上的粒子每个计 $\frac18$，棱上的计 $\frac14$，面上的计 $\frac12$，体内的计 1。这样计算为什么可靠？因为晶体由晶胞无隙并置而成，每个粒子被共有它的几个晶胞平分，所有晶胞分到的份额加起来恰好是 1，不重复也不遗漏。
+
+均摊法的依据是“共用”，所以晶胞不是立方体时，要按实际共有的晶胞数来分。例如六棱柱形晶胞，顶点被 6 个晶胞共有（同一层 3 个，上下两层），计 $\frac16$；竖直的侧棱被 3 个共有，计 $\frac13$；上下底面的棱被 4 个共有，计 $\frac14$；面心计 $\frac12$。长方体晶胞与立方体的共有关系相同。
+
+现在用这一方法数 \ce{NaCl} 晶胞（图~\ref{fig:08-nacl}）中的离子。图中大球代表 \ce{Cl-}，小球代表 \ce{Na+}，为了看清位置，球画得比实际小。
+
+\ceighttu{\begin{tikzpicture}[c8cell=2.6cm]
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.16]{mainblue!70}{\p}}
+\foreach \p in \ceightF {\ceightball[0.16]{mainblue!70}{\p}}
+\foreach \p in \ceightE {\ceightball[0.1]{warnred!85}{\p}}
+\ceightball[0.1]{warnred!85}{0.5,0.5,0.5}
+\node[c8lab,below left] at (0,0,0) {顶点 \ce{Cl-}};
+\node[c8lab,below] at (0.5,0,-0.03) {棱心 \ce{Na+}};
+\draw[-Stealth,black!70] (2.7cm,3.9cm) node[right,font=\scriptsize]{面心 \ce{Cl-}} -- (1.92cm,3.05cm);
+\draw[-Stealth,black!70] (4.3cm,0.9cm) node[right,font=\scriptsize]{体心 \ce{Na+}} -- (1.98cm,1.62cm);
+\ceightleg[0.16]{4.3cm,2.6cm}{mainblue!70}{\ce{Cl-}}
+\ceightleg[0.1]{4.3cm,2.1cm}{warnred!85}{\ce{Na+}}
+\end{tikzpicture}}{\ce{NaCl} 晶胞（\ce{Cl-} 位于顶点和面心，\ce{Na+} 位于棱心和体心）\label{fig:08-nacl}}
+
+第一步，分清位置：\ce{Cl-} 在 8 个顶点和 6 个面心，\ce{Na+} 在 12 条棱的中点和体心。第二步，按位置计数：\ce{Cl-} 为 $8\times\frac18+6\times\frac12=1+3=4$；\ce{Na+} 为 $12\times\frac14+1=3+1=4$。第三步，检验：$N(\ce{Na+}):N(\ce{Cl-})=4:4=1:1$，与化学式 \ce{NaCl} 一致。\ce{NaCl} 中没有分子，我们说一个晶胞含 4 个“\ce{NaCl} 单元”。用均摊法求出的个数比必须与化学式相符，这一点常用来检验计数，也可以反过来由化学式推断粒子的位置。
+
+\begin{yicuo}
+均摊法只适用于无隙并置的晶胞。如果题目给的是一个独立的“团簇分子”或“气态分子”的结构图，它的所有原子都属于这个分子，应直接数总数，不能按顶点 $\frac18$、面心 $\frac12$ 计算。
+\end{yicuo}
+
+\begin{liti}[基础→典型]
+(1) 某立方晶胞中，A 原子位于顶点，B 原子位于棱心，写出该晶体的化学式。(2) 金红石（\ce{TiO2} 的一种晶体）的晶胞是长方体，Ti 原子位于 8 个顶点和体心；O 原子有 4 个位于上下两个底面上（每个面上 2 个），另有 2 个位于晶胞内部。求一个晶胞中 Ti、O 的个数，并验证化学式。
+\tcblower
+\jie (1) A：$8\times\frac18=1$；B：$12\times\frac14=3$；化学式为 \ce{AB3}。\\
+(2) 长方体晶胞的共有关系与立方体相同。Ti：$8\times\frac18+1=2$；O：面上 $4\times\frac12=2$，体内 2，共 4。$N(\ce{Ti}):N(\ce{O})=2:4=1:2$，与 \ce{TiO2} 一致，一个晶胞含 2 个 \ce{TiO2} 单元。
+\end{liti}
+
+\section{四类晶体与典型晶胞}
+
+晶体按构成粒子和粒子之间的作用力分类。高一学过离子键、共价键，上一章学过分子间作用力（范德华力和氢键）；粒子不同、作用力不同，晶体的熔点、硬度、导电性就不同。
+
+\subsection{分子晶体}
+
+分子之间通过分子间作用力结合形成的晶体叫\textbf{分子晶体}。通常分子内部的原子以共价键结合，分子与分子之间通过范德华力，有的还通过氢键结合；稀有气体固体由单原子构成，是本类的特殊情形。分子间作用力比化学键弱得多，所以分子晶体熔点、沸点低，硬度小；构成粒子是电中性的分子，固态和熔融态都不导电（有些如 HCl 溶于水后电离而导电，那是溶液的性质）。大多数非金属单质（如 \ce{I2}、\ce{S8}，稀有气体固体也归入这一类）、非金属氢化物、酸、大多数非金属氧化物（\ce{SiO2} 除外）和大多数有机物，固态时都是分子晶体。
+
+对于简单分子晶体，不能仅由“分子间有范德华力”就断言一定最紧密堆积，还要看分子形状等。干冰中分子中心采用面心立方的排列：\ce{CO2} 分子位于立方晶胞的顶点和面心（图~\ref{fig:08-covmol}(c)），一个晶胞含 $8\times\frac18+6\times\frac12=4$ 个 \ce{CO2}，每个 \ce{CO2} 周围紧邻 12 个 \ce{CO2}（数法见 8.5 节）。冰则不同：水分子之间的氢键有方向性，每个水分子只与周围 4 个水分子以氢键相连，形成四面体式的空旷结构，空隙较多，所以冰的密度比液态水小。
+
+\subsection{共价晶体}
+
+相邻原子间以共价键相结合，形成三维骨架结构的晶体叫\textbf{共价晶体}。整块晶体就是一个巨大的“网”，不存在单个分子，\ce{SiO2} 之类的化学式只表示原子个数比。破坏共价晶体要断开大量共价键，所以熔点很高、硬度很大，一般不导电（晶体硅、锗是半导体）。常见的共价晶体有金刚石、晶体硅、晶体锗、SiC、\ce{SiO2}、立方 BN 等；不同结构的同一化学组成可能有不同性质。
+
+金刚石中每个 C 原子 $\mathrm{sp}^3$ 杂化，与周围 4 个 C 原子以共价键结合成正四面体，向空间无限延伸；其中最小的碳环是六元环。金刚石的晶胞（图~\ref{fig:08-covmol}(a)）中，C 原子位于顶点、面心，另有 4 个位于体内，共 $8\times\frac18+6\times\frac12+4=8$ 个。每个 C 形成 4 个 C—C 键，每个键由 2 个 C 共用，所以 1 mol 金刚石含 2 mol C—C 键。\ce{SiO2} 中每个 Si 与 4 个 O 相连，每个 O 连 2 个 Si，1 mol \ce{SiO2} 含 4 mol Si—O 键。比较相近共价网络物质时，共价键强弱是影响熔点的重要因素，如 SiC 的熔点高于晶体硅；不同元素的网络还涉及具体结构和相变条件，不能跨越适用范围只按键长排序。
+
+石墨是层状结构（图~\ref{fig:08-covmol}(b)），属于\textbf{混合型晶体}。层内每个 C 原子 $\mathrm{sp}^2$ 杂化，与 3 个 C 原子以共价键形成平面六元环网状结构；每个 C 还剩一个未参与杂化的 p 电子，它们形成遍及整层的大 $\pi$ 键，这些电子能在层内移动，所以石墨能导电。层与层之间是范德华力，容易相对滑动，所以石墨质软、有滑腻感。层内 C—C 键长（142 pm）比金刚石中（154 pm）短，层内结合很强；常压高温下碳主要升华，金刚石还可能先转化为石墨，因此不宜把常压“石墨与金刚石的熔点大小”当成普通熔化实验来比较。每个 C 连 3 个 C—C 键，每个键由 2 个 C 共用，1 mol 石墨含 1.5 mol C—C 键；每个 C 被 3 个六元环共有，每个六元环平均含 $6\times\frac13=2$ 个 C。
+
+\ceighttu{\begin{tikzpicture}
+\begin{scope}[c8cell=2.2cm]
+\ceightcube[black!50]
+\foreach \t/\a/\b/\c/\d in {{0.25,0.25,0.25}/{0,0,0}/{0.5,0.5,0}/{0.5,0,0.5}/{0,0.5,0.5},
+ {0.75,0.75,0.25}/{1,1,0}/{0.5,0.5,0}/{1,0.5,0.5}/{0.5,1,0.5},
+ {0.75,0.25,0.75}/{1,0,1}/{0.5,0,0.5}/{1,0.5,0.5}/{0.5,0.5,1},
+ {0.25,0.75,0.75}/{0,1,1}/{0,0.5,0.5}/{0.5,1,0.5}/{0.5,0.5,1}}
+ {\draw[c8bond] (\t)--(\a); \draw[c8bond] (\t)--(\b); \draw[c8bond] (\t)--(\c); \draw[c8bond] (\t)--(\d);}
+\foreach \p in \ceightV {\ceightball[0.1]{black!30}{\p}}
+\foreach \p in \ceightF {\ceightball[0.1]{black!30}{\p}}
+\foreach \p in \ceightT {\ceightball[0.1]{black!75}{\p}}
+\node[c8lab] at (0.6,0,-0.3) {(a) 金刚石晶胞\\深色为体内 4 个 C};
+\end{scope}
+\begin{scope}[xshift=4.5cm]
+\foreach \ly in {0,1.25}{
+\begin{scope}[cm={1,0,0.55,0.45,(0,\ly)}]
+\foreach \i in {0,...,3}{\foreach \j in {0,1}{
+ \pgfmathsetmacro{\cx}{\i*0.6}\pgfmathsetmacro{\cy}{(\j+0.5*mod(\i,2))*0.6928}
+ \draw[black!70] (\cx,\cy) +(0:0.4)--+(60:0.4)--+(120:0.4)--+(180:0.4)--+(240:0.4)--+(300:0.4)--cycle;
+ \foreach \a in {0,60,...,300}{\fill[black!75] (\cx,\cy) +(\a:0.4) circle (1.1pt);}}}
+\end{scope}}
+\foreach \x in {0.2,1.4,2.6}{\draw[dashed,mainblue] (\x+0.25,0.25)--(\x+0.25,1.5);}
+\node[c8lab,right] at (3.2,1.95) {层内：共价键\\与大 $\pi$ 键};
+\node[c8lab,right] at (3.35,0.85) {层间：\\范德华力};
+\node[c8lab] at (1.8,-0.6) {(b) 石墨的层状结构};
+\end{scope}
+\begin{scope}[xshift=10.2cm,c8cell=2.2cm]
+\ceightcube[black!50]
+\foreach \p in \ceightV {\ceightcotwo{\p}{0.08,0.08,0.08}}
+\ceightcotwo{0.5,0.5,0}{0.08,-0.08,0.08}\ceightcotwo{0.5,0.5,1}{0.08,-0.08,0.08}
+\ceightcotwo{0.5,0,0.5}{-0.08,0.08,0.08}\ceightcotwo{0.5,1,0.5}{-0.08,0.08,0.08}
+\ceightcotwo{0,0.5,0.5}{0.08,0.08,-0.08}\ceightcotwo{1,0.5,0.5}{0.08,0.08,-0.08}
+\node[c8lab] at (0.6,0,-0.3) {(c) 干冰晶胞\\\ce{CO2} 位于顶点和面心};
+\end{scope}
+\end{tikzpicture}}{金刚石、石墨和干冰的结构示意\label{fig:08-covmol}}
+
+\subsection{离子晶体}
+
+阴、阳离子通过离子键结合形成的晶体叫\textbf{离子晶体}。离子键没有方向性和饱和性，每个离子周围会尽可能多地排列带相反电荷的离子，配位数与离子大小、所带电荷和具体结合方式等有关。在简单的离子球模型中，半径比有助于理解结构：较大的 \ce{Cs+} 可有 8 个最近的 \ce{Cl-}，\ce{NaCl} 中 \ce{Na+} 则有 6 个最近的 \ce{Cl-}。这些是相应晶体的实验结构，不是对所有物质只凭半径就能推出的绝对结论。离子晶体熔点较高、硬度较大但较脆；固态时离子不能自由移动，不导电，熔融或溶于水后离子能自由移动而导电。同类离子晶体比较熔点看离子键：离子电荷越高、半径越小，离子键越强，熔点越高，如 MgO$>$\ce{NaCl}$>$KCl。
+
+化学键中离子键和共价键并没有绝对的界限，两种元素的电负性差越大，化学键中离子键的成分（百分数）越大。ZnS 中的化学键就有相当大的共价成分，但它的结构常和离子晶体放在一起讨论。图~\ref{fig:08-ionic} 是四种常见的 AB 型和 \ce{AB2} 型结构。
+
+\ceighttu{\begin{tikzpicture}[c8cell=1.8cm]
+\begin{scope}
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.12]{mainblue!70}{\p}}
+\foreach \p in \ceightF {\ceightball[0.12]{mainblue!70}{\p}}
+\foreach \p in \ceightE {\ceightball[0.075]{warnred!85}{\p}}
+\ceightball[0.075]{warnred!85}{0.5,0.5,0.5}
+\node[c8lab] at (0.6,0,-0.35) {(a) \ce{NaCl} 型\\蓝 \ce{Cl-}、红 \ce{Na+}};
+\end{scope}
+\begin{scope}[xshift=3.6cm]
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.12]{mainblue!70}{\p}}
+\ceightball[0.14]{warnred!85}{0.5,0.5,0.5}
+\node[c8lab] at (0.6,0,-0.35) {(b) CsCl 型\\蓝 \ce{Cl-}、红 \ce{Cs+}};
+\end{scope}
+\begin{scope}[xshift=7.2cm]
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.11]{mainblue!70}{\p}}
+\foreach \p in \ceightF {\ceightball[0.11]{mainblue!70}{\p}}
+\foreach \p in \ceightT {\ceightball[0.09]{warnred!85}{\p}}
+\node[c8lab] at (0.6,0,-0.35) {(c) ZnS 型（闪锌矿）\\蓝 \ce{S^2-}、红 \ce{Zn^2+}};
+\end{scope}
+\begin{scope}[xshift=10.8cm]
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.11]{deepgreen!70}{\p}}
+\foreach \p in \ceightF {\ceightball[0.11]{deepgreen!70}{\p}}
+\foreach \p in \ceightT {\ceightball[0.08]{exorange!90}{\p}}
+\foreach \p in \ceightTT {\ceightball[0.08]{exorange!90}{\p}}
+\node[c8lab] at (0.6,0,-0.35) {(d) \ce{CaF2} 型（萤石）\\绿 \ce{Ca^2+}、橙 \ce{F-}};
+\end{scope}
+\end{tikzpicture}}{四种典型离子晶体的晶胞\label{fig:08-ionic}}
+
+读图时先认出“骨架”。\ce{NaCl}、ZnS、\ce{CaF2} 三种晶胞中，一种离子都位于顶点和面心，排成面心立方，区别在于另一种离子放在哪里。把晶胞切成 8 个小立方体，每个小立方体的中心叫\textbf{四面体空隙}，因为它到所在小立方体的 4 个面心立方格点距离相等，这 4 个点构成正四面体（见 8.5 节图~\ref{fig:08-tet}）。一个晶胞共有 8 个四面体空隙：ZnS 中 \ce{Zn^2+} 占据其中互不相邻的 4 个（间隔占据），\ce{CaF2} 中 \ce{F-} 占满全部 8 个。\ce{NaCl} 中 \ce{Na+} 位于棱心和体心，这些位置周围有 6 个 \ce{Cl-}，叫八面体空隙。CsCl 则是 \ce{Cl-} 在顶点、\ce{Cs+} 在体心，两者互换位置后结构不变。
+
+\begin{center}
+\small
+\begin{minipage}{\linewidth}\centering
+\captionof{table}{典型晶胞的组成与配位数\label{tab:08-cells}}
+\begin{tabularx}{\linewidth}{p{2.4cm}Xp{4.2cm}}
+\toprule
+晶胞 & 粒子位置 & 每个晶胞含有；配位数 \\
+\midrule
+\ce{NaCl} & \ce{Cl-} 顶点和面心，\ce{Na+} 棱心和体心 & 4 个 \ce{NaCl}；6:6 \\
+CsCl & \ce{Cl-} 顶点，\ce{Cs+} 体心 & 1 个 CsCl；8:8 \\
+ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体空隙 & 4 个 ZnS；4:4 \\
+\ce{CaF2}（萤石） & \ce{Ca^2+} 顶点和面心，\ce{F-} 占全部四面体空隙 & 4 个 \ce{CaF2}；\ce{Ca^2+} 为 8，\ce{F-} 为 4 \\
+金刚石 & 把 ZnS 中的两种离子都换成 C & 8 个 C；每个 C 连 4 个 C \\
+干冰 & \ce{CO2} 分子顶点和面心 & 4 个 \ce{CO2}；紧邻 12 个 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+\begin{liti}[组成与占位组合]
+①已知电负性近似值：Al 1.5、Ga 1.6、N 3.0、Sb 1.9，AlSb 与 GaN 中离子键成分相对较大的是\tk。②AlSb 的立方晶胞如图~\ref{fig:08-alsb}，原子占据 A、B、C 三种位置，同类位置只放一种原子。根据 1:1 的组成，判断哪些位置必须放同一种原子；能否仅凭图和组成唯一指定 Al、Sb 各占哪组位置？
+\ceighttu{\begin{tikzpicture}[c8cell=1.9cm]
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.1]{black!35}{\p}}
+\foreach \p in \ceightF {\ceightball[0.1]{mainblue!60}{\p}}
+\foreach \p in \ceightT {\ceightball[0.1]{warnred!80}{\p}}
+\node[c8lab,below left] at (0,0,0) {A};
+\draw[-Stealth,black!70] (-0.7cm,1.5cm) node[left,font=\scriptsize]{B} -- (0.88cm,0.97cm);
+\draw[-Stealth,black!70] (-0.7cm,0.6cm) node[left,font=\scriptsize]{C} -- (0.58cm,0.6cm);
+\node[c8lab,right] at (2.6cm,1.5cm) {A：顶点\\B：面心\\C：体内（4 个）};
+\end{tikzpicture}}{AlSb 晶胞中的三种位置（示意重绘）\label{fig:08-alsb}}
+\tcblower
+\jie ①GaN 的电负性差为 $3.0-1.6=1.4$，AlSb 为 $1.9-1.5=0.4$，GaN 中离子性相对更大。这里比较的是相对成分，不是声称电负性差为 1.4 就一定成为纯离子键。②AlSb 为 1:1 型。A（顶点）$8\times\frac18=1$，B（面心）$6\times\frac12=3$，合计 4；C（体内）4 个。只有“A 与 B 合起来”才能和 C 构成 1:1，所以顶点和面心是同一种原子，体内是另一种，结构与 ZnS 相同。所以 A、B 必为同一种原子，C 为另一种。仅凭这些条件不能区分哪组必是 Al；Al 在 A、B 且 Sb 在 C，或二者交换，均满足计数。要唯一确定元素身份，需要补充结构测定信息。
+\end{liti}
+
+\subsection{金属晶体}
+
+金属原子通过金属键形成的晶体叫\textbf{金属晶体}。金属键可以用“电子气”理论描述：金属原子脱落下来的价电子形成遍布整块晶体的“电子气”，被所有金属阳离子共用，从而把它们维系在一起。用这一模型可以解释金属的通性：在外加电场作用下自由电子定向移动，所以金属导电；自由电子在运动中与金属阳离子碰撞，传递能量，所以金属导热；金属阳离子层之间相对滑动时，“电子气”仍能把它们结合在一起，金属键不被破坏，所以金属有延展性。不同金属的金属键强弱差别很大，熔点从汞的约 $-39$ ℃ 到钨的约 3422 ℃ 都有。一般说，金属阳离子半径越小、价电子越多，金属键越强，熔点越高，如 Al$>$Mg$>$Na，Li$>$Na$>$K。
+
+金属键没有方向性，金属原子也倾向于紧密堆积。高中常见的立方晶胞有两种（图~\ref{fig:08-metal}(a)(b)）：体心立方，原子位于顶点和体心，一个晶胞含 2 个原子，如 Na、K、Fe；面心立方，原子位于顶点和面心，一个晶胞含 4 个原子，如 Cu、Ag、Au、Al。Mg、Zn 等常见为六方结构；理想的六方最密堆积与理想面心立方堆积具有相同的最高等径球空间利用率，实际金属可偏离理想几何参数。
+
+图~\ref{fig:08-metal}(c) 的钙钛矿 \ce{CaTiO3} 是一种重要的复合氧化物结构：Ca 位于顶点（$8\times\frac18=1$），Ti 位于体心（1），O 位于面心（$6\times\frac12=3$），组成为 \ce{CaTiO3}。Ti 周围有 6 个 O（八面体配位）；每个 Ca 周围最近的 O 有 12 个：共用该顶点的 8 个晶胞中，每个晶胞各有 3 个面心 O 与它距离最近，而每个面心 O 被 2 个晶胞共用，$8\times3\div2=12$。
+
+\ceighttu{\begin{tikzpicture}[c8cell=1.9cm]
+\begin{scope}
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.13]{orange!80}{\p}}
+\ceightball[0.13]{orange!80}{0.5,0.5,0.5}
+\node[c8lab] at (0.6,0,-0.35) {(a) 体心立方（Na、K、Fe）\\2 个原子};
+\end{scope}
+\begin{scope}[xshift=4.3cm]
+\ceightcube
+\foreach \p in \ceightV {\ceightball[0.12]{orange!80}{\p}}
+\foreach \p in \ceightF {\ceightball[0.12]{orange!80}{\p}}
+\node[c8lab] at (0.6,0,-0.35) {(b) 面心立方（Cu、Ag、Au、Al）\\4 个原子};
+\end{scope}
+\begin{scope}[xshift=8.6cm]
+\ceightcube
+\foreach \p in \ceightF {\ceightball[0.09]{warnred!80}{\p}}
+\foreach \p in \ceightV {\ceightball[0.12]{deepgreen!70}{\p}}
+\ceightball[0.13]{mainblue!70}{0.5,0.5,0.5}
+\node[c8lab] at (0.6,0,-0.35) {(c) 钙钛矿 \ce{CaTiO3}\\绿 Ca、蓝 Ti、红 O};
+\end{scope}
+\end{tikzpicture}}{金属的两种立方晶胞和钙钛矿晶胞\label{fig:08-metal}}
+
+\subsection{四类晶体的比较}
+
+表~\ref{tab:08-types} 把四类晶体放在一起比较。判断一种晶体属于哪一类，可以从组成入手（是否含金属元素、是否由离子构成、是不是 C、Si、\ce{SiO2}、SiC 这类原子骨架），也可以从性质入手：熔点很高、硬度很大、不导电的多为共价晶体；熔点较高、熔融时导电的是离子晶体；熔点低的多为分子晶体；固态能导电、有延展性的是金属。
+
+\begin{center}
+\small
+\begin{minipage}{\linewidth}\centering
+\captionof{table}{四类晶体的比较\label{tab:08-types}}
+\begin{tabularx}{\linewidth}{p{1.4cm}XXXX}
+\toprule
+& 分子晶体 & 共价晶体 & 离子晶体 & 金属晶体 \\
+\midrule
+构成粒子 & 分子 & 原子 & 阴、阳离子 & 金属阳离子、自由电子 \\
+作用力 & 范德华力（有的有氢键） & 共价键 & 离子键 & 金属键 \\
+熔沸点 & 低 & 很高 & 较高 & 差别大 \\
+硬度 & 小 & 很大 & 较大，较脆 & 差别大，有延展性 \\
+导电性 & 固态、熔融不导电 & 一般不导电（Si 为半导体） & 熔融或溶于水导电 & 固态导电 \\
+实例 & 干冰、冰、\ce{I2}、大多数有机物 & 金刚石、晶体硅、SiC、\ce{SiO2} & \ce{NaCl}、CsCl、MgO & Na、Cu、Fe \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+比较熔沸点时，先识别实际粒子与主要作用。常见简单例子中，共价晶体、离子晶体往往比小分子晶体熔点高，金属差别很大；这不是对任意物质都成立的全序，仍要结合具体结构或题给数据。同类型再比较对应作用力。分子晶体熔化时破坏的是分子间作用力，与分子内共价键的强弱无关：有分子间氢键的反常地高；组成和结构相似的，相对分子质量越大，范德华力通常越大，沸点通常越高；在其他条件可比时，分子极性增大常使相应作用增强；熔点还较明显地依赖晶体堆积，不能仅凭极性给所有物质排序。
+
+\begin{liti}[典型练习]
+比较下列各组性质并说明理由：(1) \ce{SiO2}、\ce{NaCl} 的熔点与干冰常压升华所需的温度所反映的作用力差异；(2) \ce{H2O}、\ce{H2S}、\ce{H2Se} 的沸点；(3) Na、Mg、Al 的熔点。
+\tcblower
+\silu 先判断晶体类型，类型不同按类型比较；类型相同再找起作用的作用力。\\
+\jie (1) \ce{SiO2}、\ce{NaCl} 在远高于干冰常压升华温度的条件下才熔化；常见数据中 \ce{SiO2} 的熔点高于 \ce{NaCl}。\ce{SiO2} 熔化需改变共价网络，\ce{NaCl} 熔化需克服离子间较强作用，干冰升华主要克服分子间作用。CO$_2$ 在常压直接升华，不能把它写成常压先熔化。\\
+(2) \ce{H2O}$>$\ce{H2Se}$>$\ce{H2S}。三者均由分子构成，\ce{H2O} 分子间有氢键，沸点反常地高；\ce{H2Se} 与 \ce{H2S} 组成和结构相似，\ce{H2Se} 相对分子质量大，范德华力大。\\
+(3) Al$>$Mg$>$Na。三者都是金属晶体，从 Na 到 Al，阳离子半径减小、价电子数增多，金属键增强。
+\end{liti}
+
+\begin{tuozhan}[离子液体、液晶、纳米材料]
+离子液体通常指熔点低于100 ℃的离子盐，其中一些在室温呈液态，常具有较低挥发性，可作溶剂或电解质；液晶介于液态与晶态之间，既有流动性又有类似晶体的各向异性；纳米晶体的表面原子比例大，性质与普通晶体不同。低共熔溶剂常由几种物质通过特定相互作用形成熔点显著降低的混合体系，不应一概等同于离子液体。
+\end{tuozhan}
+
+\section{读晶胞图：分数坐标、分层与投影}
+
+晶胞是立体的，书上和试卷上只能画成平面图。除了斜着画出的立体图，常见的还有三种表达方式：给出每个粒子的分数坐标；把晶胞按高度分成几层，逐层画平面图；把整个晶胞沿某个方向“压扁”，画投影图。这一节学习怎样在它们之间转换。
+
+\subsection{原子分数坐标}
+
+以晶胞的一个顶点为原点，以从这个顶点出发的三条棱为 $x$、$y$、$z$ 轴，把晶胞边长当作 1，晶胞中每个粒子的位置就可以用三个 0 到 1 之间的数表示，叫\textbf{原子分数坐标}（图~\ref{fig:08-coord}）。例如原点 (0,0,0)，前面的面心 $(\frac12,0,\frac12)$，体心 $(\frac12,\frac12,\frac12)$，原点所在小立方体的中心 $(\frac14,\frac14,\frac14)$。
+
+\ceighttu{\begin{tikzpicture}[c8cell=2.6cm]
+\ceightcube[black!55]
+\draw[-Stealth,thick] (0,0,0)--(1.3,0,0) node[right]{$x$};
+\draw[-Stealth,thick] (0,0,0)--(0,1.55,0) node[below right]{$y$};
+\draw[-Stealth,thick] (0,0,0)--(0,0,1.3) node[above]{$z$};
+\ceightball[0.09]{warnred!85}{0,0,0}
+\ceightball[0.09]{warnred!85}{0.5,0,0.5}
+\ceightball[0.09]{warnred!85}{0.5,0.5,0.5}
+\ceightball[0.09]{warnred!85}{0.25,0.25,0.25}
+\ceightball[0.09]{warnred!85}{1,1,1}
+\node[c8lab,below left] at (0,0,0) {原点 (0,0,0)};
+\node[c8lab,left] at (0.47,0,0.5) {A};
+\node[c8lab,right] at (0.53,0.5,0.5) {B};
+\node[c8lab,below right] at (0.28,0.25,0.25) {C};
+\node[c8lab,right,align=left]at(4.6cm,2.2cm){A：$(\frac12,0,\frac12)$\\[4pt]B：$(\frac12,\frac12,\frac12)$\\[4pt]C：$(\frac14,\frac14,\frac14)$};
+\node[c8lab,above right] at (1,1,1) {(1,1,1)};
+\end{tikzpicture}}{原子分数坐标（以边长为单位 1）\label{fig:08-coord}}
+
+坐标中某个数加 1 或减 1，相当于平移一个晶胞边长，得到的是相邻晶胞中完全等同的位置，所以 8 个顶点 (0,0,0)、(1,0,0)、…、(1,1,1) 是同一类位置，写坐标时通常只写 (0,0,0) 作为代表；同理，相对的两个面心如 $(\frac12,\frac12,0)$ 与 $(\frac12,\frac12,1)$ 也是同一类位置。分数坐标的另一个用处是求距离：两粒子的坐标差为 $(\Delta x,\Delta y,\Delta z)$ 时，它们的距离 $d=a\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}$（8.5 节会说明依据）。
+
+\subsection{分层图}
+
+把晶胞中的粒子按 $z$ 坐标分组，同一高度的粒子画在同一张正方形平面图上（相当于从上往下俯视这一层），就得到分层图。图~\ref{fig:08-layer} 是 \ce{NaCl} 晶胞的分层图。$z=0$ 层是晶胞的底面：顶点和底面面心是 \ce{Cl-}，四条底棱的中点是 \ce{Na+}。$z=\frac12$ 层是从中间水平切开的截面：四条竖直棱的中点和体心是 \ce{Na+}，四个侧面的面心是 \ce{Cl-}。$z=1$ 层与 $z=0$ 层相同。
+
+\ceighttu{\begin{tikzpicture}[x=2cm,y=2cm]
+\foreach \s/\lab/\mid in {0/{$z=0$}/0,1.6/{$z=\frac12$}/1,3.2/{$z=1$}/0}{
+\begin{scope}[xshift=\s*2cm]
+\draw (0,0) rectangle (1,1);
+\ifnum\mid=0
+ \foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0.5}{\shade[ball color=mainblue!70] (\x,\y) circle (0.15cm);}
+ \foreach \x/\y in {0.5/0,0/0.5,1/0.5,0.5/1}{\shade[ball color=warnred!85] (\x,\y) circle (0.09cm);}
+\else
+ \foreach \x/\y in {0.5/0,0/0.5,1/0.5,0.5/1}{\shade[ball color=mainblue!70] (\x,\y) circle (0.15cm);}
+ \foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0.5}{\shade[ball color=warnred!85] (\x,\y) circle (0.09cm);}
+\fi
+\node[font=\small] at (0.5,-0.25) {\lab};
+\end{scope}}
+\draw[-Stealth] (-0.3,-0.12)--(0.05,-0.12) node[right,font=\scriptsize]{$x$};
+\draw[-Stealth] (-0.3,-0.12)--(-0.3,0.25) node[above,font=\scriptsize]{$y$};
+\shade[ball color=mainblue!70] (5.1,0.75) circle (0.15cm); \node[right,font=\scriptsize] at (5.17,0.75) {\ce{Cl-}};
+\shade[ball color=warnred!85] (5.1,0.4) circle (0.09cm); \node[right,font=\scriptsize] at (5.17,0.4) {\ce{Na+}};
+\end{tikzpicture}}{\ce{NaCl} 晶胞按 $z=0$、$\frac12$、1 分层的平面图\label{fig:08-layer}}
+
+分层图把看不清的内部粒子摆到了明处。例如找体心 \ce{Na+} 周围最近的 \ce{Cl-}：在 $z=\frac12$ 层，它的前后左右各有一个 \ce{Cl-}，距离都是 $\frac a2$；在 $z=0$ 和 $z=1$ 层，它的正下方和正上方各有一个面心 \ce{Cl-}，距离也是 $\frac a2$，合计 6 个。只看 $z=0$ 层，也能看出每个 \ce{Cl-} 的前后左右都是 \ce{Na+}，两种离子交替排列。
+
+\subsection{投影图}
+
+想象一束平行光沿某个方向照射晶胞，把每个粒子的影子落在垂直于光线的平面上，就得到沿这个方向的\textbf{投影图}。沿 $z$ 轴投影最简单：每个粒子 $(x,y,z)$ 的影子落在正方形中的 $(x,y)$ 处，$z$ 坐标被“丢掉”了，高度不同但 $x$、$y$ 相同的粒子重叠成一个点。
+
+图~\ref{fig:08-projz} 是三种晶胞沿 $z$ 轴的投影，点旁的小字是落在该点的粒子的 $z$ 坐标。体心立方中，顶点原子投影到正方形四角，体心原子投影到中心。面心立方中，上下两个面心都投影到中心，四个侧面的面心投影到四条边的中点。\ce{NaCl} 的投影最能说明问题：九个投影点上都同时有 \ce{Na+} 和 \ce{Cl-}，例如中心点既有上下面心的 \ce{Cl-}（$z=0$、1），也有体心的 \ce{Na+}（$z=\frac12$）。
+
+\ceighttu{\begin{tikzpicture}[x=2cm,y=2cm]
+\begin{scope}
+\draw (0,0) rectangle (1,1);
+\foreach \x/\y in {0/0,1/0,0/1,1/1}{\shade[ball color=orange!80] (\x,\y) circle (0.12cm);}
+\shade[ball color=orange!80] (0.5,0.5) circle (0.12cm);
+\node[font=\tiny,above right] at (0.53,0.53) {$\frac12$};
+\node[font=\tiny,below left] at (0,0) {0,1};
+\node[font=\small] at (0.5,-0.3) {(a) 体心立方};
+\end{scope}
+\begin{scope}[xshift=4.2cm]
+\draw (0,0) rectangle (1,1);
+\foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0.5,0.5/0,0/0.5,1/0.5,0.5/1}{\shade[ball color=orange!80] (\x,\y) circle (0.12cm);}
+\node[font=\tiny,above right] at (0.53,0.53) {0,1};
+\node[font=\tiny,left] at (-0.05,0.5) {$\frac12$};
+\node[font=\tiny,below left] at (0,0) {0,1};
+\node[font=\small] at (0.5,-0.3) {(b) 面心立方};
+\end{scope}
+\begin{scope}[xshift=8.4cm]
+\draw (0,0) rectangle (1,1);
+\foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0.5,0.5/0,0/0.5,1/0.5,0.5/1}{\shade[ball color=mainblue!70] (\x,\y) circle (0.14cm);\shade[ball color=warnred!85] (\x,\y) circle (0.07cm);}
+\node[font=\small] at (0.5,-0.3) {(c) \ce{NaCl}};
+\node[font=\scriptsize,right,align=left] at (1.15,0.5) {每点都有 \ce{Na+}\\和 \ce{Cl-} 重叠};
+\end{scope}
+\end{tikzpicture}}{三种晶胞沿 $z$ 轴的投影图（小字为该点粒子的 $z$ 坐标）\label{fig:08-projz}}
+
+沿体对角线投影要复杂些（图~\ref{fig:08-proj111}）。光线沿体对角线方向，正方体的轮廓投影成正六边形。体对角线两端的顶点 (0,0,0) 和 (1,1,1) 都落在六边形中心；其余 6 个顶点落在六边形的 6 个角上；6 个面心各落在中心与一个角连线的中点，例如顶面面心 $(\frac12,\frac12,1)$ 恰好在 (0,0,1) 的投影与中心连线的中点。所以面心立方沿体对角线的投影图是“六边形 6 个角、6 个中点和中心”共 13 个点，其中中心点对应 2 个原子。
+
+\ceighttu{\begin{tikzpicture}
+\begin{scope}[c8cell=2cm]
+\ceightcube[black!55]
+\foreach \p in \ceightV {\ceightball[0.1]{mainblue!70}{\p}}
+\foreach \p in \ceightF {\ceightball[0.09]{exorange!85}{\p}}
+\draw[-Stealth,warnred,thick] (1.25,1.25,1.25)--(0.05,0.05,0.05);
+\node[c8lab,warnred,right] at (1.25,1.25,1.25) {投影方向};
+\end{scope}
+\begin{scope}[xshift=7.2cm,yshift=1.4cm]
+\def\R{1.5}
+\draw[black!55] (90:\R)--(30:\R)--(-30:\R)--(-90:\R)--(-150:\R)--(150:\R)--cycle;
+\foreach \a in {90,30,-30,-90,-150,150}{\draw[black!30] (0,0)--(\a:\R);}
+\foreach \a in {90,30,-30,-90,-150,150}{\shade[ball color=exorange!85] (\a:{\R/2}) circle (0.09cm);}
+\foreach \a in {90,30,-30,-90,-150,150}{\shade[ball color=mainblue!70] (\a:\R) circle (0.1cm);}
+\shade[ball color=mainblue!70] (0,0) circle (0.1cm);
+\node[c8lab,above] at (90:\R+0.08) {(0,0,1)};
+\node[c8lab,right] at (30:\R+0.08) {(0,1,1)};
+\node[c8lab,right] at (-30:\R+0.08) {(0,1,0)};
+\node[c8lab,below] at (-90:\R+0.08) {(1,1,0)};
+\node[c8lab,left] at (-150:\R+0.08) {(1,0,0)};
+\node[c8lab,left] at (150:\R+0.08) {(1,0,1)};
+\node[c8lab,right] at (2.6,0.6) {\textcolor{mainblue}{$\bullet$} 顶点原子};
+\node[c8lab,right] at (2.6,0.1) {\textcolor{exorange}{$\bullet$} 面心原子};
+\node[c8lab,right,align=left] at (2.6,-0.55) {中心点：(0,0,0) 与\\(1,1,1) 两个顶点重叠};
+\end{scope}
+\end{tikzpicture}}{面心立方晶胞沿体对角线的投影（右图标出各顶点原子的坐标）\label{fig:08-proj111}}
+
+从这些例子可以得到读投影图的两条要点。第一，投影图上的一个点可能对应多个粒子，所以\textbf{不能直接数投影图上的点来求化学式}。第二，由投影图还原粒子的位置，要补充“丢掉”的那个坐标，补充的依据可以是题目给出的高度、分层图、另一个方向的投影图，或者晶胞中粒子的总数和化学式。2024 年山东卷第 16 题就把四方晶胞的投影、氧空位及化合价联系起来（题源见书末资料[4]）：应先按位置和共有关系计数，再用电荷守恒检验组成，不能把投影上的点数直接当作原子数。
+
+\begin{liti}[典型·原子分数坐标与投影图]
+ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位于体内四个互不相邻的四面体空隙中（图~\ref{fig:08-ionic}(c)）。(1) 若顶点 \ce{S^2-} 的坐标为 (0,0,0)，写出四个 \ce{Zn^2+} 的坐标；(2) 画出晶胞沿 $z$ 轴方向的投影图。
+\tcblower
+\jie (1) $(\frac14,\frac14,\frac14)$、$(\frac34,\frac34,\frac14)$、$(\frac34,\frac14,\frac34)$、$(\frac14,\frac34,\frac34)$。四个空隙“互不相邻”，所以下层（$z=\frac14$）的两个在一条对角线上，上层（$z=\frac34$）的两个在另一条对角线上。\\
+(2) 沿 $z$ 轴投影时只看 $x$、$y$ 坐标：\ce{S^2-} 投影在正方形的四个顶点、四条边的中点和中心；\ce{Zn^2+} 投影在 $(\frac14,\frac14)$、$(\frac34,\frac34)$、$(\frac34,\frac14)$、$(\frac14,\frac34)$ 四点，如图~\ref{fig:08-znsproj}。
+\ceighttu{\begin{tikzpicture}[x=2.4cm,y=2.4cm]
+\draw (0,0) rectangle (1,1);
+\draw[black!25,dashed] (0.5,0)--(0.5,1) (0,0.5)--(1,0.5);
+\foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0,0.5/1,0/0.5,1/0.5,0.5/0.5}{\fill[mainblue] (\x,\y) circle (2.4pt);}
+\foreach \x/\y/\h in {0.25/0.25/\frac14,0.75/0.75/\frac14,0.75/0.25/\frac34,0.25/0.75/\frac34}{\fill[warnred] (\x,\y) circle (2pt); \node[font=\tiny,above right] at (\x,\y) {$\h$};}
+\node[font=\scriptsize,right,text=black] at (1.15,0.65) {\textcolor{mainblue}{$\bullet$} \textcolor{black}{\ce{S^2-}}};
+\node[font=\scriptsize,right,text=black] at (1.15,0.4) {\textcolor{warnred}{$\bullet$} \textcolor{black}{\ce{Zn^2+}}（小字为 $z$）};
+\end{tikzpicture}}{ZnS 晶胞沿 $z$ 轴的投影\label{fig:08-znsproj}}
+\dianbo 投影图上共有 13 个点，但一个晶胞只含 4 个 \ce{S^2-} 和 4 个 \ce{Zn^2+}；若只给投影图而不标高度，单凭投影无法区分 $z=\frac14$ 与 $z=\frac34$ 的 \ce{Zn^2+}。
+\end{liti}
+
+\begin{liti}[综合练习·由投影图还原晶胞]
+某金属单质的立方晶胞沿 $z$ 轴的投影如图~\ref{fig:08-projz}(a) 所示：正方形四个顶点和中心各有一个投影点。已知原子只可能位于顶点、棱心、面心、体心。(1) 投影中心点对应的原子可能在什么位置？(2) 若该晶胞沿 $x$ 轴、$y$ 轴的投影图与沿 $z$ 轴的完全相同，确定原子的位置，并求晶胞中的原子数。
+\tcblower
+\silu 投影只保留 $(x,y)$，先列出所有 $x=y=\frac12$ 的候选位置，再用另外两个方向的投影排除。\\
+\jie (1) 投影在中心的原子满足 $x=y=\frac12$，可能是上下底面的面心 $(\frac12,\frac12,0)$、$(\frac12,\frac12,1)$，也可能是体心 $(\frac12,\frac12,\frac12)$。同理，四角的投影点可能来自顶点，也可能来自竖直棱的中点 $(0,0,\frac12)$ 等。\\
+(2) 若有上下底面的面心，沿 $x$ 轴投影时 $(\frac12,\frac12,0)$ 落在 $(y,z)=(\frac12,0)$，即边的中点，而沿 $z$ 轴的投影图中边的中点没有点，与“投影图相同”矛盾，所以没有面心原子；同理，竖直棱的中点 $(0,0,\frac12)$ 沿 $x$ 轴投影也落在边的中点 $(0,\frac12)$，所以也没有棱心原子。因此中心点只能来自体心，四角来自顶点，这是体心立方晶胞，含原子 $8\times\frac18+1=2$ 个。
+\end{liti}
+
+\section{粒子间的距离与配位数}
+
+\subsection{面对角线与体对角线}
+
+求晶胞中两个粒子的距离，要用到初中学过的勾股定理。图~\ref{fig:08-diag} 中，晶胞边长为 $a$。底面是边长为 $a$ 的正方形，它的对角线（面对角线）$=\sqrt{a^2+a^2}=\sqrt2a$。体对角线从 (0,0,0) 到 (1,1,1)，它和底面对角线、一条竖直棱构成直角三角形（直角在 (1,1,0) 处），所以体对角线 $=\sqrt{(\sqrt2a)^2+a^2}=\sqrt3a$。前面给出的公式 $d=a\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}$ 就是把勾股定理连用两次的结果。
+
+\ceighttu{\begin{tikzpicture}[c8cell=2.6cm]
+\ceightcube[black!55]
+\draw[mainblue,thick] (0,0,0)--(1,1,0);
+\draw[warnred,thick] (0,0,0)--(1,1,1);
+\draw[deepgreen,very thick] (1,1,0)--(1,1,1);
+\draw[black!70] (0.93,0.93,0)--(0.93,0.93,0.08)--(1,1,0.08);
+\node[c8lab,below] at (0.5,0,0) {$a$};
+\node[c8lab,right] at (1,0.5,0) {$a$};
+\node[c8lab,above left,mainblue] at (0.62,0.62,0) {$\sqrt2a$};
+\node[c8lab,above left,warnred] at (0.5,0.5,0.5) {$\sqrt3a$};
+\node[c8lab,right,deepgreen] at (1,1,0.5) {$a$};
+\end{tikzpicture}}{立方晶胞的面对角线与体对角线\label{fig:08-diag}}
+
+\subsection{原子半径与晶胞边长}
+
+求金属原子半径时，高中采用\textbf{刚性球模型}：把原子看成大小一定的硬球，距离最近的原子相互接触（相切）。这是一种近似，实际原子没有明确的边界，但用它算出的半径与测量值符合得很好。关键是判断沿哪条线相切：沿那条线，原子一个挨一个，没有空隙。图~\ref{fig:08-touch} 是三种立方晶胞中原子相切的截面。
+
+\ceighttu{\begin{tikzpicture}
+\begin{scope}
+\begin{scope}\clip (0,0) rectangle (2,2);
+\foreach \x/\y in {0/0,2/0,0/2,2/2}{\shade[ball color=orange!70] (\x,\y) circle (1);}\end{scope}
+\draw (0,0) rectangle (2,2);
+\draw[thick,warnred] (0,0)--(2,0);
+\node[c8lab,below] at (1,0) {$a=2r$};
+\node[c8lab] at (1,-0.75) {(a) 简单立方：沿棱相切};
+\end{scope}
+\begin{scope}[xshift=3.2cm]
+\pgfmathsetmacro{\w}{1.4142*2}\pgfmathsetmacro{\r}{1.7321*2/4}
+\begin{scope}\clip (0,0) rectangle (\w,2);
+\foreach \x/\y in {0/0,\w/0,0/2,\w/2,\w/2/1}{\shade[ball color=orange!70] (\x,\y) circle (\r);}
+\shade[ball color=orange!70] (\w/2,1) circle (\r);\end{scope}
+\draw (0,0) rectangle (\w,2);
+\draw[thick,warnred] (0,0)--(\w,2);
+\node[c8lab,below] at (\w/2,0) {$\sqrt2a$};
+\node[c8lab,left] at (0,1) {$a$};
+\node[c8lab,above] at (\w/2,2) {$4r=\sqrt3a$};
+\node[c8lab] at (\w/2,-0.75) {(b) 体心立方：沿体对角线相切\\（过体对角线的截面）};
+\end{scope}
+\begin{scope}[xshift=7.4cm]
+\pgfmathsetmacro{\r}{1.4142*2/4}
+\begin{scope}\clip (0,0) rectangle (2,2);
+\foreach \x/\y in {0/0,2/0,0/2,2/2,1/1}{\shade[ball color=orange!70] (\x,\y) circle (\r);}\end{scope}
+\draw (0,0) rectangle (2,2);
+\draw[thick,warnred] (0,0)--(2,2);
+\node[c8lab,below] at (1,0) {$a$};
+\node[c8lab,above] at (1,2) {$4r=\sqrt2a$};
+\node[c8lab] at (1,-0.75) {(c) 面心立方：沿面对角线相切\\（一个面）};
+\end{scope}
+\end{tikzpicture}}{三种立方晶胞中原子相切的位置（红线为相切方向）\label{fig:08-touch}}
+
+简单立方晶胞只有顶点原子，相邻顶点沿棱相切，$a=2r$。体心立方中，体心原子夹在一条体对角线两端的顶点原子之间，这条线上依次是“半个顶点原子、整个体心原子、半个顶点原子”，所以 $4r=\sqrt3a$，$r=\frac{\sqrt3}{4}a$；顶点原子之间沿棱并不接触（相距 $a>2r$）。面心立方中，每个面的面心原子夹在这个面一条对角线两端的顶点原子之间，$4r=\sqrt2a$，$r=\frac{\sqrt2}{4}a$。
+
+离子晶体中，最近的阴、阳离子间距（核间距）同样由几何位置决定。\ce{NaCl} 中 \ce{Na+} 在棱心，与顶点的 \ce{Cl-} 沿棱相邻，最近距离为 $\frac a2$；CsCl 中体心 \ce{Cs+} 与顶点 \ce{Cl-} 相距半条体对角线，即 $\frac{\sqrt3}{2}a$。ZnS 稍复杂：把晶胞切成 8 个边长为 $\frac a2$ 的小立方体，每个 \ce{Zn^2+} 位于一个小立方体的中心，周围 4 个 \ce{S^2-} 位于这个小立方体的 4 个互不相邻的顶点上，构成正四面体（图~\ref{fig:08-tet}）。\ce{Zn^2+} 与 \ce{S^2-} 的距离是小立方体体对角线的一半：$\frac12\times\sqrt3\times\frac a2=\frac{\sqrt3}{4}a$，也就是大晶胞体对角线的 $\frac14$。金刚石中最近两个 C 原子的距离同样是 $\frac{\sqrt3}{4}a$。
+
+\ceighttu{\begin{tikzpicture}
+\begin{scope}[c8cell=2.2cm]
+\ceightcube[black!50]
+\draw[mainblue,thick] (0,0,0)--(0.5,0,0)--(0.5,0,0.5)--(0,0,0.5)--cycle (0.5,0,0)--(0.5,0.5,0)--(0.5,0.5,0.5)--(0.5,0,0.5) (0,0,0.5)--(0,0.5,0.5)--(0.5,0.5,0.5);
+\foreach \p in \ceightV {\ceightball[0.1]{mainblue!70}{\p}}
+\foreach \p in \ceightF {\ceightball[0.1]{mainblue!70}{\p}}
+\foreach \p in \ceightT {\ceightball[0.08]{warnred!85}{\p}}
+\node[c8lab] at (0.6,0,-0.3) {(a) ZnS 晶胞，蓝线为 $\frac18$ 小立方体};
+\end{scope}
+\begin{scope}[xshift=6.5cm,c8cell=2.4cm]
+\ceightcube[black!50]
+\foreach \p in {{0,0,0},{1,1,0},{1,0,1},{0,1,1}}{\draw[c8bond,warnred] (0.5,0.5,0.5)--(\p);}
+\draw[mainblue!60,dashed] (0,0,0)--(1,1,0)--(1,0,1)--cycle (0,0,0)--(0,1,1)--(1,1,0) (0,1,1)--(1,0,1);
+\foreach \p in {{0,0,0},{1,1,0},{1,0,1},{0,1,1}}{\ceightball[0.13]{mainblue!70}{\p}}
+\ceightball[0.11]{warnred!85}{0.5,0.5,0.5}
+\node[c8lab,below] at (0.5,0,0) {边长 $\frac a2$};
+\node[c8lab,right,align=left] at (3.7cm,1.3cm) {\ce{Zn^2+}—\ce{S^2-} 距离\\$=\frac12\times\frac{\sqrt3}{2}a=\frac{\sqrt3}{4}a$};
+\node[c8lab] at (0.6,0,-0.3) {(b) 小立方体：\ce{Zn^2+} 在正四面体中心};
+\end{scope}
+\end{tikzpicture}}{ZnS 中 \ce{Zn^2+} 位于 4 个 \ce{S^2-} 构成的正四面体中心\label{fig:08-tet}}
+
+\subsection{配位数}
+
+晶体中一个粒子周围距离最近且相等的粒子的数目叫\textbf{配位数}。离子晶体中通常指一个离子周围最近的异电荷离子数；金属晶体中指一个原子周围最近的原子数。数配位数分三步：先选一个周围情况容易看全的粒子（体心粒子最好）；再确定“最近”的距离是多少；最后数出所有处于这个距离的粒子，包括相邻晶胞中的粒子。
+
+\ceighttu{\begin{tikzpicture}[c8cell=2.2cm]
+\begin{scope}
+\ceightcube[black!40]
+\foreach \p in \ceightF {\draw[c8bond] (0.5,0.5,0.5)--(\p);}
+\foreach \p in \ceightF {\ceightball[0.13]{mainblue!70}{\p}}
+\ceightball[0.09]{warnred!85}{0.5,0.5,0.5}
+\node[c8lab] at (0.6,0,-0.3) {(a) \ce{NaCl}：体心 \ce{Na+} 周围 6 个 \ce{Cl-}\\（6 个面心，构成正八面体）};
+\end{scope}
+\begin{scope}[xshift=6cm]
+\ceightcube[black!40]
+\foreach \p in \ceightV {\draw[c8bond] (0.5,0.5,0.5)--(\p);}
+\foreach \p in \ceightV {\ceightball[0.12]{mainblue!70}{\p}}
+\ceightball[0.14]{warnred!85}{0.5,0.5,0.5}
+\node[c8lab] at (0.6,0,-0.3) {(b) CsCl：体心 \ce{Cs+} 周围 8 个 \ce{Cl-}\\（8 个顶点，构成立方体）};
+\end{scope}
+\end{tikzpicture}}{\ce{NaCl} 与 CsCl 中阳离子的配位情况（图中只画出与体心离子相关的离子）\label{fig:08-cn}}
+
+看图~\ref{fig:08-cn}(a)：\ce{NaCl} 晶胞的体心 \ce{Na+} 与 6 个面心 \ce{Cl-} 的距离都是 $\frac a2$，比其他任何 \ce{Cl-} 都近，所以 \ce{Na+} 的配位数为 6；由化学式 1:1 可知 \ce{Cl-} 的配位数也是 6。图~\ref{fig:08-cn}(b)：CsCl 的体心 \ce{Cs+} 与 8 个顶点 \ce{Cl-} 等距（$\frac{\sqrt3}{2}a$），配位数为 8:8。
+
+粒子在顶点时，要把周围 8 个晶胞都想象出来。以面心立方金属为例，选一个顶点原子，最近的是与它相距 $\frac{\sqrt2}{2}a$ 的面心原子。经过这个顶点有三个互相垂直的平面（$xy$、$yz$、$xz$ 平面），每个平面上它周围有 4 个面心原子，共 $3\times4=12$ 个，配位数为 12；体心立方的配位数为 8。干冰中 \ce{CO2} 分子也按面心立方排列，所以每个 \ce{CO2} 周围紧邻 12 个 \ce{CO2}。同理，\ce{NaCl} 中与一个 \ce{Na+} 最近的 \ce{Na+} 也有 12 个，距离为 $\frac{\sqrt2}{2}a$。\ce{CaF2} 中，每个 \ce{F-} 位于 4 个 \ce{Ca^2+} 构成的四面体中心，\ce{F-} 的配位数为 4；化学式中 \ce{F-} 的数目是 \ce{Ca^2+} 的 2 倍，所以 \ce{Ca^2+} 的配位数为 $4\times2=8$。最后这种“由一种离子的配位数和化学式推另一种”的方法很常用：阳离子数$\times$阳离子配位数$=$阴离子数$\times$阴离子配位数，因为两边数的是同一批“最近的阴阳离子对”。
+
+\begin{liti}[基础练习]
+金属钠为体心立方晶胞，晶胞边长 $a=429$ pm。求钠的原子半径和配位数。
+\tcblower
+\jie 体心立方中原子沿体对角线相切：$4r=\sqrt3a$，$r=\frac{\sqrt3}{4}\times429\ \text{pm}\approx186$ pm。体心原子周围 8 个顶点原子最近，配位数为 8。
+\end{liti}
+
+\begin{liti}[典型练习]
+\ce{NaCl} 晶胞边长为 564 pm。求：(1) \ce{Na+} 与 \ce{Cl-} 的最近距离；(2) 两个 \ce{Na+} 的最近距离，以及与一个 \ce{Na+} 最近且等距的 \ce{Na+} 数目。
+\tcblower
+\jie (1) \ce{Na+} 在棱心，与同一条棱两端的 \ce{Cl-} 相距 $\frac a2=282$ pm。\\
+(2) 体心 \ce{Na+} $(\frac12,\frac12,\frac12)$ 与棱心 \ce{Na+} $(\frac12,0,0)$ 的坐标差为 $(0,\frac12,\frac12)$，距离 $a\sqrt{\frac14+\frac14}=\frac{\sqrt2}{2}a\approx399$ pm。12 条棱心上的 \ce{Na+} 与体心 \ce{Na+} 都相距 $\frac{\sqrt2}{2}a$，所以数目为 12（\ce{Na+} 本身也排成面心立方）。
+\end{liti}
+
+\begin{liti}[改编自2025年广东卷第18题(5)；来源见附录]
+\ce{Ni_xCu_yN_z} 晶体的立方晶胞中原子所处位置为顶点、面心和体心。已知：同种位置原子相同，相邻原子间的最近距离之比 $d_{\text{Ni—Cu}}:d_{\text{Ni—N}}=\sqrt2:1$，则 $x:y:z=$\tk；晶体中与 Cu 原子最近且等距离的原子的数目为\tk。
+
+\tcblower
+\jie 设边长为 $a$。三种位置两两之间的最近距离：面心到顶点 $\frac{\sqrt2}{2}a$，面心到体心 $\frac12a$，顶点到体心 $\frac{\sqrt3}{2}a$。比值为 $\sqrt2:1$ 的只有“面心—顶点”与“面心—体心”，Ni 同时出现在两个距离中，所以 Ni 在面心，Cu 在顶点，N 在体心。Ni：$6\times\frac12=3$；Cu：$8\times\frac18=1$；N：1。$x:y:z=3:1:1$。顶点 Cu 周围最近的是面心上的 Ni，与上面面心立方配位数的数法相同，共 12 个（也可以算：共用该顶点的 8 个晶胞各有 3 个面心与它相邻，每个面心被 2 个晶胞共用，$8\times3\div2=12$）。
+\end{liti}
+
+\section{晶体密度的计算}
+
+晶体由晶胞无隙并置而成，每个晶胞的质量和体积都相同，所以一个晶胞的密度就是晶体的密度，即 $\rho=m(\text{晶胞})/V(\text{晶胞})$。高一学过，1 mol 粒子有 $N_\text{A}$ 个，质量为 $M$ g，所以一个“化学式单元”的质量为 $M/N_\text{A}$ g。若一个晶胞含 $N$ 个化学式单元，晶胞质量就是 $N\cdot M/N_\text{A}$ g；立方晶胞的体积为 $a^3$。于是
+
+\begin{gainian}[晶胞密度公式]
+\[
+\rho=\frac{N\cdot M}{N_\text{A}\cdot a^3}
+\]
+$N$：一个晶胞所含化学式单元数（用均摊法求）；$M$：摩尔质量（g·mol$^{-1}$）；$a$：晶胞边长，必须换算成 cm，$\rho$ 的单位才是 g·cm$^{-3}$。换算关系：1 pm $=10^{-10}$ cm，1 nm $=10^{-7}$ cm，所以 $(a\ \text{pm})^3=a^3\times10^{-30}$ cm$^3$。
+\end{gainian}
+
+计算的步骤是：①用均摊法求 $N$（注意数的是化学式单元，如 \ce{NaCl} 晶胞 $N=4$，不是 8）；②写出 $M$；③把 $a$ 换算成 cm；④代入公式。许多题只要求“列出计算式”，这时分子写 $N\cdot M$，分母写 $N_\text{A}\cdot a^3$，单位换算的 $10^{-10}$ 或 $10^{-7}$ 直接写进式子。
+
+\begin{liti}[基础练习]
+\ce{NaCl} 晶胞边长为 564 pm，$M(\ce{NaCl})=58.5$ g·mol$^{-1}$，$N_\text{A}=6.02\times10^{23}$ mol$^{-1}$，求 \ce{NaCl} 晶体的密度。
+\tcblower
+\jie 一个晶胞含 4 个 \ce{NaCl}；$a=564$ pm $=564\times10^{-10}$ cm，$a^3\approx1.79\times10^{-22}$ cm$^3$。
+\[\rho=\frac{4\times58.5}{6.02\times10^{23}\times(564\times10^{-10})^3}\ \text{g·cm}^{-3}\approx2.17\ \text{g·cm}^{-3}\]
+\end{liti}
+
+\begin{liti}[典型练习]
+铜晶体为面心立方结构，晶胞边长 $a=361$ pm，$M(\ce{Cu})=64$ g·mol$^{-1}$，$N_\text{A}=6.02\times10^{23}$ mol$^{-1}$。求铜的密度和铜原子半径。
+\tcblower
+\jie 每个晶胞含 Cu：$8\times\frac18+6\times\frac12=4$。
+\[\rho=\frac{4\times64}{6.02\times10^{23}\times(361\times10^{-10})^3}\ \text{g·cm}^{-3}\approx9.0\ \text{g·cm}^{-3}\]
+面心立方中原子沿面对角线相切：$4r=\sqrt2a$，$r=\frac{\sqrt2}{4}\times361\ \text{pm}\approx128$ pm。\\
+\xianjing 常见错误是忘记把 pm 换算成 cm，或把 $N$ 取成 14（数了顶点和面心的个数而没有均摊）。
+\end{liti}
+
+\begin{liti}[综合练习]
+某 AB 型离子晶体具有 \ce{NaCl} 型结构，密度为 $\rho$ g·cm$^{-3}$，摩尔质量为 $M$ g·mol$^{-1}$，阿伏加德罗常数为 $N_\text{A}$。求晶体中阴、阳离子的最近距离（用 pm 表示，列出表达式）。
+\tcblower
+\silu 已知密度反求边长，再由几何关系求距离。\\
+\jie \ce{NaCl} 型晶胞含 4 个 AB。由 $\rho=\dfrac{4M}{N_\text{A}a^3}$ 得 $a=\sqrt[3]{\dfrac{4M}{\rho N_\text{A}}}$ cm。阴、阳离子沿棱相邻，最近距离为边长的一半，再把 cm 换算成 pm（1 cm $=10^{10}$ pm）：
+\[d=\frac a2=\frac12\sqrt[3]{\frac{4M}{\rho N_\text{A}}}\times10^{10}\ \text{pm}\]
+\end{liti}
+
+\begin{tuozhan}[空间利用率]
+把原子看成刚性球，晶胞中原子总体积占晶胞体积的百分数叫空间利用率。以面心立方为例：一个晶胞含 4 个原子，$4r=\sqrt2a$，即 $r=\frac{\sqrt2}{4}a$，
+\[\text{空间利用率}=\frac{4\times\frac43\pi r^3}{a^3}=\frac{\sqrt2\pi}{6}\approx74\%\]
+同样可以算出，体心立方（2 个原子，$4r=\sqrt3a$）为 $\frac{\sqrt3\pi}{8}\approx68\%$，简单立方（1 个原子，$a=2r$）为 $\frac{\pi}{6}\approx52\%$。面心立方和六方最密堆积的 74\% 是等径球堆积能达到的最大值。
+\end{tuozhan}
+
+% ---------------- 章末 ----------------
+\zhangmo{本章小结}
+\subsection*{一、知识总结}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.4cm}X}
+\toprule
+晶体特征 & 内部粒子周期性有序排列；自范性、各向异性、固定熔点；X 射线衍射鉴别 \\
+晶胞与均摊法 & 晶胞无隙并置；立方晶胞：顶点 $\frac18$、棱 $\frac14$、面 $\frac12$、体内 1 \\
+晶体类型 & 分子、共价、离子、金属；混合型石墨；熔沸点“先类型、后作用力” \\
+典型结构 & \ce{NaCl}（6:6）、CsCl（8:8）、ZnS/金刚石（4:4）、\ce{CaF2}（8:4）、干冰（12）、金属体心立方（8）与面心立方（12） \\
+读晶胞图 & 分数坐标；分层图按 $z$ 分组；投影图丢掉一个坐标，一点可能对应多个粒子 \\
+计算 & 面对角线 $\sqrt2a$、体对角线 $\sqrt3a$；$d=a\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}$；$\rho=\frac{NM}{N_\text{A}a^3}$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\subsection*{二、方法提升}
+\begin{enumerate}
+\item 求化学式：均摊法数出各粒子个数，化为最简比，并与化学式互相检验。
+\item 求配位数：选一个粒子，找“最近且等距”的粒子，别漏掉相邻晶胞中的粒子；也可用“阳离子数$\times$阳离子配位数$=$阴离子数$\times$阴离子配位数”。
+\item 求距离：写出两粒子的分数坐标或确定它们在同一棱、同一面还是体对角线上，再用勾股定理；原子半径要先判断沿哪条线相切。
+\item 读投影图和分层图：先还原出每个粒子的三个坐标，再计数或求距离。
+\end{enumerate}
+\subsection*{三、易错点归纳}
+\begin{enumerate}
+\item 把分子晶体中的共价键强弱当作熔沸点高低的原因（应看分子间作用力）。
+\item \ce{NaCl} 晶胞中 \ce{Na+} 的个数：棱心 $12\times\frac14+$ 体心 $1=4$，不是 13。
+\item 金刚石晶胞含 8 个 C 原子，1 mol 金刚石含 2 mol C—C 键；1 mol \ce{SiO2} 含 4 mol Si—O 键；1 mol 石墨含 1.5 mol C—C 键。
+\item 体心立方中原子沿体对角线相切，不是沿棱相切；面心立方沿面对角线相切。
+\item 直接数投影图上的点求粒子数；单位换算错误：$(a\ \mathrm{pm})^3=a^3\times10^{-30}$ cm$^3$。
+\end{enumerate}
+
+\zhangmo{分层练习}
+\zu{A组\quad 基础巩固}
+\begin{xiti}[start=1]
+\item 下列说法正确的是\xz
+\xxa{具有规则几何外形的固体一定是晶体}{区分晶体与非晶体最可靠的方法是测定熔点}{晶体硅、SiC、金刚石均有共价网络，内部没有独立的分子}{分子晶体中分子内共价键越强，熔点越高}
+
+\item 下列各组物质熔点由高到低排列正确的是\xz
+\xxa{\ce{CO2}$>$\ce{SiO2}$>$\ce{NaCl}}{MgO$>$\ce{NaCl}$>$KCl}{Na$>$Mg$>$Al}{HI$>$HBr$>$HCl$>$HF}
+
+\item 某晶体的立方晶胞中，A 原子位于顶点，B 原子位于面心，C 原子位于体心，则该晶体的化学式为\tk；与 C 原子最近的 B 原子有\tk{}个。
+
+\item 某物质硬度很大，熔点约 1700 ℃，不溶于水，固态不导电，已知内部不含独立分子，该物质最可能是\tk{}晶体；另一物质熔点 801 ℃，易溶于水，固态不导电而熔融态导电，它属于\tk{}晶体。
+
+\item 下列各组晶体中，化学键类型相同、晶体类型也相同的是\xz
+\xx{\ce{SO2} 与 \ce{SiO2}}{\ce{CO2} 与 \ce{H2O}}{\ce{NaCl} 与 HCl}{\ce{CCl4} 与 KCl}
+
+\item \laiyuan{综合练习}\ 金属钾为体心立方晶胞，晶胞边长为 $a$ pm。(1) 每个晶胞含 K 原子\tk{}个，K 的配位数为\tk；(2) K 原子半径 $r=$\tk pm（用 $a$ 表示）；(3) 顶点原子的坐标为 (0,0,0)，体心原子的坐标为\tk。
+\end{xiti}
+
+\zu{B组\quad 高考典型}
+\begin{xiti}
+\item \laiyuan{改编自2024年广东卷第18题(6)；来源见附录}\ 一种含 Ga、Ni、Co 元素的记忆合金的晶体结构可描述为 Ga 与 Ni 交替填充在 Co 构成的立方体体心，形成如图~\ref{fig:08-alloy} 所示的结构单元（小立方体棱长为 $a$ nm）。该合金的晶胞中，粒子个数最简比 Co:Ga:Ni$=$\tk，其立方晶胞的体积为\tk nm$^3$。
+\ceighttu{\begin{tikzpicture}
+\begin{scope}[c8cell=2.6cm]\ceightcube\end{scope}
+\begin{scope}[c8cell=1.3cm]
+\draw[black!35] (1,0,0)--(1,0,2) (0,0,1)--(2,0,1) (1,0,2)--(1,2,2) (0,1,2)--(2,1,2) (2,1,0)--(2,1,2) (2,0,1)--(2,2,1);
+\foreach \i in {0,1,2}{\foreach \j in {0,1,2}{\foreach \k in {0,1,2}{\ceightball[0.08]{mainblue!60}{\i,\j,\k}}}}
+\foreach \i in {0,1}{\foreach \j in {0,1}{\foreach \k in {0,1}{
+ \pgfmathtruncatemacro{\s}{mod(\i+\j+\k,2)}
+ \ifnum\s=0 \ceightball[0.11]{exorange!90}{\i+0.5,\j+0.5,\k+0.5}\else\ceightball[0.11]{deepgreen!70}{\i+0.5,\j+0.5,\k+0.5}\fi}}}
+\node[c8lab,below] at (0.5,0,0) {$a$ nm};
+\end{scope}
+\ceightleg[0.08]{4.3cm,2.6cm}{mainblue!60}{Co}
+\ceightleg[0.11]{4.3cm,2.1cm}{exorange!90}{Ga}
+\ceightleg[0.11]{4.3cm,1.6cm}{deepgreen!70}{Ni}
+\end{tikzpicture}}{Co–Ga–Ni 合金的结构示意（由 8 个小立方体构成）\label{fig:08-alloy}}
+
+\item \laiyuan{综合练习}\ 金刚石晶胞（与 ZnS 结构类似，全为 C 原子）边长为 $a$ pm。(1) 每个晶胞含 C 原子\tk{}个；(2) 最近两个 C 原子的距离为\tk pm；(3) 若原点处 C 原子坐标为 (0,0,0)，写出另外两个位于体内的 C 原子坐标；(4) 列式表示金刚石的密度（g·cm$^{-3}$，阿伏加德罗常数为 $N_\text{A}$）。
+
+\item \laiyuan{综合练习}\ \ce{CaF2} 晶胞中 \ce{Ca^2+} 位于顶点和面心，\ce{F-} 位于体内 8 个四面体空隙中，边长为 $a$ nm。(1) \ce{Ca^2+} 和 \ce{F-} 的配位数分别为\tk、\tk；(2) 最近的 \ce{Ca^2+} 与 \ce{F-} 的距离为\tk nm；(3) 晶体密度为\tk g·cm$^{-3}$（列式，$M(\ce{CaF2})=78$ g·mol$^{-1}$）。
+
+\item \laiyuan{综合练习}\ CsCl 晶胞中 \ce{Cl-} 位于顶点、\ce{Cs+} 位于体心，晶胞边长为 $a$ pm。(1) 每个 \ce{Cs+} 周围距离最近的 \ce{Cs+} 有\tk{}个；(2) \ce{Cs+} 与 \ce{Cl-} 的最近距离为\tk pm；(3) 列式表示晶体密度（$M(\ce{CsCl})=168.5$ g·mol$^{-1}$，阿伏加德罗常数为 $N_\text{A}$）。
+
+\item \laiyuan{综合练习}\ 钙钛矿 \ce{CaTiO3} 的晶胞如图~\ref{fig:08-metal}(c)（Ca 在顶点、Ti 在体心、O 在面心）。(1) 若改为以 Ti 为顶点重新取晶胞，则 Ca 位于\tk，O 位于\tk。(2) 若晶胞边长为 $a$ nm，Ti 与 O 的最近距离为\tk nm，Ca 与 O 的最近距离为\tk nm。
+
+\item \laiyuan{综合练习}\ 某 AB 型晶体的立方晶胞按 $z$ 坐标分层如下：$z=0$ 层和 $z=1$ 层，A 位于正方形的四个顶点和中心，B 位于四条边的中点；$z=\frac12$ 层，A 位于四条边的中点，B 位于四个顶点和中心。(1) 一个晶胞中 A、B 各有几个？(2) 该晶体与哪种典型晶体结构相同？B 的配位数为多少？(3) 画出（或描述）该晶胞沿 $z$ 轴的投影图，并说明为什么不能由投影图直接数出 A、B 的个数。
+\end{xiti}
+
+\zu{C组\quad 冲刺高分}
+\begin{xiti}
+\item \laiyuan{综合练习}\ 氮化硼（BN）有类似石墨的六方结构（h-BN）和类似金刚石的立方结构（c-BN）。(1) h-BN 中 B 原子的杂化方式为\tk，h-BN 不导电而石墨导电，从结构上解释原因。(2) c-BN 的晶胞与 ZnS 相同，B 原子位于体内四面体空隙。c-BN 中 B 原子的杂化方式为\tk，B 的配位数为\tk。(3) c-BN 硬度很大，解释其结构原因；能否仅凭 B—N 键长略大于金刚石中的 C—C 键，就唯一断定二者的熔点顺序？说明理由。(4) 已知 c-BN 晶胞边长为 361.5 pm，求其密度（保留两位小数，$N_\text{A}=6.02\times10^{23}$ mol$^{-1}$，B 为 10.8，N 为 14.0）。
+
+\item \laiyuan{综合练习}\ 某铜金合金具有面心立方结构，Au 原子位于顶点、Cu 原子位于面心。(1) 该合金的化学式为\tk。(2) 该合金可以储氢：H 原子进入由 Cu、Au 原子构成的四面体空隙中。若把 Cu、Au 原子等同看待，储氢后晶胞结构与 \ce{CaF2} 相似（H 占据全部四面体空隙），则储氢后的化学式为\tk。(3) 若晶胞边长为 $a$ cm，储氢后的晶体中氢的密度（单位体积内 H 的质量）为多少 g·cm$^{-3}$？
+\end{xiti}
+
+\zhangmo{练习解析}
+\begin{jiexilist}
+\item \ans{C}A：玻璃可制成规则外形，但不是晶体；B：最可靠的是 X 射线衍射；C：三者均由共价键连接成空间网络，正确；D：分子晶体熔点由分子间作用力决定。
+\item \ans{B}A：\ce{SiO2}（共价晶体）$>$\ce{NaCl}（离子晶体）$>$\ce{CO2}（分子晶体）；B：\ce{Mg^2+}、\ce{O^2-} 电荷高且半径小，MgO 最高，\ce{Na+} 半径小于 \ce{K+}，\ce{NaCl} 高于 KCl，正确；C：金属键 Al$>$Mg$>$Na；D：给出的熔点顺序不成立，相关实验值排序为 HI$>$HF$>$HBr$>$HCl；HF 的氢键使它相对 HCl、HBr 反常偏高，但不能保证超过 HI。
+\item \ce{AB3C}；6。A：$8\times\frac18=1$；B：$6\times\frac12=3$；C：1。体心 C 与 6 个面心 B 距离均为 $\frac a2$，最近。
+\item 共价；离子。前者有共价网络、熔点高且硬度大，符合共价晶体（如二氧化硅）；后者熔融导电，说明由离子构成。
+\item \ans{B}A：\ce{SO2} 为分子晶体，\ce{SiO2} 为共价晶体；B：均为含极性共价键的分子晶体，正确；C：\ce{NaCl} 含离子键、为离子晶体，HCl 含共价键、为分子晶体；D：\ce{CCl4} 为分子晶体，KCl 为离子晶体。
+\item (1) 2；8。$8\times\frac18+1=2$；体心原子周围 8 个顶点原子最近。(2) $\frac{\sqrt3}{4}a$（沿体对角线相切，$4r=\sqrt3a$）。(3) $(\frac12,\frac12,\frac12)$。
+\item 2:1:1；$8a^3$。晶胞（大立方体）由 8 个小立方体构成，边长为 $2a$ nm；Co 位于大立方体的顶点、面心、棱心和体心：$8\times\frac18+6\times\frac12+12\times\frac14+1=8$ 个；8 个小立方体的体心中 Ga、Ni 各 4 个。Co:Ga:Ni$=8:4:4=2:1:1$；晶胞体积 $(2a)^3=8a^3$ nm$^3$。
+\item (1) 8（$8\times\frac18+6\times\frac12+4$）。(2) $\frac{\sqrt3}{4}a$（体内原子与最近的顶点原子相距体对角线的 $\frac14$）。(3) 如 $(\frac14,\frac14,\frac14)$、$(\frac34,\frac34,\frac14)$（其余为 $(\frac34,\frac14,\frac34)$、$(\frac14,\frac34,\frac34)$）。(4) $\rho=\dfrac{8\times12}{N_\text{A}\times(a\times10^{-10})^3}$ g·cm$^{-3}$。
+\item (1) 8；4。每个 \ce{F-} 位于由 4 个 \ce{Ca^2+} 构成的四面体中心，\ce{F-} 配位数为 4；由化学式 \ce{CaF2}，\ce{Ca^2+} 配位数为 $4\times2=8$。(2) $\frac{\sqrt3}{4}a$。(3) $\dfrac{4\times78}{N_\text{A}\times(a\times10^{-7})^3}$。
+\item (1) 6（相邻晶胞体心的 \ce{Cs+} 位于上下前后左右，距离为 $a$）。(2) $\frac{\sqrt3}{2}a$（体心到顶点）。(3) $\rho=\dfrac{168.5}{N_\text{A}\times(a\times10^{-10})^3}$ g·cm$^{-3}$（每个晶胞含 1 个 CsCl）。
+\item (1) 体心；棱心（以 Ti 为顶点时，原体心的 Ti 成为新顶点，原顶点的 Ca 落在新晶胞体心，原面心的 O 落在新晶胞棱心，组成仍为 \ce{CaTiO3}：Ti $8\times\frac18=1$，Ca 1，O $12\times\frac14=3$）。(2) $\frac a2$（体心到面心）；$\frac{\sqrt2}{2}a$（顶点到相邻面心）。
+\item (1) A、B 各 4 个。A：$z=0$、1 层的四个顶点即晶胞 8 个顶点（$8\times\frac18=1$），中心即上下两个面心（$2\times\frac12=1$），$z=\frac12$ 层边中点即 4 个侧面面心（$4\times\frac12=2$），共 4 个；B：$z=0$、1 层边中点即 8 条水平棱的中点（$8\times\frac14=2$），$z=\frac12$ 层的四个顶点即 4 条竖直棱的中点（$4\times\frac14=1$），中心为体心（1），共 4 个。(2) 与 \ce{NaCl} 型相同（A 相当于 \ce{Cl-}，B 相当于 \ce{Na+}）；B 的配位数为 6（如体心 B 的前后左右上下各有一个 A，距离均为 $\frac a2$）。(3) 投影图为 $3\times3$ 的九个点（四个顶点、四条边中点和中心），每个点上都同时有 A 和 B 的投影，如图~\ref{fig:08-projz}(c)；不同高度的粒子重叠在同一点，且各点对应的粒子被共有的情况不同，所以不能由投影点数直接求个数。
+\item (1) $\mathrm{sp}^2$；h-BN 虽也有层状共轭结构，但 B、N 不等同、电子分布和能级与石墨不同，不能提供像石墨那样容易移动的载流电子，所以不导电。详细能带解释超出高中，本题以已给不导电事实认识“层状结构不必都导电”。(2) $\mathrm{sp}^3$；4。(3) c-BN 是由强共价键构成的空间网络，抵抗形变能力强，故硬度大。不能仅凭两个不同种类的键的键长确定晶体熔点：还要考虑键的类型、整个结构及是否先转变或分解；常压下金刚石也不经历简单的普通熔化过程。(4) 每个晶胞含 4 个 BN：$\rho=\dfrac{4\times24.8}{6.02\times10^{23}\times(361.5\times10^{-10})^3}\ \text{g·cm}^{-3}\approx3.49$ g·cm$^{-3}$。
+\item (1) \ce{Cu3Au}（Au：$8\times\frac18=1$；Cu：$6\times\frac12=3$）。(2) \ce{Cu3AuH8}：面心立方晶胞共有 8 个四面体空隙，全部被 H 占据，每个晶胞含 8 个 H。(3) 每个晶胞含 8 个 H，质量为 $\dfrac{8\times1}{N_\text{A}}$ g，氢的密度为 $\dfrac{8}{N_\text{A}\cdot a^3}$ g·cm$^{-3}$。
+\end{jiexilist}

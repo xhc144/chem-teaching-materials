@@ -1,0 +1,834 @@
+% ============================================================
+% 第9章 有机化合物的结构特点与烃（必修二第七章、选必3第一、二章）
+% ============================================================
+% ---- 本章专用样式与宏（前缀 c9 / \cnine） ----
+\definecolor{c9red}{RGB}{190,40,40}
+\definecolor{c9blue}{RGB}{0,84,147}
+\tikzset{
+  c9bond/.style={line width=0.6pt},
+  c9atom/.style={font=\small,inner sep=1pt},
+  c9mk/.style={font=\scriptsize\itshape,text=c9red,inner sep=0.5pt},
+  c9break/.style={c9red,densely dashed,line width=0.8pt},
+  c9new/.style={c9blue,line width=1.3pt},
+  c9sym/.style={gray,dash pattern=on 3pt off 2pt,line width=0.5pt},
+  c9lab/.style={font=\small,align=center}
+}
+% 苯环：\cninebenz[半径]{取代位/文字,...}{标记位/文字,...}，在 tikzpicture 中使用
+\newcommand{\cninebenz}[3][0.5]{%
+  \draw[c9bond] (90:#1) \foreach \k in {1,...,5}{ -- ({90-60*\k}:#1)} -- cycle;
+  \draw[c9bond] (0,0) circle ({0.6*#1});
+  \foreach \p/\t in {#2}{%
+    \pgfmathtruncatemacro\cnineang{150-60*\p}%
+    \pgfmathtruncatemacro\cnineanc{mod(\cnineang+540,360)}%
+    \draw[c9bond] (\cnineang:#1) -- (\cnineang:{1.5*#1}) node[c9atom,anchor=\cnineanc]{\t};}
+  \foreach \p/\t in {#3}{\node[c9mk] at ({150-60*\p}:{1.4*#1}) {\t};}
+}
+% 楔形键（指向读者）
+\newcommand{\cninewedge}[2]{\fill ($(#1)!0.22cm!(#2)$) -- ($($(#2)!0.22cm!(#1)$)!0.07cm!90:(#1)$) -- ($($(#2)!0.22cm!(#1)$)!0.07cm!-90:(#1)$) -- cycle;}
+\newcommand{\cninesk}[1]{{\setchemfig{atom sep=1.65em}\small\chemfig{#1}}}
+
+\chapter{有机物的结构与烃}
+
+高一我们认识了甲烷、乙烯、苯、乙醇、乙酸等几种有机物，知道有机物的种类远远多于无机物。本章回答两个问题：有机物为什么这么多，怎样弄清一种有机物的结构。我们先从碳原子的成键特点和杂化方式出发，认识有机物的空间结构和表示方法；再系统学习同分异构现象，这是本章的重点，也是后面书写有机物结构的基本功；然后介绍分离提纯和测定结构的方法；最后学习烷烃、烯烃、炔烃和芳香烃的结构与性质。广东卷第20题（有机综合题）每年都考官能团名称、核磁共振氢谱、同分异构体的数目或结构、碳原子杂化与共面（2024年第20题(2)、2025年第20题(2)(4)、2026年第20题(2)(3)），选择题也常考陌生有机物的结构与性质（2024年第9题）。
+
+\section{碳原子的成键特点与分子的空间结构}
+
+\subsection{从甲烷、乙烯和苯说起}
+回顾高一学过的三种烃。甲烷 \ce{CH4} 中，碳原子与 4 个氢原子各形成 1 个共价键，分子呈正四面体；乙烯 \ce{CH2=CH2} 中两个碳原子之间是碳碳双键，6 个原子在同一平面内；苯 \ce{C6H6} 的 6 个碳原子连成平面正六边形，6 个碳碳键完全相同，键长介于典型碳碳单键与双键之间。
+
+这三种分子体现了碳原子成键的共同特点。碳原子最外层有 4 个电子，不容易得到或失去电子，通常与其他原子形成 4 个共价键（“碳四价”）。碳原子之间可以形成单键、双键或三键；许多碳原子可以连成长短不一的链，链上还可以带支链，链的两端也可以连成环（图~\ref{fig:09-skel}）。碳原子还能与 H、O、N、卤素等原子成键。原子数目相同时，连接方式就有很多种，这是有机物种类繁多的根本原因。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \node at (0,0) {\cninesk{C-C}};
+  \node at (1.6,0) {\cninesk{C=C}};
+  \node at (3.2,0) {\cninesk{C~C}};
+  \node[c9lab] at (1.6,-0.75) {(a) 碳碳单键、双键、三键};
+  \node at (6.4,0) {\cninesk{C-C-C-C-C}};
+  \node at (9.6,0.25) {\cninesk{C-C(-[:90]C)-C-C}};
+  \node at (12.4,0) {\cninesk{*6(------)}};
+  \node[c9lab] at (6.4,-0.75) {(b) 直链};
+  \node[c9lab] at (9.6,-0.75) {(c) 带支链};
+  \node[c9lab] at (12.4,-0.75) {(d) 环状};
+\end{tikzpicture}}{碳原子之间的成键方式与碳骨架（只画出碳原子，氢原子省略）\label{fig:09-skel}}
+
+\subsection{碳原子的杂化方式与空间构型}
+第 7 章用杂化轨道理论解释了分子的空间结构。有机物中碳原子的杂化方式只有三种，可以由碳原子形成的 $\sigma$ 键数目（即与它直接相连的原子数）来判断：
+\begin{itemize}
+\item 碳原子连 4 个原子（全是单键）：$\mathrm{sp}^3$ 杂化，4 个 $\sigma$ 键指向正四面体的 4 个顶点，键角约 109°28$'$，如甲烷和各种饱和碳原子。
+\item 碳原子连 3 个原子（有 1 个双键）：$\mathrm{sp}^2$ 杂化，3 个 $\sigma$ 键在同一平面内，夹角约 120°；未参与杂化的 p 轨道垂直于这个平面，与相邻原子的 p 轨道“肩并肩”重叠形成 $\pi$ 键，如乙烯碳、苯环碳、羰基碳。
+\item 碳原子连 2 个原子（有 1 个三键或 2 个双键）：sp 杂化，2 个 $\sigma$ 键在一条直线上，夹角 180°；2 个未杂化的 p 轨道形成 2 个 $\pi$ 键，如乙炔中的碳。
+\end{itemize}
+
+\tu{\begin{tikzpicture}[font=\small]
+  % 甲烷
+  \begin{scope}
+    \node[c9atom] (C) at (0,0) {C};
+    \node[c9atom] (H1) at (0,1.05) {H};
+    \node[c9atom] (H2) at (-0.95,-0.5) {H};
+    \node[c9atom] (H3) at (0.35,-0.95) {H};
+    \node[c9atom] (H4) at (0.95,-0.25) {H};
+    \draw[c9bond] (C)--(H1); \draw[c9bond] (C)--(H2);
+    \cninewedge{C}{H3}
+    \draw[c9bond,densely dashed] (C)--(H4);
+    \draw[gray!60,very thin] (H1)--(H2)--(H3)--(H4)--(H1) (H1)--(H3);
+    \node[c9lab] at (0,-1.55) {甲烷：$\mathrm{sp}^3$\\正四面体，109°28$'$};
+  \end{scope}
+  % 乙烯
+  \begin{scope}[xshift=3.6cm]
+    \fill[c9blue!7] (-1.25,-0.85)--(1.0,-0.85)--(1.25,0.85)--(-1.0,0.85)--cycle;
+    \node[c9atom] (A) at (-0.4,0) {C}; \node[c9atom] (B) at (0.4,0) {C};
+    \draw[c9bond] ([yshift=1.5pt]A.east)--([yshift=1.5pt]B.west);
+    \draw[c9bond] ([yshift=-1.5pt]A.east)--([yshift=-1.5pt]B.west);
+    \foreach \a/\n in {150/h1,210/h2}{\node[c9atom] (\n) at ($(A)+(\a:0.75)$) {H}; \draw[c9bond] (A)--(\n);}
+    \foreach \a/\n in {30/h3,-30/h4}{\node[c9atom] (\n) at ($(B)+(\a:0.75)$) {H}; \draw[c9bond] (B)--(\n);}
+    \node[c9lab] at (0,-1.55) {乙烯：$\mathrm{sp}^2$，约 120°\\6 个原子共平面};
+  \end{scope}
+  % 乙炔
+  \begin{scope}[xshift=7.0cm]
+    \node[c9atom] (h1) at (-1.3,0) {H}; \node[c9atom] (A) at (-0.4,0) {C};
+    \node[c9atom] (B) at (0.4,0) {C}; \node[c9atom] (h2) at (1.3,0) {H};
+    \draw[c9bond] (h1)--(A); \draw[c9bond] (B)--(h2);
+    \foreach \d in {-2pt,0pt,2pt}{\draw[c9bond] ([yshift=\d]A.east)--([yshift=\d]B.west);}
+    \draw[c9sym] (-1.7,0)--(-1.5,0) (1.5,0)--(1.7,0);
+    \node[font=\scriptsize] at (0,0.35) {180°};
+    \node[c9lab] at (0,-1.55) {乙炔：sp\\4 个原子共直线};
+  \end{scope}
+  % 苯
+  \begin{scope}[xshift=10.6cm]
+    \fill[c9blue!7] (-1.25,-1.0)--(1.05,-1.0)--(1.25,1.0)--(-1.05,1.0)--cycle;
+    \draw[c9bond] (90:0.5) \foreach \k in {1,...,5}{ -- ({90-60*\k}:0.5)} -- cycle;
+    \draw[c9bond] (0,0) circle (0.3);
+    \foreach \k in {0,...,5}{\draw[c9bond] ({90-60*\k}:0.5)--({90-60*\k}:0.72); \node[c9atom,font=\scriptsize] at ({90-60*\k}:0.86) {H};}
+    \node[c9lab] at (0,-1.55) {苯：$\mathrm{sp}^2$，120°\\12 个原子共平面};
+  \end{scope}
+\end{tikzpicture}}{四种基本分子的空间构型（模型示意）\label{fig:09-shape}}
+
+读图~\ref{fig:09-shape} 时注意立体结构在纸面上的画法：甲烷中实线表示在纸面上的键，楔形实线表示伸向读者的键，虚线表示伸向纸面后方的键，4 个 H 构成正四面体的顶点（灰色细线）。浅蓝色的平行四边形表示分子所在的平面：乙烯的 2 个碳原子和 4 个氢原子都在这个平面内；苯的 6 个碳原子和 6 个氢原子也都在一个平面内，环中的圆圈表示 6 个碳原子共有的大 $\pi$ 键（9.5.4 节再细讲）。乙炔的 4 个原子排在一条直线上。后面判断复杂分子中原子是否共面、共线，都要以这四种分子为“模板”。
+
+\begin{liti}[基础]
+1-丁烯-3-炔的结构简式为 \ce{CH2=CH-C#CH}。指出各碳原子的杂化方式，并求 1 个分子中 $\sigma$ 键和 $\pi$ 键的数目。
+\tcblower
+\silu 先数每个碳连了几个原子，再按“单键全是 $\sigma$ 键，双键含 1 个 $\pi$ 键，三键含 2 个 $\pi$ 键”数键。\\
+\jie 从左到右，C1（连 2 个 H 和 C2）、C2（连 H、C1、C3）各连 3 个原子，为 $\mathrm{sp}^2$ 杂化；C3（连 C2、C4）、C4（连 C3、H）各连 2 个原子，为 sp 杂化。$\sigma$ 键：C—H 键 4 个，C—C 之间 3 个，共 7 个；$\pi$ 键：双键 1 个、三键 2 个，共 3 个。
+\end{liti}
+
+\section{有机物的表示方法与分类}
+
+\subsection{有机物结构的几种表示方法}
+同一种有机物可以用几种式子来表示，它们给出的信息详略不同。\textbf{分子式}只表示分子由哪些原子组成、各有几个，如 \ce{C4H10O}，看不出原子的连接方式。\textbf{结构式}把每一个共价键都用短线画出来，信息最完整，但书写繁琐。\textbf{结构简式}省略 C—H 键和碳链上的碳碳单键，把同一个碳上的氢合并写，如 \ce{(CH3)2CHCH2OH}；碳碳双键、三键不能省略。\textbf{键线式}只画碳骨架：每个拐点和端点代表 1 个碳原子，碳上的氢原子不写，其他原子（O、N、卤素等）和它们所连的氢要写出来。图~\ref{fig:09-repr} 把同一物质的几种写法放在一起对照。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \node[anchor=west] at (0,0) {\ce{C4H10O}};
+  \node at (3.6,0) {{\setchemfig{atom sep=1.6em}\chemfig{H-C(-[:90]H)(-[:-90]H)-C(-[:90]H)(-[:-90,1.9]C(-[:180]H)(-[:0]H)-[:-90]H)-C(-[:90]H)(-[:-90]H)-O-H}}};
+  \node at (7.6,0) {\ce{(CH3)2CHCH2OH}};
+  \node at (10.3,0.1) {{\setchemfig{atom sep=1.6em}\chemfig{-[:-30](-[:-90])-[:30]-[:-30]OH}}};
+  \foreach \x/\t in {0.6/分子式,3.6/结构式,7.6/结构简式,10.3/键线式}{\node[c9lab,font=\small\heiti] at (\x,1.6) {\t};}
+  \draw[gray!50] (-0.2,-1.95)--(11.4,-1.95);
+  \node[anchor=west] at (0,-2.5) {\ce{C4H8}};
+  \node at (3.6,-2.5) {\ce{CH2=CH-CH2-CH3}};
+  \node at (7.6,-2.5) {\ce{CH2=CHCH2CH3}};
+  \node at (10.3,-2.4) {{\setchemfig{atom sep=1.6em}\chemfig{=[:30]-[:-30]-[:30]}}};
+  \node[font=\scriptsize,text=graytext,anchor=west] at (-0.1,-3.1) {第一行：2-甲基-1-丙醇；第二行：1-丁烯（结构式中只写出碳链部分）};
+\end{tikzpicture}}{同一物质的几种表示方法\label{fig:09-repr}}
+
+从键线式还原分子式时，按“碳四价”补氢：某个碳在图中画出了几根键，就补上 $4-\text{键数}$ 个氢（双键算 2 根，三键算 3 根）。例如图~\ref{fig:09-repr} 中 2-甲基-1-丙醇的键线式，左端点和下端点的碳只画了 1 根键，各补 3 个 H；三叉点的碳画了 3 根键，补 1 个 H；与 OH 相连的拐点碳画了 2 根键，补 2 个 H。合计 4 个 C、9 个与碳相连的 H，再加羟基，分子式为 \ce{C4H10O}。
+
+\subsection{官能团与有机物的分类}
+按碳骨架，有机物分为\textbf{链状化合物}和\textbf{环状化合物}；环状化合物又分为脂环化合物（如环己烷）和芳香族化合物（含苯环）。含苯环的烃叫芳香烃。
+
+按官能团分类更常用。决定一类有机物特殊性质的原子或原子团叫\textbf{官能团}。高一学过乙烯中的碳碳双键、乙醇中的羟基、乙酸中的羧基，乙烯能使溴水褪色、乙醇能与钠反应、乙酸有酸性，就是由这些官能团决定的。常见官能团见下表（卤代烃及表中右栏各类物质将在下一章学习）：
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+类别 & 官能团 & 类别 & 官能团 \\
+\midrule
+烯烃 & 碳碳双键 \ce{C=C} & 醛 & 醛基 \ce{-CHO} \\
+炔烃 & 碳碳三键 \ce{C#C} & 酮 & 酮羰基 \ce{C=O} \\
+卤代烃 & 碳卤键 \ce{-X} & 羧酸 & 羧基 \ce{-COOH} \\
+醇 & （醇）羟基 \ce{-OH}（连在饱和碳上） & 酯 & 酯基 \ce{-COOR} \\
+酚 & （酚）羟基 \ce{-OH}（直接连苯环） & 胺 & 氨基 \ce{-NH2} \\
+醚 & 醚键 \ce{-O-} & 酰胺 & 酰胺基 \ce{-CONH-} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+书写同分异构体时，常要先判断分子中有几个双键或环，为此引入\textbf{不饱和度} $\Omega$。以链状烷烃 \ce{C_nH_{2n+2}} 为基准，分子每多一个双键或一个环，就少 2 个氢原子，$\Omega$ 增加 1；一个三键相当于两个双键，$\Omega=2$；一个苯环相当于一个环和三个双键，$\Omega=4$。对于只含 C、H、O 的分子 \ce{C_xH_yO_z}：
+\[
+\Omega=\frac{2x+2-y}{2}
+\]
+（氧原子是二价的，插进分子不改变氢原子数，所以不计入；卤素原子当作氢原子计入 $y$。）例如苯 \ce{C6H6} 的 $\Omega=\frac{2\times6+2-6}{2}=4$；乙酸 \ce{C2H4O2} 的 $\Omega=1$，对应 1 个 \ce{C=O}。
+
+\begin{liti}[基础]
+某有机物的键线式为 \cninesk{*6(=(-)----)}，写出它的分子式并计算不饱和度。
+\tcblower
+\jie 环上 6 个碳加 1 个甲基碳，共 7 个碳。逐个补氢：甲基碳 3 个 H；与甲基相连的双键碳已有 4 根键（双键 2 根、单键 2 根），0 个 H；另一个双键碳 1 个 H；其余 4 个环碳各 2 个 H。共 $3+0+1+8=12$ 个 H，分子式 \ce{C7H12}。$\Omega=\frac{2\times7+2-12}{2}=2$，对应 1 个环和 1 个双键，与结构一致。
+\end{liti}
+
+\section{同分异构现象}
+
+\subsection{同分异构体及其类型}
+高一学过正丁烷和异丁烷：分子式都是 \ce{C4H10}，碳原子的连接方式不同，沸点分别为 $-0.5$~℃ 和 $-11.7$~℃，是两种物质。化合物具有相同的分子式但结构不同的现象叫\textbf{同分异构现象}，这些化合物互为\textbf{同分异构体}。同分异构体的性质不同，所以只给分子式往往不能确定是哪种物质。
+
+同分异构可以分成两大类。一类是原子的连接顺序不同，叫构造异构，包括：①\textbf{碳架异构}，碳骨架不同，如正丁烷与异丁烷；②\textbf{位置异构}，官能团或取代基在碳链、苯环上的位置不同，如 1-丁烯与 2-丁烯；③\textbf{官能团异构}，官能团种类不同，如乙醇 \ce{CH3CH2OH} 与二甲醚 \ce{CH3OCH3}。另一类是原子连接顺序相同、空间排列不同，叫立体异构，包括\textbf{顺反异构}（9.3.5 节）和对映异构（第 7 章学过的手性分子）。高考中“不考虑立体异构”时，只数构造异构。
+
+\subsection{碳架异构的有序枚举}
+碳架异构是其他各类异构的基础：位置异构要先有碳架才能放官能团。下面从 \ce{C4H10} 开始，学习怎样不重复、不遗漏地写出所有碳架。
+
+\ce{C4H10} 的 4 个碳排成一条链，得到正丁烷。再从链上取下 1 个碳作支链，主链剩 3 个碳。这个甲基只能连在中间的碳上；如果连在端点碳上，碳链只是“拐了个弯”，最长的链仍是 4 个碳，还是正丁烷。所以 \ce{C4H10} 只有 2 种。\ce{C5H12} 用同样的办法：主链 5 个碳，1 种；主链 4 个碳，甲基只能放在 2 号碳（放在 3 号碳与 2 号碳相同，从另一端数就是 2 号）；主链 3 个碳，剩下 2 个碳若作乙基放在中间碳上，最长链会变成 4 个碳，与上一种重复，只能作 2 个甲基都连在中间碳上，得到新戊烷。共 3 种（图~\ref{fig:09-c4c5}）。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \node[c9lab,anchor=west] at (-0.2,1.2) {\heiti \ce{C4H10}};
+  \node at (0.9,0.3) {\cninesk{C-C-C-C}};
+  \node at (3.2,0.5) {\cninesk{C-C(-[:90]C)-C}};
+  \node[c9lab] at (0.9,-0.8) {主链 4 个碳\\正丁烷};
+  \node[c9lab] at (3.2,-0.8) {主链 3 个碳\\异丁烷};
+  \draw[gray] (4.5,1.4)--(4.5,-1.3);
+  \node[c9lab,anchor=west] at (4.7,1.2) {\heiti \ce{C5H12}};
+  \node at (6.2,0.3) {\cninesk{C-C-C-C-C}};
+  \node at (9.1,0.5) {\cninesk{C-C(-[:90]C)-C-C}};
+  \node at (11.8,0.3) {\cninesk{C-C(-[:90]C)(-[:-90]C)-C}};
+  \node[c9lab] at (6.2,-0.8) {主链 5 个碳\\正戊烷};
+  \node[c9lab] at (9.1,-0.8) {主链 4 个碳\\异戊烷};
+  \node[c9lab] at (11.8,-0.8) {主链 3 个碳\\新戊烷};
+  \draw[-Stealth,gray] (7.3,1.2)--(8.1,1.2) node[midway,above,font=\scriptsize]{主链缩短};
+  \draw[-Stealth,gray] (10.1,1.2)--(10.9,1.2) node[midway,above,font=\scriptsize]{主链缩短};
+\end{tikzpicture}}{\ce{C4H10}、\ce{C5H12} 的碳架枚举（只画碳原子）\label{fig:09-c4c5}}
+
+碳原子再多一些，就需要把这个过程整理成固定的顺序。以 \ce{C6H14} 为例（图~\ref{fig:09-c6}），按下面三条依次进行：
+\begin{enumerate}
+\item \textbf{主链由长到短}：先写最长的直链，再依次让主链少 1 个、2 个碳……
+\item \textbf{支链由整到散}：从主链上取下的碳，先作为一个整体（如乙基），再拆成几个小支链（如两个甲基）。
+\item \textbf{位置由心到边}：支链先放在主链中间的碳上，再逐步向一端移动，移到对称中心的另一侧就停止（再移就和前面重复），而且不能移到使主链变长的位置。
+\end{enumerate}
+
+\tu{\small
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{p{2.6cm}ccc}
+\toprule
+主链与支链 & \multicolumn{3}{c}{支链位置（由心到边）} \\
+\midrule
+主链 6 个碳 & \cninesk{C-C-C-C-C-C} & & \\
+& 己烷 & & \\[2pt]
+主链 5 个碳，\newline 1 个甲基 & \cninesk{C-C-C(-[:90]C)-C-C} & \cninesk{C-C(-[:90]C)-C-C-C} & \cninesk{C(-[:90]C)-C-C-C-C}\\
+& 3-甲基戊烷 & 2-甲基戊烷 & \textcolor{c9red}{$\times$ 主链变为 6 个碳}\\[2pt]
+主链 4 个碳，\newline 2 个碳作支链 & \cninesk{C-C(-[:90]C-[:90]C)-C-C} & \cninesk{C-C(-[:90]C)(-[:-90]C)-C-C} & \cninesk{C-C(-[:90]C)-C(-[:90]C)-C} \\
+& \textcolor{c9red}{$\times$ 整：乙基使主链变长} & 散：2,2-二甲基丁烷 & 散：2,3-二甲基丁烷 \\
+\bottomrule
+\end{tabular}}{\ce{C6H14} 碳架的有序枚举（打 $\times$ 的与前面的结构重复）\label{fig:09-c6}}
+
+图~\ref{fig:09-c6} 的读法：每一行的主链长度相同，行与行之间主链逐次缩短；同一行中从左向右移动支链。主链 5 个碳时，甲基放在 3 号碳（中心）得 3-甲基戊烷，放在 2 号碳得 2-甲基戊烷；放在 1 号碳则主链变成 6 个碳，回到己烷，删去。主链 4 个碳时，2 个碳若整体作乙基放在 2 号碳上，从乙基末端数起最长链有 5 个碳，实际是 3-甲基戊烷，删去；拆成两个甲基，可以连在同一个碳上（2,2-）或两个相邻碳上（2,3-）。主链 3 个碳时，剩下的 3 个碳无论怎样连在中间碳上，最长链都会超过 3 个碳，不再有新结构。所以 \ce{C6H14} 共 5 种。
+
+为什么这样做能不重不漏？每种碳架的“最长碳链有几个碳”是确定的，所以按主链长度分行，不同行之间不会重复；在同一行里，支链的组成和位置都按顺序穷举了，不会遗漏；位置只移到对称中心为止，并删去使主链变长的位置，同一行内也不会重复。由此还可以得到两条常用的判断：甲基不能连在主链的 1 号碳上，乙基不能连在 2 号碳上（否则主链变长）。
+
+\begin{liti}[典型]
+分子式为 \ce{C7H16}、主链有 5 个碳原子的烷烃有几种？写出它们的名称。
+\tcblower
+\silu 主链 5 个碳，还有 2 个碳作支链。按“由整到散”：先作 1 个乙基，再拆成 2 个甲基。\\
+\jie ①乙基：只能放在 3 号碳上（放在 2 号碳会使主链变成 6 个碳），得 3-乙基戊烷。②两个甲基：同在一个碳上，可在 2 号或 3 号碳，得 2,2-二甲基戊烷、3,3-二甲基戊烷；在不同碳上，可在 2,3 号或 2,4 号碳，得 2,3-二甲基戊烷、2,4-二甲基戊烷（3,4 号与 2,3 号从另一端数相同）。共 5 种。\\
+\dianbo 按同样的方法可以求出 \ce{C7H16} 共有 9 种同分异构体（主链 7 个碳 1 种，6 个碳 2 种，5 个碳 5 种，4 个碳 1 种）。
+\end{liti}
+
+\subsection{等效氢与一元取代物}
+烷烃分子中的 1 个氢原子被氯原子取代，叫一元取代（一氯代）。\ce{C3H8} 中氢原子有 8 个，但一氯代物只有 \ce{CH3CH2CH2Cl} 和 \ce{CH3CHClCH3} 两种。原因是：如果把分子翻转或旋转后，两个氢原子的位置可以互换而分子看起来完全一样，那么取代这两个氢原子得到的是同一种物质，这样的氢原子叫\textbf{等效氢}。一元取代物的种数就等于等效氢的种数。
+
+判断等效氢有三条依据：
+\begin{enumerate}
+\item 同一个甲基上的 3 个氢原子通常等效；本章按高中常用简化模型，不讨论手性环境中同一 \ce{CH2} 上两氢的精细差别；
+\item 连在同一个碳原子上的几个甲基，它们的氢原子等效；
+\item 处于对称位置（关于分子的对称轴或对称面）的碳原子上的氢原子等效。
+\end{enumerate}
+
+\tu{\begin{tikzpicture}[font=\small]
+  % 异戊烷
+  \begin{scope}
+    \node[c9atom] (a1) at (0,0.55) {\ce{CH3}}; \node[c9atom] (a2) at (0,-0.55) {\ce{CH3}};
+    \node[c9atom] (b) at (1.0,0) {CH}; \node[c9atom] (c) at (2.0,0) {\ce{CH2}}; \node[c9atom] (d) at (3.0,0) {\ce{CH3}};
+    \draw[c9bond] (a1)--(b) (a2)--(b) (b)--(c) (c)--(d);
+    \node[c9mk] at (-0.45,0.55) {a}; \node[c9mk] at (-0.45,-0.55) {a};
+    \node[c9mk] at (1.0,0.32) {b}; \node[c9mk] at (2.0,0.32) {c}; \node[c9mk] at (3.0,0.32) {d};
+    \node[c9lab] at (1.4,-1.6) {异戊烷：a、b、c、d\\4 种，一氯代物 4 种};
+  \end{scope}
+  % 新戊烷
+  \begin{scope}[xshift=5.0cm]
+    \node[c9atom] (C) at (0,0) {C};
+    \foreach \a/\n in {90/n1,0/n2,270/n3,180/n4}{\node[c9atom] (\n) at (\a:0.75) {\ce{CH3}}; \draw[c9bond] (C)--(\n);}
+    \foreach \a in {90,0,270,180}{\node[c9mk] at ($(\a:0.75)+(\a+50:0.42)$) {a};}
+    \node[c9lab] at (0,-1.6) {新戊烷：只有 a\\1 种，一氯代物 1 种};
+  \end{scope}
+  % 甲苯
+  \begin{scope}[xshift=8.4cm,yshift=-0.15cm]
+    \cninebenz{1/\ce{CH3}}{2/b,6/b,3/c,5/c,4/d}
+    \node[c9mk] at (0.42,1.08) {a};
+    \draw[c9sym] (0,1.3)--(0,-0.75);
+    \node[c9lab] at (0,-1.45) {甲苯：a、b、c、d\\4 种，一氯代物 4 种};
+  \end{scope}
+  % 对二甲苯
+  \begin{scope}[xshift=11.6cm,yshift=-0.15cm]
+    \cninebenz{1/\ce{CH3},4/\ce{CH3}}{2/b,3/b,5/b,6/b}
+    \node[c9mk] at (0.42,1.08) {a}; \node[c9mk] at (0.42,-1.08) {a};
+    \draw[c9sym] (0,1.25)--(0,-1.25); \draw[c9sym] (-0.95,0)--(0.95,0);
+    \node[c9lab] at (0,-1.45) {对二甲苯：a、b\\2 种，一氯代物 2 种};
+  \end{scope}
+\end{tikzpicture}}{用对称性判断等效氢（虚线为对称轴，同一字母表示等效氢）\label{fig:09-eqH}}
+
+读图~\ref{fig:09-eqH}：异戊烷 \ce{(CH3)2CHCH2CH3} 中，左边两个甲基连在同一个碳上，6 个 H 等效（依据②），记为 a；CH、\ce{CH2}、右端 \ce{CH3} 上的 H 各为一种（依据①），所以有 4 种等效氢。新戊烷 \ce{C(CH3)4} 中 4 个甲基连在同一个碳上，分子高度对称，12 个 H 全部等效。甲苯有一条通过甲基和对位碳的对称轴，甲基两侧的邻位（b）、间位（c）分别等效，再加上对位（d）和甲基上的 H（a），共 4 种。对二甲苯有两条对称轴，苯环上 4 个 H 等效，两个甲基的 H 也等效，只有 2 种。
+
+用等效氢可以得到常见烃基的种数，烃基就是烃分子去掉 1 个 H 剩下的部分：丙烷有 2 种 H，所以丙基 \ce{-C3H7} 有 2 种；正丁烷、异丁烷各有 2 种 H，丁基 \ce{-C4H9} 有 4 种；正戊烷 3 种、异戊烷 4 种、新戊烷 1 种，戊基 \ce{-C5H11} 有 8 种。由此，\ce{C4H9Cl}、\ce{C4H9OH}（醇）、\ce{C4H9CHO}（醛）、\ce{C4H9COOH}（羧酸）都各有 4 种，\ce{C5H11OH}（醇）有 8 种，这种方法叫\textbf{基元法}。
+
+\begin{liti}[基础]
+写出分子式为 \ce{C4H9Cl} 的所有同分异构体的结构简式（不考虑立体异构）。
+\tcblower
+\silu 先写碳架，再在每种碳架上找等效氢，把 Cl 放在每一种等效氢的位置上。\\
+\jie 碳架为正丁烷时，有 2 种 H：\ce{CH3CH2CH2CH2Cl}、\ce{CH3CH2CHClCH3}；碳架为异丁烷时，有 2 种 H：\ce{(CH3)2CHCH2Cl}、\ce{(CH3)3CCl}。共 4 种。\\
+\xianjing \ce{CH3CHClCH2CH3} 与 \ce{CH3CH2CHClCH3} 是同一种物质，从左往右或从右往左读而已。
+\end{liti}
+
+二元取代物（如二氯代物）可以用\textbf{定一移一法}：先把一个取代基固定在某种等效氢的位置上，再移动另一个，然后换下一个固定位置，已经数过的组合不再重复数。例如 \ce{C3H6Cl2}：先把一个 Cl 固定在 1 号碳上，另一个 Cl 可以在 1、2、3 号碳上，得 \ce{CHCl2CH2CH3}、\ce{CH2ClCHClCH3}、\ce{CH2ClCH2CH2Cl}；再把一个 Cl 固定在 2 号碳上，另一个 Cl 只需再放 2 号碳（放 1、3 号已数过），得 \ce{CH3CCl2CH3}。共 4 种。
+
+\subsection{位置异构与官能团异构}
+碳架确定以后，官能团或取代基放在不同位置，就得到\textbf{位置异构}体。在链上，例如 \ce{CH2=CHCH2CH3}（1-丁烯）与 \ce{CH3CH=CHCH3}（2-丁烯），\ce{CH3CH2CH2OH}（1-丙醇）与 \ce{CH3CH(OH)CH3}（2-丙醇）。确定位置时同样要用等效氢的思想：在某个碳架上放一个 \ce{-OH}，有几种等效氢就有几种位置。
+
+在苯环上，两个取代基的相对位置有邻、间、对三种（图~\ref{fig:09-benz2}），苯环可以翻转、旋转，其他画法都与这三种之一相同。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \begin{scope}\cninebenz{1/$X$,2/$X$}{1/{}}\node[c9lab] at (0,-1.15) {邻位（1,2-）};\end{scope}
+  \begin{scope}[xshift=3.2cm]\cninebenz{1/$X$,3/$X$}{1/{}}\node[c9lab] at (0,-1.15) {间位（1,3-）};\end{scope}
+  \begin{scope}[xshift=6.4cm]\cninebenz{1/$X$,4/$X$}{1/{}}\node[c9lab] at (0,-1.15) {对位（1,4-）};\end{scope}
+\end{tikzpicture}}{苯环上的二取代物（$X$ 表示取代基，未画出的位置连 H）\label{fig:09-benz2}}
+
+苯环上有三个取代基时，用“定二移一”：先按邻、间、对放好两个，再放第三个，并用对称性去重。三个取代基相同（$X$、$X$、$X$）时有 3 种；两个相同、一个不同（$X$、$X$、$Y$）时有 6 种（图~\ref{fig:09-benz3}）。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \begin{scope}[xshift=3.2cm,yshift=0cm]\cninebenz[0.42]{1/$X$,2/$X$,3/$X$}{1/{}}\end{scope}
+  \begin{scope}[xshift=5.4cm,yshift=0cm]\cninebenz[0.42]{1/$X$,2/$X$,4/$X$}{1/{}}\end{scope}
+  \begin{scope}[xshift=7.6cm,yshift=0cm]\cninebenz[0.42]{1/$X$,3/$X$,5/$X$}{1/{}}\end{scope}
+  \begin{scope}[xshift=0cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,2/$X$,3/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=2.2cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,2/$X$,4/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=4.8cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,3/$X$,2/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=7.0cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,3/$X$,4/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=9.2cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,3/$X$,5/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=11.8cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,4/$X$,2/$Y$}{1/{}}\end{scope}
+  \node[c9lab] at (5.4,-1.25) {(a) $X$、$X$、$X$：连、偏、均，共 3 种};
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt}] (-0.6,-4.0)--(2.8,-4.0) node[midway,below=4pt,font=\scriptsize]{两个 $X$ 邻位：2 种};
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt}] (4.2,-4.0)--(9.8,-4.0) node[midway,below=4pt,font=\scriptsize]{两个 $X$ 间位：3 种};
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt}] (11.2,-4.0)--(12.4,-4.0) node[midway,below=4pt,font=\scriptsize]{对位：1 种};
+  \node[c9lab] at (5.9,-4.85) {(b) $X$、$X$、$Y$：共 6 种};
+\end{tikzpicture}}{苯环上三取代物的枚举\label{fig:09-benz3}}
+
+图~\ref{fig:09-benz3}(b) 中：两个 $X$ 处于邻位时，苯环有一条对称轴，剩下 4 个位置只有 2 种，$Y$ 放上去得 2 种；两个 $X$ 处于间位时，剩下的位置有 3 种（两个 $X$ 之间、紧挨一个 $X$、与两个 $X$ 都相间），得 3 种；两个 $X$ 处于对位时，剩下 4 个位置都等效，得 1 种。合计 $2+3+1=6$ 种。三个取代基都不相同（$X$、$Y$、$Z$）时，先放 $X$、$Y$：邻位时剩下 4 个位置互不等效，得 4 种；间位时也得 4 种；对位时剩下 4 个位置两两等效，得 2 种，共 10 种。
+
+\textbf{官能团异构}是官能团种类不同。分子式相同时，常见的官能团异构有：
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+通式 & 可能的类别 & 实例（分子式相同） \\
+\midrule
+\ce{C_nH_{2n}}（$n\ge3$） & 烯烃、环烷烃 & \ce{CH2=CHCH3} 与环丙烷 \\
+\ce{C_nH_{2n-2}}（$n\ge4$） & 炔烃、二烯烃、环烯烃 & \ce{CH#CCH2CH3} 与 \ce{CH2=CH-CH=CH2} \\
+\ce{C_nH_{2n+2}O}（$n\ge2$） & 醇、醚 & \ce{CH3CH2OH} 与 \ce{CH3OCH3} \\
+\ce{C_nH_{2n}O}（$n\ge3$） & 醛、酮 & \ce{CH3CH2CHO} 与 \ce{CH3COCH3} \\
+\ce{C_nH_{2n}O2}（$n\ge2$） & 羧酸、酯 & \ce{CH3COOH} 与 \ce{HCOOCH3} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{顺反异构}
+2-丁烯 \ce{CH3CH=CHCH3} 有两种：两个甲基在双键同一侧的叫\textbf{顺式}，在两侧的叫\textbf{反式}（图~\ref{fig:09-cistrans}）。它们的沸点分别为 3.7~℃ 和 0.9~℃，是两种物质。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \node at (0,0) {{\setchemfig{atom sep=1.7em}\chemfig{C(-[:150]H_3C)(-[:-150]H)=C(-[:30]CH_3)(-[:-30]H)}}};
+  \node[c9lab] at (0,-1.15) {(a) 顺-2-丁烯};
+  \node at (3.9,0) {{\setchemfig{atom sep=1.7em}\chemfig{C(-[:150]H_3C)(-[:-150]H)=C(-[:30]H)(-[:-30]CH_3)}}};
+  \node[c9lab] at (3.9,-1.15) {(b) 反-2-丁烯};
+  \begin{scope}[xshift=7.8cm,scale=1.3]
+    \foreach \x in {0,1.1}{
+      \fill[c9blue!18] (\x,0.38) ellipse (0.17 and 0.36);
+      \fill[c9red!15] (\x,-0.38) ellipse (0.17 and 0.36);
+      \draw[thin] (\x,0.38) ellipse (0.17 and 0.36) (\x,-0.38) ellipse (0.17 and 0.36);
+      \fill (\x,0) circle (1.4pt);}
+    \draw[c9bond] (0,0)--(1.1,0);
+    \draw[c9blue,densely dotted,thick] (0.17,0.45) .. controls (0.55,0.62) .. (0.93,0.45);
+    \draw[c9blue,densely dotted,thick] (0.17,-0.45) .. controls (0.55,-0.62) .. (0.93,-0.45);
+    \node[font=\scriptsize] at (-0.33,0) {C}; \node[font=\scriptsize] at (1.43,0) {C};
+    \draw[-Stealth,gray] (1.75,0.35) arc (60:-240:0.18 and 0.4);
+    \node[c9lab,font=\scriptsize] at (2.6,0) {绕 $\sigma$ 键\\旋转};
+    \node[c9lab] at (0.9,-0.95) {(c) p 轨道肩并肩重叠};
+  \end{scope}
+\end{tikzpicture}}{2-丁烯的顺反异构与 $\pi$ 键示意（(c) 为模型示意）\label{fig:09-cistrans}}
+
+为什么双键两侧的基团不能转到另一侧？图~\ref{fig:09-cistrans}(c) 画出了双键中两个 $\mathrm{sp}^2$ 杂化碳原子未参与杂化的 p 轨道，它们互相平行，在 $\sigma$ 键的上方和下方肩并肩重叠，形成 $\pi$ 键。普通碳碳单键的 $\sigma$ 重叠绕键轴近似对称，通常可以转动（实际存在较小的转动能垒）；双键如果绕键轴旋转 90°，两个 p 轨道变得互相垂直，无法重叠，$\pi$ 键就断了，常温下没有足够的能量做到这一点。所以碳碳双键不能自由旋转，顺式和反式在通常条件下不能仅靠单键式转动互相转化。
+
+产生顺反异构需要满足两个条件：分子中有碳碳双键；\textbf{每个}双键碳原子上连着两个不同的原子或原子团。1-丁烯 \ce{CH2=CHCH2CH3} 的 1 号碳连着 2 个 H，2-甲基-2-丁烯 \ce{(CH3)2C=CHCH3} 的 2 号碳连着 2 个甲基，都没有顺反异构；2-丁烯、2-戊烯有顺反异构。
+
+\subsection{同分异构体的书写与计数}
+把前面的方法连起来，书写限定条件的同分异构体一般按这样的步骤进行：①由分子式计算不饱和度，结合题目条件确定含有哪些结构（苯环、双键、哪种官能团）；②把这些“必须有的结构”拿出来，数一数剩下几个碳，写出剩余部分的碳架；③把官能团或取代基放到碳架或苯环的不同位置上，用等效氢或对称性去重；④用题目的其他条件（如核磁共振氢谱的峰组数）逐个检验。
+
+\begin{liti}[典型]
+分子式为 \ce{C5H10} 的链状烯烃，不考虑顺反异构时有几种？考虑顺反异构时有几种？
+\tcblower
+\silu $\Omega=1$，链状，所以含 1 个碳碳双键。先写 \ce{C5H12} 的 3 种碳架，再在相邻两个碳之间放双键；每个碳最多形成 4 个键，季碳（连 4 个碳）不能再参与双键。\\
+\jie ①直链 C—C—C—C—C：双键在 1,2 号碳之间得 1-戊烯，在 2,3 号碳之间得 2-戊烯（3,4 位与 2,3 位相同）。②碳架 C—C(C)—C—C：双键可以在甲基碳与 2 号碳之间或 1,2 号碳之间（两者都得 2-甲基-1-丁烯），在 2,3 号碳之间（2-甲基-2-丁烯），在 3,4 号碳之间（3-甲基-1-丁烯）。③新戊烷碳架中心碳已连 4 个碳，不能形成双键。不考虑顺反异构共 5 种。5 种中只有 2-戊烯 \ce{CH3CH=CHCH2CH3} 的两个双键碳都连着不同的基团，有顺、反两种，所以考虑顺反异构时共 6 种。\\
+\xianjing 碳架 C—C(C)—C—C 中，甲基碳和 1 号碳都连在 2 号碳上，是等效的，双键放在“甲基碳—2 号碳”和“1 号碳—2 号碳”得到同一种物质，不要重复计数。
+\end{liti}
+
+\begin{liti}[综合]
+分子式为 \ce{C8H8O2}、含苯环且属于酯类的同分异构体共有几种？其中核磁共振氢谱有 4 组峰的是哪些？
+\tcblower
+\silu 不饱和度 $\Omega=\frac{2\times8+2-8}{2}=5$：苯环 4，酯基 1，其余均饱和。按“酸 $+$ 醇（酚）”拆分。\\
+\jie ①甲酸酯：\ce{HCOOCH2C6H5}（1 种）、\ce{HCOOC6H4CH3}（甲基在邻、间、对，3 种）；②乙酸苯酯 \ce{CH3COOC6H5}（1 种）；③苯甲酸甲酯 \ce{C6H5COOCH3}（1 种）。共 6 种。\\
+4 组峰：\ce{HCOOCH2C6H5} 有苯环上 3 种 H、\ce{CH2} 和 \ce{HCOO} 中的 H，共 5 组，不符；甲酸对甲基苯酯 \ce{HCOO-C6H4-CH3}（对位）有 \ce{HCOO}、苯环 2 种、\ce{CH3}，共 4 组，符合；邻位、间位异构体苯环上有 4 种 H，共 6 组，不符；\ce{CH3COOC6H5} 有 \ce{CH3} 和苯环 3 种，共 4 组，符合；\ce{C6H5COOCH3} 同理 4 组，符合。所以有 3 种。\\
+\xianjing 一取代苯环上有邻、间、对 3 种 H；对位二取代（两基团不同）苯环上只有 2 种 H。
+\end{liti}
+
+\begin{liti}[据2025年广东卷第20题(2)②改编]
+化合物 2a（苯乙烯，\ce{C8H8}）可与 \ce{H2O} 发生加成反应生成化合物Ⅰ。在Ⅰ的同分异构体中，同时含有苯环和醇羟基结构的共\tk{}种（含化合物Ⅰ，不考虑立体异构）。
+
+\tcblower
+\jieⅠ的分子式为 \ce{C8H10O}，除苯环外剩 2 个 C，均为饱和结构。醇羟基不能直接连在苯环上：①一个侧链：\ce{C6H5CH2CH2OH}、\ce{C6H5CH(OH)CH3}，2 种；②两个侧链 \ce{-CH3} 和 \ce{-CH2OH}：邻、间、对 3 种。共 5 种。“醇羟基”排除了酚（\ce{-OH} 直接连苯环），同时也要排除醚（如 \ce{C6H5CH2OCH3}）。
+\end{liti}
+
+\begin{liti}[据2026年广东卷第20题(3)改编]
+化合物Ⅲ的分子式为 \ce{C9H12O}。Ⅲ的同分异构体中，苯环上连有一个烷基且能与 \ce{FeCl3} 作用显色的共有\tk{}种。
+
+\tcblower
+\jie 能与 \ce{FeCl3} 显色说明含酚羟基（\ce{-OH} 直接连在苯环上，下一章学习）。除去 \ce{C6H4} 和 \ce{-OH}，烷基为 \ce{-C3H7}，有正丙基、异丙基 2 种；苯环上两个不同的取代基有邻、间、对 3 种位置。共 $2\times3=6$ 种。
+\end{liti}
+
+\section{研究有机物的一般方法}
+从天然物质或反应混合物中得到一种有机物并确定它的结构，一般经过这样几步：分离、提纯 $\to$ 元素分析，确定实验式 $\to$ 测定相对分子质量，确定分子式 $\to$ 波谱分析，确定结构式。
+
+\subsection{分离与提纯}
+\textbf{蒸馏}用来分离沸点相差较大（一般大于 30~℃）的互溶液体，或除去液体中难挥发的杂质。加热时沸点低的组分先汽化，蒸气在冷凝管中冷凝成液体流入接收器。装置要点见图~\ref{fig:09-sep}(a)：温度计的水银球位于蒸馏烧瓶支管口处，因为要测的是即将进入冷凝管的蒸气的温度；冷凝水从下口进、上口出，使冷凝管中始终充满水，冷却效果好；烧瓶中加碎瓷片防止暴沸。
+
+\tu{\begin{tikzpicture}[font=\scriptsize,line width=0.6pt,scale=0.9]
+  % (a) 蒸馏
+  \begin{scope}
+    \begin{scope}\clip (0,0) circle (0.8); \fill[c9blue!15] (-1,-1) rectangle (1,-0.15);\end{scope}
+    \draw (0.18,0.78) arc (77:-257:0.8);
+    \draw (-0.18,0.78)--(-0.18,2.2) (0.18,0.78)--(0.18,1.55);
+    \draw (0.18,1.85)--(0.18,2.2);
+    \foreach \p in {(-0.3,-0.55),(0.1,-0.62),(0.35,-0.45)}{\fill[gray] \p circle (1.2pt);}
+    \draw[thick] (-0.04,2.6)--(-0.04,1.75); \draw (0.04,2.6)--(0.04,1.75); \fill[c9red] (0,1.7) circle (1.6pt);
+    \draw (0.18,1.85)--(1.3,1.45) (0.18,1.55)--(1.2,1.2);
+    \begin{scope}[shift={(1.25,1.33)},rotate=-20]
+      \draw (0,0.06)--(3.5,0.06) (0,-0.06)--(3.5,-0.06);
+      \draw (0.35,-0.28) rectangle (3.0,0.28);
+      \draw (2.7,-0.28)--(2.7,-0.55) (2.8,-0.28)--(2.8,-0.55);
+      \draw (0.55,0.28)--(0.55,0.55) (0.65,0.28)--(0.65,0.55);
+      \draw[-Stealth,c9blue] (2.75,-0.95)--(2.75,-0.6); \node[c9blue] at (2.75,-1.1) {进水};
+      \draw[-Stealth,c9blue] (0.6,0.6)--(0.6,0.95); \node[c9blue] at (0.6,1.1) {出水};
+    \end{scope}
+    \draw (4.55,0.2)--(4.75,-0.1) (4.45,0.12)--(4.62,-0.2);
+    \draw (4.45,-0.25)--(4.45,-0.45)--(4.0,-1.2)--(5.2,-1.2)--(4.75,-0.45)--(4.75,-0.25);
+    \fill[c9blue!15] (4.15,-0.95)--(4.0,-1.2)--(5.2,-1.2)--(5.05,-0.95)--cycle;
+    \draw (-0.9,-0.95)--(0.9,-0.95); \node at (0,-1.2) {加热（垫陶土网）};
+    \draw[gray] (0.1,2.35)--(0.8,2.6) node[right,black]{温度计（水银球在支管口处）};
+    \draw[gray] (-0.6,0.3)--(-1.2,0.8) node[above,black]{蒸馏烧瓶};
+    \draw[gray] (0.3,-0.55)--(1.0,-0.7) node[right,black]{碎瓷片};
+    \draw[gray] (2.6,0.95)--(2.9,1.4) node[above right=-2pt,black]{冷凝管};
+    \node at (4.6,-1.45) {锥形瓶};
+    \node[font=\small] at (2.0,-1.9) {(a) 蒸馏};
+  \end{scope}
+  % (b) 分液
+  \begin{scope}[xshift=7.6cm,yshift=-0.2cm]
+    \def\funnel{(-0.15,2.4)--(-0.15,2.1) .. controls (-0.95,1.75) and (-0.75,0.85) .. (-0.08,0.35)--(0.08,0.35) .. controls (0.75,0.85) and (0.95,1.75) .. (0.15,2.1)--(0.15,2.4)}
+    \begin{scope}\clip \funnel -- cycle;
+      \fill[c9blue!20] (-1,0) rectangle (1,1.0);
+      \fill[yellow!25] (-1,1.0) rectangle (1,1.75);
+    \end{scope}
+    \draw \funnel;
+    \draw (-0.2,2.4) rectangle (0.2,2.55);
+    \draw (-0.08,0.35)--(-0.05,-0.6) (0.08,0.35)--(0.05,-0.6);
+    \draw (-0.22,0.0) rectangle (0.22,0.12);
+    \draw[gray] (0.6,1.4)--(1.2,1.6) node[right,black]{上层液体：从上口倒出};
+    \draw[gray] (0.5,0.75)--(1.2,0.85) node[right,black]{下层液体：从下口放出};
+    \draw[gray] (0.22,0.06)--(1.2,0.1) node[right,black]{活塞};
+    \draw (-0.45,-0.55)--(-0.45,-1.3)--(0.45,-1.3)--(0.45,-0.55);
+    \node[font=\small] at (0.6,-1.7) {(b) 萃取与分液};
+  \end{scope}
+\end{tikzpicture}}{蒸馏与分液装置示意\label{fig:09-sep}}
+
+\textbf{重结晶}用来提纯固体有机物，要求杂质在所选溶剂中的溶解度很大或很小，而被提纯物的溶解度受温度影响较大。以含少量 NaCl 和泥沙的粗苯甲酸为例：加水、加热使苯甲酸溶解；趁热过滤除去泥沙（趁热是为了防止苯甲酸因降温析出而损失）；滤液冷却结晶，苯甲酸的溶解度随温度降低明显减小而大量析出，NaCl 的溶解度受温度影响小，又含量少，留在溶液中；最后过滤、洗涤，得到较纯的苯甲酸。2024年广东卷第6题、2025年广东卷第17题(2)都考查了这一流程。
+
+\textbf{萃取}是利用溶质在两种互不相溶的溶剂中溶解度的不同，用一种溶剂把溶质从另一种溶剂中提取出来。高一用 \ce{CCl4} 萃取碘水中的碘就是一例。萃取后用分液漏斗分液（图~\ref{fig:09-sep}(b)），下层液体从下口放出，上层液体从上口倒出，以免两层液体互相沾染。此外还可以用色谱法分离结构相近的物质，这里不展开。
+
+\begin{liti}[改编自2024年广东卷第6题]
+提纯苯甲酸粗品（含少量 NaCl 和泥沙）的过程为：粗品 $\xrightarrow{\text{加水、加热}}$ 浊液 $\xrightarrow{\text{趁热过滤}}$ 滤液 $\xrightarrow{\text{操作 X}}$ $\xrightarrow{\text{过滤、洗涤}}$ 苯甲酸。操作 X 为\xz
+\xx{加热蒸馏}{加水稀释}{冷却结晶}{萃取分液}
+\tcblower
+\daan C。趁热过滤已经除去泥沙；苯甲酸的溶解度受温度影响大，NaCl 受温度影响小，冷却后苯甲酸结晶析出而 NaCl 留在母液中，再过滤即可分离。
+\end{liti}
+
+\subsection{确定分子式}
+\textbf{元素分析}：将一定质量的有机物完全燃烧，把生成的 \ce{CO2} 和 \ce{H2O} 分别吸收、称量，求出碳、氢的质量；若已知样品只含 C、H、O，且其质量大于碳、氢质量之和，差值就是氧的质量；未经元素组成确认，不能把其余质量一律算作氧。由各元素的物质的量之比得到\textbf{实验式}（最简式）。
+
+\textbf{质谱法}：用高能电子流轰击样品分子，使其失去电子变成带正电的分子离子和碎片离子，按质荷比（离子质量与电荷之比）的大小被记录下来。若已识别出电荷数为 1 的\textbf{分子离子峰}，其质荷比的数值就是相对分子质量。高中题通常会直接给出这一峰的信息；不能不加判断地把谱图最右端的峰当作分子离子峰，因为还有同位素峰，且分子离子峰可能很弱甚至缺失。由实验式和相对分子质量就能确定分子式。
+
+\begin{liti}[基础]
+4.6 g 某仅含 C、H、O 的有机物 A 完全燃烧，生成 8.8 g \ce{CO2} 和 5.4 g \ce{H2O}；A 的质谱图中分子离子峰的质荷比为 46。求 A 的分子式。
+\tcblower
+\jie $n(\ce{C})=\frac{8.8}{44}=0.2$ mol，$m(\ce{C})=2.4$ g；$n(\ce{H})=2\times\frac{5.4}{18}=0.6$ mol，$m(\ce{H})=0.6$ g。$2.4+0.6=3.0\ \text{g}<4.6\ \text{g}$，所以 A 含氧，$m(\ce{O})=1.6$ g，$n(\ce{O})=0.1$ mol。$n(\ce{C}):n(\ce{H}):n(\ce{O})=2:6:1$，实验式为 \ce{C2H6O}，式量 46，等于相对分子质量，所以分子式为 \ce{C2H6O}。\\
+\dianbo \ce{C2H6O} 可能是乙醇 \ce{CH3CH2OH}，也可能是二甲醚 \ce{CH3OCH3}，需要用下面的波谱方法区分。
+\end{liti}
+
+\subsection{确定结构式：红外光谱与核磁共振氢谱}
+\textbf{红外光谱}：分子中不同的化学键或官能团吸收不同频率的红外光，谱图上的吸收峰可以告诉我们分子中有哪些化学键，如 O—H、C=O、C—O—C 等。乙醇的红外光谱中有 O—H 键的吸收，二甲醚没有。
+
+\textbf{核磁共振氢谱}：处在不同化学环境中的氢原子（即不等效的氢）在谱图上出现在不同位置，每一种等效氢给出一组吸收峰。读谱只看两点：
+\begin{itemize}
+\item 吸收峰的组数 $=$ 等效氢的种类数；
+\item 各组峰的面积之比 $=$ 各类氢原子的个数之比。
+\end{itemize}
+
+\tu{\begin{tikzpicture}[x=1.15cm,y=0.42cm,font=\small]
+  \draw[-Stealth] (-0.1,0)--(5.4,0);
+  \foreach \d in {5,4,3,2,1,0}{\draw (5-\d,0)--(5-\d,-0.2) node[below,font=\scriptsize]{\d};}
+  \node[font=\scriptsize,anchor=west] at (5.4,-0.25) {$\delta$};
+  \node[font=\scriptsize] at (2.5,-1.5) {化学位移 $\delta$（从右向左增大）};
+  \foreach \x/\h in {1.3/2,2.4/1,3.8/3}{
+    \draw[thick] (\x-0.18,0) .. controls (\x-0.04,0) and (\x-0.03,\h*1.6) .. (\x,\h*1.6) .. controls (\x+0.03,\h*1.6) and (\x+0.04,0) .. (\x+0.18,0);}
+  \node[align=center] at (1.3,4.3) {\ce{-CH2-}\\面积 2};
+  \node[align=center] at (2.4,2.7) {\ce{-OH}\\面积 1};
+  \node[align=center] at (3.8,5.9) {\ce{-CH3}\\面积 3};
+  \draw[c9sym] (0,0)--(0,0);
+\end{tikzpicture}}{乙醇 \ce{CH3CH2OH} 的核磁共振氢谱（简化示意）\label{fig:09-nmr}}
+
+图~\ref{fig:09-nmr} 是乙醇核磁共振氢谱的简化示意。横轴是化学位移 $\delta$，表示峰的位置，高中不要求记住具体数值；图中有 3 组峰，说明乙醇中有 3 种等效氢；3 组峰的面积之比为 $2:1:3$，对应 \ce{-CH2-}、\ce{-OH}、\ce{-CH3} 上的氢原子数。实际谱图中有的峰会分裂成几个小峰，仍算作一组；面积通常由谱图上的积分曲线给出，台阶的高度之比就是峰面积之比。二甲醚 \ce{CH3OCH3} 的 6 个 H 都等效，只有 1 组峰。所以由核磁共振氢谱也能区分乙醇和二甲醚。
+
+\begin{liti}[据2025年广东卷第20题(4)改编]
+一定条件下，\ce{Br2} 与丙酮发生反应，溴取代丙酮中的 1 个 H，生成化合物 3a（\ce{CH3COCH2Br}）。若用核磁共振氢谱监测该取代反应，则可推测：与丙酮相比，产物 3a 的氢谱图中\tk。
+
+\tcblower
+\jie 丙酮 \ce{CH3COCH3} 两个甲基对称，6 个 H 等效，只有 1 组峰。\ce{CH3COCH2Br} 中 \ce{-CH3} 和 \ce{-CH2Br} 上的 H 不再等效，出现 2 组峰，面积比为 $3:2$。答案：丙酮的单一峰消失，出现两组新峰，面积比为 3:2。
+\end{liti}
+
+\section{烃}
+
+\subsection{烷烃}
+\textbf{结构与通式}：烷烃分子中碳原子都是 $\mathrm{sp}^3$ 杂化，碳原子之间以单键相连，其余价键都与氢原子结合。链状烷烃的通式为 \ce{C_nH_{2n+2}}。结构相似、分子组成相差一个或若干个 \ce{CH2} 原子团的化合物互为\textbf{同系物}，如甲烷、乙烷、丙烷。同系物化学性质相似，物理性质随碳原子数递变：碳原子数增多，沸点升高；碳原子数相同时，支链越多，沸点越低（正戊烷 36~℃、异戊烷 28~℃、新戊烷 9.5~℃）。
+
+\textbf{化学性质}：烷烃很稳定，通常不与强酸、强碱、酸性 \ce{KMnO4} 溶液和溴水反应，能燃烧。特征反应是光照下与卤素单质的\textbf{取代反应}。以甲烷为例：
+\[
+\ce{CH4 + Cl2 ->[\text{光}] CH3Cl + HCl}
+\]
+生成的 \ce{CH3Cl} 还可以继续被取代，生成 \ce{CH2Cl2}、\ce{CHCl3}、\ce{CCl4}，所以产物是多种氯代物和 HCl 的混合物。取代反应中断开和形成了哪些化学键，见图~\ref{fig:09-react}(a)：断开 1 个 C—H 键和 1 个 Cl—Cl 键，形成 1 个 C—Cl 键和 1 个 H—Cl 键，相当于 H 和 Cl “交换了位置”。每取代 1 个 H 就消耗 1 个 \ce{Cl2}，生成 1 个 HCl。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \begin{scope}
+    \node[c9atom] (m) at (0,0) {\ce{H3C}}; \node[c9atom] (h) at (1.1,0) {H};
+    \node[c9atom] (l1) at (0,-1) {Cl}; \node[c9atom] (l2) at (1.1,-1) {Cl};
+    \draw[c9break] (m)--(h); \draw[c9break] (l1)--(l2);
+    \node at (0.55,-0.5) {$+$};
+    \draw[-Stealth,thick] (1.6,-0.5)--(2.5,-0.5) node[midway,above,font=\scriptsize]{光};
+    \node[c9atom] (p1) at (3.0,0) {\ce{H3C}}; \node[c9atom] (q1) at (3.0,-1) {Cl};
+    \node[c9atom] (p2) at (4.1,0) {H}; \node[c9atom] (q2) at (4.1,-1) {Cl};
+    \draw[c9new] (p1)--(q1); \draw[c9new] (p2)--(q2);
+    \node[c9lab] at (2.05,-1.75) {(a) 取代：C—H、Cl—Cl 断开；C—Cl、H—Cl 形成};
+  \end{scope}
+  \begin{scope}[xshift=7.2cm]
+    \node[c9atom] (c1) at (0,0) {\ce{H2C}}; \node[c9atom] (c2) at (1.3,0) {\ce{CH2}};
+    \draw[c9bond] ([yshift=-1.6pt]c1.east)--([yshift=-1.6pt]c2.west);
+    \draw[c9break] ([yshift=1.6pt]c1.east)--([yshift=1.6pt]c2.west);
+    \node[font=\scriptsize,text=c9red] at (0.65,0.3) {$\pi$ 键};
+    \node[c9atom] (b1) at (0,-1) {Br}; \node[c9atom] (b2) at (1.3,-1) {Br};
+    \draw[c9break] (b1)--(b2);
+    \node at (0.65,-0.5) {$+$};
+    \draw[-Stealth,thick] (1.9,-0.5)--(2.8,-0.5);
+    \node[c9atom] (d1) at (3.3,0) {\ce{H2C}}; \node[c9atom] (d2) at (4.6,0) {\ce{CH2}};
+    \draw[c9bond] (d1)--(d2);
+    \node[c9atom] (e1) at (3.3,-1) {Br}; \node[c9atom] (e2) at (4.6,-1) {Br};
+    \draw[c9new] (d1)--(e1); \draw[c9new] (d2)--(e2);
+    \node[c9lab] at (2.3,-1.75) {(b) 加成：$\pi$ 键、Br—Br 断开；2 个 C—Br 形成};
+  \end{scope}
+\end{tikzpicture}}{取代反应与加成反应的断键和成键（红色虚线：断开的键；蓝色粗线：新形成的键）\label{fig:09-react}}
+
+\textbf{系统命名法}：烷烃的命名按以下步骤进行（图~\ref{fig:09-name}）。
+\begin{enumerate}
+\item 选主链：选最长的碳链作主链，按主链碳原子数称“某烷”；有几条等长的最长链时，选支链最多的一条。注意结构简式中写成一行的不一定是最长链。
+\item 编号：从离支链最近的一端开始给主链碳原子编号；两端离支链一样近时，把两组支链位次从小到大排列，依次比较，在第一个不同处取数值较小的一组。
+\item 写名称：按“支链位次—支链名称—主链名称”书写，位次与名称之间用短线连接，位次之间用逗号隔开；相同支链合并，用“二、三……”表示个数；不同支链，简单的写在前面。
+\end{enumerate}
+
+\tu{\begin{tikzpicture}[font=\small]
+  \begin{scope}
+    \fill[c9blue!12,rounded corners=5pt] (-0.25,-0.22)--(3.25,-0.22)--(3.25,-1.85)--(2.75,-1.85)--(2.75,0.22)--(-0.25,0.22)--cycle;
+    \foreach \x/\n in {0/1,1/2,2/3,3/4}{\node[c9atom] (a\n) at (\x,0) {C};}
+    \node[c9atom] (a5) at (4,0) {C}; \node[c9atom] (u) at (2,0.85) {C};
+    \node[c9atom] (e1) at (3,-0.8) {C}; \node[c9atom] (e2) at (3,-1.6) {C};
+    \draw[c9bond] (a1)--(a2)--(a3)--(a4)--(a5) (a3)--(u) (a4)--(e1)--(e2);
+    \foreach \n/\t in {a1/1,a2/2,a3/3,a4/4}{\node[font=\scriptsize,text=c9blue] at ($(\n)+(0,-0.38)$) {\t};}
+    \node[font=\scriptsize,text=c9blue] at ($(e1)+(-0.3,0)$) {5}; \node[font=\scriptsize,text=c9blue] at ($(e2)+(-0.3,0)$) {6};
+    \node[c9lab] at (2,-2.4) {(a) 最长链有 6 个碳（阴影）\\3,4-二甲基己烷};
+  \end{scope}
+  \begin{scope}[xshift=7.0cm]
+    \foreach \x/\n in {0/1,1/2,2/3,3/4,4/5,5/6}{\node[c9atom] (b\n) at (\x,0) {C};}
+    \foreach \n in {2,3,5}{\node[c9atom] (s\n) at ($(b\n)+(0,0.85)$) {C}; \draw[c9bond] (b\n)--(s\n);}
+    \draw[c9bond] (b1)--(b2)--(b3)--(b4)--(b5)--(b6);
+    \foreach \n in {1,...,6}{\node[font=\scriptsize,text=c9blue] at ($(b\n)+(0,-0.38)$) {\n};}
+    \foreach \n/\t in {1/6,2/5,3/4,4/3,5/2,6/1}{\node[font=\scriptsize,text=gray] at ($(b\n)+(0,-0.72)$) {\t};}
+    \node[font=\scriptsize,anchor=east,text=c9blue] at (-0.3,-0.38) {从左编号：2,3,5};
+    \node[font=\scriptsize,anchor=east,text=gray] at (-0.3,-0.72) {从右编号：2,4,5};
+    \node[c9lab] at (2.5,-1.55) {(b) 首个不同位次 $3<4$，从左编号\\2,3,5-三甲基己烷};
+  \end{scope}
+\end{tikzpicture}}{烷烃系统命名：选主链与编号（只画碳骨架）\label{fig:09-name}}
+
+图~\ref{fig:09-name}(a) 中，横着写的一行只有 5 个碳，但从左端经过 4 号碳拐到下方，最长链有 6 个碳，主链为己烷，3 号、4 号碳上各有 1 个甲基，名称为 3,4-二甲基己烷。图~\ref{fig:09-name}(b) 中两端离第一个支链都隔 1 个碳，从左编号支链位次为 2、3、5，从右编号为 2、4、5，第一个位次都是 2，第二个位次 $3<4$，选从左编号，名称为 2,3,5-三甲基己烷。
+
+\begin{liti}[基础]
+用系统命名法命名：(1) \ce{(CH3)2CHCH2C(CH3)3}；(2) \ce{CH3CH2CH(CH3)CH(C2H5)CH3}。
+\tcblower
+\jie (1) 主链 5 个碳，从右端编号，2 号碳上 2 个甲基、4 号碳上 1 个甲基：2,2,4-三甲基戊烷（与从左编号的 2,4,4 相比，在第二个位次处 $2<4$）。(2) 最长链要经过乙基，有 6 个碳：\ce{CH3CH2-CH(CH3)-CH(CH3)-CH2CH3}，3、4 号碳上各有 1 个甲基，名称为 3,4-二甲基己烷，就是图~\ref{fig:09-name}(a) 中的物质。
+\end{liti}
+
+\subsection{烯烃}
+\textbf{结构与命名}：含碳碳双键的烃叫烯烃，含 1 个双键的链状烯烃通式为 \ce{C_nH_{2n}}（$n\ge2$）。双键碳为 $\mathrm{sp}^2$ 杂化，双键由 1 个 $\sigma$ 键和 1 个 $\pi$ 键组成，$\pi$ 键的电子云在分子平面的上下两侧，受原子核束缚较弱，容易断开，所以烯烃比烷烃活泼。命名时选\textbf{含双键}的最长碳链为主链，从离双键最近的一端编号，用双键碳中编号较小的数字标出双键位置。例如 \ce{CH2=C(CH3)CH2CH3} 为 2-甲基-1-丁烯，\ce{CH2=CHCH(CH3)CH3} 为 3-甲基-1-丁烯。
+
+\textbf{加成反应}：乙烯与溴的反应如图~\ref{fig:09-react}(b) 所示，双键中的 $\pi$ 键断开，Br—Br 键也断开，两个溴原子分别加到两个双键碳上，形成 2 个 C—Br 键，碳碳之间只剩 $\sigma$ 键：
+\[
+\ce{CH2=CH2 + Br2 -> CH2Br-CH2Br}
+\]
+对比图~\ref{fig:09-react} 中的 (a) 和 (b)：取代反应“有上有下”，分子中一个原子被换掉，同时生成一个小分子；加成反应“只上不下”，两部分合成一个分子，没有副产物，原子利用率为 100\%。烯烃能使溴水或溴的 \ce{CCl4} 溶液褪色，可用于检验碳碳双键。烯烃还能与 \ce{H2}、HX、\ce{H2O} 等加成：
+\[
+\ce{CH2=CH2 + H2O ->[\text{催化剂}][\text{加热、加压}] CH3CH2OH}
+\]
+不对称烯烃（如丙烯）与 HX 加成时可能得到两种产物，主要产物是 H 加到含氢较多的双键碳上，如 \ce{CH3CH=CH2 + HBr -> CH3CHBrCH3}（主要产物）。
+
+含两个双键、且两个双键被一个单键隔开的烯烃叫共轭二烯烃，如 1,3-丁二烯 \ce{CH2=CH-CH=CH2}。它与等物质的量的 \ce{Br2} 加成有两种方式：只打开一个双键，叫 1,2-加成，生成 \ce{CH2Br-CHBr-CH=CH2}；两个双键同时打开，1、4 号碳上加溴原子，2、3 号碳之间形成新的双键，叫 1,4-加成，生成 \ce{CH2Br-CH=CH-CH2Br}。
+
+\textbf{氧化反应}：烯烃能使酸性 \ce{KMnO4} 溶液褪色。双键被氧化断裂，双键碳按所连氢原子数转变为不同产物：\ce{CH2=} 变成 \ce{CO2}，\ce{RCH=} 变成 \ce{RCOOH}，\ce{R2C=} 变成酮 \ce{R2C=O}。例如 \ce{(CH3)2C=CHCH3} 被氧化生成丙酮 \ce{CH3COCH3} 和乙酸。反过来，由氧化产物可以推断双键的位置。
+
+\textbf{加聚反应}：在催化剂作用下，烯烃双键中的 $\pi$ 键断开，许多分子首尾相连形成高分子：
+\[
+\ce{$n$CH2=CH2 ->[\text{催化剂}] -[CH2-CH2]_{$n$}-}\qquad
+\ce{$n$CH2=CHCl ->[\text{催化剂}] -[CH2-CHCl]_{$n$}-}
+\]
+高分子主链上只有原来的双键碳，其他原子或原子团作为支链挂在主链上。聚氯乙烯的单体是氯乙烯 \ce{CH2=CHCl}，不是氯乙烷 \ce{CH3CH2Cl}（2025年广东卷第5题A项考查过这一点）。
+
+\subsection{炔烃}
+含碳碳三键的烃叫炔烃，含 1 个三键的链状炔烃通式为 \ce{C_nH_{2n-2}}（$n\ge2$），命名方法与烯烃相同。最简单的炔烃是乙炔 \ce{CH#CH}，碳原子为 sp 杂化，分子呈直线形，三键含 1 个 $\sigma$ 键和 2 个 $\pi$ 键。
+
+乙炔的化学性质与乙烯相似。它能使溴水和酸性 \ce{KMnO4} 溶液褪色；三键中有 2 个 $\pi$ 键，加成可以分两步进行：
+\[
+\ce{CH#CH + Br2 -> CHBr=CHBr},\qquad \ce{CHBr=CHBr + Br2 -> CHBr2-CHBr2}
+\]
+乙炔与 HCl 加成得到氯乙烯：\ce{CH#CH + HCl ->[\text{催化剂}][\text{△}] CH2=CHCl}，氯乙烯再加聚得到聚氯乙烯。
+
+实验室用电石（\ce{CaC2}）与水反应制取乙炔：
+\[
+\ce{CaC2 + 2H2O -> Ca(OH)2 + CH#CH ^}
+\]
+反应很剧烈，常用饱和食盐水代替水以减缓反应速率；电石中含有杂质，生成的乙炔中混有 \ce{H2S} 等气体，用 \ce{CuSO4} 溶液除去。
+
+\subsection{苯和苯的同系物}
+\textbf{苯的结构}：苯分子中 6 个碳原子都是 $\mathrm{sp}^2$ 杂化，每个碳原子用 3 个杂化轨道分别与两个相邻碳原子和一个氢原子形成 $\sigma$ 键，所以 12 个原子共平面，键角都是 120°。每个碳原子还剩 1 个未杂化的 p 轨道，垂直于环平面（图~\ref{fig:09-benzpi}(a)）。这 6 个 p 轨道彼此平行，不是两两重叠形成 3 个独立的 $\pi$ 键，而是一起重叠，形成环平面上下两侧的环状电子云（图~\ref{fig:09-benzpi}(b)），6 个电子为 6 个碳原子共有，叫\textbf{大 $\pi$ 键}，记作 $\Pi_6^6$。所以苯环中的 6 个碳碳键完全相同，介于单键和双键之间。一个证据是：如果苯是单、双键交替的结构，邻二溴苯应有两种（两个溴原子之间是单键或双键），实际只有一种。苯的结构简式常写成凯库勒式（单双键交替）或在六边形中画一个圆，两者都表示同一种苯。
+
+\tu{\begin{tikzpicture}[font=\small]
+  \begin{scope}
+    \foreach \k in {0,...,5}{\coordinate (v\k) at ({1.15*cos(60*\k)},{0.42*sin(60*\k)});}
+    \foreach \k in {3,4,5,0}{\fill[c9red!15] (v\k)+(0,-0.36) ellipse (0.11 and 0.34); \draw[thin] (v\k)+(0,-0.36) ellipse (0.11 and 0.34);}
+    \draw[c9bond] (v0)--(v1)--(v2)--(v3)--(v4)--(v5)--cycle;
+    \foreach \k in {0,...,5}{\fill (v\k) circle (1.3pt);}
+    \foreach \k in {0,...,5}{\fill[c9blue!20] (v\k)+(0,0.36) ellipse (0.11 and 0.34); \draw[thin] (v\k)+(0,0.36) ellipse (0.11 and 0.34);}
+    \foreach \k in {1,2}{\fill[c9red!15] (v\k)+(0,-0.36) ellipse (0.11 and 0.34); \draw[thin] (v\k)+(0,-0.36) ellipse (0.11 and 0.34);}
+    \node[c9lab] at (0,-1.35) {(a) 每个碳有 1 个垂直于\\环平面的 p 轨道};
+  \end{scope}
+  \begin{scope}[xshift=4.6cm]
+    \fill[c9red!15,even odd rule] (0,-0.32) ellipse (1.3 and 0.52) (0,-0.32) ellipse (0.62 and 0.2);
+    \draw[thin,even odd rule] (0,-0.32) ellipse (1.3 and 0.52) (0,-0.32) ellipse (0.62 and 0.2);
+    \foreach \k in {0,...,5}{\coordinate (w\k) at ({1.15*cos(60*\k)},{0.42*sin(60*\k)});}
+    \draw[c9bond] (w0)--(w1)--(w2)--(w3)--(w4)--(w5)--cycle;
+    \foreach \k in {0,...,5}{\fill (w\k) circle (1.3pt);}
+    \fill[c9blue!20,even odd rule,opacity=0.85] (0,0.36) ellipse (1.3 and 0.52) (0,0.36) ellipse (0.62 and 0.2);
+    \draw[thin,even odd rule] (0,0.36) ellipse (1.3 and 0.52) (0,0.36) ellipse (0.62 and 0.2);
+    \node[c9lab] at (0,-1.35) {(b) 6 个 p 轨道共同重叠\\形成大 $\pi$ 键 $\Pi_6^6$};
+  \end{scope}
+\end{tikzpicture}}{苯分子中的大 $\pi$ 键（模型示意，电子云不是电子运动的轨迹；氢原子未画出）\label{fig:09-benzpi}}
+
+\textbf{苯的化学性质}：大 $\pi$ 键使苯环比较稳定，苯不能使酸性 \ce{KMnO4} 溶液褪色，也不与溴水发生加成反应，表现为易取代、能加成、难氧化：
+\begin{itemize}
+\item 溴代：\ce{C6H6 + Br2 ->[\ce{FeBr3}] C6H5Br + HBr}。要用液溴，不能用溴水；生成的溴苯是无色液体，因溶有 \ce{Br2} 而呈褐色，可用 NaOH 溶液洗涤后分液除去。
+\item 硝化：\ce{C6H6 + HNO3 ->[\text{浓硫酸}][\text{50～60 ℃}] C6H5NO2 + H2O}。用水浴加热控制温度；浓硫酸作催化剂和吸水剂。
+\item 加成：\ce{C6H6 + 3H2 ->[\ce{Ni}][\text{△}] C6H12}（环己烷），需要较强的条件。
+\end{itemize}
+
+\textbf{苯的同系物}：苯环上的氢原子被烷基取代的产物叫苯的同系物，通式 \ce{C_nH_{2n-6}}（$n\ge7$），如甲苯、乙苯、二甲苯。二甲苯有邻、间、对三种，也可以用 1,2-二甲苯、1,3-二甲苯、1,4-二甲苯表示。苯的同系物中，苯环和侧链相互影响：
+\begin{itemize}
+\item 苯环使侧链活化：甲烷不能被酸性 \ce{KMnO4} 溶液氧化，甲苯却能，侧链被氧化为 \ce{-COOH}，生成苯甲酸（2025年广东卷第17题(1)：向甲苯中滴加几滴酸性 \ce{KMnO4} 溶液，振荡，溶液由紫色变为无色）。不论侧链多长，只要与苯环直接相连的碳原子上有氢，侧链就被氧化成 \ce{-COOH}，如乙苯也被氧化为苯甲酸。
+\item 侧链使苯环活化：甲苯比苯更容易发生硝化反应，取代发生在甲基的邻位和对位，可以生成 2,4,6-三硝基甲苯（TNT）。
+\end{itemize}
+
+\begin{yicuo}
+\begin{enumerate}
+\item 苯与溴水混合振荡，水层褪色是\textbf{萃取}（物理变化），不是加成。
+\item 苯的同系物侧链被 \ce{KMnO4} 氧化的前提是“与苯环直接相连的碳原子上有氢原子”，如叔丁基苯 \ce{C6H5C(CH3)3} 不能被氧化。
+\item 光照下甲苯与 \ce{Cl2} 取代侧链上的 H；\ce{FeCl3} 催化下取代苯环上的 H。条件不同，取代的位置也不同。
+\end{enumerate}
+\end{yicuo}
+
+\subsection{烃的性质比较与燃烧规律}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{1.8cm}p{3.6cm}p{2.0cm}X}
+\toprule
+烃 & 溴水（或 \ce{Br2}/\ce{CCl4}） & 酸性 \ce{KMnO4} & 特征反应 \\
+\midrule
+烷烃 & 不反应（液态烷烃可萃取溴，使水层颜色变浅） & 不褪色 & 光照取代 \\
+烯烃、炔烃 & 褪色（加成） & 褪色（氧化） & 加成、氧化、加聚 \\
+苯 & 不反应（萃取溴水中的溴，水层褪色；与 \ce{Br2}/\ce{CCl4} 互溶，不褪色） & 不褪色 & \ce{FeBr3} 催化溴代、硝化、加氢 \\
+甲苯等 & 不反应（同苯，只发生萃取） & 褪色（侧链氧化） & 侧链氧化；苯环邻、对位取代；光照侧链取代 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+烃完全燃烧的通式为 \ce{C_xH_y + ($x$ + $\frac y4$)O2 -> $x$CO2 + $\frac y2$H2O}。由此可以得到三条规律：①等物质的量的烃完全燃烧，耗氧量由 $x+\frac y4$ 决定；②等质量的烃完全燃烧，消耗 1 mol \ce{O2} 需要 12 g C 或 4 g H，所以氢的质量分数越大，耗氧越多，\ce{CH4} 最多；③在同温同压、烃和水都呈气态时，每燃烧 1 mol 烃，气体总物质的量变化为 $\Delta n=\frac y4-1$ mol；$y=4$ 时气体总体积不变，如 \ce{CH4}、\ce{C2H4}、\ce{C3H4}。
+
+\subsection{分子中原子共线、共面的判断}
+判断复杂分子中原子共线、共面，要把分子拆成图~\ref{fig:09-shape} 中的四种模板：
+\begin{itemize}
+\item 甲烷：饱和碳原子与所连的 4 个原子呈四面体，最多 3 个原子共面。所以分子中只要有饱和碳原子（如 \ce{-CH3}、\ce{-CH2-}），所有原子就\textbf{不可能}共面。
+\item 乙烯：双键碳及所连的 4 个原子共 6 个原子一定共面。
+\item 乙炔：三键碳及所连的 2 个原子共 4 个原子一定共线。
+\item 苯：12 个原子一定共面，处于对位的 2 个碳原子及与它们相连的 2 个原子共 4 个原子共线。
+\end{itemize}
+拼接模板时要用到两条几何依据：①两点确定一条直线，直线上有两个点在某平面内，整条直线就在该平面内；②两个平面以一个单键相连时，单键可以旋转，这两个平面\textbf{可能}重合，但不一定重合。所以题目问“一定”还是“最多（可能）”，答案往往不同。
+
+\tu{\begin{tikzpicture}[font=\small,x=0.95cm,y=0.95cm]
+  \begin{scope}
+    \fill[c9blue!8] (-1.2,1.3)--(1.9,1.3)--(3.2,-3.0)--(0.1,-3.0)--cycle;
+    \coordinate (C2) at (0,0); \coordinate (C3) at (1,0);
+    \coordinate (C1) at (-0.5,0.866); \coordinate (H2) at (-0.5,-0.866);
+    \coordinate (H3) at (1.5,0.866); \coordinate (C4) at (1.5,-0.866);
+    \coordinate (C5) at (2.0,-1.732); \coordinate (C6) at (2.5,-2.598);
+    \draw[c9sym,c9red] ($(C3)!-0.4!(C6)$)--($(C3)!1.15!(C6)$);
+    \draw[c9bond] (C1)--(C2) (C2)--(H2) (C3)--(H3) (C3)--(C4) (C5)--(C6);
+    \draw[c9bond] ($(C2)+(0,0.05)$)--($(C3)+(0,0.05)$) ($(C2)+(0,-0.05)$)--($(C3)+(0,-0.05)$);
+    \draw[c9bond] (C4)--(C5); \draw[c9bond] ($(C4)+(0.06,0.035)$)--($(C5)+(0.06,0.035)$) ($(C4)+(-0.06,-0.035)$)--($(C5)+(-0.06,-0.035)$);
+    \foreach \p/\t/\a in {C1/C1/180,C2/C2/120,C3/C3/80,C4/C4/180,C5/C5/180,C6/C6/180}{\fill (\p) circle (1.5pt); \node[font=\scriptsize,anchor=\a,inner sep=2pt] at (\p) {\t};}
+    \node[font=\scriptsize,anchor=north east] at (H2) {H}; \node[font=\scriptsize,anchor=south west] at (H3) {H};
+    \node[font=\scriptsize,text=c9red,anchor=west] at ($(C3)!1.12!(C6)$) {直线};
+    \node[c9lab] at (1.0,-3.45) {(a) \ce{CH3-CH=CH-C#C-CH3} 的碳骨架};
+  \end{scope}
+  \begin{scope}[xshift=6.6cm,yshift=-0.9cm]
+    \fill[c9blue!8] (-1.25,-1.0)--(1.05,-1.0)--(1.25,1.0)--(-1.05,1.0)--cycle;
+    \cninebenz[0.55]{2/{}}{1/{}}
+    \coordinate (a) at (30:0.83); \coordinate (b) at ($(a)+(0.75,0)$); \coordinate (c) at ($(b)+(60:0.75)$);
+    \draw[c9bond] ($(a)+(0,0)$)--(b); \draw[c9bond] (b)--(c); \draw[c9bond] ($(b)+(0.06,-0.035)$)--($(c)+(0.06,-0.035)$);
+    \node[font=\scriptsize,anchor=north] at (b) {CH}; \node[font=\scriptsize,anchor=west] at (c) {\ce{CH2}};
+    \draw[-Stealth,c9red] ($(a)!0.5!(b)+(-0.1,0.3)$) arc (150:-150:0.12 and 0.33);
+    \node[font=\scriptsize,text=c9red,align=left,anchor=west] at (1.6,-0.4) {单键可旋转，\\两个平面可能重合};
+    \node[c9lab] at (0.7,-2.55) {(b) 苯乙烯：所有原子可能共面};
+  \end{scope}
+\end{tikzpicture}}{用模板分析原子共线、共面（模型示意，H 未全部画出）\label{fig:09-plane}}
+
+图~\ref{fig:09-plane}(a) 中，以碳碳双键为中心，C1、C2、C3、C4 都连在双键碳上，一定在乙烯平面（浅蓝色）内；C3—C4$\equiv$C5—C6 中，C4、C5 为 sp 杂化，C3、C4、C5、C6 在同一条直线（红色虚线）上，而这条直线上的 C3、C4 已经在平面内，所以 C5、C6 也在平面内。图~\ref{fig:09-plane}(b) 中，苯环平面和乙烯基平面通过一个单键相连，单键旋转到某个角度时两个平面重合，所以苯乙烯的 16 个原子“可能”共面，但不是“一定”共面。
+
+\begin{liti}[典型]
+\ce{CH3-CH=CH-C#C-CH3} 分子中，最多有几个碳原子共面？一定共线的碳原子有几个？所有原子能否共面？
+\tcblower
+\jie 由图~\ref{fig:09-plane}(a) 的分析，6 个碳原子一定共面。一定共线的是 C3、C4、C5、C6 共 4 个；C2 不在这条直线上，因为 C3 是 $\mathrm{sp}^2$ 杂化，C2—C3 与 C3—C4 的夹角约为 120°。分子中有两个甲基（饱和碳），每个甲基最多只有 1 个 H 能与碳骨架共面，所以所有原子不可能共面。
+\end{liti}
+
+2024年广东卷第9题考查了一种陌生分子柳珊瑚酸的结构，其中选项 C 说“其环系结构中 3 个五元环共平面”。柳珊瑚酸的三个五元环共用一个碳原子，这个碳原子同时与 4 个碳原子相连，为 $\mathrm{sp}^3$ 杂化，与所连 4 个碳原子呈四面体，因此 3 个五元环不可能共平面，该选项错误。分析陌生分子时，先找出饱和碳原子和 $\mathrm{sp}^2$、sp 杂化的碳原子，再套用模板。
+
+% ---------------- 章末 ----------------
+\zhangmo{本章小结}
+\subsection*{一、知识总结}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.2cm}X}
+\toprule
+结构 & 碳四价，可成单、双、三键，成链成环；饱和碳 $\mathrm{sp}^3$、双键碳 $\mathrm{sp}^2$、三键碳 sp；甲烷、乙烯、乙炔、苯四种空间模型 \\
+表示与分类 & 分子式、结构式、结构简式、键线式；按碳骨架和官能团分类；不饱和度 $\Omega=\frac{2x+2-y}{2}$ \\
+同分异构 & 碳架（主链由长到短、支链由整到散、位置由心到边）、位置、官能团、顺反、对映；等效氢、基元法、定一移一、苯环取代 3/6/10 \\
+研究方法 & 蒸馏、重结晶、萃取、色谱；元素分析（实验式）、质谱（相对分子质量）、红外（化学键与官能团）、核磁（氢的种类与数目比） \\
+烷烃 & 光照取代；系统命名：选主链、编号、写名称 \\
+烯、炔 & 加成（\ce{Br2}、\ce{H2}、HX、\ce{H2O}）、氧化（\ce{KMnO4} 褪色）、加聚 \\
+芳香烃 & 苯：大 $\pi$ 键，溴代（\ce{FeBr3}）、硝化、加成；甲苯：侧链氧化、邻对位取代 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\subsection*{二、方法提升}
+\begin{enumerate}
+\item 书写同分异构体分步进行：先算不饱和度、定类别（官能团），再定碳架，最后移位置；用等效氢和对称性去重，检查有没有使主链变长的位置。
+\item 用核磁共振氢谱“峰组数$+$峰面积比”验证结构；限定条件题先把“必须有的结构”拿出来，剩余部分再组合。
+\item 判断共线共面：拆成甲烷、乙烯、乙炔、苯模板，区分“一定”与“可能”。
+\end{enumerate}
+\subsection*{三、易错点归纳}
+\begin{enumerate}
+\item 认为含 \ce{-CH3} 的分子中所有原子可能共面（错）。
+\item 苯环上三取代计数遗漏或重复；“两同一异”记成 10 种（应为 6 种）。
+\item 碳架枚举时把甲基放在 1 号碳、乙基放在 2 号碳，造成重复。
+\item 写加聚产物时把双键碳以外的原子放进主链。
+\item 苯与溴水“褪色”误认为加成反应。
+\end{enumerate}
+
+\zhangmo{分层练习}
+\zu{A组\quad 基础巩固}
+\begin{xiti}[start=1]
+\item 下列有机物分子中所有原子一定共平面的是\xz
+\xxb{\ce{CH3CH=CH2}}{苯乙烯}{\ce{CH2=CH-CH=CH2}}{\ce{C6H5Cl}（氯苯）}
+
+\item 分子式为 \ce{C4H8O2} 且属于酯的同分异构体有\tk{}种；分子式为 \ce{C5H10O2} 且能与 \ce{NaHCO3} 反应放出气体的有\tk{}种。
+
+\item 某烃的相对分子质量为 72，其核磁共振氢谱只有 1 组峰，则其结构简式为\tk，系统命名为\tk。
+
+\item 下列关于苯及其同系物的说法正确的是\xz
+\xxa{苯能使溴水褪色，发生了加成反应}{甲苯能使酸性 \ce{KMnO4} 溶液褪色，说明苯环对甲基有影响}{苯与液溴在光照条件下生成溴苯}{苯的硝化反应中，浓硫酸只作吸水剂}
+
+\item 用系统命名法命名：\\(1) \ce{CH2=C(CH3)-CH=CH2}\tk[6em]；\\(2) \ce{CH3CH(C2H5)CH2CH3}\tk[6em]；\\(3) \ce{CH#C-CH(CH3)2}\tk[6em]。
+
+\item 等质量的 \ce{CH4}、\ce{C2H4}、\ce{C2H2}、\ce{C6H6} 完全燃烧，消耗 \ce{O2} 最多的是\tk；等物质的量的上述四种烃完全燃烧，消耗 \ce{O2} 最多的是\tk。
+
+\item 下列物质存在顺反异构的是\xz
+\xx{\ce{CH2=CHCH3}}{\ce{CH3CH=CHCl}}{\ce{(CH3)2C=CHCH3}}{\ce{CH2=CCl2}}
+
+\item \ce{C3H6Cl2} 的同分异构体有\tk{}种；\ce{C5H12} 的一氯代物共有\tk{}种。
+\end{xiti}
+
+\zu{B组\quad 高考典型}
+\begin{xiti}
+\item \laiyuan{据2024年广东卷第20题(2)改编}\ 化合物Ⅱ为苯乙酮（\ce{C6H5COCH3}），其中含氧官能团的名称是\tk。化合物Ⅱ的某同分异构体含有苯环，在核磁共振氢谱上只有 4 组峰，且能够发生银镜反应（含 \ce{-CHO}），其结构简式为\tk。
+
+\item \laiyuan{原创}\ 某烯烃 A（\ce{C6H12}）被酸性 \ce{KMnO4} 溶液氧化，只得到丙酮（\ce{CH3COCH3}）一种产物。(1) 写出 A 的结构简式并命名。(2) A 与 HBr 加成的产物有几种？(3) A 是否存在顺反异构？
+
+\item \laiyuan{原创}\ 分子式为 \ce{C8H10} 的芳香烃共有\tk{}种；其中苯环上的一氯代物只有一种的是\tk（写结构简式）；被酸性 \ce{KMnO4} 溶液氧化后生成苯甲酸的是\tk（写名称）。
+
+\item \laiyuan{原创}\ 分子式为 \ce{C4H8} 的同分异构体（包括环状结构），不考虑顺反异构时有\tk{}种；考虑顺反异构时有\tk{}种。其中属于烯烃且与 \ce{H2} 加成后得到异丁烷的结构简式为\tk。
+
+\item \laiyuan{原创}\ 分子式为 \ce{C9H12} 的芳香烃共有\tk{}种；其中苯环上的一溴代物只有一种的结构简式为\tk。
+
+\item \laiyuan{原创}\ 某有机物只含 C、H、O 三种元素，质谱图中分子离子峰的质荷比为 60；红外光谱显示含 C=O 和 C—O 键，不含 O—H 键；核磁共振氢谱有 2 组峰，面积比为 $1:3$。该有机物的结构简式为\tk，名称为\tk。
+\end{xiti}
+
+\zu{C组\quad 冲刺高分}
+\begin{xiti}
+\item \laiyuan{原创}\ 某有机物 X 只含 C、H、O 三种元素。取 1.48 g X 完全燃烧，生成 3.52 g \ce{CO2} 和 1.80 g \ce{H2O}；质谱显示分子离子峰的质荷比为 74；红外光谱显示有 O—H 键；核磁共振氢谱有 2 组峰，面积比为 9:1。(1) 求 X 的分子式。(2) 写出 X 的结构简式并命名。(3) 写出与 X 同类别（醇）的同分异构体中，能被催化氧化为醛的结构简式。
+
+\item \laiyuan{原创}\ 0.1 mol 烃 A 完全燃烧生成 0.6 mol \ce{CO2} 和 0.5 mol \ce{H2O}；A 能使溴的 \ce{CCl4} 溶液褪色，1 mol A 最多与 1 mol \ce{H2} 加成；A 被酸性 \ce{KMnO4} 溶液氧化只得到己二酸 \ce{HOOC(CH2)4COOH}。(1) 求 A 的分子式并计算不饱和度。(2) 写出 A 的结构简式（名称）。(3) 写出 A 与 \ce{Br2} 反应的化学方程式。(4) A 的同分异构体中，属于链状二烯烃且核磁共振氢谱只有 2 组峰的结构简式为\tk。
+
+\item \laiyuan{原创}\ 分子式为 \ce{C9H10O2} 的芳香族化合物 Y 满足：①能与 \ce{NaHCO3} 溶液反应放出 \ce{CO2}；②苯环上只有两个取代基。(1) Y 的可能结构共有\tk{}种。(2) 写出其中核磁共振氢谱有 5 组峰、峰面积比为 $3:2:2:2:1$ 的所有结构简式。(3) 若去掉条件②，只要求含苯环且能与 \ce{NaHCO3} 反应，符合条件的结构共有\tk{}种。
+\end{xiti}
+
+\zhangmo{练习解析}
+\begin{jiexilist}
+\item \ans{D}A 含 \ce{-CH3}，不可能全部共面；B、C 中苯环与乙烯基、两个乙烯基之间以单键相连，可旋转，“可能”共面但不一定；D 中 Cl 取代苯环上的 H，仍在苯环平面内，一定共面。
+\item 4；4。酯：甲酸正丙酯、甲酸异丙酯、乙酸乙酯、丙酸甲酯。羧酸 \ce{C4H9COOH}：丁基 4 种。
+\item \ce{C(CH3)4}；2,2-二甲基丙烷。$72=14\times5+2$，符合 \ce{C_nH_{2n+2}}（$n=5$），为 \ce{C5H12}；只有一种等效氢，为新戊烷。
+\item \ans{B}A：萃取；B：甲基本身不能被 \ce{KMnO4} 氧化，在苯环影响下才被氧化为羧基，正确；C：需 \ce{FeBr3} 催化，不是光照；D：浓硫酸作催化剂和吸水剂。
+\item (1) 2-甲基-1,3-丁二烯（异戊二烯）；(2) 3-甲基戊烷（主链应选含乙基的 5 个碳，不能命名为“2-乙基丁烷”）；(3) 3-甲基-1-丁炔。
+\item \ce{CH4}；\ce{C6H6}。等质量时含 H 质量分数越大耗氧越多（\ce{CH4} 最大）；等物质的量时看 $x+\frac y4$：\ce{CH4} 2、\ce{C2H4} 3、\ce{C2H2} 2.5、\ce{C6H6} 7.5。
+\item \ans{B}顺反异构要求两个双键碳各连两个不同的原子或原子团。A 中 1 号碳连 2 个 H；C 中 2 号碳连 2 个甲基；D 中 2 号碳连 2 个 Cl、1 号碳连 2 个 H；B 中左边双键碳连 H 和 \ce{CH3}，右边连 H 和 Cl，存在顺反异构。
+\item 4；8。\ce{C3H6Cl2} 用定一移一：\ce{CHCl2CH2CH3}、\ce{CH2ClCHClCH3}、\ce{CH2ClCH2CH2Cl}、\ce{CH3CCl2CH3}。\ce{C5H12} 的一氯代物即戊基的种数：正戊烷 3 种、异戊烷 4 种、新戊烷 1 种，共 8 种。
+\item 酮羰基；对甲基苯甲醛（\ce{CH3C6H4CHO}，对位）。能发生银镜反应说明含 \ce{-CHO}；\ce{C8H8O} 除苯环和醛基外剩 1 个 C。若为 \ce{C6H5CH2CHO}，有苯环上 3 种 H、\ce{CH2}、\ce{CHO}，共 5 组峰，不符；若为甲基苯甲醛，对位时 H 的种类为 \ce{-CH3}、苯环上两种、\ce{-CHO}，共 4 组，邻、间位时苯环上有 4 种 H，不符。
+\item (1) \ce{(CH3)2C=C(CH3)2}，2,3-二甲基-2-丁烯。氧化只得丙酮，说明双键两端各连两个甲基。(2) 1 种。分子结构对称，与 HBr 加成只得一种产物 \ce{(CH3)2CBr-CH(CH3)2}。(3) 不存在，双键碳上各连两个相同的甲基。
+\item 4；\ce{CH3-C6H4-CH3}（对二甲苯）；乙苯。\ce{C8H10} 芳香烃有乙苯和邻、间、对二甲苯 4 种。对二甲苯苯环上的 4 个 H 等效，一氯代物只有 1 种。含苄位 H 的烷基侧链被酸性 \ce{KMnO4} 氧化时，无论侧链多长，与苯环相连的碳都变为 \ce{-COOH}：乙苯（1 个侧链）生成苯甲酸，二甲苯（2 个侧链）生成苯二甲酸。
+\item 5；6；\ce{CH2=C(CH3)2}。$\Omega=1$，可以是 1 个双键或 1 个环。烯烃：1-丁烯、2-丁烯、2-甲基丙烯，3 种；环烷烃：环丁烷、甲基环丙烷，2 种；共 5 种。其中只有 2-丁烯有顺反异构，考虑后共 6 种。本题在烯烃中筛选，加氢得到异丁烷 \ce{(CH3)3CH} 的只有 2-甲基丙烯。
+\item 8；1,3,5-三甲苯（均三甲苯），结构简式如下：\par{\centering\setchemfig{atom sep=1.5em}\chemfig{*6(-(-CH_3)=-(-CH_3)=-(-CH_3)=)}\par}一个侧链：丙苯、异丙苯（2 种）；两个侧链（甲基、乙基）：邻、间、对（3 种）；三个甲基：连三甲苯、偏三甲苯、均三甲苯（3 种）。均三甲苯高度对称，苯环上 3 个 H 等效。
+\item \ce{HCOOCH3}；甲酸甲酯。含 C=O 和 C—O 键而无 O—H 键，不是羧酸或醇，应为酯，至少含酯基 \ce{-COO-}（式量 44）；$60-44=16$，剩余部分只能是 1 个 C 和 4 个 H，分子式为 \ce{C2H4O2}，酯只有甲酸甲酯 \ce{HCOOCH3}。它有 \ce{HCOO} 和 \ce{CH3} 两种 H，面积比 $1:3$，符合。
+\item (1) $n(\ce{C})=3.52/44=0.08$ mol，$n(\ce{H})=2\times1.80/18=0.20$ mol，$m(\ce{O})=1.48-0.96-0.20=0.32$ g，$n(\ce{O})=0.02$ mol；C:H:O$=4:10:1$，实验式 \ce{C4H10O}，式量 74，分子式 \ce{C4H10O}。(2) 有 O—H 键，为醇；2 组峰面积比 9:1，为 \ce{(CH3)3COH}，2-甲基-2-丙醇。(3) 能氧化为醛的醇含 \ce{-CH2OH}：\ce{CH3CH2CH2CH2OH}、\ce{(CH3)2CHCH2OH}。
+\item (1) \ce{C6H10}，$\Omega=\frac{2\times6+2-10}{2}=2$。(2) 只与 1 mol \ce{H2} 加成，说明只有 1 个碳碳双键，另 1 个不饱和度为环；氧化只得到直链二元酸，双键在六元环中：环己烯。(3) 加成反应，生成 1,2-二溴环己烷：\par{\centering\setchemfig{atom sep=1.5em}\chemfig{*6(-=----)}\quad\ce{+ Br2 ->}\quad\chemfig{*6(-(-Br)-(-Br)----)}\par}(4) \ce{CH2=C(CH3)-C(CH3)=CH2}（2,3-二甲基-1,3-丁二烯，\ce{CH2} 与 \ce{CH3} 两种 H，面积比 4:6）。
+\item (1) 6。$\Omega=5$，苯环 4、羧基 1，侧链饱和；除苯环外侧链共 3 个碳（含羧基碳）。两个取代基的组合有：\ce{-COOH} 与 \ce{-CH2CH3}，\ce{-CH2COOH} 与 \ce{-CH3}；每组有邻、间、对 3 种，共 6 种。(2) 对乙基苯甲酸 \ce{CH3CH2-C6H4-COOH} 和对甲基苯乙酸 \ce{CH3-C6H4-CH2COOH}（均为对位）。两者都有 \ce{-CH3}（3）、\ce{-CH2-}（2）、苯环上两种 H（2、2）和 \ce{-COOH}（1），共 5 组；邻、间位异构体苯环上有 4 种 H，共 7 组，不符。(3) 14。一个取代基：\ce{-CH2CH2COOH}、\ce{-CH(CH3)COOH}，2 种；两个取代基：6 种；三个取代基 \ce{-COOH}、\ce{-CH3}、\ce{-CH3}，属于“两同一异”，6 种。共 $2+6+6=14$ 种。
+\end{jiexilist}

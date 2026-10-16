@@ -1,0 +1,590 @@
+% ============================================================
+% 第4章 水溶液中的离子反应与平衡
+% ============================================================
+\tikzset{
+  c4ion/.style={circle,draw,thin,inner sep=0pt,minimum size=0.52cm,font=\scriptsize},
+  c4mol/.style={ellipse,draw,thin,inner sep=0pt,minimum width=0.95cm,minimum height=0.46cm,font=\scriptsize,fill=white},
+  c4arr/.style={-{Stealth[length=2mm]},thick},
+  c4lab/.style={font=\footnotesize,align=left,anchor=west,text=black},
+}
+\newcommand{\cfourbeaker}[2]{% #1 = 左下角 x，#2 = 液面高度
+  \fill[mainblue!7] (#1,0) rectangle ++(3.4,#2);
+  \draw[thick] (#1,2.9)--(#1,0)--++(3.4,0)--++(0,2.9);}
+
+\chapter{水溶液中的离子反应与平衡}
+
+高一学习电解质时，我们关心的是物质“能不能电离”、离子之间“能不能反应”。本章要进一步回答“电离到什么程度”“反应进行到什么程度”。水溶液中的许多过程是可逆的，最终都会达到平衡：弱酸、弱碱的电离平衡，水的电离平衡，盐的水解平衡，难溶电解质的沉淀溶解平衡。第3章学过的平衡常数、浓度商 $Q$ 与 $K$ 的比较和勒夏特列原理，在本章都要用到。学完本章，应能解释溶液为什么呈酸性或碱性，会计算 pH 和各种平衡常数，会比较溶液中粒子浓度的大小，并能读懂滴定曲线、分布系数图和沉淀溶解平衡图。广东卷的实验题和工艺流程题几乎每年都要用到这些知识，例如用滴定曲线求 $K_\text{a}$、用 $K_\text{sp}$ 计算调节 pH 的范围。
+
+\section{弱电解质的电离平衡}
+
+\subsection{强电解质与弱电解质}
+先回顾必修一的内容：在水溶液中或熔融状态下能导电的化合物叫电解质，它们导电是因为电离出了自由移动的离子；HCl、NaOH、NaCl 的电离方程式都用“$=$”。那么，是不是所有的酸在水中都能完全电离呢？
+
+做一个对比实验。取浓度均为 0.10 mol·L$^{-1}$ 的盐酸和醋酸，用 pH 计测得盐酸的 pH$=1.0$，醋酸的 pH 约为 2.9；再分别放入大小相同的镁条，盐酸中产生气泡的速率明显更快。初中学过，pH 越小，溶液的酸性越强；4.2 节会说明，pH$=1.0$ 表示 $c(\ce{H+})=0.10$ mol·L$^{-1}$，pH$\approx2.9$ 表示 $c(\ce{H+})\approx1.3\times10^{-3}$ mol·L$^{-1}$。可见盐酸中的 HCl 全部电离了，而醋酸中只有约 1.3\% 的 \ce{CH3COOH} 分子发生电离，其余仍以分子形式存在。图~\ref{fig:04-micro} 画出了两种溶液中溶质粒子的情况。
+
+\tu{\begin{tikzpicture}[font=\small]
+\cfourbeaker{0}{2.6}
+\foreach \x/\y in {0.5/0.5,1.9/0.5,1.55/1.25,0.5/2.0,1.9/2.0}{\node[c4ion,fill=warnred!12] at (\x,\y) {\ce{H+}};}
+\foreach \x/\y in {1.2/0.5,2.6/0.5,0.85/1.25,2.25/1.25,1.2/2.0}{\node[c4ion,fill=deepgreen!12] at (\x,\y) {\ce{Cl-}};}
+\node[c4ion,fill=deepgreen!12] at (2.6,2.0) {\ce{Cl-}};
+\node[c4ion,fill=warnred!12] at (2.95,1.25) {\ce{H+}};
+\node[font=\scriptsize,align=center] at (1.7,-0.5) {0.10 mol·L$^{-1}$ 盐酸\\ pH$=1.0$};
+\cfourbeaker{4.6}{2.6}
+\foreach \x/\y in {5.25/0.5,6.35/0.5,7.45/0.5,5.25/1.25,7.45/1.25,5.25/2.0,6.35/2.0,7.45/2.0}{\node[c4mol] at (\x,\y) {HAc};}
+\node[c4ion,fill=warnred!12] at (6.05,1.25) {\ce{H+}};
+\node[c4ion,fill=deepgreen!12,minimum size=0.6cm] at (6.7,1.25) {Ac$^-$};
+\node[font=\scriptsize,align=center] at (6.3,-0.5) {0.10 mol·L$^{-1}$ 醋酸\\ pH$\approx2.9$};
+\end{tikzpicture}}{同浓度盐酸与醋酸中溶质粒子的示意。HAc 表示 \ce{CH3COOH} 分子，Ac$^-$ 表示 \ce{CH3COO-}；水分子未画出，醋酸中离子的比例已夸大\label{fig:04-micro}}
+
+读图时注意两点：左边烧杯中找不到 HCl 分子，只有 \ce{H+} 和 \ce{Cl-}，而且两者个数相等；右边烧杯中绝大部分是 \ce{CH3COOH} 分子，离子只占少数，并且 \ce{H+} 和 \ce{CH3COO-} 成对出现，因为每电离一个分子就生成一个 \ce{H+} 和一个 \ce{CH3COO-}。醋酸溶液中分子和离子同时存在，这就是“部分电离”的含义。
+
+\begin{gainian}[强电解质与弱电解质]
+在水溶液中能够全部电离的电解质叫做\textbf{强电解质}，包括强酸（HCl、\ce{H2SO4}、\ce{HNO3} 等）、强碱（NaOH、KOH、\ce{Ba(OH)2} 等）和绝大多数盐；在水溶液中只能部分电离的电解质叫做\textbf{弱电解质}，包括弱酸（\ce{CH3COOH}、\ce{H2CO3}、HClO、HF 等）、弱碱（\ce{NH3*H2O} 等）和水。
+\end{gainian}
+
+强电解质的电离方程式用“$=$”，弱电解质用“\ce{<=>}”。多元弱酸分步电离，以第一步为主，必须分步书写；多元弱碱的电离也是分步的，但中学阶段习惯一步写出：
+\[\ce{H2CO3 <=> H+ + HCO3-},\quad \ce{HCO3- <=> H+ + CO3^2-};\qquad \ce{Fe(OH)3 <=> Fe^3+ + 3OH-}\]
+酸式盐要看酸根是否来自强酸。\ce{H2SO4} 是强酸，\ce{NaHSO4} 在水中完全电离为 \ce{Na+}、\ce{H+} 和 \ce{SO4^2-}，熔融时只断开离子键，电离为 \ce{Na+} 和 \ce{HSO4-}；\ce{H2CO3} 是弱酸，\ce{NaHCO3 = Na+ + HCO3-}，\ce{HCO3-} 只能再部分电离，书写时不能拆开。
+
+\begin{yicuo}
+溶液的导电能力与自由离子的浓度、所带电荷及移动能力等有关，不能单凭导电能力判断电解质的强弱：很稀的盐酸导电能力可能不如较浓的醋酸。\ce{BaSO4} 难溶于水，但溶解的那一部分全部电离，它是强电解质。
+\end{yicuo}
+
+\subsection{电离平衡及其移动}
+醋酸溶于水后，\ce{CH3COOH} 分子不断电离成离子，离子也不断结合成分子。若暂不计水的电离，刚溶解时溶质主要以分子存在，电离过程占优势；随着离子增多，离子结合成分子的速率逐渐增大，最终两个速率相等，各粒子浓度不再变化，达到\textbf{电离平衡}。这与第3章的化学平衡完全一样，是动态平衡，同样服从勒夏特列原理。以 \ce{CH3COOH <=> CH3COO- + H+} 为例，恒温下改变浓度的影响见表~\ref{tab:04-shift}。改变温度时则要先看电离反应的吸放热：若题设电离吸热，升温使平衡正移、$K_\text{a}$ 增大；具体趋势以题给数据为准。电离同时涉及断键和水合等作用，不能仅凭“断键吸热”判断整个过程的热效应。
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\small
+\captionof{table}{改变条件对醋酸电离平衡的影响\label{tab:04-shift}}
+\begin{tabular}{lccccc}
+\toprule
+改变条件 & 平衡移动 & $n(\ce{H+})$ & $c(\ce{H+})$ & 电离程度 & $K_\text{a}$ \\
+\midrule
+加水稀释 & 正向 & 增大 & 减小 & 增大 & 不变 \\
+加少量 \ce{CH3COONa} 固体 & 逆向 & 减小 & 减小 & 减小 & 不变 \\
+通入少量 HCl & 逆向 & 增大 & 增大 & 减小 & 不变 \\
+加少量 NaOH 固体 & 正向 & 减小 & 减小 & 增大 & 不变 \\
+加冰醋酸 & 正向 & 增大 & 增大 & 减小 & 不变 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{center}
+
+表中最不直观的是加水稀释。把溶液稀释到原体积的 2 倍，各粒子浓度瞬间都变为原来的一半，此时的浓度商
+\[Q=\frac{\frac12c(\ce{CH3COO-})\cdot\frac12c(\ce{H+})}{\frac12c(\ce{CH3COOH})}=\frac{K_\text{a}}{2}<K_\text{a}\]
+（$K_\text{a}$ 是电离平衡常数，下一小节专门讨论），所以平衡正向移动，电离程度增大，这就是“越稀越电离”。但平衡移动只能减弱而不能抵消稀释的影响，$c(\ce{H+})$ 仍比稀释前小。加冰醋酸的情况正好相反：\ce{CH3COOH} 浓度增大，平衡正向移动，$c(\ce{H+})$ 增大，但已电离的分子所占的比例反而减小。
+
+\subsection{电离平衡常数}
+\begin{gainian}[电离平衡常数]
+一定温度下，弱电解质达到电离平衡时，电离生成的各离子浓度之积与未电离的分子浓度之比是一个常数，叫做\textbf{电离平衡常数}，弱酸的用 $K_\text{a}$ 表示，弱碱的用 $K_\text{b}$ 表示：
+\[\ce{HA <=> H+ + A-}\qquad K_\text{a}=\frac{c(\ce{H+})\cdot c(\ce{A-})}{c(\ce{HA})}\]
+\end{gainian}
+
+$K_\text{a}$ 衡量弱酸电离的程度：浓度相同时，$K_\text{a}$ 越大，平衡时离子所占比例越大，酸性越强。和其他平衡常数一样，对确定的弱酸及溶剂，$K_\text{a}$ 在高中采用的稀溶液模型中只随温度改变，不因稀释而改变；升温后的大小按题给热效应或数据判断。多元弱酸各步的电离常数相差很大，如 \ce{H2CO3} 的 $K_{\text{a}1}\gg K_{\text{a}2}$，因为要从带负电的 \ce{HCO3-} 中再拉走一个 \ce{H+} 困难得多，所以多元弱酸的酸性主要由第一步电离决定。本章常用的数据见表~\ref{tab:04-ka}。
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\small
+\captionof{table}{25 ℃ 时一些弱电解质的电离常数\label{tab:04-ka}}
+\begin{tabular}{llll}
+\toprule
+弱电解质 & 电离常数 & 弱电解质 & 电离常数 \\
+\midrule
+HF & $K_\text{a}=6.3\times10^{-4}$ & \ce{H2CO3} & $K_{\text{a}1}=4.5\times10^{-7}$，$K_{\text{a}2}=4.7\times10^{-11}$ \\
+\ce{CH3COOH} & $K_\text{a}=1.75\times10^{-5}$ & \ce{H2SO3} & $K_{\text{a}1}=1.4\times10^{-2}$，$K_{\text{a}2}=6.0\times10^{-8}$ \\
+HClO & $K_\text{a}=4.0\times10^{-8}$ & \ce{NH3*H2O} & $K_\text{b}=1.8\times10^{-5}$ \\
+HCN & $K_\text{a}=6.2\times10^{-10}$ & & \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{center}
+
+$K_\text{a}$ 的第一个用途是计算弱酸溶液中的 $c(\ce{H+})$，方法与第3章用“三段式”求平衡浓度相同。
+
+\begin{liti}[基础]
+求 25 ℃ 时 0.10 mol·L$^{-1}$ \ce{CH3COOH} 溶液中的 $c(\ce{H+})$ 和醋酸的电离度（已电离的分子数占原有分子总数的百分比）。
+\tcblower
+\jie 设平衡时电离的 \ce{CH3COOH} 浓度为 $x$ mol·L$^{-1}$：
+\begin{center}
+\small
+\begin{tabular}{lccc}
+ & \ce{CH3COOH} & \ce{CH3COO-} & \ce{H+} \\
+起始/(mol·L$^{-1}$) & 0.10 & 0 & 0 \\
+转化/(mol·L$^{-1}$) & $x$ & $x$ & $x$ \\
+平衡/(mol·L$^{-1}$) & $0.10-x$ & $x$ & $x$ \\
+\end{tabular}
+\end{center}
+$K_\text{a}=\dfrac{x^2}{0.10-x}=1.75\times10^{-5}$。$K_\text{a}$ 很小，电离的分子极少，$x\ll0.10$，可以把分母近似为 0.10，得 $x=\sqrt{1.75\times10^{-5}\times0.10}\approx1.3\times10^{-3}$，即 $c(\ce{H+})\approx1.3\times10^{-3}$ mol·L$^{-1}$。电离度 $\alpha=\dfrac{1.3\times10^{-3}}{0.10}\times100\%=1.3\%$。\\
+\dianbo 这里得到的近似公式 $c(\ce{H+})\approx\sqrt{K_\text{a}\cdot c}$ 要求电离度很小（一般 $\alpha<5\%$），并且酸提供的 \ce{H+} 远多于水电离的 \ce{H+}；前一条件不满足时应解一元二次方程，极稀时还要考虑水的电离。
+\end{liti}
+
+\begin{liti}[典型]
+25 ℃ 时，测得 0.10 mol·L$^{-1}$ 一元弱酸 HA 溶液中 $c(\ce{H+})=1.0\times10^{-3}$ mol·L$^{-1}$。(1) 求 HA 的电离度和 $K_\text{a}$；(2) 将该溶液稀释到 0.0010 mol·L$^{-1}$，估算此时的电离度，并说明“越稀越电离”。
+\tcblower
+\jie (1) $c(\ce{A-})=c(\ce{H+})=1.0\times10^{-3}$ mol·L$^{-1}$，$\alpha=\dfrac{1.0\times10^{-3}}{0.10}=1.0\%$；$K_\text{a}=\dfrac{(1.0\times10^{-3})^2}{0.10-1.0\times10^{-3}}\approx1.0\times10^{-5}$。\\
+(2) 温度不变，$K_\text{a}$ 不变，$c(\ce{H+})\approx\sqrt{1.0\times10^{-5}\times0.0010}=1.0\times10^{-4}$ mol·L$^{-1}$，$\alpha\approx\dfrac{1.0\times10^{-4}}{0.0010}=10\%$。浓度变为原来的 $\frac1{100}$，电离度增大到原来的 10 倍，但 $c(\ce{H+})$ 只有原来的 $\frac1{10}$。此时 $\alpha$ 已超过 5\%，精确解一元二次方程得 $\alpha\approx9.5\%$，结论不变。
+\end{liti}
+
+$K_\text{a}$ 的第二个用途是判断酸碱反应的主要方向，即“较强的酸制较弱的酸”。由表~\ref{tab:04-ka}，\ce{H2CO3} 的酸性强于 HClO，而 HClO 又强于 \ce{HCO3-}。向 NaClO 溶液中通入 \ce{CO2}，高中通常按生成 \ce{HCO3-} 书写：\ce{ClO- + CO2 + H2O = HClO + HCO3-}。若再由 \ce{HCO3-} 提供质子生成 HClO，平衡明显不利，故不能因“\ce{CO2} 少量”就机械地把主要产物写成 \ce{CO3^2-}。
+
+第三个用途是判断浓度比值的变化。把 $K_\text{a}$ 的表达式变形为 $\dfrac{c(\ce{A-})}{c(\ce{HA})}=\dfrac{K_\text{a}}{c(\ce{H+})}$，比值就只取决于 $c(\ce{H+})$。例如稀释醋酸时 $c(\ce{H+})$ 减小，$\dfrac{c(\ce{CH3COO-})}{c(\ce{CH3COOH})}$ 增大。遇到“某比值如何变化”的问题，先设法把它改写成“常数$\div$某一浓度”。
+
+强酸和弱酸的差别，在“浓度相同”和“pH 相同”两种比较方式下表现不同（表~\ref{tab:04-cmp}），关键在于弱酸溶液中还“储存”着大量未电离的分子，反应中 \ce{H+} 被消耗后，平衡正移会不断补充。
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\small
+\captionof{table}{盐酸与醋酸的比较\label{tab:04-cmp}}
+\begin{tabularx}{\linewidth}{lXX}
+\toprule
+比较项目 & 物质的量浓度相同 & pH 相同 \\
+\midrule
+$c(\ce{H+})$ & 盐酸大 & 相等 \\
+中和 NaOH 的能力（等体积） & 相等 & 醋酸大（醋酸浓度大得多） \\
+与足量 Zn 反应 & 开始时盐酸快，产生 \ce{H2} 总量相等 & 开始速率相等，随后醋酸快，醋酸产生 \ce{H2} 多 \\
+稀释相同倍数后 & 盐酸 pH 仍较小 & 盐酸 pH 变化大，醋酸 pH 变化小 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+\section{水的电离与溶液的酸碱性}
+
+\subsection{水的电离和水的离子积}
+用精密仪器测定，纯水也能微弱地导电，说明水能发生微弱的电离：
+\[\ce{H2O + H2O <=> H3O+ + OH-}\qquad\text{简写为}\qquad\ce{H2O <=> H+ + OH-}\]
+25 ℃ 时，纯水中 $c(\ce{H+})=c(\ce{OH-})=1.0\times10^{-7}$ mol·L$^{-1}$。1 L 水约为 55.6 mol，也就是说大约 5.6 亿个水分子中只有 1 个发生电离。
+
+按第3章的规则写出水的电离平衡常数。稀溶液中水的浓度几乎不变，可以并入常数，于是得到\textbf{水的离子积常数}
+\[K_\text{w}=c(\ce{H+})\cdot c(\ce{OH-})\]
+25 ℃ 时 $K_\text{w}=1.0\times10^{-14}$。水的电离吸热，升高温度 $K_\text{w}$ 增大：50 ℃ 时约为 $5.5\times10^{-14}$，100 ℃ 时约为 $5.5\times10^{-13}$（计算时优先用题给值）。$K_\text{w}$ 不仅适用于纯水，也适用于任何稀的酸、碱、盐溶液：酸溶液中 $c(\ce{H+})$ 大，$c(\ce{OH-})$ 就小，但二者乘积在一定温度下保持不变。
+
+加入酸或碱，增大了 \ce{H+} 或 \ce{OH-} 的浓度，水的电离平衡逆向移动，水的电离受到抑制。例如 25 ℃ 时 0.01 mol·L$^{-1}$ 盐酸中，$c(\ce{OH-})=\dfrac{10^{-14}}{0.01}=10^{-12}$ mol·L$^{-1}$，这些 \ce{OH-} 全部来自水，所以由水电离出的 $c(\ce{H+})$ 也只有 $10^{-12}$ mol·L$^{-1}$。加入能与 \ce{H+} 或 \ce{OH-} 结合的离子（4.4 节的盐类水解）或活泼金属 Na，则消耗 \ce{H+} 或 \ce{OH-}，促进水的电离；升高温度也促进水的电离。
+
+\begin{yicuo}
+“由水电离出的 $c(\ce{H+})=10^{-12}$ mol·L$^{-1}$”说明水的电离受到抑制，溶液可能是 pH$=2$ 的酸，也可能是 pH$=12$ 的碱，不能断定酸碱性。
+\end{yicuo}
+
+\subsection{溶液的酸碱性与 pH}
+溶液呈酸性还是碱性，取决于 $c(\ce{H+})$ 与 $c(\ce{OH-})$ 的相对大小：$c(\ce{H+})>c(\ce{OH-})$ 呈酸性，$c(\ce{H+})=c(\ce{OH-})$ 呈中性，$c(\ce{H+})<c(\ce{OH-})$ 呈碱性。稀溶液中 $c(\ce{H+})$ 常常是 $10^{-3}$、$10^{-9}$ 这样很小的数，直接比较和书写都不方便，于是取它的负对数：
+\[\mathrm{pH}=-\lg c(\ce{H+})\]
+例如 $c(\ce{H+})=1.0\times10^{-3}$ mol·L$^{-1}$ 时 pH$=3$。由定义可知，pH 每减小 1，$c(\ce{H+})$ 增大到原来的 10 倍。高中通常讨论稀水溶液；当 $c(\ce{H+})$ 和 $c(\ce{OH-})$ 都不超过 1 mol·L$^{-1}$ 时，25 ℃ 的 pH 在 0～14 之间（图~\ref{fig:04-ph}），中性溶液 pH$=7$。
+
+\tu{\begin{tikzpicture}[x=0.82cm,font=\scriptsize]
+\shade[left color=warnred!55,right color=white] (0,0) rectangle (7,0.45);
+\shade[left color=white,right color=mainblue!55] (7,0) rectangle (14,0.45);
+\draw (0,0) rectangle (14,0.45);
+\foreach \i in {0,...,14}{\draw (\i,0)--(\i,-0.12) node[below]{\i};}
+\foreach \i/\e in {0/0,2/-2,4/-4,6/-6,7/-7,8/-8,10/-10,12/-12,14/-14}{\node[above] at (\i,0.45) {$10^{\e}$};}
+\node[anchor=east] at (-0.3,0.75) {$c(\ce{H+})$/(mol·L$^{-1}$)};
+\node[anchor=east] at (-0.3,-0.3) {pH};
+\draw[c4arr,warnred] (6.3,1.25)--(0.5,1.25) node[midway,above]{酸性增强};
+\draw[c4arr,mainblue] (7.7,1.25)--(13.5,1.25) node[midway,above]{碱性增强};
+\node at (7,1.25) {中性};
+\foreach \p/\t/\yy in {1.5/胃液/-0.9,2.4/柠檬汁/-1.3,7/纯水/-0.9,7.4/血液/-1.3,10/肥皂水/-0.9,13/{0.1 mol·L$^{-1}$ NaOH}/-1.3}{\draw[gray] (\p,-0.45)--(\p,\yy+0.15); \node[below] at (\p,\yy+0.15) {\t};}
+\end{tikzpicture}}{25 ℃ 时 pH 与 $c(\ce{H+})$ 的对应关系及一些常见溶液的 pH（近似值）\label{fig:04-ph}}
+
+测定 pH 时，广泛 pH 试纸通常只能估读到整数，试纸不能先用水润湿（相当于稀释了待测液）；用 pH 计可以精确到 0.01。
+
+\begin{yicuo}
+判断酸碱性的根本依据是 $c(\ce{H+})$ 与 $c(\ce{OH-})$ 的相对大小，“pH$=7$ 为中性”只在 25 ℃ 时成立。100 ℃ 时纯水的 pH 约为 6.1，但 $c(\ce{H+})=c(\ce{OH-})$，仍呈中性。
+\end{yicuo}
+
+\subsection{pH 的计算}
+计算 pH 的关键是先求出 $c(\ce{H+})$。酸性溶液直接求 $c(\ce{H+})$；碱性溶液中 \ce{OH-} 是主角，要先求 $c(\ce{OH-})$，再用 $K_\text{w}$ 换算成 $c(\ce{H+})$。下面的例题由单一溶液开始，再到稀释和混合。
+
+\begin{liti}[基础]
+求 25 ℃ 时下列溶液的 pH：(1) 0.010 mol·L$^{-1}$ 盐酸；(2) 0.0050 mol·L$^{-1}$ \ce{H2SO4} 溶液；(3) 0.010 mol·L$^{-1}$ NaOH 溶液；(4) 0.10 mol·L$^{-1}$ \ce{CH3COOH} 溶液（$\lg1.3\approx0.11$）。
+\tcblower
+\jie (1) HCl 全部电离，$c(\ce{H+})=0.010=10^{-2}$ mol·L$^{-1}$，pH$=2$。\\
+(2) 1 个 \ce{H2SO4} 电离出 2 个 \ce{H+}，$c(\ce{H+})=2\times0.0050=10^{-2}$ mol·L$^{-1}$，pH$=2$。\\
+(3) $c(\ce{OH-})=10^{-2}$ mol·L$^{-1}$，$c(\ce{H+})=\dfrac{K_\text{w}}{c(\ce{OH-})}=\dfrac{10^{-14}}{10^{-2}}=10^{-12}$ mol·L$^{-1}$，pH$=12$。\\
+(4) 由例~4-1，$c(\ce{H+})\approx1.3\times10^{-3}$ mol·L$^{-1}$，pH$=3-\lg1.3\approx2.9$。弱酸要先用 $K_\text{a}$ 求 $c(\ce{H+})$，不能把酸的浓度直接当作 $c(\ce{H+})$。
+\end{liti}
+
+稀释时，溶质的物质的量不变。pH$=a$ 的强酸稀释到原体积的 $10^n$ 倍，$c(\ce{H+})$ 变为原来的 $10^{-n}$，pH$=a+n$；但酸无论怎样稀释都不会变成碱，无限稀释时 pH 只能接近 7（此时水电离的 \ce{H+} 不能再忽略）。弱酸稀释时电离平衡正移，补充了一部分 \ce{H+}，所以 $a<\text{pH}<a+n$。
+
+强酸与强碱混合时，先按 \ce{H+ + OH- = H2O} 计算过量离子的物质的量，再除以混合后的总体积。若含弱酸或弱碱，应先按实际反应计算，例如 \ce{CH3COOH + OH- = CH3COO- + H2O}；然后根据剩余弱电解质及生成的盐重新分析平衡，不能只拿混合前游离的 \ce{H+} 与 \ce{OH-} 相减。两种碱溶液混合，混合后仍是碱性溶液，必须先求混合后的 $c(\ce{OH-})$，不能直接平均 $c(\ce{H+})$，因为碱溶液中的 \ce{H+} 是由 $K_\text{w}$ 和 $c(\ce{OH-})$ 决定的，稀释混合时并不守恒。
+
+\begin{liti}[典型]
+25 ℃ 时：(1) pH$=3$ 的盐酸和 pH$=3$ 的醋酸分别稀释到原体积的 100 倍，pH 分别是多少（或在什么范围）？(2) pH$=10$ 与 pH$=12$ 的 NaOH 溶液等体积混合，求混合后的 pH（$\lg5\approx0.7$）；(3) pH$=13$ 的 NaOH 溶液与 pH$=2$ 的盐酸混合后溶液呈中性，求二者的体积比。
+\tcblower
+\jie (1) 盐酸 pH$=5$；醋酸 $3<$pH$<5$。\\
+(2) $c(\ce{OH-})=\dfrac{10^{-4}V+10^{-2}V}{2V}\approx5\times10^{-3}$ mol·L$^{-1}$，$c(\ce{H+})=\dfrac{10^{-14}}{5\times10^{-3}}=2\times10^{-12}$ mol·L$^{-1}$，pH$=12-\lg2\approx11.7$。若错误地平均 $c(\ce{H+})$，会得到 pH$\approx10.3$，混合后反而接近较稀的碱，显然不合理。\\
+(3) 中性时 $n(\ce{OH-})=n(\ce{H+})$：$10^{-1}V_\text{碱}=10^{-2}V_\text{酸}$，$V_\text{碱}:V_\text{酸}=1:10$。
+\end{liti}
+
+\begin{liti}[综合]
+水的电离平衡曲线如图~\ref{fig:04-kw}，A 点在 25 ℃ 曲线上，B 点在温度 $T$ 的曲线上。(1) 温度 $T$ 时 $K_\text{w}=$\tk。(2) 温度 $T$ 时，pH$=6$ 的溶液呈\tk{}性。(3) 25 ℃ 时，从 A 点变到曲线上的 C 点可采用的方法是\tk。(4) 能否通过升温使溶液由 A 点变到 C 点？
+\tu{\begin{tikzpicture}
+\begin{axis}[width=6cm,height=4.6cm,xlabel={$c(\ce{H+})$/(mol·L$^{-1}$)},ylabel={$c(\ce{OH-})$/(mol·L$^{-1}$)},xmode=log,ymode=log,xmin=1e-9,xmax=1e-4,ymin=1e-9,ymax=1e-4,tick label style={font=\scriptsize},label style={font=\scriptsize},legend style={font=\scriptsize,at={(1.03,0.5)},anchor=west}]
+\addplot[thick,mainblue,domain=1e-9:1e-5,samples=40]{1e-14/x};
+\addplot[thick,warnred,domain=1e-8:1e-4,samples=40]{1e-12/x};
+\addplot[only marks,mark=*,mark size=1.5pt,forget plot] coordinates {(1e-7,1e-7) (1e-6,1e-6) (1e-6,1e-8)};
+\draw[dashed,gray] (axis cs:1e-9,1e-9)--(axis cs:1e-4,1e-4);
+\node[font=\scriptsize,above left] at (axis cs:1e-7,1e-7) {A};
+\node[font=\scriptsize,above left] at (axis cs:1e-6,1e-6) {B};
+\node[font=\scriptsize,above right] at (axis cs:1e-6,1e-8) {C};
+\legend{25 ℃,温度 $T$}
+\end{axis}
+\end{tikzpicture}}{水的电离平衡曲线（双对数坐标）。A$(10^{-7},10^{-7})$，B$(10^{-6},10^{-6})$，C$(10^{-6},10^{-8})$；虚线上 $c(\ce{H+})=c(\ce{OH-})$\label{fig:04-kw}}
+\tcblower
+\silu 先读图：同一条曲线上各点温度相同，$K_\text{w}$ 相同；虚线上的点都呈中性，虚线右下方 $c(\ce{H+})>c(\ce{OH-})$，呈酸性。\\
+\jie (1) 由 B 点，$K_\text{w}=10^{-6}\times10^{-6}=1.0\times10^{-12}$。(2) 温度 $T$ 时 pH$=6$ 即 $c(\ce{H+})=10^{-6}$ mol·L$^{-1}$，$c(\ce{OH-})=\dfrac{10^{-12}}{10^{-6}}=10^{-6}$ mol·L$^{-1}$，呈中性。(3) C 点仍在 25 ℃ 曲线上，$c(\ce{H+})$ 增大、$c(\ce{OH-})$ 减小，可加入少量酸（或 \ce{NH4Cl} 等强酸弱碱盐）。(4) 不能。升温使 $K_\text{w}$ 增大，纯水中 $c(\ce{H+})$、$c(\ce{OH-})$ 同时增大，沿虚线由 A 移向 B，而 C 点 $c(\ce{OH-})$ 比 A 点小。
+\end{liti}
+
+\section{酸碱中和滴定}
+
+\subsection{原理与仪器}
+用已知浓度的酸（或碱）测定未知浓度的碱（或酸），叫做\textbf{酸碱中和滴定}。例如用 NaOH 滴定一元酸 HA，反应为 \ce{HA + OH- = A- + H2O}。恰好完全反应时，酸的总物质的量等于加入的 NaOH 的物质的量（不是混合前游离 \ce{H+} 的量），所以
+\[c_\text{待}=\frac{c_\text{标}\cdot V_\text{标}}{V_\text{待}}\]
+若反应计量比不是 $1:1$，须按方程式调整系数。式中 $c_\text{标}$ 已知，$V_\text{待}$ 用移液管或滴定管量取，只要测出恰好反应时消耗的 $V_\text{标}=V_\text{终读数}-V_\text{初读数}$ 即可。按计量关系恰好反应的位置叫等量点，实际观察到指示剂变色的位置叫滴定终点；选好指示剂，是使终点尽量接近等量点。要测得准，一是体积要量得准，所以用精确到 0.01 mL 的滴定管；二是终点要判断准，所以要借助指示剂或 pH 计。实验装置和滴定管的读数方法见图~\ref{fig:04-app}。
+
+\par\medskip\noindent
+\begin{minipage}[b]{0.58\linewidth}\centering
+\begin{tikzpicture}[font=\footnotesize,scale=0.9]
+\fill[gray!25] (-0.2,0) rectangle (3.6,0.15); \draw (-0.2,0) rectangle (3.6,0.15);
+\draw[line width=1.4pt,gray!70!black] (0.2,0.15)--(0.2,6.4);
+\draw[thick] (0.2,5.0)--(1.42,5.0); \fill[gray!70!black] (1.32,4.9) rectangle (1.42,5.1);
+\fill[mainblue!15] (1.42,2.3) rectangle (1.68,5.8);
+\draw[thick] (1.42,6.3)--(1.42,2.3)--(1.68,2.3)--(1.68,6.3);
+\foreach \y in {2.6,2.9,...,6.0}{\draw (1.42,\y)--(1.52,\y);}
+\draw (1.52,2.3)--(1.52,2.05)--(1.58,2.05)--(1.58,2.3);
+\fill[gray!50] (1.35,2.12) rectangle (1.75,2.22); \draw (1.35,2.12) rectangle (1.75,2.22);
+\draw (1.52,2.05)--(1.54,1.7)--(1.56,1.7)--(1.58,2.05);
+\fill[warnred!12] (0.92,0.32)--(2.18,0.32)--(1.85,0.75)--(1.25,0.75)--cycle;
+\draw[thick] (1.3,1.55)--(1.3,1.15)--(0.8,0.25)--(2.3,0.25)--(1.8,1.15)--(1.8,1.55);
+\draw (0.5,0.15) rectangle (2.6,0.25);
+\draw[gray] (1.68,4.4)--(2.4,4.4) node[c4lab]{聚四氟乙烯活塞滴定管\\（NaOH 标准液，0 刻度在上）};
+\draw[gray] (1.75,2.17)--(2.4,2.6) node[c4lab]{活塞};
+\draw[gray] (2.1,0.6)--(2.6,1.1) node[c4lab]{锥形瓶（待测酸＋\\2～3 滴指示剂）};
+\draw[gray] (2.4,0.2)--(2.8,0.45) node[c4lab]{白纸};
+\draw[gray] (0.2,5.6)--(-0.3,5.9) node[anchor=east,text=black]{铁架台};
+\draw[gray] (0.8,5.0)--(0.6,5.4) node[above,text=black]{滴定管夹};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.38\linewidth}\centering
+\begin{tikzpicture}[font=\scriptsize]
+\fill[mainblue!15] (0,0)--(0.8,0)--(0.8,2.005)..controls (0.65,1.865) and (0.15,1.865)..(0,2.005)--cycle;
+\draw[thick,mainblue] (0,2.005)..controls (0.15,1.865) and (0.65,1.865)..(0.8,2.005);
+\draw[thick] (0,3.1)--(0,0) (0.8,3.1)--(0.8,0);
+\foreach \i in {0,...,10}{\pgfmathsetmacro\yy{2.6-0.2*\i}\draw (0,\yy)--(0.15,\yy);}
+\draw (0,2.6)--(0.3,2.6) node[right]{20}; \draw (0,0.6)--(0.3,0.6) node[right]{21};
+\draw[dashed,warnred] (0.4,1.90)--(2.2,1.90) node[right]{视线};
+\node[align=center] at (0.9,-0.45) {凹液面最低处读数\\20.35 mL};
+\end{tikzpicture}
+\end{minipage}
+\par\nobreak\vspace{2pt}
+\captionof{figure}{中和滴定装置（左）与滴定管读数（右，视线与凹液面最低处相平，估读到 0.01 mL）\label{fig:04-app}}
+\medskip
+
+滴定的操作顺序是：检查是否漏水$\to$用蒸馏水洗涤$\to$用待装溶液润洗 2～3 次$\to$装液、赶出尖嘴部分的气泡$\to$调节液面并记录初读数$\to$滴定$\to$记录终读数$\to$重复 2～3 次，取平均值。滴定时左手控制活塞，右手摇动锥形瓶，眼睛注视锥形瓶中溶液颜色的变化。传统玻璃活塞酸式滴定管不宜装碱液，以免活塞与玻璃黏结；NaOH 可用碱式滴定管或图示的耐碱活塞滴定管。滴定管要用待装液润洗，否则管壁残留的水会稀释溶液；锥形瓶却不能用待测液润洗，否则待测溶质的量增多。
+
+\subsection{滴定曲线与指示剂的选择}
+滴定过程中溶液 pH 怎样变化？以 0.1000 mol·L$^{-1}$ NaOH 滴定 20.00 mL 0.1000 mol·L$^{-1}$ 盐酸为例计算几个点：加入 19.98 mL NaOH（还差约半滴）时，剩余 \ce{H+} 为 $0.1000\times0.02\times10^{-3}$ mol，溶液约 40 mL，$c(\ce{H+})=5\times10^{-5}$ mol·L$^{-1}$，pH$=4.3$；加入 20.00 mL 时恰好中和，pH$=7.0$；加入 20.02 mL 时 NaOH 过量 0.02 mL，同理 $c(\ce{OH-})=5\times10^{-5}$ mol·L$^{-1}$，pH$=9.7$。也就是说，在恰好中和前后 0.04 mL（约一滴）的范围内，pH 从 4.3 突然升到 9.7，这种 pH 的急剧变化叫做\textbf{滴定突跃}。原因是：接近终点时 99.9\% 的 \ce{H+} 已被中和，剩下的 \ce{H+} 极少，再多一滴碱就由酸过量变为碱过量。以加入碱的体积为横坐标、pH 为纵坐标，就得到滴定曲线（图~\ref{fig:04-titr}）。
+
+\tu{\begin{tikzpicture}
+\begin{axis}[width=9cm,height=5.8cm,xlabel={$V(\ce{NaOH})$/mL},ylabel={pH},xmin=0,xmax=40,ymin=0,ymax=14,
+ ytick={0,2,...,14},xtick={0,10,20,30,40},grid=major,grid style={gray!20},legend pos=south east,legend style={font=\scriptsize},tick label style={font=\scriptsize},label style={font=\small},clip=false]
+\fill[red!12] (axis cs:0,8.2) rectangle (axis cs:40,10.0);
+\fill[orange!18] (axis cs:0,3.1) rectangle (axis cs:40,4.4);
+\addplot[thick,mainblue,smooth] coordinates {(0,1.00) (2,1.09) (5,1.22) (10,1.48) (15,1.85) (18,2.28) (19,2.59) (19.5,2.90) (19.8,3.30) (19.96,4.00) (20,7.00) (20.04,10.00) (20.2,10.70) (20.5,11.09) (21,11.39) (22,11.68) (25,12.05) (30,12.30) (35,12.44) (40,12.52)};
+\addplot[thick,warnred,smooth,dashed] coordinates {(0,2.88) (2,3.81) (5,4.28) (10,4.76) (15,5.23) (18,5.71) (19,6.04) (19.5,6.35) (19.8,6.75) (19.96,7.45) (20,8.73) (20.04,10.00) (20.2,10.70) (20.5,11.09) (21,11.39) (22,11.68) (25,12.05) (30,12.30) (35,12.44) (40,12.52)};
+\addplot[only marks,mark=*,mark size=1.4pt,forget plot] coordinates {(10,4.76) (20,8.73) (20,7.00)};
+\node[font=\scriptsize,anchor=south east] at (axis cs:10,4.9) {半中和点};
+\node[font=\scriptsize,anchor=west] at (axis cs:20.6,8.4) {恰好中和（醋酸）};
+\node[font=\scriptsize,anchor=east] at (axis cs:19.6,7.0) {恰好中和（盐酸）};
+\node[font=\scriptsize,anchor=west] at (axis cs:40.5,9.1) {酚酞};
+\node[font=\scriptsize,anchor=west] at (axis cs:40.5,3.75) {甲基橙};
+\legend{滴定盐酸,滴定醋酸}
+\end{axis}
+\end{tikzpicture}}{0.1000 mol·L$^{-1}$ NaOH 滴定 20.00 mL 0.1000 mol·L$^{-1}$ 盐酸和醋酸的滴定曲线（计算值）。浅色横带为酚酞（8.2～10.0）和甲基橙（3.1～4.4）的变色范围\label{fig:04-titr}}
+
+读滴定曲线可以按下面的顺序。第一看起点：盐酸起点 pH$=1.0$，醋酸起点 pH$\approx2.9$，这里两种酸浓度相同，因此起点越高说明电离越弱。第二看半中和点：加入 10.00 mL 时，醋酸有一半转化为 \ce{CH3COONa}，$c(\ce{CH3COOH})\approx c(\ce{CH3COO-})$，代入 $K_\text{a}$ 表达式得 $K_\text{a}\approx c(\ce{H+})$，即 pH$\approx$p$K_\text{a}$（p$K_\text{a}=-\lg K_\text{a}=4.76$），这是从曲线求 $K_\text{a}$ 的常用方法。第三看突跃：突跃陡变段中的等量点对应恰好中和时消耗的体积；滴定醋酸的突跃范围约为 7.7～9.7，比盐酸窄，恰好中和时 pH$\approx8.7$，溶液呈碱性（原因见 4.4 节）。第四选指示剂：应让指示剂的终点颜色变化出现在等量点附近的陡变段，使少量标准液就能引起清楚变色。强碱滴定强酸，酚酞、甲基橙都可以；强碱滴定弱酸，只能用酚酞，若用甲基橙，pH 刚到 4.4 左右就变色，此时醋酸还远未中和完；强酸滴定弱碱，恰好中和时溶液呈酸性，用甲基橙。
+
+终点现象这样描述：“当滴入最后半滴××标准溶液时，溶液由×色变为×色，且半分钟内不恢复原色”。分析误差时，一切误差都归结到 $V_\text{标}$ 上，因为 $c_\text{待}\propto V_\text{标}$：滴定管未用标准液润洗，标准液被稀释，$V_\text{标}$ 偏大，结果偏高；锥形瓶用待测液润洗，待测溶质增多，偏高；滴定前尖嘴有气泡、滴定后消失，气泡体积被计入 $V_\text{标}$，偏高；滴定后俯视读数，终读数偏小，偏低；锥形瓶中有少量蒸馏水，待测溶质的量不变，无影响。
+
+氧化还原反应也可用于滴定，原理相同：用 \ce{KMnO4} 溶液滴定时，\ce{KMnO4} 自身作指示剂，终点时溶液变为浅紫红色；用碘量法（\ce{I2 + 2S2O3^2- = 2I- + S4O6^2-}）时，用淀粉作指示剂，终点时蓝色褪去。计算时依据得失电子守恒建立关系式。
+
+\begin{zhenti}{改编自2025年广东卷第17题(3)}
+测定常温下苯甲酸饱和溶液的浓度 $c_0$ 和苯甲酸的 $K_\text{a}$：取 50.00 mL 苯甲酸饱和溶液，用 0.1000 mol·L$^{-1}$ NaOH 溶液滴定，用 pH 计测得的滴定曲线如图~\ref{fig:04-bz}。①$c_0=$\tk mol·L$^{-1}$；②苯甲酸的 $K_\text{a}=$\tk（列出算式，水的电离可忽略）。
+\tu{\begin{tikzpicture}
+\begin{axis}[width=6.4cm,height=4.4cm,xlabel={$V(\ce{NaOH})$/mL},ylabel={pH},xmin=0,xmax=20,ymin=0,ymax=13,xtick={0,7,14,20},ytick={2.89,7,12},yticklabels={2.89,7,12},grid=major,grid style={gray!20},tick label style={font=\scriptsize},label style={font=\scriptsize}]
+\addplot[thick,mainblue,smooth] coordinates {(0,2.89) (1,3.22) (2,3.47) (4,3.82) (6,4.09) (7,4.21) (8,4.34) (10,4.61) (12,4.99) (13,5.32) (13.5,5.64) (13.8,6.05) (13.9,6.35) (14,8.27) (14.1,10.19) (14.2,10.49) (14.5,10.89) (15,11.19) (16,11.48) (18,11.77) (20,11.93)};
+\addplot[only marks,mark=*,mark size=1.3pt] coordinates {(0,2.89) (14,8.27)};
+\end{axis}
+\end{tikzpicture}}{NaOH 溶液滴定苯甲酸饱和溶液的 pH 曲线（按题中数据计算绘制）\label{fig:04-bz}}
+{\heiti 解析}\quad ①突跃出现在 14.00 mL，此时恰好中和：$c_0=\dfrac{0.1000\times14.00}{50.00}=0.028$ mol·L$^{-1}$。②起点就是苯甲酸饱和溶液，$c(\ce{H+})=c(\text{苯甲酸根})=10^{-2.89}$ mol·L$^{-1}$，$K_\text{a}=\dfrac{10^{-2.89}\times10^{-2.89}}{0.028-10^{-2.89}}$。\\
+\dianbo 也可以读半中和点（7.00 mL）的 pH，约为 4.2，得 $K_\text{a}\approx10^{-4.2}$，两种方法结果一致（约 $6\times10^{-5}$）。
+\end{zhenti}
+
+\section{盐类的水解}
+
+\subsection{盐溶液为什么不一定呈中性}
+NaCl、\ce{CH3COONa}、\ce{NH4Cl} 这些正盐不直接电离出 \ce{H+} 或 \ce{OH-}，它们的水溶液是不是都呈中性？用 pH 计测得 25 ℃ 时几种 0.10 mol·L$^{-1}$ 盐溶液的 pH：NaCl 为 7.0，\ce{CH3COONa} 约为 8.9，\ce{Na2CO3} 约为 11.6，\ce{NH4Cl} 约为 5.1。按生成盐的酸和碱的强弱归类：强酸强碱盐（NaCl）呈中性，强碱弱酸盐（\ce{CH3COONa}、\ce{Na2CO3}）呈碱性，强酸弱碱盐（\ce{NH4Cl}）呈酸性。
+
+原因要从溶液中的粒子说起（图~\ref{fig:04-hyd}）。\ce{CH3COONa} 溶液中，盐电离出 \ce{Na+} 和 \ce{CH3COO-}，水电离出少量 \ce{H+} 和 \ce{OH-}。\ce{CH3COOH} 是弱电解质，\ce{CH3COO-} 遇到 \ce{H+} 会结合成 \ce{CH3COOH} 分子，使溶液中的 \ce{H+} 减少，水的电离平衡正向移动，\ce{OH-} 随之增多，最终 $c(\ce{OH-})>c(\ce{H+})$，溶液呈碱性。\ce{NH4Cl} 溶液中，\ce{NH4+} 结合水电离出的 \ce{OH-} 生成弱电解质 \ce{NH3*H2O}，结果 $c(\ce{H+})>c(\ce{OH-})$，溶液呈酸性。NaCl 溶液中，\ce{Na+} 和 \ce{Cl-} 都不能与 \ce{H+} 或 \ce{OH-} 结合成弱电解质，水的电离平衡不受影响，溶液呈中性。
+
+\tu{\begin{tikzpicture}[font=\small]
+\begin{scope}
+\node at (0,0) {\ce{CH3COONa}}; \node at (1.05,0) {$=$}; \node at (1.75,0) {\ce{Na+}}; \node at (2.35,0) {$+$}; \node (a3) at (3.2,0) {\ce{CH3COO-}};
+\node at (0,-0.9) {\ce{H2O}}; \node at (1.05,-0.9) {\ce{<=>}}; \node[warnred] (b2) at (1.75,-0.9) {\ce{OH-}}; \node at (2.35,-0.9) {$+$}; \node (b3) at (3.2,-0.9) {\ce{H+}};
+\draw[mainblue,rounded corners=2pt] (2.6,0.3) rectangle (3.85,-1.2);
+\draw[c4arr,mainblue] (3.2,-1.2)--(3.2,-1.65) node[below]{\ce{CH3COOH}};
+\node[font=\scriptsize,align=left,anchor=west] at (3.95,-0.45) {结合成\\弱电解质};
+\node[font=\scriptsize,warnred] at (1.4,-2.0) {$c(\ce{OH-})>c(\ce{H+})$，碱性};
+\node[font=\scriptsize] at (1.9,0.65) {(a)};
+\end{scope}
+\begin{scope}[xshift=7.6cm]
+\node at (0,0) {\ce{NH4Cl}}; \node at (0.85,0) {$=$}; \node at (1.55,0) {\ce{Cl-}}; \node at (2.15,0) {$+$}; \node at (2.9,0) {\ce{NH4+}};
+\node at (0,-0.9) {\ce{H2O}}; \node at (0.85,-0.9) {\ce{<=>}}; \node[warnred] at (1.55,-0.9) {\ce{H+}}; \node at (2.15,-0.9) {$+$}; \node at (2.9,-0.9) {\ce{OH-}};
+\draw[mainblue,rounded corners=2pt] (2.35,0.3) rectangle (3.45,-1.2);
+\draw[c4arr,mainblue] (2.9,-1.2)--(2.9,-1.65) node[below]{\ce{NH3*H2O}};
+\node[font=\scriptsize,warnred] at (1.3,-2.0) {$c(\ce{H+})>c(\ce{OH-})$，酸性};
+\node[font=\scriptsize] at (1.7,0.65) {(b)};
+\end{scope}
+\end{tikzpicture}}{\ce{CH3COONa}(a) 和 \ce{NH4Cl}(b) 溶液中水解的示意：方框内的两种离子结合成弱电解质，打破了水的电离平衡\label{fig:04-hyd}}
+
+\begin{gainian}[盐类的水解]
+在溶液中，盐电离出的弱酸根离子或弱碱阳离子与水电离出的 \ce{H+} 或 \ce{OH-} 结合生成弱电解质的反应，叫做\textbf{盐类的水解}。水解促进水的电离，常使溶液呈酸性或碱性；酸碱性还取决于阴、阳离子水解的相对作用。
+\[\ce{CH3COO- + H2O <=> CH3COOH + OH-}\qquad \ce{NH4+ + H2O <=> NH3*H2O + H+}\]
+\end{gainian}
+
+从本质出发，可以得到水解的规律：盐中有弱酸根或弱碱阳离子才水解，没有就不水解；溶液的酸碱性由“强”的一方决定，强碱弱酸盐显碱性，强酸弱碱盐显酸性，强酸强碱盐显中性。若阴、阳离子都能水解，不能套用“谁强显谁性”的口诀，要比较两者的水解作用；例如常温下醋酸铵两种离子的水解作用接近，溶液接近中性。
+
+\subsection{水解常数与水解规律}
+水解反应也有平衡常数，叫\textbf{水解常数} $K_\text{h}$。以 \ce{CH3COO-} 为例，把表达式的分子、分母同乘 $c(\ce{H+})$：
+\[K_\text{h}=\frac{c(\ce{CH3COOH})\cdot c(\ce{OH-})}{c(\ce{CH3COO-})}=\frac{c(\ce{CH3COOH})\cdot c(\ce{OH-})\cdot c(\ce{H+})}{c(\ce{CH3COO-})\cdot c(\ce{H+})}=\frac{K_\text{w}}{K_\text{a}}\]
+同理弱碱阳离子的 $K_\text{h}=\dfrac{K_\text{w}}{K_\text{b}}$。这个关系告诉我们两件事。第一，对应的酸越弱（$K_\text{a}$ 越小），$K_\text{h}$ 越大，水解程度越大，即“越弱越水解”：等浓度时，NaCN 溶液（HCN 的 $K_\text{a}=6.2\times10^{-10}$）的碱性比 \ce{CH3COONa} 溶液强得多。第二，\ce{CH3COO-} 的 $K_\text{h}=\dfrac{10^{-14}}{1.75\times10^{-5}}\approx5.7\times10^{-10}$，数值很小，一般的水解都是微弱的。\ce{CO3^2-} 对应的酸是 \ce{HCO3-}，$K_\text{h1}=\dfrac{K_\text{w}}{K_{\text{a}2}}=\dfrac{10^{-14}}{4.7\times10^{-11}}\approx2.1\times10^{-4}$，所以 \ce{Na2CO3} 溶液的碱性比同浓度的 \ce{NaHCO3} 强。
+
+书写水解方程式时，因为水解程度很小，用“\ce{<=>}”，生成物不标“↑”“↓”；多元弱酸根分步水解，分步书写，以第一步为主，如 \ce{CO3^2- + H2O <=> HCO3- + OH-}；多元弱碱阳离子一步写出，如 \ce{Fe^3+ + 3H2O <=> Fe(OH)3 + 3H+}。弱酸根与弱碱阳离子相互促进、水解彻底时用“$=$”，并标出沉淀和气体，如泡沫灭火器的原理 \ce{Al^3+ + 3HCO3- = Al(OH)3 v + 3CO2 ^}。
+
+酸式盐的酸根 \ce{HA-} 既能电离（\ce{HA- <=> H+ + A^2-}，常数为 $K_{\text{a}2}$），又能水解（\ce{HA- + H2O <=> H2A + OH-}，常数为 $K_\text{h2}=K_\text{w}/K_{\text{a}1}$），溶液的酸碱性由两者的相对大小决定。\ce{HCO3-}：$K_\text{h2}=\dfrac{10^{-14}}{4.5\times10^{-7}}\approx2.2\times10^{-8}>K_{\text{a}2}=4.7\times10^{-11}$，水解为主，\ce{NaHCO3} 溶液呈碱性。\ce{HSO3-}：$K_\text{h2}=\dfrac{10^{-14}}{1.4\times10^{-2}}\approx7\times10^{-13}<K_{\text{a}2}=6.0\times10^{-8}$，电离为主，\ce{NaHSO3} 溶液呈酸性。用同样的方法可知 \ce{NaH2PO4}、\ce{NaHC2O4} 溶液呈酸性，\ce{Na2HPO4} 溶液呈碱性。
+
+\begin{liti}[典型]
+已知 25 ℃ 时 \ce{CH3COOH} 的 $K_\text{a}=1.75\times10^{-5}$。(1) 求 0.10 mol·L$^{-1}$ \ce{CH3COONa} 溶液的 pH（$\sqrt{5.7}\approx2.4$，$\lg7.6\approx0.88$）；(2) 加水稀释 \ce{CH3COONa} 溶液时，$\dfrac{c(\ce{CH3COO-})}{c(\ce{CH3COOH})\cdot c(\ce{OH-})}$ 如何变化？
+\tcblower
+\silu 与例~4-1 求弱酸的 $c(\ce{H+})$ 完全类似，只是把 $K_\text{a}$ 换成 $K_\text{h}$，所求的是 $c(\ce{OH-})$。\\
+\jie (1) $K_\text{h}=\dfrac{K_\text{w}}{K_\text{a}}\approx5.7\times10^{-10}$。设水解生成的 $c(\ce{OH-})=x$，则 $c(\ce{CH3COOH})\approx x$，$\dfrac{x^2}{0.10-x}=K_\text{h}$，$x\ll0.10$，$x\approx\sqrt{5.7\times10^{-11}}\approx7.6\times10^{-6}$ mol·L$^{-1}$；$c(\ce{H+})=\dfrac{10^{-14}}{7.6\times10^{-6}}\approx1.3\times10^{-9}$ mol·L$^{-1}$，pH$\approx8.9$。\\
+(2) 该比值等于 $\dfrac1{K_\text{h}}$，温度不变则不变。
+\end{liti}
+
+\subsection{影响水解的因素与水解的应用}
+常见盐的水解可看作相应弱酸、弱碱中和过程的逆过程，通常按吸热处理，升温促进水解；遇到题给热效应或实验数据时以题设为准。稀释也促进水解（理由与“越稀越电离”相同），但溶液中 $c(\ce{OH-})$ 或 $c(\ce{H+})$ 减小；加酸抑制弱碱阳离子的水解，加碱抑制弱酸根的水解。这些规律有许多应用，见表~\ref{tab:04-app}。
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\small
+\captionof{table}{盐类水解的应用\label{tab:04-app}}
+\begin{tabularx}{\linewidth}{p{3.2cm}X}
+\toprule
+应用 & 原理与实例 \\
+\midrule
+配制易水解的盐溶液 & 配制 \ce{FeCl3} 溶液，先溶于较浓盐酸再加水稀释；配制 \ce{FeSO4} 溶液，加少量稀硫酸（抑制水解）和铁粉（防止 \ce{Fe^2+} 被氧化） \\
+盐溶液蒸干所得产物 & \ce{FeCl3}、\ce{AlCl3} 溶液加热时 HCl 挥发，水解加深，不能直接蒸干得到无水氯化物，继续灼烧可得氧化物；\ce{MgCl2} 加热脱水还可能形成碱式盐，不能一概判为 \ce{Mg(OH)2}；\ce{Fe2(SO4)3} 溶液蒸干仍得原物质（\ce{H2SO4} 难挥发）；在 HCl 气流中加热 \ce{MgCl2*6H2O} 可得无水 \ce{MgCl2} \\
+净水 & 明矾、\ce{FeCl3}：\ce{Al^3+ + 3H2O <=> Al(OH)3}（胶体）\ce{+ 3H+}，胶体吸附水中的悬浮杂质 \\
+热纯碱溶液去油污 & 升温促进 \ce{CO3^2-} 水解，生成的 \ce{OH-} 增多（pH 变化还须考虑 $K_\text{w}$） \\
+调节 pH 除杂 & 除去 \ce{MgCl2} 溶液中的 \ce{Fe^3+}：加 MgO 或 \ce{MgCO3} 消耗 \ce{H+}，促进 \ce{Fe^3+} 水解生成 \ce{Fe(OH)3} 沉淀，且不引入新杂质 \\
+化肥的使用 & 草木灰（含 \ce{K2CO3}）不能与铵态氮肥混用，二者相互促进水解，放出 \ce{NH3} \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+\begin{zhenti}{2025年广东卷第17题(5)}
+某小组尝试测定弱酸 HClO 的 $K_\text{a}$。丙同学认为不宜用滴定法，原因之一是次氯酸易分解（\ce{2HClO ->[\text{光照}] 2H+ + 2Cl- + O2 ^}）。小组讨论后，选用 0.100 mol·L$^{-1}$ NaClO 溶液（含少量 NaCl）进行实验，以获得 HClO 的 $K_\text{a}$。简述该方案（包括所用仪器及数据处理思路）。
+
+{\heiti 参考答案}\quad 取适量 0.100 mol·L$^{-1}$ NaClO 溶液于烧杯中，用 pH 计测定 25 ℃ 时溶液的 pH。\ce{ClO-} 水解：\ce{ClO- + H2O <=> HClO + OH-}，由 pH 求出 $c(\ce{OH-})$，水解常数 $K_\text{h}=\dfrac{c^2(\ce{OH-})}{0.100-c(\ce{OH-})}$，再由 $K_\text{a}=\dfrac{K_\text{w}}{K_\text{h}}$ 求出 HClO 的 $K_\text{a}$。\\
+\dianbo 本题用的正是 $K_\text{a}\cdot K_\text{h}=K_\text{w}$：弱酸不稳定时，可以测定它的强碱盐溶液的 pH，间接求 $K_\text{a}$。
+\end{zhenti}
+
+\section{溶液中粒子浓度的关系}
+
+\subsection{三大守恒的推导}
+盐溶液中同时存在电离和水解，粒子种类多，浓度又都很小，怎样找出它们之间的定量关系？下面以 0.10 mol·L$^{-1}$ \ce{Na2CO3} 溶液为例，一步一步地推导。
+
+第一步，写出溶液中发生的全部过程：
+\[\begin{aligned}
+\ce{Na2CO3 = 2Na+ + CO3^2-}&\qquad \ce{H2O <=> H+ + OH-}\\
+\ce{CO3^2- + H2O <=> HCO3- + OH-}&\qquad \ce{HCO3- + H2O <=> H2CO3 + OH-}
+\end{aligned}\]
+第二步，列出除水分子外的全部粒子：\ce{Na+}、\ce{CO3^2-}、\ce{HCO3-}、\ce{H2CO3}、\ce{H+}、\ce{OH-}。
+
+第三步，\textbf{电荷守恒}。溶液整体不带电，单位体积内阳离子所带正电荷总数等于阴离子所带负电荷总数。1 个 \ce{CO3^2-} 带 2 个单位负电荷，浓度为 $c(\ce{CO3^2-})$ 的 \ce{CO3^2-} 提供的负电荷相当于 $2c(\ce{CO3^2-})$，所以
+\[c(\ce{Na+})+c(\ce{H+})=2c(\ce{CO3^2-})+c(\ce{HCO3-})+c(\ce{OH-})\]
+
+第四步，\textbf{元素质量守恒}（也叫物料守恒）。\ce{Na2CO3} 中 $n(\mathrm{Na}):n(\mathrm{C})=2:1$。\ce{Na+} 不水解，$c(\ce{Na+})=0.20$ mol·L$^{-1}$；C 元素原来都以 \ce{CO3^2-} 形式加入，水解后分散在三种粒子中，但总量不变：$c(\ce{CO3^2-})+c(\ce{HCO3-})+c(\ce{H2CO3})=0.10$ mol·L$^{-1}$。于是
+\[c(\ce{Na+})=2[c(\ce{CO3^2-})+c(\ce{HCO3-})+c(\ce{H2CO3})]\]
+
+第五步，\textbf{质子守恒}。溶液中的 \ce{OH-} 全部来自水的电离，水电离出的 \ce{H+} 与 \ce{OH-} 一样多。这些 \ce{H+} 有三个去向：一部分仍游离在溶液中，一部分被 \ce{CO3^2-} 结合成 \ce{HCO3-}（每个 \ce{HCO3-} 含 1 个这样的 \ce{H+}），一部分结合成 \ce{H2CO3}（每个含 2 个）。按“得失质子数相等”可以画出图~\ref{fig:04-proton}，得到
+\[c(\ce{OH-})=c(\ce{H+})+c(\ce{HCO3-})+2c(\ce{H2CO3})\]
+把物料守恒式代入电荷守恒式消去 $c(\ce{Na+})$，得到的正是这个式子，可以用来检验。
+
+\tu{\begin{tikzpicture}[font=\small]
+\node[font=\scriptsize\heiti] at (-3.4,1.75) {得质子后的产物};
+\node[font=\scriptsize\heiti] at (0,1.75) {基准粒子};
+\node[font=\scriptsize\heiti] at (3.4,1.75) {失质子后的产物};
+\node[draw,rounded corners=2pt,minimum width=1.3cm] (co) at (0,0.75) {\ce{CO3^2-}};
+\node[draw,rounded corners=2pt,minimum width=1.3cm] (w) at (0,-0.6) {\ce{H2O}};
+\node (h1) at (-3.4,1.15) {\ce{HCO3-}};
+\node (h2) at (-3.4,0.35) {\ce{H2CO3}};
+\node (h3) at (-3.4,-0.6) {\ce{H3O+}（即 \ce{H+}）};
+\node (oh) at (3.4,-0.6) {\ce{OH-}};
+\draw[c4arr,mainblue] (co.west)--(h1.east) node[midway,above,font=\scriptsize]{$+1\ce{H+}$};
+\draw[c4arr,mainblue] (co.west)--(h2.east) node[midway,below,font=\scriptsize]{$+2\ce{H+}$};
+\draw[c4arr,mainblue] (w.west)--(h3.east) node[midway,above,font=\scriptsize]{$+1\ce{H+}$};
+\draw[c4arr,warnred] (w.east)--(oh.west) node[midway,above,font=\scriptsize]{$-1\ce{H+}$};
+\node[font=\scriptsize] at (0,-1.45) {得质子总数 $=$ 失质子总数：$c(\ce{H+})+c(\ce{HCO3-})+2c(\ce{H2CO3})=c(\ce{OH-})$};
+\end{tikzpicture}}{\ce{Na2CO3} 溶液质子守恒的推导：以大量存在的 \ce{CO3^2-} 和 \ce{H2O} 为基准，分别统计得质子和失质子的产物\label{fig:04-proton}}
+
+\begin{liti}[基础]
+写出 0.10 mol·L$^{-1}$ \ce{NaHCO3} 溶液中的电荷守恒、物料守恒和质子守恒式。
+\tcblower
+\silu \ce{HCO3-} 既电离（生成 \ce{CO3^2-}）又水解（生成 \ce{H2CO3}），粒子种类与 \ce{Na2CO3} 溶液相同，只是物料比例和质子守恒的基准不同。\\
+\jie 电荷守恒：$c(\ce{Na+})+c(\ce{H+})=2c(\ce{CO3^2-})+c(\ce{HCO3-})+c(\ce{OH-})$（与 \ce{Na2CO3} 溶液的形式相同）。\\
+物料守恒：$n(\mathrm{Na}):n(\mathrm{C})=1:1$，$c(\ce{Na+})=c(\ce{CO3^2-})+c(\ce{HCO3-})+c(\ce{H2CO3})$。\\
+质子守恒：以 \ce{HCO3-}、\ce{H2O} 为基准，得质子的产物是 \ce{H2CO3}、\ce{H+}，失质子的产物是 \ce{CO3^2-}、\ce{OH-}：$c(\ce{H+})+c(\ce{H2CO3})=c(\ce{OH-})+c(\ce{CO3^2-})$。把物料守恒式代入电荷守恒式消去 $c(\ce{Na+})$，可以验证此式。
+\end{liti}
+
+\subsection{粒子浓度大小的比较}
+在高中常见浓度下，许多弱电解质的电离和盐的水解都较微弱；浓度极低或常数较大时必须另行判断。对单一溶液，先判断电离和水解谁为主，再排序。
+\begin{itemize}
+\item \ce{CH3COONa}：\ce{CH3COO-} 少量水解，$c(\ce{Na+})>c(\ce{CH3COO-})>c(\ce{OH-})>c(\ce{H+})$。
+\item \ce{Na2CO3}：$c(\ce{Na+})>c(\ce{CO3^2-})>c(\ce{OH-})>c(\ce{HCO3-})>c(\ce{H+})$。由刚推导的质子守恒式，$c(\ce{OH-})-c(\ce{HCO3-})=c(\ce{H+})+2c(\ce{H2CO3})>0$，所以 \ce{OH-} 略多于 \ce{HCO3-}。
+\item \ce{NaHCO3}：水解大于电离，$c(\ce{Na+})>c(\ce{HCO3-})>c(\ce{OH-})>c(\ce{H+})$，且 $c(\ce{H2CO3})>c(\ce{CO3^2-})$。
+\end{itemize}
+
+对混合溶液，先看两种溶质是否反应，再看“剩下什么、各剩多少”，最后比较电离与水解谁大，见表~\ref{tab:04-mix}。
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\small
+\captionof{table}{两种溶质等物质的量混合时的浓度比较（浓度不很低）\label{tab:04-mix}}
+\begin{tabularx}{\linewidth}{lp{3.9cm}X}
+\toprule
+混合体系 & 比较依据 & 结论 \\
+\midrule
+\ce{CH3COOH} 与 \ce{CH3COONa} & $K_\text{a}=1.75\times10^{-5}>K_\text{h}=5.7\times10^{-10}$，电离为主 & 酸性；$c(\ce{CH3COO-})>c(\ce{Na+})>c(\ce{CH3COOH})>c(\ce{H+})>c(\ce{OH-})$ \\
+\ce{NH3*H2O} 与 \ce{NH4Cl} & $K_\text{b}=1.8\times10^{-5}>K_\text{h}=5.6\times10^{-10}$，电离为主 & 碱性；$c(\ce{NH4+})>c(\ce{Cl-})>c(\ce{NH3*H2O})>c(\ce{OH-})>c(\ce{H+})$ \\
+HCN 与 NaCN & $K_\text{a}=6.2\times10^{-10}<K_\text{h}=1.6\times10^{-5}$，水解为主 & 碱性；$c(\ce{HCN})>c(\ce{Na+})>c(\ce{CN-})>c(\ce{OH-})>c(\ce{H+})$ \\
+\bottomrule
+\end{tabularx}
+\end{minipage}
+\end{center}
+
+滴定过程中粒子浓度的变化，可以借助图~\ref{fig:04-titr} 中 NaOH 滴定醋酸的曲线分段分析。起点只有 \ce{CH3COOH}；半中和点 \ce{CH3COOH} 与 \ce{CH3COONa} 等量，电离为主，呈酸性；pH$=7$ 的点 $c(\ce{H+})=c(\ce{OH-})$，由电荷守恒得 $c(\ce{Na+})=c(\ce{CH3COO-})$，此时醋酸略过量；恰好中和点溶质只有 \ce{CH3COONa}，水解使溶液呈碱性，水的电离程度最大；此后 NaOH 过量，抑制水解和水的电离。
+
+\begin{liti}[综合]
+常温下，向 20 mL 0.1 mol·L$^{-1}$ \ce{CH3COOH} 溶液中逐滴加入 0.1 mol·L$^{-1}$ NaOH 溶液。下列说法正确的是\xz
+\xxa{加入 10 mL NaOH 溶液时：$c(\ce{CH3COO-})+c(\ce{CH3COOH})=2c(\ce{Na+})$}{pH$=7$ 时，加入 NaOH 溶液的体积为 20 mL}{加入 20 mL NaOH 溶液时：$c(\ce{Na+})>c(\ce{CH3COO-})>c(\ce{H+})>c(\ce{OH-})$}{滴定过程中，水的电离程度一直增大}
+\tcblower
+\jie A：此时醋酸分子与醋酸根的总物质的量是 \ce{Na+} 的 2 倍，物料守恒成立，正确。B：恰好中和时溶液呈碱性，所以 pH$=7$ 时 NaOH 溶液不足 20 mL。C：恰好中和时溶液呈碱性，应为 $c(\ce{OH-})>c(\ce{H+})$。D：恰好中和前，酸逐渐被消耗、水解的盐增多，水的电离程度增大；之后 NaOH 过量，抑制水的电离，程度又减小。\daan A
+\end{liti}
+
+\section{沉淀溶解平衡}
+
+\subsection{溶度积}
+必修中说 AgCl “难溶”，是指 20 ℃ 时 100 g 水中能溶解的质量小于 0.01 g，并不是一点也不溶。向 \ce{AgNO3} 溶液中加入过量 NaCl 溶液，过滤后在澄清的滤液中滴加 KI 溶液，会出现黄色的 AgI 沉淀，说明滤液中仍有少量 \ce{Ag+}。从微观上看（图~\ref{fig:04-agcl}），AgCl 固体表面的 \ce{Ag+} 和 \ce{Cl-} 在水分子作用下不断进入溶液，溶液中的 \ce{Ag+} 和 \ce{Cl-} 也不断回到固体表面；当两个速率相等时，溶液达到饱和，建立了\textbf{沉淀溶解平衡}：\ce{AgCl(s) <=> Ag+(aq) + Cl-(aq)}。
+
+\tu{\begin{tikzpicture}[font=\scriptsize]
+\fill[mainblue!7] (0,0) rectangle (5.6,2.8);
+\draw[thick] (0,3.1)--(0,0)--(5.6,0)--(5.6,3.1);
+\foreach \i in {0,...,8}{\foreach \j in {0,1}{
+  \pgfmathtruncatemacro\k{mod(\i+\j,2)}
+  \ifnum\k=0 \node[circle,draw,fill=gray!35,inner sep=0pt,minimum size=0.36cm] at (0.6+0.55*\i,0.25+0.45*\j) {};
+  \else \node[circle,draw,fill=deepgreen!30,inner sep=0pt,minimum size=0.5cm] at (0.6+0.55*\i,0.25+0.45*\j) {};\fi}}
+\node[circle,draw,fill=gray!35,inner sep=0pt,minimum size=0.36cm] (ag) at (1.5,2.1) {};
+\node[circle,draw,fill=deepgreen!30,inner sep=0pt,minimum size=0.5cm] (cl) at (3.9,2.0) {};
+\node[circle,draw,fill=gray!35,inner sep=0pt,minimum size=0.36cm] at (4.9,2.4) {};
+\node[circle,draw,fill=deepgreen!30,inner sep=0pt,minimum size=0.5cm] at (2.6,2.5) {};
+\draw[c4arr,warnred] (1.15,1.0)--(1.4,1.85) node[midway,left]{溶解};
+\draw[c4arr,mainblue] (3.9,1.7)--(3.6,1.05) node[midway,right]{沉淀};
+\node[circle,draw,fill=gray!35,inner sep=0pt,minimum size=0.36cm] at (6.2,2.3) {}; \node[anchor=west] at (6.45,2.3) {\ce{Ag+}};
+\node[circle,draw,fill=deepgreen!30,inner sep=0pt,minimum size=0.5cm] at (6.2,1.7) {}; \node[anchor=west] at (6.45,1.7) {\ce{Cl-}};
+\node[anchor=west] at (5.75,0.45) {AgCl 固体};
+\end{tikzpicture}}{AgCl 沉淀溶解平衡的模型示意（水分子未画出）\label{fig:04-agcl}}
+
+\begin{gainian}[溶度积]
+难溶电解质 \ce{A_mB_n} 在溶液中达到沉淀溶解平衡 \ce{A_mB_n(s) <=> $m$A^{n+}(aq) + $n$B^{m-}(aq)} 时，其平衡常数叫做\textbf{溶度积常数}，简称溶度积：
+\[K_\text{sp}=c^{\,m}(\ce{A^{n+}})\cdot c^{\,n}(\ce{B^{m-}})\]
+固体不写入表达式。$K_\text{sp}$ 只与难溶电解质的性质和温度有关。任意时刻离子浓度幂的乘积叫离子积 $Q$：$Q>K_\text{sp}$，溶液过饱和，析出沉淀；$Q=K_\text{sp}$，溶液饱和，处于平衡；$Q<K_\text{sp}$，溶液不饱和，若有固体则继续溶解。
+\end{gainian}
+
+\begin{liti}[基础]
+25 ℃ 时 $K_\text{sp}(\ce{AgCl})=1.8\times10^{-10}$，$K_\text{sp}(\ce{Ag2CrO4})=1.1\times10^{-12}$。(1) 分别求两种物质饱和溶液中的 $c(\ce{Ag+})$（$\sqrt{1.8}\approx1.34$，$\sqrt[3]{0.275}\approx0.65$）；(2) 将 $1.0\times10^{-5}$ mol·L$^{-1}$ \ce{AgNO3} 溶液与 $1.0\times10^{-5}$ mol·L$^{-1}$ NaCl 溶液等体积混合，有无沉淀生成？
+\tcblower
+\jie (1) AgCl：设溶解的浓度为 $s$，$c(\ce{Ag+})=c(\ce{Cl-})=s$，$s^2=1.8\times10^{-10}$，$c(\ce{Ag+})\approx1.3\times10^{-5}$ mol·L$^{-1}$。\ce{Ag2CrO4}：$c(\ce{CrO4^2-})=s$，$c(\ce{Ag+})=2s$，$(2s)^2\cdot s=4s^3=1.1\times10^{-12}$，$s=\sqrt[3]{2.75\times10^{-13}}\approx6.5\times10^{-5}$，$c(\ce{Ag+})\approx1.3\times10^{-4}$ mol·L$^{-1}$。\\
+(2) 混合后 $c(\ce{Ag+})=c(\ce{Cl-})=5.0\times10^{-6}$ mol·L$^{-1}$，$Q=2.5\times10^{-11}<K_\text{sp}$，无沉淀生成。\\
+\dianbo \ce{Ag2CrO4} 的 $K_\text{sp}$ 比 AgCl 小，溶解的却更多。只有电离计量类型相同、又不考虑水解等副反应的难溶物，才能直接用 $K_\text{sp}$ 比较摩尔溶解度；若比的是 g 为单位的溶解度，还要考虑摩尔质量。
+\end{liti}
+
+\subsection{沉淀的生成、溶解与转化}
+沉淀的生成、溶解与转化都是沉淀溶解平衡的移动，判断依据始终是 $Q$ 与 $K_\text{sp}$ 的大小。一般认为，残留在溶液中的离子浓度小于 $1.0\times10^{-5}$ mol·L$^{-1}$ 时，该离子已沉淀完全。
+
+工业上常通过调节 pH 使杂质离子生成氢氧化物沉淀。以除去 0.10 mol·L$^{-1}$ \ce{MgCl2} 溶液中少量 \ce{Fe^3+} 为例（$K_\text{sp}[\ce{Fe(OH)3}]=2.8\times10^{-39}$，$K_\text{sp}[\ce{Mg(OH)2}]=5.6\times10^{-12}$）：\ce{Fe^3+} 沉淀完全时 $c(\ce{OH-})=\sqrt[3]{\dfrac{2.8\times10^{-39}}{1.0\times10^{-5}}}\approx6.5\times10^{-12}$ mol·L$^{-1}$，pH$\approx2.8$；\ce{Mg^2+} 开始沉淀时 $c(\ce{OH-})=\sqrt{\dfrac{5.6\times10^{-12}}{0.10}}\approx7.5\times10^{-6}$ mol·L$^{-1}$，pH$\approx8.9$。所以应控制 $2.8\le\text{pH}<8.9$，实际调到 3～4 即可，并用 MgO 等不引入新杂质的物质调节。计算时注意：“开始沉淀”用溶液中原有的离子浓度，“沉淀完全”用 $1.0\times10^{-5}$ mol·L$^{-1}$。
+
+使沉淀溶解，就要设法减小溶液中某种离子的浓度，使 $Q<K_\text{sp}$。如 \ce{CaCO3} 溶于盐酸（\ce{H+} 结合 \ce{CO3^2-}）；\ce{Mg(OH)2} 溶于 \ce{NH4Cl} 溶液（\ce{NH4+} 结合 \ce{OH-}）；AgCl 溶于氨水（\ce{Ag+} 与氨分子结合成可溶的配离子 \ce{[Ag(NH3)2]+}，自由 \ce{Ag+} 减少；配位平衡见本章末节）。
+
+沉淀的转化一般由溶解度小的向溶解度更小的方向进行。当原、新沉淀在转化式中的系数均为 1，且消去相同的共用离子时，转化反应的平衡常数 $K=\dfrac{K_\text{sp}(\text{原沉淀})}{K_\text{sp}(\text{新沉淀})}$。例如 \ce{AgCl(s) + I-(aq) <=> AgI(s) + Cl-(aq)}，$K=\dfrac{1.8\times10^{-10}}{8.5\times10^{-17}}\approx2\times10^6$，转化很彻底，所以白色 AgCl 能依次转化为浅黄色 AgBr、黄色 AgI。锅炉水垢中的 \ce{CaSO4} 用 \ce{Na2CO3} 溶液处理：\ce{CaSO4(s) + CO3^2-(aq) <=> CaCO3(s) + SO4^2-(aq)}，$K=\dfrac{4.9\times10^{-5}}{3.4\times10^{-9}}\approx1.4\times10^4$，生成的 \ce{CaCO3} 再用酸除去。用 FeS 除去废水中的 \ce{Cu^2+}、\ce{Hg^2+}，原理也是沉淀转化：\ce{FeS(s) + Cu^2+(aq) <=> CuS(s) + Fe^2+(aq)}。
+
+转化也可以向溶解度稍大的方向进行，只要提供足够大的离子浓度。\ce{BaSO4(s) + CO3^2-(aq) <=> BaCO3(s) + SO4^2-(aq)}，$K=\dfrac{1.1\times10^{-10}}{2.6\times10^{-9}}\approx0.04$，只要 $c(\ce{CO3^2-})$ 大于 $c(\ce{SO4^2-})$ 的约 24 倍，平衡就正向移动，所以用饱和 \ce{Na2CO3} 溶液多次处理，可以把 \ce{BaSO4} 转化为 \ce{BaCO3}。
+
+\begin{zhenti}{2025年广东卷第18题(3)}
+从多金属精矿中提取金属的流程中，“沉铝”时需保证 \ce{Cu^2+}、\ce{Ni^2+} 不沉淀。已知“滤液1”中 $c(\ce{Cu^2+})=0.022$ mol·L$^{-1}$、$c(\ce{Ni^2+})=0.042$ mol·L$^{-1}$，$K_\text{sp}[\ce{Cu(OH)2}]=2.2\times10^{-20}$，$K_\text{sp}[\ce{Ni(OH)2}]=5.5\times10^{-16}$。“沉铝”时 pH 最高可调至\tk（溶液体积变化可忽略）。
+
+{\heiti 解析}\quad 分别求两种离子开始沉淀的 pH。\ce{Cu^2+}：$c^2(\ce{OH-})=\dfrac{2.2\times10^{-20}}{0.022}=1.0\times10^{-18}$，$c(\ce{OH-})=10^{-9}$ mol·L$^{-1}$，pH$=5$；\ce{Ni^2+}：$c^2(\ce{OH-})=\dfrac{5.5\times10^{-16}}{0.042}\approx1.3\times10^{-14}$，pH$\approx7.1$。\ce{Cu^2+} 先沉淀，pH 最高调至 5。
+\end{zhenti}
+
+\subsection{沉淀溶解平衡图像}
+沉淀溶解平衡曲线的读图方法可以归纳为四点。第一，看清坐标轴表示的是哪种离子的浓度及其单位（或对数）。第二，曲线上每一点都满足 $Q=K_\text{sp}$，是饱和溶液；温度不变，曲线不变，曲线上各点 $K_\text{sp}$ 相等。第三，以 $c(\ce{Ba^2+})$–$c(\ce{SO4^2-})$ 图为例，曲线上方的点离子浓度积偏大，$Q>K_\text{sp}$，会析出沉淀；曲线下方的点 $Q<K_\text{sp}$，为不饱和溶液。第四，判断点的移动：向饱和溶液中加入某种离子，这种离子浓度增大，另一种离子浓度减小，点沿曲线移动；蒸发溶剂时两种离子浓度同比例增大，不饱和溶液的点沿着过原点的直线向外移动，直到碰到曲线；改变温度则整条曲线移动。
+
+\begin{liti}[典型]
+某温度下，\ce{BaSO4} 在水中的沉淀溶解平衡曲线如图~\ref{fig:04-baso4}（$K_\text{sp}=1.0\times10^{-10}$）。下列说法正确的是\xz
+\tu{\begin{tikzpicture}
+\begin{axis}[width=6.2cm,height=4.6cm,xlabel={$c(\ce{SO4^2-})/(10^{-5}\,\mathrm{mol\cdot L^{-1}})$},ylabel={$c(\ce{Ba^2+})/(10^{-5}\,\mathrm{mol\cdot L^{-1}})$},xmin=0,xmax=4.4,ymin=0,ymax=4.4,tick label style={font=\scriptsize},label style={font=\scriptsize},grid=major,grid style={gray!20}]
+\addplot[thick,mainblue,domain=0.24:4.2,samples=80]{1/x};
+\addplot[only marks,mark=*,mark size=1.6pt] coordinates {(0.5,2) (2,0.5) (2,2) (1,0.5)};
+\node[font=\scriptsize,above right] at (axis cs:0.5,2) {a};
+\node[font=\scriptsize,above right] at (axis cs:2,0.5) {c};
+\node[font=\scriptsize,above right] at (axis cs:2,2) {b};
+\node[font=\scriptsize,below left] at (axis cs:1,0.5) {d};
+\end{axis}
+\end{tikzpicture}}{\ce{BaSO4} 的沉淀溶解平衡曲线\label{fig:04-baso4}}
+\xxa{加入 \ce{Na2SO4} 固体可使溶液由 c 点变到 a 点}{b 点对应的溶液中无 \ce{BaSO4} 沉淀生成}{蒸发溶剂可使溶液由 d 点变到曲线上 a、c 之间的某点}{升高温度可使溶液由 c 点变到 a 点}
+\tcblower
+\silu 先读出各点坐标：a(0.5, 2)、c(2, 0.5) 在曲线上，b(2, 2) 在曲线上方，d(1, 0.5) 在曲线下方（单位 $10^{-5}$ mol·L$^{-1}$）。\\
+\jie A：加 \ce{Na2SO4}，$c(\ce{SO4^2-})$ 增大，平衡逆向移动，$c(\ce{Ba^2+})$ 减小，点沿曲线向右下方移动（如 a$\to$c），而不是 c$\to$a，错误。B：b 点 $Q=2\times10^{-5}\times2\times10^{-5}=4\times10^{-10}>K_\text{sp}$，有沉淀生成，错误。C：蒸发时两种离子浓度同比例增大，d 点沿直线 $c(\ce{Ba^2+})=0.5c(\ce{SO4^2-})$ 移动，与曲线交于 $c(\ce{SO4^2-})=\sqrt2\approx1.41$ 处，位于 a、c 之间，正确。D：升温 $K_\text{sp}$ 改变，整条曲线移动，c 点不会沿原曲线变到 a 点，错误。\daan C
+\end{liti}
+
+许多图像题的纵轴用 $\lg c$ 或 $-\lg c$ 表示。取对数把乘方变成乘法，曲线就变成直线。例如难溶物 \ce{MX2}，$K_\text{sp}=c(\ce{M^2+})\cdot c^2(\ce{X-})$，两边取对数得 $\lg c(\ce{M^2+})=\lg K_\text{sp}-2\lg c(\ce{X-})$，以 $\lg c(\ce{M^2+})$ 对 $\lg c(\ce{X-})$ 作图是一条斜率为 $-2$ 的直线。读对数图时，把直线上任一点的坐标代入，就能求出 $K_\text{sp}$；斜率可以帮助判断难溶物的阴、阳离子个数比。
+
+\section{分布系数图与配位平衡}
+
+\subsection{分布系数图}
+弱酸在溶液中以几种形式（型体）存在，某种型体的浓度占该弱酸总浓度的分数叫做\textbf{分布系数}，用 $\delta$ 表示。改变 pH，各型体的分布系数随之变化，画成曲线就是分布系数图（图~\ref{fig:04-dist}）。
+
+\tu{\begin{tikzpicture}
+\begin{axis}[width=8cm,height=4.8cm,xlabel={pH},ylabel={$\delta$},xmin=0,xmax=7,ymin=0,ymax=1.05,
+ xtick={0,1.25,2.76,4.27,6,7},xticklabels={0,1.25,2.76,4.27,6,7},ytick={0,0.5,1},grid=major,grid style={gray!20},tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(1.02,0.5)},anchor=west}]
+\addplot[thick,mainblue,domain=0:7,samples=120] {1/(1+10^(x-1.25)+10^(2*x-5.52))};
+\addplot[thick,deepgreen,domain=0:7,samples=120] {10^(x-1.25)/(1+10^(x-1.25)+10^(2*x-5.52))};
+\addplot[thick,warnred,domain=0:7,samples=120] {10^(2*x-5.52)/(1+10^(x-1.25)+10^(2*x-5.52))};
+\legend{\ce{H2A},\ce{HA-},\ce{A^2-}}
+\end{axis}
+\end{tikzpicture}}{某二元弱酸 \ce{H2A}（p$K_{\text{a}1}=1.25$，p$K_{\text{a}2}=4.27$）的分布系数图\label{fig:04-dist}}
+
+读分布系数图，关键是两条曲线的交点。\ce{H2A} 与 \ce{HA-} 曲线的交点处 $c(\ce{H2A})=c(\ce{HA-})$，代入 $K_{\text{a}1}=\dfrac{c(\ce{H+})c(\ce{HA-})}{c(\ce{H2A})}$，得 $K_{\text{a}1}=c(\ce{H+})$，即该点 pH$=$p$K_{\text{a}1}=1.25$；同理 \ce{HA-} 与 \ce{A^2-} 曲线交点处 pH$=$p$K_{\text{a}2}=4.27$。\ce{HA-} 的分布系数在两交点中间、pH$=\frac12(\mathrm{p}K_{\text{a}1}+\mathrm{p}K_{\text{a}2})\approx2.76$ 处最大。由 $K_\text{h2}=\dfrac{10^{-14}}{10^{-1.25}}=10^{-12.75}<K_{\text{a}2}=10^{-4.27}$ 可知 \ce{NaHA} 溶液呈酸性。这种“找交点、代入 $K$ 表达式”的方法，对滴定曲线、对数图同样适用。
+
+\subsection{溶液中的配位平衡}
+金属离子能与某些分子或离子结合成一个带电的整体，叫作\textbf{配离子}；参与结合的分子或离子叫\textbf{配体}。例如 \ce{Ag+} 可结合两个 \ce{NH3}，形成 \ce{[Ag(NH3)2]+}，方括号中的整体不能再按普通强电解质拆写。配位键的结构将在第7章解释；本节先用平衡观点理解其生成与解离。
+
+这些结合通常可逆，如 \ce{Cu^2+ + 4NH3 <=> [Cu(NH3)4]^2+}、\ce{Ag+ + 2NH3 <=> [Ag(NH3)2]+}。\ce{Fe^3+} 与 \ce{SCN-} 的显色，在稀溶液中可用 \ce{Fe^3+ + SCN- <=> [Fe(SCN)]^2+} 示意；实际可有不同配体数的配离子，不把它们一概写成唯一的 \ce{Fe(SCN)3} 分子。配体浓度越大，越有利于形成配位数较高的配离子；加入能结合配体或中心离子的试剂（如用酸结合 \ce{NH3}），配离子就会解离。
+
+\begin{zhenti}{2025年广东卷第12题}
+CuCl 微溶于水，但在 \ce{Cl-} 浓度较高的溶液中因形成 \ce{[CuCl2]-} 和 \ce{[CuCl3]^2-} 而溶解。将适量 CuCl 完全溶于盐酸，得到含 \ce{[CuCl2]-} 和 \ce{[CuCl3]^2-} 的溶液，下列叙述正确的是\xz
+\xxa{加水稀释，\ce{[CuCl3]^2-} 浓度一定下降}{向溶液中加入少量 NaCl 固体，\ce{[CuCl2]-} 浓度一定上升}{\ce{H[CuCl2]} 的电离方程式为 \ce{H[CuCl2] = H+ + Cu+ + 2Cl-}}{体系中，$c(\ce{Cu+})+c(\ce{H+})=c(\ce{Cl-})+c(\ce{[CuCl2]-})+c(\ce{[CuCl3]^2-})+c(\ce{OH-})$}
+{\heiti 解析}\quad A：加水稀释，溶液体积增大，且 \ce{[CuCl2]- + Cl- <=> [CuCl3]^2-} 因 $c(\ce{Cl-})$ 减小而逆向移动，\ce{[CuCl3]^2-} 浓度一定下降，正确。B：加 NaCl，$c(\ce{Cl-})$ 增大，可能使 \ce{[CuCl2]-} 转化为 \ce{[CuCl3]^2-}，浓度不一定上升。C：配离子是一个整体，应为 \ce{H[CuCl2] = H+ + [CuCl2]-}。D：电荷守恒中 \ce{[CuCl3]^2-} 的系数应为 2。\daan A
+\end{zhenti}
+
+\input{chapters/ch04ex}

@@ -1,0 +1,639 @@
+% ============================================================
+% 第1章 化学反应的热效应（选择性必修1 第一章）
+% ============================================================
+\definecolor{c1sol}{RGB}{214,234,248}
+\definecolor{c1lid}{RGB}{200,200,200}
+\tikzset{
+  c1lvl/.style={line width=1.2pt},
+  c1arr/.style={-{Stealth[length=2mm]},thick},
+  c1dim/.style={{Stealth[length=1.5mm]}-{Stealth[length=1.5mm]},semithick},
+  c1aux/.style={dashed,black!50},
+  c1lead/.style={black!60,thin}
+}
+
+\chapter{化学反应的热效应}
+
+燃料燃烧放热，\ce{Ba(OH)2*8H2O} 与 \ce{NH4Cl} 混合后烧杯变凉，化学反应总伴随着能量变化。必修二已经知道，反应中的能量变化主要表现为热量的放出或吸收，原因是反应物和生成物的总能量不同、断键和成键的能量不同。本章把这些认识变成定量的工具：先说明反应热和焓变的含义，从物质能量和化学键两个角度解释反应热的来源，学会读能量图；再学习怎样测定中和反应的反应热，怎样用热化学方程式表示反应热，什么是燃烧热；最后学习盖斯定律，并用它和键能、燃烧热等数据计算反应热。高考原理题常把盖斯定律与具体化工反应结合，选择题也常用能量—反应进程图检验对焓变和活化能的理解。本章的能量图和活化能在第2章还要继续使用。
+
+\section{反应热与焓变}
+
+\subsection{体系与环境}
+要讨论“反应放出了多少热”，先得说清楚热从哪里来、到哪里去。以烧杯中盐酸与 NaOH 溶液的中和反应为例：我们关心的是溶液里的 HCl、NaOH、生成的 NaCl 和水，以及它们之间发生的反应；烧杯、温度计和周围的空气不参与反应，只是接收反应放出的热量。
+
+被研究的这部分物质（包括其中发生的反应）叫做\textbf{体系}，体系以外、与体系相互影响的其他部分叫做\textbf{环境}。图~\ref{fig:01-system} 中，虚线框内的溶液是体系，虚线外的烧杯、温度计和空气都是环境。体系与环境的界线由研究者划定，一旦划定就不再改变。反应放热时，热量从体系传给环境；反应吸热时，热量从环境传入体系。
+
+\tu{\begin{tikzpicture}[font=\small]
+\fill[c1sol] (0,0) rectangle (2.6,1.7);
+\draw[thick] (-0.15,2.35)--(0,2.2)--(0,0)--(2.6,0)--(2.6,2.2)--(2.75,2.35);
+\draw[thick] (1.9,0.35) rectangle (2.05,3.0); \fill[warnred] (1.975,0.32) circle (0.1);
+\draw[dashed,warnred,thick,rounded corners] (0.12,0.1) rectangle (2.48,1.6);
+\node at (0.95,0.85) {体系};
+\foreach \y in {0.5,1.2}{\draw[-Stealth,exorange,thick] (2.75,\y)--(3.65,\y);}
+\draw[-Stealth,exorange,thick] (-0.15,0.85)--(-1.05,0.85);
+\node[exorange,right] at (3.65,0.85) {热量传给环境};
+\node[align=left,right] at (3.8,2.3) {虚线内：盐酸、NaOH 溶液\\及其中的反应（体系）};
+\node[align=left,right] at (3.8,-0.2) {虚线外：烧杯、温度计、\\空气等（环境）};
+\end{tikzpicture}}{体系与环境（以放热的中和反应为例）\label{fig:01-system}}
+
+体系还可以按它与环境有无物质交换来分类：敞口烧杯中的反应体系与环境既交换能量又交换物质（如气体逸出），叫敞开体系；密闭容器中的反应体系只交换能量，叫封闭体系；与环境既无物质交换也无能量交换的体系叫孤立体系，理想的绝热、密闭且刚性的容器接近这种情况。
+
+化学反应发生时体系与环境之间传递的热量，就是本章要研究的对象。反应放出的热会先使体系自身温度升高，这部分能量暂时“存”在体系的升温里。为了让不同反应、不同实验的结果能够比较，规定在等温条件下讨论，即反应后体系恢复到反应前的温度，这时传给环境的热量就完全由化学变化决定。
+
+\begin{gainian}[反应热]
+在等温条件下，化学反应体系向环境释放或从环境吸收的热量，称为化学反应的热效应，简称\textbf{反应热}。
+\end{gainian}
+
+实际测量时并不需要真的等体系冷却。测出溶液升高了多少度，就能算出“让体系回到原温度需要传给环境多少热”，这正是 1.2 节测定中和反应反应热的思路。
+
+\subsection{内能与焓}
+反应热从哪里来？物质内部储存着能量：分子、原子和电子的运动具有动能，粒子之间的相互作用（包括化学键）具有势能。体系内这些能量的总和叫做体系的\textbf{内能}，用 $U$ 表示。可以把内能看成体系的“能量存款”：反应前后物质变了，存款数额也随之改变，差额以热（有时还有做功）的形式与环境交换。必修二说“反应物的总能量高于生成物的总能量时反应放热”，其中的“总能量”就是这份存款。
+
+内能的绝对值无法测定，我们只关心它的变化。实际的化学反应大多在敞口容器中、大气压下进行，即在\textbf{等压}条件下进行。等压下，若反应使气体增多，体系膨胀时要推开外界大气、对外做一点功，所以体系放出的热量并不完全等于内能的减少。为了在等压条件下直接用热量描述能量变化，科学上定义了一个与内能密切相关的物理量——\textbf{焓}，用 $H$ 表示。焓的严格定义（$H=U+pV$）在大学学习，高中只需掌握它的用途：等压且体系只做体积功时，反应热等于体系焓的变化；高中一般量热问题采用这一条件。
+
+\begin{gainian}[焓变]
+生成物与反应物的焓之差称为反应的\textbf{焓变}，用 $\Delta H$ 表示，常用单位 kJ·mol$^{-1}$：
+\[\Delta H=H(\text{生成物})-H(\text{反应物})\]
+等压且只做体积功时，反应热等于焓变。体系放热，焓减少，$\Delta H<0$；体系吸热，焓增加，$\Delta H>0$。
+\end{gainian}
+
+例如，合成氨反应 \ce{N2(g) + 3H2(g) = 2NH3(g)} 的 $\Delta H=-92.4$ kJ·mol$^{-1}$，负号表示体系的焓减少、反应放热：1 mol \ce{N2} 与 3 mol \ce{H2} 完全反应生成 2 mol \ce{NH3}，向环境放出 92.4 kJ 热量。$\Delta H$ 的正负号是站在体系的角度说的，“$-$”表示体系失去能量，并不表示“数值小”。
+
+\subsection{从物质能量的角度认识反应热}
+焓看不见，用图表示最直观。图~\ref{fig:01-exoendo} 中，纵轴表示焓，越往上焓越大；每条横线表示一种状态（反应物或生成物）的焓所处的“高度”；横轴只表示反应进行的先后，没有刻度。读图时先找到反应物和生成物两条横线：从反应物指向生成物的箭头向下，表示焓减少，反应放热，$\Delta H<0$；箭头向上，表示焓增加，反应吸热，$\Delta H>0$。箭头的长度就是 $|\Delta H|$。
+
+\tu{\begin{tikzpicture}[scale=0.72,font=\small]
+\begin{scope}
+\draw[-Stealth] (0,0)--(4.6,0) node[below left]{反应进程};
+\draw[-Stealth] (0,0)--(0,3.4) node[left]{焓 $H$};
+\draw[c1lvl] (0.4,2.4)--(1.7,2.4) node[midway,above]{反应物};
+\draw[c1lvl] (2.7,0.7)--(4.0,0.7) node[midway,above]{生成物};
+\draw[c1aux] (1.7,2.4)--(2.4,2.4);
+\draw[c1arr,warnred] (2.2,2.4)--(2.2,0.7) node[midway,right]{$\Delta H<0$};
+\node at (2.2,-0.75) {(a) 放热反应};
+\end{scope}
+\begin{scope}[xshift=6.6cm]
+\draw[-Stealth] (0,0)--(4.6,0) node[below left]{反应进程};
+\draw[-Stealth] (0,0)--(0,3.4) node[left]{焓 $H$};
+\draw[c1lvl] (0.4,0.7)--(1.7,0.7) node[midway,above]{反应物};
+\draw[c1lvl] (2.7,2.4)--(4.0,2.4) node[midway,above]{生成物};
+\draw[c1aux] (1.7,0.7)--(2.4,0.7);
+\draw[c1arr,mainblue] (2.2,0.7)--(2.2,2.4) node[midway,right]{$\Delta H>0$};
+\node at (2.2,-0.75) {(b) 吸热反应};
+\end{scope}
+\end{tikzpicture}}{放热反应和吸热反应的焓变示意图\label{fig:01-exoendo}}
+
+常见的放热反应和吸热反应如下：
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{>{\centering\arraybackslash}p{1.6cm}X}
+\toprule
+类型 & 常见实例 \\
+\midrule
+放热反应 & 燃烧；酸碱中和；活泼金属与水或酸的反应；大多数化合反应；铝热反应；缓慢氧化；\ce{2H2O2 = 2H2O + O2 ^}（分解反应，但放热） \\
+吸热反应 & 大多数分解反应；\ce{Ba(OH)2*8H2O} 与 \ce{NH4Cl} 的反应；\ce{C + H2O(g) ->[\text{高温}] CO + H2}；\ce{C + CO2 ->[\text{高温}] 2CO}（化合反应，但吸热） \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{yicuo}
+反应吸热还是放热，要比较指定温度、压强和聚集状态下反应物与生成物的焓，不能只凭是否加热、点燃来判断。始态、终态相同时，改变反应途径不改变 $\Delta H$。需要加热或点燃的反应不一定吸热（木炭燃烧要先点燃，却是放热反应）；常温下能进行的反应也可能吸热（\ce{Ba(OH)2*8H2O} 与 \ce{NH4Cl} 搅拌即可反应）。
+
+“吸热反应”“放热反应”专指化学反应。浓硫酸稀释、NaOH 固体溶解放热，\ce{NH4NO3} 溶解吸热、水汽化吸热，都是物理过程，不能叫放热反应或吸热反应。
+\end{yicuo}
+
+\subsection{从化学键的角度认识反应热}
+能量图说明了“放热是因为生成物的焓更低”，却没有回答生成物的焓为什么更低。这要回到微观。必修二学过，化学反应的本质是旧的化学键断裂、新的化学键形成；原子之间形成化学键时释放能量，断开化学键时要吸收能量。两个原子结合成键后能量降低，才能稳定存在；要把它们重新拉开，就必须从外界补回同样多的能量。
+
+断开化学键需要多少能量，用键能衡量。在 25 ℃、101 kPa 下，断开 1 mol 气态分子 AB(g) 中的共价键、生成气态原子 A(g) 和 B(g) 所吸收的能量，叫做 A—B 键的\textbf{键能}，单位 kJ·mol$^{-1}$。例如 H—H 键的键能为 436 kJ·mol$^{-1}$，表示 1 mol \ce{H2(g) -> 2H(g)} 吸收 436 kJ；反过来，2 mol H(g) 结合成 1 mol \ce{H2(g)} 放出 436 kJ。键能越大，该化学键越难断裂；比较相似分子的稳定性时可作为依据，但不能仅凭其中某一条键的键能判断整种物质的一切反应性质。
+
+以 \ce{H2(g) + Cl2(g) = 2HCl(g)} 为例（键能：H—H 436、Cl—Cl 243、H—Cl 431，单位 kJ·mol$^{-1}$）。真实反应的微观过程比较复杂，但焓变只取决于开始和结束的状态（1.5 节会说明理由），所以可以设想反应分两步完成，如图~\ref{fig:01-bond}：第一步，断开 1 mol H—H 键和 1 mol Cl—Cl 键，得到 2 mol H 原子和 2 mol Cl 原子，吸收 $436+243=679$ kJ，焓升高；第二步，这些原子两两结合，形成 2 mol H—Cl 键，放出 $2\times431=862$ kJ，焓降低。图中向下的箭头比向上的箭头长，说明成键放出的能量多于断键吸收的能量，净放出 $862-679=183$ kJ，即 $\Delta H\approx-183$ kJ·mol$^{-1}$，与实验值 $-184.6$ kJ·mol$^{-1}$ 很接近。
+
+\tu{\begin{tikzpicture}[font=\small,y=0.9cm]
+\draw[-Stealth] (-0.3,-0.3)--(-0.3,4.7) node[left]{焓 $H$};
+\draw[c1lvl] (0,0.9)--(2.2,0.9) node[midway,below]{\ce{H2(g) + Cl2(g)}};
+\draw[c1lvl] (2.0,4.3)--(5.6,4.3) node[midway,above]{\ce{2H(g) + 2Cl(g)}};
+\draw[c1lvl] (5.4,0)--(7.6,0) node[midway,below]{\ce{2HCl(g)}};
+\draw[c1arr,mainblue] (2.1,0.9)--(2.1,4.3) node[midway,left,align=right]{断键吸收\\$436+243$\\$=679$ kJ};
+\draw[c1arr,warnred] (5.5,4.3)--(5.5,0) node[midway,right,align=left]{成键放出\\$2\times431$\\$=862$ kJ};
+\draw[c1aux] (2.2,0.9)--(8.4,0.9);
+\draw[c1arr] (8.2,0.9)--(8.2,0) node[midway,right]{$\Delta H\approx-183$ kJ·mol$^{-1}$};
+\end{tikzpicture}}{用键能分析 \ce{H2} 与 \ce{Cl2} 反应的焓变（设想先断键、后成键）\label{fig:01-bond}}
+
+由此可见，化学键断裂和形成时的能量变化是化学反应中能量变化的主要原因。把上面的算法写成一般形式：$\Delta H=$ 断键吸收的总能量 $-$ 成键放出的总能量，即
+\[\Delta H=\sum E(\text{反应物的键能})-\sum E(\text{生成物的键能})\]
+这里是“反应物减生成物”，与 $\Delta H=H(\text{生成物})-H(\text{反应物})$ 的顺序相反。原因在于两种算法参照不同：键能法把反应物和生成物都与同一组气态原子比较。对于原子种类、数目相同的一组物质，形成的键释放能量越多，它相对这组气态原子的焓就越低。
+
+用键能算出的 $\Delta H$ 是估算值，因为表中键能是同种键在许多分子中的平均值，而且键能只针对气态物质；有固态、液态物质参与时，还要考虑状态变化的热量（题目通常会给出）。计算的关键是数清 1 mol 物质中含多少摩尔化学键。小分子可以从结构式直接数，如 1 个 \ce{CH4} 含 4 个 C—H 键，1 个 \ce{CO2} 含 2 个 C=O 键。共价晶体和一些特殊结构的分子要结合结构分析，这些结构在选择性必修2中学习，这里先记住表~\ref{tab:01-bonds} 的结论。以晶体硅为例：每个 Si 原子与 4 个 Si 原子成键，每个 Si—Si 键为 2 个 Si 原子共有，所以 1 mol Si 含 $4\times\frac12=2$ mol Si—Si 键；石墨中每个 C 原子与 3 个 C 原子成键，1 mol C 含 $3\times\frac12=1.5$ mol C—C 键。
+
+\begin{center}
+\begin{minipage}{\linewidth}\centering
+\small
+\captionof{table}{1 mol 物质中所含共价键的物质的量}\label{tab:01-bonds}
+\begin{tabular}{cccccccc}
+\toprule
+物质 & \ce{P4}（白磷） & 晶体硅 & \ce{SiO2} & 金刚石 & 石墨 & \ce{S8} & \ce{CO2} \\
+\midrule
+共价键 & 6 mol P—P & 2 mol Si—Si & 4 mol Si—O & 2 mol C—C & 1.5 mol C—C & 8 mol S—S & 2 mol C=O \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{center}
+
+\begin{liti}[基础]
+已知键能（kJ·mol$^{-1}$）：C—H 413，O=O 498，C=O 799，H—O 463。估算 \ce{CH4(g) + 2O2(g) = CO2(g) + 2H2O(g)} 的 $\Delta H$。
+\tcblower
+\silu 先数清方程式中各物质含有的键，再分别算断键吸收和成键放出的能量。\\
+\jie 反应物：1 mol \ce{CH4} 含 4 mol C—H，2 mol \ce{O2} 含 2 mol O=O；生成物：1 mol \ce{CO2} 含 2 mol C=O，2 mol \ce{H2O} 含 4 mol H—O。断键吸收 $4\times413+2\times498=2648$ kJ，成键放出 $2\times799+4\times463=3450$ kJ。$\Delta H=2648-3450=-802$ kJ·mol$^{-1}$。\\
+\dianbo 这里生成的是气态水，键能法正好适用。若要生成液态水，还要加上水蒸气液化放出的热量。
+\end{liti}
+
+\begin{liti}[典型]
+\ce{SF6} 是一种优良的绝缘气体，分子中只存在 S—F 键。已知：1 mol S(s) 转化为气态硫原子吸收能量 280 kJ，断裂 1 mol F—F、1 mol S—F 分别需吸收能量 160 kJ、330 kJ。则 \ce{S(s) + 3F2(g) = SF6(g)} 的 $\Delta H$ 为
+\xx{$-1780$ kJ·mol$^{-1}$}{$-1220$ kJ·mol$^{-1}$}{$-450$ kJ·mol$^{-1}$}{$+430$ kJ·mol$^{-1}$}
+\tcblower
+\silu 仍按“先变成气态原子，再组合成生成物”的思路：$\Delta H=$ 反应物变成气态原子吸收的能量 $-$ 气态原子形成生成物放出的能量。S 是固体，S(s) 变成 S(g) 既要克服分子间作用力，又要断开 \ce{S8} 环中的 S—S 键，题目已直接给出这一步的总能量 280 kJ，照用即可，不必再另算 S—S 键。\\
+\jie 吸收：$280+3\times160=760$ kJ；1 个 \ce{SF6} 含 6 个 S—F 键，放出 $6\times330=1980$ kJ。$\Delta H=760-1980=-1220$ kJ·mol$^{-1}$。\daan B
+\end{liti}
+
+\subsection{反应过程中的能量变化：活化能}
+图~\ref{fig:01-exoendo} 只画了反应开始和结束两个状态。实际上，反应物不是直接“滑”到生成物的：旧键要先被拉长、削弱，新键逐渐形成，中间要经过一个能量比反应物更高的状态，叫做\textbf{过渡态}。这就像把一辆车从一个山谷开到另一个山谷，即使对面更低，也得先翻过中间的山岭。把体系能量随反应进程的变化画出来，就得到能量—反应进程图（图~\ref{fig:01-ea}）。
+
+\tu{\begin{tikzpicture}[font=\small,scale=0.95]
+\draw[-Stealth] (0,0)--(8,0) node[below left]{反应进程};
+\draw[-Stealth] (0,0)--(0,5) node[left]{能量};
+\draw[thick,mainblue] (0.3,1.8)--(1.3,1.8) .. controls (2.3,1.8) and (2.7,4.2) .. (3.5,4.2) .. controls (4.3,4.2) and (4.7,0.6) .. (5.7,0.6)--(7.4,0.6);
+\draw[thick,mainblue,dashed] (1.3,1.8) .. controls (2.3,1.8) and (2.8,3.0) .. (3.5,3.0) .. controls (4.2,3.0) and (4.7,0.6) .. (5.7,0.6);
+\node[above] at (3.5,4.2) {过渡态};
+\node[below,mainblue] at (3.5,2.95) {\footnotesize 使用催化剂};
+\node[above] at (0.75,1.8) {反应物};
+\node[below] at (6.0,0.6) {生成物};
+\draw[c1aux] (0.75,4.2)--(6.6,4.2);
+\draw[c1aux] (1.3,1.8)--(7.4,1.8);
+\draw[c1dim] (0.75,1.8)--(0.75,4.2) node[midway,right]{$E_{\text{a正}}$};
+\draw[c1dim] (6.4,0.6)--(6.4,4.2) node[pos=0.6,left]{$E_{\text{a逆}}$};
+\draw[c1arr,warnred] (7.1,1.8)--(7.1,0.6) node[midway,right]{$\Delta H$};
+\end{tikzpicture}}{放热反应的能量—反应进程图（实线：无催化剂；虚线：使用催化剂）\label{fig:01-ea}}
+
+读这类图分三步。第一，看起点和终点：起点横线是反应物的能量，终点横线是生成物的能量，二者的差就是 $\Delta H$，终点低于起点即为放热反应。第二，看峰顶：峰顶对应过渡态，从反应物到峰顶的高度叫做正反应的\textbf{活化能}（$E_{\text{a正}}$），从生成物到峰顶的高度是逆反应的活化能（$E_{\text{a逆}}$）。第三，比较两个高度：从反应物出发，先升高 $E_{\text{a正}}$，再下降 $E_{\text{a逆}}$，净变化为
+\[\Delta H=E_{\text{a正}}-E_{\text{a逆}}\]
+图中的虚线是使用催化剂后的情况：峰顶降低，在图示的一步模型中，正、逆活化能的降低量相同；起点和终点没有变，所以 $\Delta H$ 不变。其他条件相近时，活化能越大，反应通常越慢，这一点在第2章还要详细讨论。
+
+\begin{liti}[基础]
+\ce{N2O} 和 CO 在 \ce{Pt2O+} 表面转化为无害气体：\ce{N2O(g) + CO(g) = N2(g) + CO2(g)}，其能量变化如图~\ref{fig:01-n2o}（单位 kJ·mol$^{-1}$）。(1) 该反应的 $\Delta H=$\tk；(2) 逆反应的活化能为\tk；(3) 若不用 \ce{Pt2O+}，正反应的活化能\tk，$\Delta H$\tk（填“增大”“减小”或“不变”）。
+\tu{\begin{tikzpicture}[scale=0.62,font=\scriptsize]
+\axisEP{7.6}{4.8}
+\draw[thick,mainblue] (0.3,2.2)--(1.2,2.2) .. controls (2.2,2.2) and (2.4,3.9) .. (3.2,3.9) .. controls (4,3.9) and (4.3,0.6) .. (5.4,0.6)--(6.6,0.6);
+\node[above] at (0.75,2.2) {\ce{N2O + CO}};
+\node[below] at (5.6,0.6) {\ce{N2 + CO2}};
+\draw[c1aux] (1.2,2.2)--(6.9,2.2); \draw[c1aux] (3.2,3.9)--(7.3,3.9);
+\draw[c1dim] (3.2,2.2)--(3.2,3.9) node[midway,left]{134};
+\draw[c1dim] (6.2,0.6)--(6.2,2.2) node[midway,left]{226};
+\draw[c1dim] (7.1,0.6)--(7.1,3.9) node[midway,right]{?};
+\end{tikzpicture}}{\ce{N2O} 与 CO 反应的能量变化\label{fig:01-n2o}}
+\tcblower
+\silu 按“起点与终点之差是 $\Delta H$，到峰顶的高度是活化能”读图。\\
+\jie (1) 生成物比反应物低 226 kJ·mol$^{-1}$，反应放热，$\Delta H=-226$ kJ·mol$^{-1}$。(2) 由 $\Delta H=E_{\text{a正}}-E_{\text{a逆}}$，$E_{\text{a逆}}=134-(-226)=360$ kJ·mol$^{-1}$，也可直接从图上看出 $134+226=360$。(3) \ce{Pt2O+} 是催化剂，去掉后活化能增大；$\Delta H$ 只与反应物、生成物的能量有关，不变。
+\end{liti}
+
+\section{中和反应反应热及其测定}
+
+前面用到的反应热数据，都是用量热计测出来的。本节以中和反应为例学习测定方法。高一学过，强酸与强碱在稀溶液中反应的实质是 \ce{H+ + OH- = H2O}：无论是盐酸与 NaOH 溶液，还是稀硝酸与 KOH 溶液，实际发生的都是这个反应，所以生成同样多的水，放出的热量应当相同。
+
+\begin{gainian}[中和反应反应热]
+在稀溶液中，强酸和强碱发生中和反应生成 1 mol \ce{H2O(l)} 时所放出的热量，称为中和反应反应热（有的资料称“中和热”）。25 ℃、101 kPa 下：
+\[\ce{H+(aq) + OH-(aq) = H2O(l)}\qquad \Delta H=-57.3\ \mathrm{kJ\cdot mol^{-1}}\]
+\end{gainian}
+
+定义中的“稀溶液”和“强酸强碱”都有原因：浓酸、浓碱溶于水时本身会放热；弱酸、弱碱在溶液中主要以分子形式存在，反应时要先电离，电离需要吸热。这两种情况测得的热量都不只是 \ce{H+} 与 \ce{OH-} 结合放出的热。
+
+测定原理并不复杂：反应放出的热量被溶液吸收，使溶液温度升高。知道溶液的质量 $m$、比热容 $c$ 和升高的温度 $\Delta t$，就能由 $Q=cm\Delta t$ 算出放出的热量，再除以生成水的物质的量。为了让热量尽量留在溶液里、温度测得准，要使用简易量热计（图~\ref{fig:01-calorimeter}）：内筒盛放反应液；内筒与外壳之间的隔热层和上面的杯盖用来减少热量散失；温度计插入溶液测温；环形的玻璃搅拌器套在温度计外，上下移动，使酸碱迅速混合、各处温度一致。
+
+\tu{\begin{tikzpicture}[font=\small]
+\fill[pattern=north east lines,pattern color=black!40] (0,0) rectangle (4,3.6);
+\fill[white] (0.7,0.55) rectangle (3.3,3.6);
+\draw[thick] (0,0) rectangle (4,3.6);
+\fill[c1sol] (0.7,0.55) rectangle (3.3,2.4);
+\draw[thick] (0.7,3.6)--(0.7,0.55)--(3.3,0.55)--(3.3,3.6);
+\fill[c1lid,draw=black,thick] (-0.15,3.6) rectangle (4.15,4.0);
+\fill[white,draw=black] (1.5,1.1) rectangle (1.7,5.4);
+\fill[warnred] (1.6,1.0) circle (0.13);
+\draw[warnred,line width=1.2pt] (1.6,1.05)--(1.6,2.3);
+\draw[thick,black!70] (2.6,0.95)--(2.6,5.0);
+\draw[thick,black!70] (1.6,0.95) ellipse (1.0 and 0.16);
+\node at (1.0,1.85) {\footnotesize 溶液};
+\draw[c1lead] (1.5,5.1)--(0.6,5.1) node[left]{温度计};
+\draw[c1lead] (2.6,4.8)--(3.5,4.8) node[right]{玻璃搅拌器};
+\draw[c1lead] (4.15,3.8)--(4.7,3.8) node[right]{杯盖};
+\draw[c1lead] (3.3,2.9)--(4.7,2.9) node[right]{内筒};
+\draw[c1lead] (3.65,1.8)--(4.7,1.8) node[right]{隔热层};
+\draw[c1lead] (4.0,0.3)--(4.7,0.3) node[right]{外壳};
+\end{tikzpicture}}{简易量热计示意图\label{fig:01-calorimeter}}
+
+实验步骤如下：
+\begin{enumerate}
+\item 用量筒量取 50 mL 0.50 mol·L$^{-1}$ 盐酸，倒入内筒，测量温度；用水把温度计上的酸冲洗干净，擦干。
+\item 用另一个量筒量取 50 mL 0.55 mol·L$^{-1}$ NaOH 溶液，测量温度。取两种溶液温度的平均值作为反应前的温度 $t_1$。
+\item 打开杯盖，将 NaOH 溶液迅速一次倒入内筒，立即盖上杯盖，插入温度计，用搅拌器匀速搅拌，记录混合溶液的最高温度 $t_2$。
+\item 重复实验两次，取温差的平均值。
+\end{enumerate}
+数据处理时，近似认为溶液密度为 1 g·mL$^{-1}$、比热容 $c=4.18$ J·g$^{-1}$·℃$^{-1}$：
+\[Q=(50+50)\,\mathrm{g}\times4.18\times10^{-3}\,\mathrm{kJ\cdot g^{-1}\cdot ℃^{-1}}\times(t_2-t_1)=0.418(t_2-t_1)\ \mathrm{kJ}\]
+生成 \ce{H2O} 0.025 mol，故 $\Delta H=-\dfrac{0.418(t_2-t_1)}{0.025}\ \mathrm{kJ\cdot mol^{-1}}$。
+
+每一步操作都是为了让测得的 $\Delta t$ 尽量准确。NaOH 溶液稍过量，是为了让盐酸完全反应，这样生成水的量就由盐酸确定为 0.025 mol。读充分混合后的最高温度，是为了尽量记录反应放热造成的升温，减少随后散热的影响。计算近似忽略量热计吸热和向外散热，实际结果通常会有偏差。碱液要一次迅速倒入，分多次或缓慢倒入会使热量在操作中散失。搅拌器用玻璃而不用铜，因为金属导热快，会把热量传出去。测完酸后要冲洗温度计，否则残留的酸会与碱反应，使测得的碱的初温偏高、$\Delta t$ 偏小。如果把酸、碱溶液都改为 100 mL，放出的总热量约增大一倍，但折算到“生成 1 mol 水”后，中和反应反应热基本不变。
+
+把以上分析归纳为下表（与理论值 57.3 kJ·mol$^{-1}$ 比较测得的放热数值）：
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{Xc}
+\toprule
+原因 & 测得的放热数值 \\
+\midrule
+装置保温、隔热差；分多次加入碱液；用铜质搅拌器；温度计未冲洗直接测碱温 & 偏小 \\
+用弱酸（如 \ce{CH3COOH}）或弱碱（如氨水）代替：弱电解质电离吸热 & 偏小 \\
+用浓硫酸或 NaOH 固体代替稀溶液：溶解（稀释）放热 & 偏大 \\
+用稀硫酸与 \ce{Ba(OH)2} 溶液：生成 \ce{BaSO4} 沉淀也放热 & 偏大 \\
+量取盐酸时仰视读数：实际 HCl 多于 0.025 mol，生成水多，计算仍按 0.025 mol & 偏大 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{liti}[基础]
+按上述方案进行三次实验，测得温差 $t_2-t_1$ 分别为 3.2 ℃、4.5 ℃、3.4 ℃；实验记录确认第二次因初温抄录错误，该组数据无效。计算中和反应反应热 $\Delta H$（保留一位小数），并分析结果与 $-57.3$ kJ·mol$^{-1}$ 不同的可能原因。
+\tcblower
+\silu 先检查实验记录：第二次数据已有明确的操作记录依据，应舍去；不能仅因为某个数与其他数不同就任意删掉。\\
+\jie 温差平均值 $(3.2+3.4)/2=3.3$ ℃。$Q=0.418\times3.3=1.379$ kJ，$\Delta H=-\dfrac{1.379}{0.025}\approx-55.2$ kJ·mol$^{-1}$。测得的放热数值偏小，可能是装置隔热不好、倒入碱液不够迅速等使热量散失。
+\end{liti}
+
+\begin{liti}[典型]
+某同学测得稀盐酸与稀 NaOH 溶液反应生成 1 mol \ce{H2O(l)} 放出热量 52.3 kJ，造成这一结果的原因\textbf{不可能}是
+\xxb{实验装置保温、隔热效果差}{用量筒量取盐酸时仰视读数}{分多次将 NaOH 溶液倒入量热计内筒}{用测量盐酸的温度计直接测定 NaOH 溶液的温度}
+\tcblower
+\jie $52.3<57.3$，测得值偏小。A、C 热量散失，偏小；D 碱的初温读数偏高，$\Delta t$ 偏小；B 仰视读数使量取的盐酸偏多，实际生成的水多于 0.025 mol，放热更多，而计算时仍除以 0.025 mol，测得值偏大，不可能导致偏小。\daan B
+\end{liti}
+
+\section{热化学方程式}
+
+化学方程式只表明物质的变化；\textbf{热化学方程式}同时表明物质变化和能量变化。可以把它看成一张“账单”：左边写投入什么，右边写得到什么，后面的 $\Delta H$ 写明这一笔变化放出或吸收多少热量。例如 \[\ce{H2(g) + Cl2(g) = 2HCl(g)}\dHv{-184.6}\]
+表示 25 ℃、101 kPa 下，1 mol \ce{H2(g)} 与 1 mol \ce{Cl2(g)} 完全反应生成 2 mol \ce{HCl(g)}，放出 184.6 kJ 热量。
+
+$\Delta H$ 单位中的“mol$^{-1}$”指“每摩尔反应”，即按方程式所写的计量数完成一次反应。所以 $\Delta H$ 的数值必须与计量数对应：计量数加倍，$\Delta H$ 加倍；反应逆向书写，$\Delta H$ 变号。对可逆反应，$\Delta H$ 指按方程式完全转化时的热效应。例如 \ce{N2(g) + 3H2(g) <=> 2NH3(g)} $\Delta H=-92.4$ kJ·mol$^{-1}$，在密闭容器中充入 1 mol \ce{N2} 和 3 mol \ce{H2}，反应不能进行到底，实际放热小于 92.4 kJ。
+
+书写热化学方程式时要注意：
+\begin{enumerate}
+\item 注明各物质的聚集状态（g、l、s、aq），因为同一物质状态不同，焓不同：等质量的水，$H(\mathrm{s})<H(\mathrm{l})<H(\mathrm{g})$。如 \ce{H2(g) + 1/2O2(g) = H2O(g)} $\Delta H=-241.8$ kJ·mol$^{-1}$，而生成 \ce{H2O(l)} 时 $\Delta H=-285.8$ kJ·mol$^{-1}$，相差的 44 kJ 正是 1 mol 水蒸气液化放出的热。同素异形体还要注明名称，如 C（石墨）。
+\item 计量数只表示物质的量，可以是分数；$\Delta H$ 与计量数成正比。
+\item $\Delta H$ 写在方程式右边，放热为“$-$”，吸热为“$+$”，单位 kJ·mol$^{-1}$。
+\item 25 ℃、101 kPa 下可不注明温度和压强；一般不写反应条件；已标明状态，就不再用“↑”“↓”。
+\end{enumerate}
+判断一个热化学方程式是否正确，可以依次检查：$\Delta H$ 的符号与吸热、放热是否一致；单位是否为 kJ·mol$^{-1}$（常误写为 kJ）；各物质状态是否标全、标对（溶液中的反应常漏写 aq，水的状态常写错）；$\Delta H$ 的数值是否与计量数对应；如果要表示燃烧热或中和反应反应热，是否符合 1.4 节和 1.2 节的规定。
+
+\begin{liti}[基础]
+常温下：(1) 8 g \ce{CH4} 完全燃烧生成 \ce{CO2(g)} 和 \ce{H2O(l)}，放出 445.0 kJ 热量；(2) 14 g CO 完全燃烧放出 141.5 kJ 热量。分别写出热化学方程式。
+\tcblower
+\silu 先把质量换算成物质的量，再按所选的计量数把热量按比例放大。\\
+\jie (1) 8 g \ce{CH4} 为 0.5 mol，1 mol 放热 890.0 kJ：\ce{CH4(g) + 2O2(g) = CO2(g) + 2H2O(l)}\dHv{-890.0}。\\
+(2) 14 g CO 为 0.5 mol，若写 2 mol CO，放热 $141.5\times4=566$ kJ：\ce{2CO(g) + O2(g) = 2CO2(g)}\dHv{-566}。写成 1 mol CO 时 $\Delta H=-283$ kJ·mol$^{-1}$，也正确。
+\end{liti}
+
+\section{燃烧热与能源}
+
+燃料燃烧放出的热量是生活和生产中最主要的能量来源。要比较不同燃料，就需要统一标准：取多少燃料，燃烧到什么程度。
+
+\begin{gainian}[燃烧热]
+101 kPa 时，1 mol 纯物质完全燃烧生成指定产物时所放出的热量，叫做该物质的\textbf{燃烧热}。指定产物：C 元素$\to$\ce{CO2(g)}，H 元素$\to$\ce{H2O(l)}，S 元素$\to$\ce{SO2(g)}，N 元素$\to$\ce{N2(g)}。
+\end{gainian}
+
+规定指定产物，是为了让“完全燃烧”有统一的终点：碳燃烧可能生成 CO 或 \ce{CO2}，只有生成 \ce{CO2(g)} 才算完全燃烧；氢燃烧生成的水规定为液态，因为 25 ℃ 时水的稳定状态是液态。高中只要求掌握上面四种元素的指定产物。
+
+例如 \ce{CH4(g) + 2O2(g) = CO2(g) + 2H2O(l)} $\Delta H=-890.3$ kJ·mol$^{-1}$，可以说“\ce{CH4} 的燃烧热为 890.3 kJ·mol$^{-1}$”，也可以说“\ce{CH4} 的燃烧热 $\Delta H=-890.3$ kJ·mol$^{-1}$”。用文字叙述燃烧热时取正值；一旦写成 $\Delta H$，就必须带负号。燃烧热与中和反应反应热的比较如下：
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{lXX}
+\toprule
+& 燃烧热 & 中和反应反应热 \\
+\midrule
+定量标准 & 可燃物为 1 mol & 生成 \ce{H2O(l)} 为 1 mol \\
+条件要求 & 完全燃烧，生成指定产物（如 \ce{H2O(l)} 而非 \ce{H2O(g)}，\ce{CO2} 而非 CO） & 稀溶液、强酸与强碱 \\
+数值 & 随可燃物不同而不同 & 均约为 57.3 kJ·mol$^{-1}$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+燃烧热可以借助弹式量热计测定：物质在充氧的密闭氧弹中完全燃烧，由周围水的升温测得热量。氧弹体积不变，仪器直接测得的是恒容热效应；换算为这里所用的恒压燃烧焓还需作相应校正，高中不要求掌握校正方法。
+
+比较燃料优劣时常用单位质量燃料完全燃烧放出的热量（热值）。\ce{H2} 的燃烧热为 285.8 kJ·mol$^{-1}$，折合 $285.8/2\approx143$ kJ·g$^{-1}$，远高于 \ce{CH4}（约 55.6 kJ·g$^{-1}$）和碳（约 32.8 kJ·g$^{-1}$），而且产物只有水，所以液氢—液氧是高能、清洁的火箭推进剂；缺点是液氢需要低温储存，密度小，储罐体积大。
+
+能源分为化石燃料（煤、石油、天然气，不可再生）和新能源（太阳能、氢能、风能、地热能、海洋能、生物质能，多数可再生）。节约能源的关键是提高燃料的燃烧效率（如使燃料与空气充分接触、通入适当过量的空气）和充分利用余热。
+
+\begin{liti}[典型]
+已知：\ce{2H2(g) + O2(g) = 2H2O(l)} $\Delta H=-571.6$ kJ·mol$^{-1}$；\ce{C3H8(g) + 5O2(g) = 3CO2(g) + 4H2O(l)} $\Delta H=-2220$ kJ·mol$^{-1}$。(1) \ce{H2} 的燃烧热为\tk；(2) \ce{H2} 和 \ce{C3H8} 的混合气体共 5 mol，完全燃烧放热 3846.75 kJ，则 $V(\ce{H2}):V(\ce{C3H8})=$\tk。
+\tcblower
+\jie (1) 燃烧热以 1 mol 可燃物为标准：$571.6\div2=285.8$ kJ·mol$^{-1}$（不是 571.6）。\\
+(2) 设 \ce{H2} 为 $x$ mol、\ce{C3H8} 为 $y$ mol：$x+y=5$，$285.8x+2220y=3846.75$，解得 $x=3.75$，$y=1.25$。同温同压下气体体积比等于物质的量之比，$V(\ce{H2}):V(\ce{C3H8})=3:1$。
+\end{liti}
+
+\section{盖斯定律}
+
+有些反应的反应热无法直接测定。例如 \ce{C(s) + 1/2O2(g) = CO(g)}：碳在氧气中燃烧时总有一部分生成 \ce{CO2}，无法控制只生成 CO，量热计测出的热量就不是这个反应的反应热。怎样得到它的 $\Delta H$？
+
+先看一个登山的例子，如图~\ref{fig:01-hess}(a)。从山脚 A 到观景台 B，可以沿台阶直接上去（途径1），也可以先爬上更高的山顶 C，再下到 B（途径2）。两条路的长短、花费的力气不同，但 A、B 两点的高度差是一样的，因为高度只由所在的位置决定，与怎样到达那里无关。
+
+焓也是这样的量。体系的状态确定了（物质的种类、物质的量、聚集状态、温度和压强都确定），它的焓就有确定的值，就像山上每个位置都有确定的海拔。所以从同一始态到同一终态，不管经过几步、经过哪些中间物质，焓变都相同。还可以用能量守恒来理解：如果两条途径的 $\Delta H$ 不同，就可以沿放热多的途径正向进行、再沿吸热少的途径逆向回到始态，每循环一次凭空多出一些能量，这违背能量守恒定律。
+
+\tu{\begin{tikzpicture}[font=\small]
+\begin{scope}
+\fill[black!8] (-0.2,0)--(0.5,0.5)--(1.4,1.6)--(2.6,3.1)--(3.6,2.3)--(4.4,2.1)--(5.0,1.2)--(5.4,0)--cycle;
+\draw[black!60] (-0.2,0)--(0.5,0.5)--(1.4,1.6)--(2.6,3.1)--(3.6,2.3)--(4.4,2.1)--(5.0,1.2)--(5.4,0);
+\draw (-0.4,0)--(5.6,0);
+\fill (0.5,0.5) circle (2pt) node[below right]{A 山脚};
+\fill (4.1,2.15) circle (2pt) node[below=2pt]{B 观景台};
+\fill (2.6,3.1) circle (2pt) node[above]{C 山顶};
+\draw[c1arr,mainblue,dashed] (0.6,0.6)--(4.0,2.15) node[pos=0.45,below right=-1pt]{途径1};
+\draw[c1arr,warnred] (0.55,0.75)--(2.45,3.1) node[pos=0.4,left]{途径2};
+\draw[c1arr,warnred] (2.75,3.05)--(4.0,2.3);
+\draw[c1aux] (0.5,0.5)--(5.9,0.5); \draw[c1aux] (4.1,2.15)--(5.9,2.15);
+\draw[c1dim] (5.8,0.5)--(5.8,2.15) node[midway,right]{高度差};
+\node at (2.7,-0.45) {(a) 高度差与登山路线无关};
+\end{scope}
+\begin{scope}[xshift=7.6cm,y=0.85cm]
+\draw[-Stealth] (-0.3,0)--(-0.3,4.4) node[left]{焓 $H$};
+\draw[c1lvl] (0,3.8)--(2.5,3.8) node[midway,above]{\ce{C(s) + O2(g)}};
+\draw[c1lvl] (1.9,2.9)--(4.5,2.9) node[pos=0.65,above]{\ce{CO(g) + 1/2O2(g)}};
+\draw[c1lvl] (0,0.5)--(4.5,0.5) node[midway,below]{\ce{CO2(g)}};
+\draw[c1arr] (0.5,3.8)--(0.5,0.5) node[midway,right]{$\Delta H_1$};
+\draw[c1arr,warnred] (2.2,3.8)--(2.2,2.9) node[midway,left]{$\Delta H_3$};
+\draw[c1arr,warnred] (3.8,2.9)--(3.8,0.5) node[midway,right]{$\Delta H_2$};
+\node at (2.2,-0.55) {(b) 碳燃烧的两条途径};
+\end{scope}
+\end{tikzpicture}}{用登山的高度差理解盖斯定律\label{fig:01-hess}}
+
+\begin{gainian}[盖斯定律]
+一个化学反应，不管是一步完成还是分几步完成，其反应热是相同的。也就是说，在一定条件下，化学反应的反应热只与反应体系的始态和终态有关，而与反应的途径无关。
+\end{gainian}
+
+图~\ref{fig:01-hess}(b) 把这个思路用于碳的燃烧。已测得
+\[\ce{C(s) + O2(g) = CO2(g)}\quad \Delta H_1=-393.5\ \mathrm{kJ\cdot mol^{-1}};\qquad \ce{CO(g) + 1/2O2(g) = CO2(g)}\quad \Delta H_2=-283.0\ \mathrm{kJ\cdot mol^{-1}}\]
+从始态 \ce{C(s) + O2(g)} 到终态 \ce{CO2(g)} 有两条途径：一步生成 \ce{CO2}；或者先生成 CO（还剩 $\frac12$ mol \ce{O2}），CO 再燃烧。图中最上面横线到最下面横线的总高度 $\Delta H_1$，等于两段高度 $\Delta H_3$ 与 $\Delta H_2$ 之和，即 $\Delta H_1=\Delta H_3+\Delta H_2$，所以
+\[\Delta H_3=\Delta H_1-\Delta H_2=-393.5-(-283.0)=-110.5\ \mathrm{kJ\cdot mol^{-1}}\]
+
+实际计算时一般不画图，而是直接把已知的热化学方程式进行加减，这叫加和法。它的依据是：每个热化学方程式代表一段“路程”，把方程式相加就是把几段路程首尾相接；中间物质在一个式子里生成、在另一个式子里消耗，相加后消去，就像途中经过的地点不出现在起点和终点里。所以方程式相加，$\Delta H$ 也相加；方程式乘以 $n$（这段路走 $n$ 遍），$\Delta H$ 也乘以 $n$；方程式反过来写（倒着走），$\Delta H$ 变号。用加和法的步骤是：
+\begin{enumerate}
+\item 找：在已知方程式中找出目标方程式中的物质，优先找只在一个已知式中出现的物质。这种物质在目标式中的位置和系数只能由这一个式子提供，所以由它确定该式的方向和倍数。
+\item 调：按目标式调整已知式的方向（逆写则 $\Delta H$ 变号）和系数（乘以几，$\Delta H$ 也乘以几）。
+\item 加：将调整后的式子相加，$\Delta H$ 同步相加。
+\item 查：检查中间物质是否全部消去，各物质的状态是否与目标式一致。在几个已知式中都出现的物质不能用来定系数，正好用来最后检验。
+\end{enumerate}
+
+\begin{liti}[基础]
+用 CuO 与 Cu 高温烧结可制取 \ce{Cu2O}。已知：\\
+①\ce{2Cu(s) + O2(g) = 2CuO(s)} $\Delta H_1=-314$ kJ·mol$^{-1}$；②\ce{2Cu2O(s) + O2(g) = 4CuO(s)} $\Delta H_2=-292$ kJ·mol$^{-1}$。\\
+则 \ce{CuO(s) + Cu(s) = Cu2O(s)} 的 $\Delta H=$\tk。
+\tcblower
+\silu 找：\ce{Cu} 只出现在①中，在反应物一侧，与目标式同侧；\ce{Cu2O} 只出现在②中，在反应物一侧，而目标式中它是生成物，所以②要逆写。调：目标式中 Cu 和 \ce{Cu2O} 的系数都是 1，①中 Cu 为 2、②中 \ce{Cu2O} 为 2，所以两式都乘以 $\frac12$。\\
+\jie 目标式 $=\frac12\times$①$-\frac12\times$②。查：\ce{O2} 为 $\frac12-\frac12=0$，消去；\ce{CuO} 左边 $\frac12\times4=2$（逆写后在反应物侧）、右边 $\frac12\times2=1$，相减后剩 1 个 CuO 在反应物侧，与目标式一致。$\Delta H=\frac12(\Delta H_1-\Delta H_2)=\frac12(-314+292)=-11$ kJ·mol$^{-1}$。
+\end{liti}
+
+\begin{zhenti}{2025年广东卷第19题(3)①}
+以 \ce{TiCl4} 为原料可制备 \ce{TiCl3}，反应体系中存在下列过程：\\
+(a)\ce{Ti(s) + TiCl4(g) <=> 2TiCl2(s)} \quad $\Delta H_1$\\
+(b)\ce{TiCl2(s) + TiCl4(g) <=> 2TiCl3(g)} \quad $\Delta H_2=+200.1$ kJ·mol$^{-1}$\\
+(c)\ce{Ti(s) + 3TiCl4(g) <=> 4TiCl3(g)} \quad $\Delta H_3=+132.4$ kJ·mol$^{-1}$\\
+则 $\Delta H_1=$\tk kJ·mol$^{-1}$。
+
+{\heiti 解析}\quad Ti 只在 (c) 中出现，且与目标式 (a) 同在反应物侧、系数都是 1，所以取 $1\times$(c)；\ce{TiCl2} 只在 (b) 中出现，在反应物侧，而目标式中它是生成物、系数为 2，所以取 $-2\times$(b)。(a)$=$(c)$-2\times$(b)。检验 \ce{TiCl4}：$3-2=1$，\ce{TiCl3}：$4-4=0$，与目标式一致。$\Delta H_1=132.4-2\times200.1=-267.8$ kJ·mol$^{-1}$。
+\end{zhenti}
+
+\begin{zhenti}{2026年广东卷第19题(2)（网络收集版）}
+我国科学家在深海发现化能合成生物群落，硫化物的氧化可为生物活动提供能量：\\
+\ce{2H2S(aq) + O2(aq) = 2S(s) + 2H2O(l)} \quad $\Delta H_1$\\
+\ce{2S(s) + 3O2(aq) + 2H2O(l) = 2SO4^2-(aq) + 4H+(aq)} \quad $\Delta H_2$\\
+\ce{SO4^2-(aq) + 3H2S(aq) + 2H+(aq) = 4S(s) + 4H2O(l)} \quad $\Delta H_3$\\
+则 $\Delta H_3=$\tk（用 $\Delta H_1$ 和 $\Delta H_2$ 表示）。
+
+{\heiti 解析}\quad \ce{SO4^2-} 只出现在第二个式子中，在生成物侧，而目标式中它在反应物侧、系数为 1，故取 $-\frac12\times$第二式；\ce{H2S} 只出现在第一个式子中，目标式需要 3 个，故取 $\frac32\times$第一式。检验：\ce{O2} 为 $\frac32-\frac32=0$，恰好消去；S 为 $3+1=4$，\ce{H2O} 为 $3+1=4$，都在生成物侧，与目标式一致。$\Delta H_3=\frac32\Delta H_1-\frac12\Delta H_2$。
+\end{zhenti}
+
+\begin{liti}[典型]
+肼（\ce{N2H4}）与 \ce{N2O4} 可作火箭推进剂。已知：①\ce{N2(g) + 2O2(g) = N2O4(l)} $\Delta H_1=-19.5$ kJ·mol$^{-1}$；②\ce{N2H4(l) + O2(g) = N2(g) + 2H2O(g)} $\Delta H_2=-534.2$ kJ·mol$^{-1}$。写出 \ce{N2H4(l)} 与 \ce{N2O4(l)} 反应生成 \ce{N2(g)} 和 \ce{H2O(g)} 的热化学方程式，并说明该推进剂的优点。
+\tcblower
+\silu 先写出并配平目标反应，再用加和法。\\
+\jie 目标：\ce{2N2H4(l) + N2O4(l) = 3N2(g) + 4H2O(g)}。\ce{N2H4} 只在②中，需要 2 个，取 $2\times$②；\ce{N2O4} 只在①中且在生成物侧，目标式中在反应物侧，取 $-$①。检验：\ce{O2} 为 $2-2=0$，\ce{N2} 为 $2+1=3$。$\Delta H=2\Delta H_2-\Delta H_1=-1068.4+19.5=-1048.9$ kJ·mol$^{-1}$。优点：放热多；产物为 \ce{N2} 和 \ce{H2O}，不污染环境；生成大量气体，推力大。
+\end{liti}
+
+\subsection{反应热大小的比较}
+比较 $\Delta H$ 时要带符号比较：放热反应放热越多，$\Delta H$ 越小（越负）；吸热反应吸热越多，$\Delta H$ 越大。拿不准时画能量示意图。例如比较 \ce{2H2(g) + O2(g) = 2H2O(l)} $\Delta H_1$ 与 \ce{2H2(g) + O2(g) = 2H2O(g)} $\Delta H_2$：起点相同，而液态水的焓比气态水低（图~\ref{fig:01-cmp}），生成液态水时箭头更长、放热更多，所以 $\Delta H_1<\Delta H_2$。
+
+\tu{\begin{tikzpicture}[font=\small,y=0.8cm]
+\draw[-Stealth] (-0.3,0)--(-0.3,3.6) node[left]{焓 $H$};
+\draw[c1lvl] (0,3.0)--(2.0,3.0) node[midway,above]{\ce{2H2(g) + O2(g)}};
+\draw[c1lvl] (2.4,1.4)--(4.6,1.4) node[right]{\ce{2H2O(g)}};
+\draw[c1lvl] (2.4,0.5)--(4.6,0.5) node[right]{\ce{2H2O(l)}};
+\draw[c1aux] (2.0,3.0)--(3.9,3.0);
+\draw[c1arr] (2.8,3.0)--(2.8,1.4) node[midway,left]{$\Delta H_2$};
+\draw[c1arr] (3.7,3.0)--(3.7,0.5) node[pos=0.3,right]{$\Delta H_1$};
+\end{tikzpicture}}{生成气态水与液态水的焓变比较\label{fig:01-cmp}}
+
+其他常见情形归纳如下：
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{lXl}
+\toprule
+情形 & 分析 & 结论 \\
+\midrule
+反应物状态不同 & \ce{S(g) + O2(g) = SO2(g)} $\Delta H_1$；\ce{S(s) + O2(g) = SO2(g)} $\Delta H_2$。气态硫能量高，放热多 & $\Delta H_1<\Delta H_2$ \\
+燃烧程度不同 & \ce{C(s) + O2(g) = CO2(g)} $\Delta H_1$；\ce{C(s) + 1/2O2(g) = CO(g)} $\Delta H_2$。完全燃烧放热多 & $\Delta H_1<\Delta H_2$ \\
+同素异形体 & C（石墨）$\to$ C（金刚石）$\Delta H=+1.9$ kJ·mol$^{-1}$：石墨能量低，等量燃烧时金刚石放热多 & $\Delta H_\text{金刚石}<\Delta H_\text{石墨}$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{yicuo}
+由 C（石墨）$\to$ C（金刚石）吸热可知石墨的能量低，更稳定。由 Sn（灰）$\to$ Sn（白）$\Delta H=+2.1$ kJ·mol$^{-1}$ 可知灰锡的焓较低，但锡的稳定形态还与温度有关：高于 13.2 ℃ 时白锡稳定，常温下锡以白锡形式存在；低于 13.2 ℃ 时白锡会缓慢转化为灰锡，所以锡器在寒冷环境中会损坏。因此，焓低不总能单独决定哪种形态最稳定。第3章将说明，反应方向还与熵有关；高中用能量图比较稳定性时，应遵从题目给出的模型和条件。
+\end{yicuo}
+
+\section{反应热的计算方法归纳}
+
+前面几节从不同角度得到了计算 $\Delta H$ 的方法，归纳如下：
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.2cm}Xp{4.8cm}}
+\toprule
+依据 & 计算式 & 注意 \\
+\midrule
+物质的能量（焓） & $\Delta H=\sum H_\text{生成物}-\sum H_\text{反应物}$ & 生成物减反应物 \\
+键能 & $\Delta H=\sum E_\text{反应物键能}-\sum E_\text{生成物键能}$ & 反应物减生成物；数准键数 \\
+活化能 & $\Delta H=E_\text{a正}-E_\text{a逆}$ & 催化剂同等降低两者，$\Delta H$ 不变 \\
+燃烧热 & $\Delta H=\sum\nu\Delta_\text{c}H_\text{反应物}-\sum\nu\Delta_\text{c}H_\text{生成物}$ & 代入带负号的 $\Delta_\text{c}H$；\ce{O2}、\ce{CO2}、\ce{H2O(l)} 不再燃烧，按 0 计 \\
+盖斯定律 & 已知式加减组合，$\Delta H$ 同步加减 & 方向、系数同步调整 \\
+热量与物质的量 & $Q=\xi\cdot|\Delta H|$ & $\xi$ 为按所写方程式折算的实际反应量（mol） \\
+\bottomrule
+\end{tabularx}
+\end{center}
+例如合成氨实际生成 0.40 mol \ce{NH3}，则 $\xi=0.40/2=0.20$ mol，放热 $0.20\times92.4=18.48$ kJ。表中 $\nu$ 是方程式中的计量数，$\Delta_\text{c}H$ 表示燃烧热（以 $\Delta H$ 形式，为负值）。
+
+燃烧热法也是盖斯定律的应用。设想把反应物和生成物都燃烧到同一组最终产物（\ce{CO2(g)}、\ce{H2O(l)} 等）：途径一，反应物先转化为生成物（$\Delta H$），生成物再燃烧（$\sum\nu\Delta_\text{c}H_\text{生}$）；途径二，反应物直接燃烧（$\sum\nu\Delta_\text{c}H_\text{反}$）。两条途径始态、终态相同，所以 $\Delta H+\sum\nu\Delta_\text{c}H_\text{生}=\sum\nu\Delta_\text{c}H_\text{反}$，移项即得表中的公式。注意公式中代入的是带负号的 $\Delta_\text{c}H$；如果改用燃烧热的正值 $Q$，公式要写成 $\Delta H=\sum\nu Q_\text{生}-\sum\nu Q_\text{反}$，顺序正好相反，最容易在这里弄错符号。
+
+\begin{liti}[典型]
+已知 \ce{H2(g)}、\ce{C2H4(g)} 和 \ce{C2H5OH(l)} 的燃烧热 $\Delta H$ 分别为 $-285.8$、$-1411.0$、$-1366.8$ kJ·mol$^{-1}$。则 \ce{C2H4(g) + H2O(l) = C2H5OH(l)} 的 $\Delta H$ 为\tk。
+\tcblower
+\silu \ce{H2O(l)} 本身就是燃烧的最终产物，按 0 计；\ce{H2} 不参与目标反应，是干扰数据。\\
+\jie $\Delta H=(-1411.0+0)-(-1366.8)=-44.2$ kJ·mol$^{-1}$。\\
+\xianjing 若直接用正值计算“$1411.0-1366.8=+44.2$”，符号就错了。
+\end{liti}
+
+\begin{liti}[综合]
+反应 \ce{A -> C} 分两步进行：①\ce{A -> B}，②\ce{B -> C}，反应过程的能量变化如图~\ref{fig:01-twostep}（$E_1$、$E_2$、$E_3$、$E_4$ 均为活化能，单位 kJ·mol$^{-1}$）。下列说法\textbf{不正确}的是
+\tu{\begin{tikzpicture}[scale=0.6,font=\scriptsize]
+\axisEP{9}{5}
+\draw[thick,mainblue] (0.3,1.8)--(0.8,1.8) .. controls (1.6,1.8) and (1.8,4.0) .. (2.4,4.0) .. controls (3.0,4.0) and (3.2,2.8) .. (3.9,2.8) .. controls (4.6,2.8) and (4.8,4.4) .. (5.4,4.4) .. controls (6.0,4.4) and (6.3,0.7) .. (7.2,0.7)--(8.3,0.7);
+\node[below] at (0.6,1.8) {A}; \node[below] at (3.9,2.8) {B}; \node[below] at (7.8,0.7) {C};
+\draw[c1dim] (1.2,1.8)--(1.2,4.0) node[midway,left]{$E_1$}; \draw[c1aux] (0.8,1.8)--(1.5,1.8); \draw[c1aux] (1.0,4.0)--(2.4,4.0);
+\draw[c1dim] (3.1,2.8)--(3.1,4.0) node[midway,left]{$E_2$}; \draw[c1aux] (2.4,4.0)--(3.3,4.0); \draw[c1aux] (2.9,2.8)--(3.9,2.8);
+\draw[c1dim] (4.6,2.8)--(4.6,4.4) node[midway,left]{$E_3$}; \draw[c1aux] (3.9,2.8)--(4.8,2.8); \draw[c1aux] (4.4,4.4)--(5.4,4.4);
+\draw[c1dim] (6.6,0.7)--(6.6,4.4) node[midway,right]{$E_4$}; \draw[c1aux] (5.4,4.4)--(6.8,4.4);
+\end{tikzpicture}}{两步反应的能量变化\label{fig:01-twostep}}
+\xxb{三种状态中 C 的能量最低}{\ce{A -> B} 的活化能为 $E_1$}{\ce{B -> C} 的 $\Delta H=E_4-E_3$}{加入催化剂不能改变反应的焓变}
+\tcblower
+\silu 每一步都有自己的峰：第一个峰属于 \ce{A -> B}，第二个峰属于 \ce{B -> C}。对每一步分别用“到峰顶的高度是活化能、起终点之差是 $\Delta H$”来读图。\\
+\jie C 的能量最低，A 对；\ce{A -> B} 的正反应活化能是从 A 到第一个峰顶的高度 $E_1$，B 对；\ce{B -> C} 的 $\Delta H=E_3-E_4$（正反应活化能减逆反应活化能），由图知 $E_4>E_3$，$\Delta H<0$，C 错；催化剂不改变焓变，D 对。\daan C\\
+\dianbo 由盖斯定律，总反应 \ce{A -> C} 的 $\Delta H$ 等于两步之和：$\Delta H=(E_1-E_2)+(E_3-E_4)$。
+\end{liti}
+
+% ------------------------------------------------------------
+\zhangmo{本章小结}
+\subsection*{一、知识总结}
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{p{2.2cm}X}
+\toprule
+基本概念 & 体系与环境；等温下体系与环境交换的热量为反应热；等压且只做体积功时，反应热等于焓变 $\Delta H=H_\text{生成物}-H_\text{反应物}$ \\
+反应热的来源 & 宏观：反应物与生成物的焓不同；微观：断键吸收的能量与成键放出的能量不同 \\
+$\Delta H$ 的符号 & 放热 $\Delta H<0$，吸热 $\Delta H>0$；不由是否加热判断 \\
+测定 & 中和反应反应热 $-57.3$ kJ·mol$^{-1}$；$\Delta H=-cm\Delta t/n(\ce{H2O})$ \\
+表示 & 热化学方程式：标状态，$\Delta H$ 与计量数对应，可逆反应指完全转化 \\
+燃烧热 & 1 mol 可燃物、完全燃烧、生成指定产物（\ce{CO2(g)}、\ce{H2O(l)}、\ce{SO2(g)}、\ce{N2(g)}） \\
+计算 & 焓（生$-$反）、键能（反$-$生）、活化能（正$-$逆）、燃烧热（反$-$生，代入负值）、盖斯定律、比例 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{二、方法提升}
+\begin{enumerate}
+\item 用盖斯定律定系数时，先找只在一个已知式中出现的物质，由它在目标式中的位置和系数确定该已知式的方向和倍数；最后用出现在多个式子中的物质验算。
+\item 比较 $\Delta H$ 大小时，画能量示意图，带符号比较；放热越多 $\Delta H$ 越小，吸热越多 $\Delta H$ 越大。
+\item 读能量—反应进程图时，峰顶对应过渡态，起点到峰顶为正反应活化能，终点到峰顶为逆反应活化能，起点与终点之差为 $\Delta H$。
+\end{enumerate}
+
+\subsection*{三、易错点归纳}
+\begin{enumerate}
+\item 把“需要加热”等同于吸热；把物理过程（溶解、稀释、汽化）的热效应称为吸热反应、放热反应。
+\item 写热化学方程式漏写状态，$\Delta H$ 单位写成 kJ，放热漏写“$-$”，计量数加倍而 $\Delta H$ 不变。
+\item 表示燃烧热时生成 \ce{H2O(g)} 或 CO，或可燃物的计量数不为 1。
+\item 可逆反应中不按实际转化的量换算热量，直接把 $|\Delta H|$ 当作总放热。
+\item 键能法与焓的计算的减法顺序弄反；数错 \ce{P4}、\ce{SiO2}、晶体硅中的键数。
+\item 催化剂能改变活化能，但不改变 $\Delta H$。
+\end{enumerate}
+
+% ------------------------------------------------------------
+\zhangmo{分层练习}
+\zu{A组\quad 基础巩固}
+\begin{xiti}[start=1]
+\item 下列说法正确的是\xz
+\xxa{吸热反应一定需要加热才能发生}{化学反应中，反应物的总能量大于生成物的总能量时，反应放热，$\Delta H<0$}{NaOH 固体溶于水放出热量，该过程属于放热反应}{同温同压下，\ce{H2(g) + Cl2(g) = 2HCl(g)} 在光照和点燃条件下的 $\Delta H$ 不同}
+
+\item \laiyuan{改编自2024年广东卷第11题}\ 在烧瓶中加入 \ce{Ba(OH)2*8H2O} 晶体和 \ce{NH4Cl} 晶体，搅拌后烧瓶外壁明显变冷。下列说法正确的是\xz
+\xxa{该反应的 $\Delta H<0$}{该反应不需要加热就能进行，所以是放热反应}{反应物的总能量低于生成物的总能量}{断开反应物中化学键吸收的总能量小于形成生成物中化学键放出的总能量}
+
+\item 下列有关中和反应反应热测定实验的说法正确的是\xz
+\xxa{可用温度计代替玻璃搅拌器搅拌溶液}{强酸与强碱的稀溶液反应生成 1 mol \ce{H2O(l)} 放出的热量都约为 57.3 kJ，因此稀硫酸与 \ce{Ba(OH)2} 稀溶液反应也可用于测定}{应读取混合溶液的最高温度作为终止温度}{用 \ce{CH3COOH} 溶液代替盐酸，测得的放热数值偏大}
+
+\item 已知 1 g \ce{H2} 完全燃烧生成液态水放出 142.9 kJ 热量。下列热化学方程式正确的是\xz
+\xxa{\ce{2H2(g) + O2(g) = 2H2O(l)} \quad $\Delta H=-142.9$ kJ·mol$^{-1}$}{\ce{H2(g) + 1/2O2(g) = H2O(l)} \quad $\Delta H=-285.8$ kJ·mol$^{-1}$}{\ce{2H2 + O2 = 2H2O} \quad $\Delta H=-571.6$ kJ·mol$^{-1}$}{\ce{H2(g) + 1/2O2(g) = H2O(g)} \quad $\Delta H=-285.8$ kJ·mol$^{-1}$}
+
+\item 下列关于燃烧热的说法正确的是\xz
+\xxa{1 mol 碳燃烧生成 CO 时放出的热量是碳的燃烧热}{表示 \ce{H2} 燃烧热的热化学方程式中，生成物应为 \ce{H2O(g)}}{\ce{CH4} 的燃烧热为 890.3 kJ·mol$^{-1}$，则 \ce{CH4(g) + 2O2(g) = CO2(g) + 2H2O(l)} $\Delta H=-890.3$ kJ·mol$^{-1}$}{燃烧热的数值与可燃物的物质的量成正比}
+
+\item 已知部分键能（kJ·mol$^{-1}$）：H—H 436，O=O 498，H—O 463。则 \ce{2H2(g) + O2(g) = 2H2O(g)} 的 $\Delta H=$\tk；若已知 \ce{H2O(l) = H2O(g)} $\Delta H=+44$ kJ·mol$^{-1}$，则 \ce{H2(g) + 1/2O2(g) = H2O(l)} 的 $\Delta H=$\tk。
+
+\item 化学反应 \ce{A2(g) + B2(g) = 2AB(g)} 的能量变化如图~\ref{fig:01-exab}（$a$、$b$ 均为正值，单位 kJ）。下列叙述正确的是\xz
+\tu{\begin{tikzpicture}[scale=0.55,font=\scriptsize]
+\axisEP{7}{4.6}
+\draw[c1lvl] (0.3,1)--(1.6,1) node[midway,below]{1 mol \ce{A2} + 1 mol \ce{B2}};
+\draw[c1lvl] (1.8,3.8)--(4.2,3.8) node[midway,above]{2 mol A + 2 mol B};
+\draw[c1lvl] (4.6,2.2)--(6.4,2.2) node[midway,below]{2 mol AB};
+\draw[c1aux] (1.6,1)--(2.2,1); \draw[c1aux] (4.2,3.8)--(5.0,3.8);
+\draw[c1dim] (2.2,1)--(2.2,3.8) node[midway,right]{$a$};
+\draw[c1dim] (5.0,2.2)--(5.0,3.8) node[midway,right]{$b$};
+\end{tikzpicture}}{\ce{A2} 与 \ce{B2} 反应的能量变化\label{fig:01-exab}}
+\xxb{每生成 2 mol AB(g) 吸收 $b$ kJ 热量}{$\Delta H=+(a-b)$ kJ·mol$^{-1}$}{反应物总能量高于生成物总能量}{断裂 1 mol A—A 和 1 mol B—B 放出 $a$ kJ 能量}
+
+\item 已知 \ce{H2(g) + I2(g) <=> 2HI(g)} $\Delta H=-9.48$ kJ·mol$^{-1}$。下列说法正确的是\xz
+\xxa{1 mol \ce{H2(g)} 与 1 mol \ce{I2(g)} 在密闭容器中充分反应，放出 9.48 kJ 热量}{按方程式完全反应生成 2 mol HI(g) 时，放出 9.48 kJ 热量}{\ce{2HI(g) <=> H2(g) + I2(s)} 的 $\Delta H=+9.48$ kJ·mol$^{-1}$}{1 mol \ce{H2(g)} 与 1 mol \ce{I2(g)} 的总能量低于 2 mol HI(g) 的能量}
+\end{xiti}
+
+\zu{B组\quad 高考典型}
+\begin{xiti}
+\item 下列各组热化学方程式中，$\Delta H_1>\Delta H_2$ 的是\xz
+\xxa{\ce{C(s) + O2(g) = CO2(g)} $\Delta H_1$；\ce{C(s) + 1/2O2(g) = CO(g)} $\Delta H_2$}{\ce{S(s) + O2(g) = SO2(g)} $\Delta H_1$；\ce{S(g) + O2(g) = SO2(g)} $\Delta H_2$}{\ce{H2(g) + 1/2O2(g) = H2O(l)} $\Delta H_1$；\ce{H2(g) + 1/2O2(g) = H2O(g)} $\Delta H_2$}{\ce{CaO(s) + H2O(l) = Ca(OH)2(s)} $\Delta H_1$；\ce{CaCO3(s) = CaO(s) + CO2(g)} $\Delta H_2$}
+
+\item 发射火箭可用液氢和液氧作推进剂。已知：①\ce{H2(g) + 1/2O2(g) = H2O(l)} $\Delta H_1=-285.8$ kJ·mol$^{-1}$；②\ce{H2(g) = H2(l)} $\Delta H_2=-0.92$ kJ·mol$^{-1}$；③\ce{O2(g) = O2(l)} $\Delta H_3=-6.84$ kJ·mol$^{-1}$；④\ce{H2O(l) = H2O(g)} $\Delta H_4=+44.0$ kJ·mol$^{-1}$。则 \ce{H2(l) + 1/2O2(l) = H2O(g)} 的 $\Delta H$ 为\xz
+\xx{$+237.46$ kJ·mol$^{-1}$}{$-474.92$ kJ·mol$^{-1}$}{$-118.73$ kJ·mol$^{-1}$}{$-237.46$ kJ·mol$^{-1}$}
+
+\item \laiyuan{改编自2024年广东卷第19题(1)②}\ 酸催化下 \ce{NaNO2} 与 \ce{NH4Cl} 混合溶液的反应（反应a）可用于石油开采中油路解堵。反应a：\ce{NO2^-(aq) + NH4^+(aq) = N2(g) + 2H2O(l)}\quad $\Delta H$。已知：\\
+\ce{NaNO2(s) + NH4Cl(s) = NaCl(s) + N2(g) + 2H2O(l)} \quad $\Delta H_1$\\
+\ce{NaNO2(s) = Na+(aq) + NO2^-(aq)} \quad $\Delta H_2$\\
+\ce{NH4Cl(s) = NH4^+(aq) + Cl-(aq)} \quad $\Delta H_3$\\
+\ce{NaCl(s) = Na+(aq) + Cl-(aq)} \quad $\Delta H_4$\\
+则反应a的 $\Delta H=$\tk。
+
+\item 已知石墨和金刚石的燃烧热 $\Delta H$ 分别为 $-393.5$ kJ·mol$^{-1}$、$-395.4$ kJ·mol$^{-1}$。下列说法正确的是\xz
+\xxa{由石墨制备金刚石是放热过程}{等质量时，石墨的能量比金刚石的高}{石墨比金刚石稳定，石墨中 C—C 键的平均键能更大}{C（石墨，s）$=$ C（金刚石，s）$\Delta H=-1.9$ kJ·mol$^{-1}$}
+
+\item \laiyuan{原创}\ 用 \ce{CH4} 催化还原 \ce{NO_x} 可消除氮氧化物污染。已知：①\ce{CH4(g) + 4NO2(g) = 4NO(g) + CO2(g) + 2H2O(g)} $\Delta H_1=-574$ kJ·mol$^{-1}$；②\ce{CH4(g) + 4NO(g) = 2N2(g) + CO2(g) + 2H2O(g)} $\Delta H_2=-1160$ kJ·mol$^{-1}$。(1) 写出 \ce{CH4} 将 \ce{NO2} 还原为 \ce{N2} 的热化学方程式（\ce{CH4} 的计量数为 1）。(2) 若用标准状况下 4.48 L \ce{CH4} 将 \ce{NO2} 完全还原为 \ce{N2}，放出的热量为多少？转移电子多少摩尔？
+
+\item \laiyuan{原创}\ 已知键能（kJ·mol$^{-1}$）：\ce{N#N} 946，H—H 436，N—H 391。(1) 估算 \ce{N2(g) + 3H2(g) = 2NH3(g)} 的 $\Delta H$。(2) 从键能角度解释为什么 \ce{N2} 化学性质稳定，而合成氨反应却是放热反应。
+\end{xiti}
+
+\zu{C组\quad 冲击高分}
+\begin{xiti}
+\item 白磷（\ce{P4}）、\ce{P4O6}、\ce{P4O10} 的分子结构：\ce{P4} 为正四面体，6 条棱为 P—P 键；\ce{P4O6} 是在 \ce{P4} 的每个 P—P 键中插入 1 个 O 原子；\ce{P4O10} 是在 \ce{P4O6} 的基础上每个 P 原子再以 P=O 连接 1 个 O 原子。部分键能（kJ·mol$^{-1}$）：P—P 198，P—O 360，O=O 498，P=O $x$。
+(1) 已知 1 mol 白磷完全燃烧生成 \ce{P4O10} 的 $\Delta H=-2982$ kJ·mol$^{-1}$，求 $x$（忽略固态与气态的差别）。
+(2) 0.5 mol 白磷与 \ce{O2} 完全反应生成 \ce{P4O6}，放出多少热量？
+(3) 已知 \ce{P4}（白磷，s）$=$ 4P（红磷，s）$\Delta H=-29.2$ kJ·mol$^{-1}$，判断白磷、红磷哪种更稳定，并比较等质量的白磷和红磷完全燃烧放出热量的多少。
+
+\item \laiyuan{原创}\ 甲烷干重整（\ce{CH4 + CO2 -> 2CO + 2H2}）可同时利用两种温室气体。已知 25 ℃ 时 \ce{CH4(g)}、\ce{CO(g)}、\ce{H2(g)} 的燃烧热 $\Delta H$ 分别为 $-890.3$、$-283.0$、$-285.8$ kJ·mol$^{-1}$；\ce{H2O(l) = H2O(g)} $\Delta H=+44.0$ kJ·mol$^{-1}$。
+(1) 求 \ce{CH4(g) + CO2(g) = 2CO(g) + 2H2(g)} 的 $\Delta H$。
+(2) 求 \ce{2H2(g) + O2(g) = 2H2O(g)} 的 $\Delta H$。
+(3) 有人认为“干重整是吸热反应，所以没有利用价值”。结合 (1)(2) 及能量守恒，评价该观点。
+
+\item \laiyuan{原创}\ \ce{CO2} 加氢制甲醇可经两条途径：途径Ⅰ直接反应 \ce{CO2(g) + 3H2(g) = CH3OH(g) + H2O(g)} $\Delta H_1$；途径Ⅱ先发生 \ce{CO2(g) + H2(g) = CO(g) + H2O(g)} $\Delta H_2=+41.2$ kJ·mol$^{-1}$，再发生 \ce{CO(g) + 2H2(g) = CH3OH(g)} $\Delta H_3=-90.7$ kJ·mol$^{-1}$。已知 \ce{H2O(l) = H2O(g)} $\Delta H=+44.0$ kJ·mol$^{-1}$。(1) 求 $\Delta H_1$。(2) 求 \ce{CO2(g) + 3H2(g) = CH3OH(g) + H2O(l)} 的 $\Delta H$。(3) 画出途径Ⅱ的焓变示意图（标出中间状态），并判断哪一步需要从外界获得能量。(4) 若在途径Ⅱ中加入只加快第二步的催化剂，总反应的 $\Delta H$ 是否改变？
+\end{xiti}
+
+% ------------------------------------------------------------
+\zhangmo{练习解析}
+\begin{jiexilist}
+\item \ans{B}A 错：吸热反应不一定需要加热，如 \ce{Ba(OH)2*8H2O} 与 \ce{NH4Cl} 常温即可反应。B 对：反应物总能量高，多余的能量放出，$\Delta H<0$。C 错：溶解是物理过程，不是放热反应。D 错：在题给同温同压、同样始态和终态下，光照或点燃只改变反应途径，不改变 $\Delta H$。
+\item \ans{C}烧瓶外壁变冷，说明反应从环境（烧瓶和周围空气）吸收热量，是吸热反应，$\Delta H>0$，A 错；反应能否不加热进行与吸热、放热无关，B 错；吸热反应中生成物的总能量高于反应物，C 对；吸热说明断键吸收的能量大于成键放出的能量，D 错。
+\item \ans{C}A 错：温度计不能用来搅拌，易损坏且测温不准。B 错：生成 \ce{BaSO4} 沉淀也放热，测得值偏大，不能用于测定中和反应反应热。C 对：读取充分混合后的最高温度，尽量记录反应放热造成的升温；计算中近似忽略装置吸热和散热。D 错：醋酸电离吸热，测得的放热数值偏小。
+\item \ans{B}1 g \ce{H2} 为 0.5 mol，故 1 mol \ce{H2} 生成液态水放热 285.8 kJ。A 中 2 mol \ce{H2} 应为 $-571.6$ kJ·mol$^{-1}$；C 未标状态；D 生成的是 \ce{H2O(g)}，放热应少于 285.8 kJ。
+\item \ans{C}A 错：碳的指定产物是 \ce{CO2(g)}。B 错：H 元素的指定产物是 \ce{H2O(l)}。C 对：燃烧热用 $\Delta H$ 表示时带负号。D 错：燃烧热以 1 mol 可燃物为标准，是定值；放出的总热量才与可燃物的物质的量成正比。
+\item \ans{$-482$ kJ·mol$^{-1}$；$-285$ kJ·mol$^{-1}$}1 个 \ce{H2O} 含 2 个 H—O 键。$\Delta H=2\times436+498-4\times463=1370-1852=-482$ kJ·mol$^{-1}$。生成 1 mol \ce{H2O(g)} 的 $\Delta H=-241$ kJ·mol$^{-1}$；水蒸气液化再放热 44 kJ，故生成 1 mol \ce{H2O(l)} 的 $\Delta H=-241-44=-285$ kJ·mol$^{-1}$。
+\item \ans{B}由图，断开 1 mol \ce{A2} 和 1 mol \ce{B2} 中的键生成气态原子吸收 $a$ kJ，原子形成 2 mol AB 放出 $b$ kJ；由图知 $a>b$，2 mol AB 的能量高于反应物，所以 $\Delta H=+(a-b)$ kJ·mol$^{-1}$，反应吸热，B 对，A、C 错；断键吸收能量，D 错。
+\item \ans{B}A 错：可逆反应不能进行到底，放热小于 9.48 kJ。B 对：$\Delta H$ 对应按方程式完全生成 2 mol HI(g) 的热效应。C 错：生成物为 \ce{I2(s)}，与 \ce{I2(g)} 的焓不同，$\Delta H$ 不等于 $+9.48$ kJ·mol$^{-1}$。D 错：放热反应中反应物总能量高于生成物。
+\item \ans{B}A：完全燃烧放热多，$\Delta H_1<\Delta H_2$。B：S(g) 的能量高于 S(s)，燃烧放热更多，$\Delta H_2<\Delta H_1$，即 $\Delta H_1>\Delta H_2$，符合题意。C：生成液态水多放出液化热，$\Delta H_1<\Delta H_2$。D：\ce{CaO} 与水化合放热，$\Delta H_1<0$；\ce{CaCO3} 分解吸热，$\Delta H_2>0$，$\Delta H_1<\Delta H_2$。
+\item \ans{D}\ce{H2(l)} 只在②中，目标式中在反应物侧，取 $-$②；\ce{O2(l)} 只在③中，目标式中系数为 $\frac12$ 且在反应物侧，取 $-\frac12\times$③；\ce{H2O(g)} 只在④中，取 $+$④；再加上①。目标式 $=$①$-$②$-\frac12$③$+$④，检验 \ce{H2(g)}、\ce{O2(g)}、\ce{H2O(l)} 均消去。$\Delta H=-285.8+0.92+\frac12\times6.84+44.0=-237.46$ kJ·mol$^{-1}$。
+\item \ans{$\Delta H_1-\Delta H_2-\Delta H_3+\Delta H_4$}\ce{NO2^-(aq)} 只在第二式中，在生成物侧，目标式中在反应物侧，取 $-\Delta H_2$；\ce{NH4^+(aq)} 只在第三式中，同理取 $-\Delta H_3$；\ce{N2} 和 \ce{H2O} 由第一式提供，取 $+\Delta H_1$；第一式生成的 \ce{NaCl(s)} 要用第四式溶解为 \ce{Na+(aq)} 和 \ce{Cl-(aq)}，取 $+\Delta H_4$。四式相加后 \ce{NaNO2(s)}、\ce{NH4Cl(s)}、\ce{NaCl(s)} 都消去，\ce{Na+(aq)}、\ce{Cl-(aq)} 两边各 1 个也消去，得到反应a。故 $\Delta H=\Delta H_1-\Delta H_2-\Delta H_3+\Delta H_4$。
+\item \ans{C}由燃烧热法，C（石墨）$\to$ C（金刚石）的 $\Delta H=-393.5-(-395.4)=+1.9$ kJ·mol$^{-1}$，吸热，A、D 错；石墨的能量低，B 错。C 对：石墨能量低，变成气态 C 原子需要吸收的能量比金刚石多，而 1 mol 石墨只含 1.5 mol C—C 键（金刚石含 2 mol），所以石墨中 C—C 键的平均键能更大。
+\item (1) 目标式 $=$(①$+$②)$\div2$：\ce{CH4(g) + 2NO2(g) = N2(g) + CO2(g) + 2H2O(g)} $\Delta H=\frac{-574-1160}{2}=-867$ kJ·mol$^{-1}$（检验：NO 为 $\frac12\times(4-4)=0$）。(2) $n(\ce{CH4})=4.48/22.4=0.2$ mol，放热 $0.2\times867=173.4$ kJ；C 由 $-4$ 价升至 $+4$ 价，每个 \ce{CH4} 失去 8 个电子，转移电子 $0.2\times8=1.6$ mol。
+\item (1) $\Delta H=946+3\times436-6\times391=2254-2346=-92$ kJ·mol$^{-1}$（2 个 \ce{NH3} 含 6 个 N—H 键）。(2) \ce{N#N} 键能很大，断开它需要很多能量，反应的活化能大，所以 \ce{N2} 很稳定、常温下难以反应；但生成物中 6 个 N—H 键放出的能量（2346 kJ）大于断开 1 个 \ce{N#N} 和 3 个 H—H 吸收的能量（2254 kJ），所以总反应放热。“稳定”说的是反应进行的难易（与活化能有关），“放热”说的是始态、终态能量的高低，两者不矛盾。
+\item (1) $x=585$。\ce{P4 + 5O2 = P4O10}：断键吸收 $6\times198+5\times498=3678$ kJ；\ce{P4O10} 含 12 个 P—O 和 4 个 P=O，成键放出 $12\times360+4x$。$3678-(4320+4x)=-2982$，解得 $x=585$。
+(2) 819 kJ。\ce{P4 + 3O2 = P4O6}：$\Delta H=6\times198+3\times498-12\times360=-1638$ kJ·mol$^{-1}$；0.5 mol 白磷放热 819 kJ。
+(3) 白磷转化为红磷放热，红磷的能量低，更稳定。两者燃烧都生成 \ce{P4O10}（终态相同），等质量时白磷的能量高，所以等质量白磷完全燃烧放出的热量更多：1 mol \ce{P4}（白磷）燃烧比 4 mol P（红磷）燃烧多放出 29.2 kJ。
+\item (1) $\Delta H=+247.3$ kJ·mol$^{-1}$。燃烧热法：$\Delta H=\Delta_\text{c}H(\ce{CH4})+0-2\Delta_\text{c}H(\ce{CO})-2\Delta_\text{c}H(\ce{H2})=-890.3+566.0+571.6=+247.3$ kJ·mol$^{-1}$（\ce{CO2} 是燃烧的最终产物，按 0 计）。
+(2) \ce{2H2(g) + O2(g) = 2H2O(l)} $\Delta H=-571.6$ kJ·mol$^{-1}$，再加上 \ce{2H2O(l) = 2H2O(g)} $\Delta H=+88.0$ kJ·mol$^{-1}$，得 $\Delta H=-483.6$ kJ·mol$^{-1}$。
+(3) 观点片面。干重整吸收的 247.3 kJ 能量储存在产物 CO 和 \ce{H2} 中，产物燃烧时可以释放出来：1 mol \ce{CH4} 直接燃烧放热 890.3 kJ，而干重整得到的 2 mol CO 和 2 mol \ce{H2} 燃烧（生成液态水）放热 $566.0+571.6=1137.6$ kJ，正好比 890.3 kJ 多 247.3 kJ，符合能量守恒。若用太阳能、工业余热等廉价能量驱动干重整，就能把这些热能转化为化学能储存起来，同时消耗 \ce{CO2}、得到合成气（CO 和 \ce{H2}，重要的化工原料），因此有利用价值。
+\item (1) 途径Ⅰ与途径Ⅱ始态、终态相同，$\Delta H_1=\Delta H_2+\Delta H_3=41.2-90.7=-49.5$ kJ·mol$^{-1}$。(2) 再加上 \ce{H2O(g) = H2O(l)} $\Delta H=-44.0$ kJ·mol$^{-1}$：$-49.5-44.0=-93.5$ kJ·mol$^{-1}$。(3) 示意图：纵轴为焓，起点横线为 \ce{CO2(g) + 3H2(g)}；第一步向上 41.2 kJ 到中间状态 \ce{CO(g) + H2O(g) + 2H2(g)}；第二步向下 90.7 kJ 到终点 \ce{CH3OH(g) + H2O(g)}，终点比起点低 49.5 kJ。第一步吸热，需要从外界获得能量。(4) 不改变，$\Delta H$ 只与始态和终态有关，催化剂只改变活化能。
+\end{jiexilist}
