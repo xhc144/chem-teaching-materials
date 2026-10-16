@@ -25,7 +25,7 @@
 }
 % 楔形键（指向读者）
 \newcommand{\cninewedge}[2]{\fill ($(#1)!0.22cm!(#2)$) -- ($($(#2)!0.22cm!(#1)$)!0.07cm!90:(#1)$) -- ($($(#2)!0.22cm!(#1)$)!0.07cm!-90:(#1)$) -- cycle;}
-\newcommand{\cninesk}[1]{{\setchemfig{atom sep=1.25em}\small\chemfig{#1}}}
+\newcommand{\cninesk}[1]{{\setchemfig{atom sep=1.65em}\small\chemfig{#1}}}
 
 \chapter{有机物的结构与烃}
 
@@ -40,15 +40,15 @@
 
 \tu{\begin{tikzpicture}[font=\small]
   \node at (0,0) {\cninesk{C-C}};
-  \node at (1.5,0) {\cninesk{C=C}};
-  \node at (3.0,0) {\cninesk{C~C}};
-  \node[c9lab] at (1.5,-0.75) {(a) 碳碳单键、双键、三键};
-  \node at (6.3,0) {\cninesk{C-C-C-C-C}};
-  \node at (9.0,0.1) {\cninesk{C-C(-[:90]C)-C-C}};
-  \node at (11.6,0) {\cninesk{*6(------)}};
-  \node[c9lab] at (6.3,-0.75) {(b) 直链};
-  \node[c9lab] at (9.0,-0.75) {(c) 带支链};
-  \node[c9lab] at (11.6,-0.75) {(d) 环状};
+  \node at (1.6,0) {\cninesk{C=C}};
+  \node at (3.2,0) {\cninesk{C~C}};
+  \node[c9lab] at (1.6,-0.75) {(a) 碳碳单键、双键、三键};
+  \node at (6.4,0) {\cninesk{C-C-C-C-C}};
+  \node at (9.6,0.25) {\cninesk{C-C(-[:90]C)-C-C}};
+  \node at (12.4,0) {\cninesk{*6(------)}};
+  \node[c9lab] at (6.4,-0.75) {(b) 直链};
+  \node[c9lab] at (9.6,-0.75) {(c) 带支链};
+  \node[c9lab] at (12.4,-0.75) {(d) 环状};
 \end{tikzpicture}}{碳原子之间的成键方式与碳骨架（只画出碳原子，氢原子省略）\label{fig:09-skel}}
 
 \subsection{碳原子的杂化方式与空间构型}
@@ -81,8 +81,7 @@
     \draw[c9bond] ([yshift=-1.5pt]A.east)--([yshift=-1.5pt]B.west);
     \foreach \a/\n in {150/h1,210/h2}{\node[c9atom] (\n) at ($(A)+(\a:0.75)$) {H}; \draw[c9bond] (A)--(\n);}
     \foreach \a/\n in {30/h3,-30/h4}{\node[c9atom] (\n) at ($(B)+(\a:0.75)$) {H}; \draw[c9bond] (B)--(\n);}
-    \node[font=\scriptsize] at (-0.05,0.32) {120°};
-    \node[c9lab] at (0,-1.55) {乙烯：$\mathrm{sp}^2$\\6 个原子共平面};
+    \node[c9lab] at (0,-1.55) {乙烯：$\mathrm{sp}^2$，约 120°\\6 个原子共平面};
   \end{scope}
   % 乙炔
   \begin{scope}[xshift=7.0cm]
@@ -100,7 +99,7 @@
     \draw[c9bond] (90:0.5) \foreach \k in {1,...,5}{ -- ({90-60*\k}:0.5)} -- cycle;
     \draw[c9bond] (0,0) circle (0.3);
     \foreach \k in {0,...,5}{\draw[c9bond] ({90-60*\k}:0.5)--({90-60*\k}:0.72); \node[c9atom,font=\scriptsize] at ({90-60*\k}:0.86) {H};}
-    \node[c9lab] at (0,-1.55) {苯：$\mathrm{sp}^2$\\12 个原子共平面};
+    \node[c9lab] at (0,-1.55) {苯：$\mathrm{sp}^2$，120°\\12 个原子共平面};
   \end{scope}
 \end{tikzpicture}}{四种基本分子的空间构型（模型示意）\label{fig:09-shape}}
 
@@ -120,15 +119,16 @@
 
 \tu{\begin{tikzpicture}[font=\small]
   \node[anchor=west] at (0,0) {\ce{C4H10O}};
-  \node at (3.6,0) {{\setchemfig{atom sep=1.6em}\chemfig{H-C(-[:90]H)(-[:-90]H)-C(-[:90]H)(-[:-90]C(-[:180]H)(-[:0]H)-[:-90]H)-C(-[:90]H)(-[:-90]H)-O-H}}};
+  \node at (3.6,0) {{\setchemfig{atom sep=1.6em}\chemfig{H-C(-[:90]H)(-[:-90]H)-C(-[:90]H)(-[:-90,1.9]C(-[:180]H)(-[:0]H)-[:-90]H)-C(-[:90]H)(-[:-90]H)-O-H}}};
   \node at (7.6,0) {\ce{(CH3)2CHCH2OH}};
   \node at (10.3,0.1) {{\setchemfig{atom sep=1.6em}\chemfig{-[:-30](-[:-90])-[:30]-[:-30]OH}}};
-  \foreach \x/\t in {0.6/分子式,3.6/结构式,7.6/结构简式,10.3/键线式}{\node[c9lab] at (\x,-1.85) {\t};}
-  \node[anchor=west] at (0,-2.6) {\ce{C4H8}};
-  \node at (3.6,-2.6) {\ce{CH2=CH-CH2-CH3}};
-  \node at (7.6,-2.6) {\ce{CH2=CHCH2CH3}};
-  \node at (10.3,-2.5) {{\setchemfig{atom sep=1.6em}\chemfig{=[:30]-[:-30]-[:30]}}};
-  \node[font=\scriptsize,text=graytext,anchor=west] at (-0.1,-3.2) {第一行：2-甲基-1-丙醇；第二行：1-丁烯（结构式中只写出碳链部分）};
+  \foreach \x/\t in {0.6/分子式,3.6/结构式,7.6/结构简式,10.3/键线式}{\node[c9lab,font=\small\heiti] at (\x,1.6) {\t};}
+  \draw[gray!50] (-0.2,-1.95)--(11.4,-1.95);
+  \node[anchor=west] at (0,-2.5) {\ce{C4H8}};
+  \node at (3.6,-2.5) {\ce{CH2=CH-CH2-CH3}};
+  \node at (7.6,-2.5) {\ce{CH2=CHCH2CH3}};
+  \node at (10.3,-2.4) {{\setchemfig{atom sep=1.6em}\chemfig{=[:30]-[:-30]-[:30]}}};
+  \node[font=\scriptsize,text=graytext,anchor=west] at (-0.1,-3.1) {第一行：2-甲基-1-丙醇；第二行：1-丁烯（结构式中只写出碳链部分）};
 \end{tikzpicture}}{同一物质的几种表示方法\label{fig:09-repr}}
 
 从键线式还原分子式时，按“碳四价”补氢：某个碳在图中画出了几根键，就补上 $4-\text{键数}$ 个氢（双键算 2 根，三键算 3 根）。例如图~\ref{fig:09-repr} 中 2-甲基-1-丙醇的键线式，左端点和下端点的碳只画了 1 根键，各补 3 个 H；三叉点的碳画了 3 根键，补 1 个 H；与 OH 相连的拐点碳画了 2 根键，补 2 个 H。合计 4 个 C、9 个与碳相连的 H，再加羟基，分子式为 \ce{C4H10O}。
@@ -181,19 +181,19 @@
 \tu{\begin{tikzpicture}[font=\small]
   \node[c9lab,anchor=west] at (-0.2,1.2) {\heiti \ce{C4H10}};
   \node at (0.9,0.3) {\cninesk{C-C-C-C}};
-  \node at (3.1,0.45) {\cninesk{C-C(-[:90]C)-C}};
-  \node[c9lab] at (0.9,-0.5) {主链 4 个碳\\正丁烷};
-  \node[c9lab] at (3.1,-0.5) {主链 3 个碳\\异丁烷};
-  \draw[gray] (4.4,1.3)--(4.4,-1.0);
+  \node at (3.2,0.5) {\cninesk{C-C(-[:90]C)-C}};
+  \node[c9lab] at (0.9,-0.8) {主链 4 个碳\\正丁烷};
+  \node[c9lab] at (3.2,-0.8) {主链 3 个碳\\异丁烷};
+  \draw[gray] (4.5,1.4)--(4.5,-1.3);
   \node[c9lab,anchor=west] at (4.7,1.2) {\heiti \ce{C5H12}};
-  \node at (6.0,0.3) {\cninesk{C-C-C-C-C}};
-  \node at (8.7,0.45) {\cninesk{C-C(-[:90]C)-C-C}};
-  \node at (11.2,0.3) {\cninesk{C-C(-[:90]C)(-[:-90]C)-C}};
-  \node[c9lab] at (6.0,-0.5) {主链 5 个碳\\正戊烷};
-  \node[c9lab] at (8.7,-0.5) {主链 4 个碳\\异戊烷};
-  \node[c9lab] at (11.2,-0.5) {主链 3 个碳\\新戊烷};
-  \draw[-Stealth,gray] (6.9,1.0)--(7.7,1.0) node[midway,above,font=\scriptsize]{主链缩短};
-  \draw[-Stealth,gray] (9.6,1.0)--(10.4,1.0) node[midway,above,font=\scriptsize]{主链缩短};
+  \node at (6.2,0.3) {\cninesk{C-C-C-C-C}};
+  \node at (9.1,0.5) {\cninesk{C-C(-[:90]C)-C-C}};
+  \node at (11.8,0.3) {\cninesk{C-C(-[:90]C)(-[:-90]C)-C}};
+  \node[c9lab] at (6.2,-0.8) {主链 5 个碳\\正戊烷};
+  \node[c9lab] at (9.1,-0.8) {主链 4 个碳\\异戊烷};
+  \node[c9lab] at (11.8,-0.8) {主链 3 个碳\\新戊烷};
+  \draw[-Stealth,gray] (7.3,1.2)--(8.1,1.2) node[midway,above,font=\scriptsize]{主链缩短};
+  \draw[-Stealth,gray] (10.1,1.2)--(10.9,1.2) node[midway,above,font=\scriptsize]{主链缩短};
 \end{tikzpicture}}{\ce{C4H10}、\ce{C5H12} 的碳架枚举（只画碳原子）\label{fig:09-c4c5}}
 
 碳原子再多一些，就需要把这个过程整理成固定的顺序。以 \ce{C6H14} 为例（图~\ref{fig:09-c6}），按下面三条依次进行：
@@ -248,29 +248,28 @@
     \draw[c9bond] (a1)--(b) (a2)--(b) (b)--(c) (c)--(d);
     \node[c9mk] at (-0.45,0.55) {a}; \node[c9mk] at (-0.45,-0.55) {a};
     \node[c9mk] at (1.0,0.32) {b}; \node[c9mk] at (2.0,0.32) {c}; \node[c9mk] at (3.0,0.32) {d};
-    \node[c9lab] at (1.4,-1.35) {异戊烷：a、b、c、d\\4 种，一氯代物 4 种};
+    \node[c9lab] at (1.4,-1.6) {异戊烷：a、b、c、d\\4 种，一氯代物 4 种};
   \end{scope}
   % 新戊烷
   \begin{scope}[xshift=5.0cm]
     \node[c9atom] (C) at (0,0) {C};
     \foreach \a/\n in {90/n1,0/n2,270/n3,180/n4}{\node[c9atom] (\n) at (\a:0.75) {\ce{CH3}}; \draw[c9bond] (C)--(\n);}
     \foreach \a in {90,0,270,180}{\node[c9mk] at ($(\a:0.75)+(\a+50:0.42)$) {a};}
-    \draw[c9sym] (-1.1,-1.1)--(1.1,1.1); \draw[c9sym] (-1.1,1.1)--(1.1,-1.1);
-    \node[c9lab] at (0,-1.35) {新戊烷：只有 a\\1 种，一氯代物 1 种};
+    \node[c9lab] at (0,-1.6) {新戊烷：只有 a\\1 种，一氯代物 1 种};
   \end{scope}
   % 甲苯
   \begin{scope}[xshift=8.4cm,yshift=-0.15cm]
     \cninebenz{1/\ce{CH3}}{2/b,6/b,3/c,5/c,4/d}
     \node[c9mk] at (0.42,1.08) {a};
-    \draw[c9sym] (0,1.3)--(0,-0.85);
-    \node[c9lab] at (0,-1.2) {甲苯：a、b、c、d\\4 种，一氯代物 4 种};
+    \draw[c9sym] (0,1.3)--(0,-0.75);
+    \node[c9lab] at (0,-1.45) {甲苯：a、b、c、d\\4 种，一氯代物 4 种};
   \end{scope}
   % 对二甲苯
-  \begin{scope}[xshift=11.5cm,yshift=-0.15cm]
+  \begin{scope}[xshift=11.6cm,yshift=-0.15cm]
     \cninebenz{1/\ce{CH3},4/\ce{CH3}}{2/b,3/b,5/b,6/b}
     \node[c9mk] at (0.42,1.08) {a}; \node[c9mk] at (0.42,-1.08) {a};
     \draw[c9sym] (0,1.25)--(0,-1.25); \draw[c9sym] (-0.95,0)--(0.95,0);
-    \node[c9lab] at (0,-1.7) {对二甲苯：a、b\\2 种，一氯代物 2 种};
+    \node[c9lab] at (0,-1.45) {对二甲苯：a、b\\2 种，一氯代物 2 种};
   \end{scope}
 \end{tikzpicture}}{用对称性判断等效氢（虚线为对称轴，同一字母表示等效氢）\label{fig:09-eqH}}
 
@@ -294,26 +293,28 @@
 在苯环上，两个取代基的相对位置有邻、间、对三种（图~\ref{fig:09-benz2}），苯环可以翻转、旋转，其他画法都与这三种之一相同。
 
 \tu{\begin{tikzpicture}[font=\small]
-  \begin{scope}\cninebenz{1/$X$,2/$X$}{3/1,4/1}\node[c9lab] at (0,-1.15) {邻位（1,2-）};\end{scope}
-  \begin{scope}[xshift=3.2cm]\cninebenz{1/$X$,3/$X$}{2/1}\node[c9lab] at (0,-1.15) {间位（1,3-）};\end{scope}
-  \begin{scope}[xshift=6.4cm]\cninebenz{1/$X$,4/$X$}{2/1}\node[c9lab] at (0,-1.15) {对位（1,4-）};\end{scope}
-\end{tikzpicture}}{苯环上的二取代物（$X$ 表示取代基；红色字母“1”只为示意苯环上剩余 H 的位置）\label{fig:09-benz2}}
+  \begin{scope}\cninebenz{1/$X$,2/$X$}{1/{}}\node[c9lab] at (0,-1.15) {邻位（1,2-）};\end{scope}
+  \begin{scope}[xshift=3.2cm]\cninebenz{1/$X$,3/$X$}{1/{}}\node[c9lab] at (0,-1.15) {间位（1,3-）};\end{scope}
+  \begin{scope}[xshift=6.4cm]\cninebenz{1/$X$,4/$X$}{1/{}}\node[c9lab] at (0,-1.15) {对位（1,4-）};\end{scope}
+\end{tikzpicture}}{苯环上的二取代物（$X$ 表示取代基，未画出的位置连 H）\label{fig:09-benz2}}
 
 苯环上有三个取代基时，用“定二移一”：先按邻、间、对放好两个，再放第三个，并用对称性去重。三个取代基相同（$X$、$X$、$X$）时有 3 种；两个相同、一个不同（$X$、$X$、$Y$）时有 6 种（图~\ref{fig:09-benz3}）。
 
 \tu{\begin{tikzpicture}[font=\small]
-  \foreach \s/\x in {{1/$X$,2/$X$,3/$X$}/0,{1/$X$,2/$X$,4/$X$}/2.1,{1/$X$,3/$X$,5/$X$}/4.2}{%
-    \begin{scope}[xshift=\x cm]\cninebenz[0.42]{\s}{1/{}}\end{scope}}
-  \node[c9lab] at (2.1,-1.2) {(a) $X$、$X$、$X$：连、偏、均，共 3 种};
-  \foreach \s/\x in {{1/$X$,2/$X$,3/$Y$}/7.0,{1/$X$,2/$X$,4/$Y$}/9.1,{1/$X$,3/$X$,2/$Y$}/11.2}{%
-    \begin{scope}[xshift=\x cm]\cninebenz[0.42]{\s}{1/{}}\end{scope}}
-  \foreach \s/\x in {{1/$X$,3/$X$,4/$Y$}/7.0,{1/$X$,3/$X$,5/$Y$}/9.1,{1/$X$,4/$X$,2/$Y$}/11.2}{%
-    \begin{scope}[xshift=\x cm,yshift=-2.6cm]\cninebenz[0.42]{\s}{1/{}}\end{scope}}
-  \node[font=\scriptsize] at (8.05,0.95) {两个 $X$ 邻位};
-  \node[font=\scriptsize] at (11.2,0.95) {两个 $X$ 间位};
-  \node[font=\scriptsize] at (8.05,-3.75) {两个 $X$ 间位};
-  \node[font=\scriptsize] at (11.2,-3.75) {两个 $X$ 对位};
-  \node[c9lab] at (9.1,-4.3) {(b) $X$、$X$、$Y$：共 6 种};
+  \begin{scope}[xshift=3.2cm,yshift=0cm]\cninebenz[0.42]{1/$X$,2/$X$,3/$X$}{1/{}}\end{scope}
+  \begin{scope}[xshift=5.4cm,yshift=0cm]\cninebenz[0.42]{1/$X$,2/$X$,4/$X$}{1/{}}\end{scope}
+  \begin{scope}[xshift=7.6cm,yshift=0cm]\cninebenz[0.42]{1/$X$,3/$X$,5/$X$}{1/{}}\end{scope}
+  \begin{scope}[xshift=0cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,2/$X$,3/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=2.2cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,2/$X$,4/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=4.8cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,3/$X$,2/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=7.0cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,3/$X$,4/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=9.2cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,3/$X$,5/$Y$}{1/{}}\end{scope}
+  \begin{scope}[xshift=11.8cm,yshift=-2.9cm]\cninebenz[0.42]{1/$X$,4/$X$,2/$Y$}{1/{}}\end{scope}
+  \node[c9lab] at (5.4,-1.25) {(a) $X$、$X$、$X$：连、偏、均，共 3 种};
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt}] (-0.6,-4.0)--(2.8,-4.0) node[midway,below=4pt,font=\scriptsize]{两个 $X$ 邻位：2 种};
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt}] (4.2,-4.0)--(9.8,-4.0) node[midway,below=4pt,font=\scriptsize]{两个 $X$ 间位：3 种};
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt}] (11.2,-4.0)--(12.4,-4.0) node[midway,below=4pt,font=\scriptsize]{对位：1 种};
+  \node[c9lab] at (5.9,-4.85) {(b) $X$、$X$、$Y$：共 6 种};
 \end{tikzpicture}}{苯环上三取代物的枚举\label{fig:09-benz3}}
 
 图~\ref{fig:09-benz3}(b) 中：两个 $X$ 处于邻位时，苯环有一条对称轴，剩下 4 个位置只有 2 种，$Y$ 放上去得 2 种；两个 $X$ 处于间位时，剩下的位置有 3 种（两个 $X$ 之间、紧挨一个 $X$、与两个 $X$ 都相间），得 3 种；两个 $X$ 处于对位时，剩下 4 个位置都等效，得 1 种。合计 $2+3+1=6$ 种。三个取代基都不相同（$X$、$Y$、$Z$）时，先放 $X$、$Y$：邻位时剩下 4 个位置互不等效，得 4 种；间位时也得 4 种；对位时剩下 4 个位置两两等效，得 2 种，共 10 种。
@@ -342,7 +343,7 @@
   \node[c9lab] at (0,-1.15) {(a) 顺-2-丁烯};
   \node at (3.9,0) {{\setchemfig{atom sep=1.7em}\chemfig{C(-[:150]H_3C)(-[:-150]H)=C(-[:30]H)(-[:-30]CH_3)}}};
   \node[c9lab] at (3.9,-1.15) {(b) 反-2-丁烯};
-  \begin{scope}[xshift=7.6cm]
+  \begin{scope}[xshift=7.8cm,scale=1.3]
     \foreach \x in {0,1.1}{
       \fill[c9blue!18] (\x,0.38) ellipse (0.17 and 0.36);
       \fill[c9red!15] (\x,-0.38) ellipse (0.17 and 0.36);
@@ -351,10 +352,10 @@
     \draw[c9bond] (0,0)--(1.1,0);
     \draw[c9blue,densely dotted,thick] (0.17,0.45) .. controls (0.55,0.62) .. (0.93,0.45);
     \draw[c9blue,densely dotted,thick] (0.17,-0.45) .. controls (0.55,-0.62) .. (0.93,-0.45);
-    \node[font=\scriptsize] at (-0.3,0) {C}; \node[font=\scriptsize] at (1.4,0) {C};
+    \node[font=\scriptsize] at (-0.33,0) {C}; \node[font=\scriptsize] at (1.43,0) {C};
     \draw[-Stealth,gray] (1.75,0.35) arc (60:-240:0.18 and 0.4);
     \node[c9lab,font=\scriptsize] at (2.6,0) {绕 $\sigma$ 键\\旋转};
-    \node[c9lab] at (0.8,-1.15) {(c) p 轨道肩并肩重叠};
+    \node[c9lab] at (0.9,-0.95) {(c) p 轨道肩并肩重叠};
   \end{scope}
 \end{tikzpicture}}{2-丁烯的顺反异构与 $\pi$ 键示意（(c) 为模型示意）\label{fig:09-cistrans}}
 
@@ -629,9 +630,9 @@
     \foreach \k in {0,...,5}{\fill (v\k) circle (1.3pt);}
     \foreach \k in {0,...,5}{\fill[c9blue!20] (v\k)+(0,0.36) ellipse (0.11 and 0.34); \draw[thin] (v\k)+(0,0.36) ellipse (0.11 and 0.34);}
     \foreach \k in {1,2}{\fill[c9red!15] (v\k)+(0,-0.36) ellipse (0.11 and 0.34); \draw[thin] (v\k)+(0,-0.36) ellipse (0.11 and 0.34);}
-    \node[c9lab] at (0,-1.3) {(a) 6 个碳各有 1 个垂直于环平面的 p 轨道};
+    \node[c9lab] at (0,-1.35) {(a) 每个碳有 1 个垂直于\\环平面的 p 轨道};
   \end{scope}
-  \begin{scope}[xshift=5.6cm]
+  \begin{scope}[xshift=4.6cm]
     \fill[c9red!15,even odd rule] (0,-0.32) ellipse (1.3 and 0.52) (0,-0.32) ellipse (0.62 and 0.2);
     \draw[thin,even odd rule] (0,-0.32) ellipse (1.3 and 0.52) (0,-0.32) ellipse (0.62 and 0.2);
     \foreach \k in {0,...,5}{\coordinate (w\k) at ({1.15*cos(60*\k)},{0.42*sin(60*\k)});}
@@ -639,7 +640,7 @@
     \foreach \k in {0,...,5}{\fill (w\k) circle (1.3pt);}
     \fill[c9blue!20,even odd rule,opacity=0.85] (0,0.36) ellipse (1.3 and 0.52) (0,0.36) ellipse (0.62 and 0.2);
     \draw[thin,even odd rule] (0,0.36) ellipse (1.3 and 0.52) (0,0.36) ellipse (0.62 and 0.2);
-    \node[c9lab] at (0,-1.3) {(b) 6 个 p 轨道共同重叠形成大 $\pi$ 键 $\Pi_6^6$};
+    \node[c9lab] at (0,-1.35) {(b) 6 个 p 轨道共同重叠\\形成大 $\pi$ 键 $\Pi_6^6$};
   \end{scope}
 \end{tikzpicture}}{苯分子中的大 $\pi$ 键（模型示意，电子云不是电子运动的轨迹；氢原子未画出）\label{fig:09-benzpi}}
 
@@ -693,7 +694,7 @@
 
 \tu{\begin{tikzpicture}[font=\small,x=0.95cm,y=0.95cm]
   \begin{scope}
-    \fill[c9blue!8] (-1.2,1.35)--(2.2,1.35)--(3.2,-3.0)--(-0.4,-1.6)--cycle;
+    \fill[c9blue!8] (-1.2,1.3)--(1.9,1.3)--(3.2,-3.0)--(0.1,-3.0)--cycle;
     \coordinate (C2) at (0,0); \coordinate (C3) at (1,0);
     \coordinate (C1) at (-0.5,0.866); \coordinate (H2) at (-0.5,-0.866);
     \coordinate (H3) at (1.5,0.866); \coordinate (C4) at (1.5,-0.866);
@@ -774,7 +775,7 @@
 \item 下列关于苯及其同系物的说法正确的是\xz
 \xxa{苯能使溴水褪色，发生了加成反应}{甲苯能使酸性 \ce{KMnO4} 溶液褪色，说明苯环对甲基有影响}{苯与液溴在光照条件下生成溴苯}{苯的硝化反应中，浓硫酸只作吸水剂}
 
-\item 用系统命名法命名：(1) \ce{CH2=C(CH3)-CH=CH2}\tk；(2) \ce{CH3CH(C2H5)CH2CH3}\tk；(3) \ce{CH#C-CH(CH3)2}\tk。
+\item 用系统命名法命名：\\(1) \ce{CH2=C(CH3)-CH=CH2}\tk[5em]；\quad(2) \ce{CH3CH(C2H5)CH2CH3}\tk[5em]；\quad(3) \ce{CH#C-CH(CH3)2}\tk[5em]。
 
 \item 等质量的 \ce{CH4}、\ce{C2H4}、\ce{C2H2}、\ce{C6H6} 完全燃烧，消耗 \ce{O2} 最多的是\tk；等物质的量的上述四种烃完全燃烧，消耗 \ce{O2} 最多的是\tk。
 
@@ -796,7 +797,7 @@
 
 \item \laiyuan{原创}\ 分子式为 \ce{C9H12} 的芳香烃共有\tk{}种；其中苯环上的一溴代物只有一种的结构简式为\tk。
 
-\item \laiyuan{原创}\ 某有机物的质谱图中最大质荷比为 60，红外光谱显示含 C=O 和 C—O 键，核磁共振氢谱有 2 组峰，面积比为 $1:3$，且不能与 \ce{NaHCO3} 反应。该有机物的结构简式为\tk，名称为\tk。
+\item \laiyuan{原创}\ 某有机物只含 C、H、O 三种元素，质谱图中最大质荷比为 60；红外光谱显示含 C=O 和 C—O 键，不含 O—H 键；核磁共振氢谱有 2 组峰，面积比为 $1:3$。该有机物的结构简式为\tk，名称为\tk。
 \end{xiti}
 
 \zu{C组\quad 冲刺高分}
@@ -805,7 +806,7 @@
 
 \item \laiyuan{原创}\ 0.1 mol 烃 A 完全燃烧生成 0.6 mol \ce{CO2} 和 0.5 mol \ce{H2O}；A 能使溴的 \ce{CCl4} 溶液褪色，1 mol A 最多与 1 mol \ce{H2} 加成；A 被酸性 \ce{KMnO4} 溶液氧化只得到己二酸 \ce{HOOC(CH2)4COOH}。(1) 求 A 的分子式并计算不饱和度。(2) 写出 A 的结构简式（名称）。(3) 写出 A 与 \ce{Br2} 反应的化学方程式。(4) A 的同分异构体中，属于链状二烯烃且核磁共振氢谱只有 2 组峰的结构简式为\tk。
 
-\item \laiyuan{原创}\ 分子式为 \ce{C9H10O2} 的芳香族化合物 Y 满足：①能与 \ce{NaHCO3} 溶液反应放出 \ce{CO2}；②苯环上只有两个取代基。(1) Y 的可能结构共有\tk{}种。(2) 其中核磁共振氢谱有 4 组峰、峰面积比为 $6:2:1:1$ 的不存在，请说明理由；写出峰面积比为 $3:2:2:2:1$ 的一种结构简式。
+\item \laiyuan{原创}\ 分子式为 \ce{C9H10O2} 的芳香族化合物 Y 满足：①能与 \ce{NaHCO3} 溶液反应放出 \ce{CO2}；②苯环上只有两个取代基。(1) Y 的可能结构共有\tk{}种。(2) 写出其中核磁共振氢谱有 5 组峰、峰面积比为 $3:2:2:2:1$ 的所有结构简式。(3) 若去掉条件②，只要求含苯环且能与 \ce{NaHCO3} 反应，符合条件的结构共有\tk{}种。
 \end{xiti}
 
 \zhangmo{练习解析}
@@ -823,8 +824,8 @@
 \item 4；\ce{CH3-C6H4-CH3}（对二甲苯）；乙苯。\ce{C8H10} 芳香烃有乙苯和邻、间、对二甲苯 4 种。对二甲苯苯环上的 4 个 H 等效，一氯代物只有 1 种。侧链被酸性 \ce{KMnO4} 氧化时，无论侧链多长，与苯环相连的碳都变为 \ce{-COOH}：乙苯（1 个侧链）生成苯甲酸，二甲苯（2 个侧链）生成苯二甲酸。
 \item 5；6；\ce{CH2=C(CH3)2}。$\Omega=1$，可以是 1 个双键或 1 个环。烯烃：1-丁烯、2-丁烯、2-甲基丙烯，3 种；环烷烃：环丁烷、甲基环丙烷，2 种；共 5 种。其中只有 2-丁烯有顺反异构，考虑后共 6 种。能使溴水褪色的是烯烃，加氢得到异丁烷 \ce{(CH3)3CH} 的只有 2-甲基丙烯。
 \item 8；1,3,5-三甲苯（均三甲苯），结构简式如下：\par{\centering\setchemfig{atom sep=1.5em}\chemfig{*6(-(-CH_3)=-(-CH_3)=-(-CH_3)=)}\par}一个侧链：丙苯、异丙苯（2 种）；两个侧链（甲基、乙基）：邻、间、对（3 种）；三个甲基：连三甲苯、偏三甲苯、均三甲苯（3 种）。均三甲苯高度对称，苯环上 3 个 H 等效。
-\item \ce{CH3COOCH3}；乙酸甲酯。含 C=O 和 C—O 键且不能与 \ce{NaHCO3} 反应，不是羧酸而是酯；相对分子质量 60 的酯为 \ce{C2H4O2}（\ce{HCOOCH3}）或……设为 \ce{C_nH_{2n}O2}，$14n+32=60$，$n=2$，分子式 \ce{C2H4O2}。可能的酯只有甲酸甲酯 \ce{HCOOCH3}，它的两组峰面积比为 $1:3$，符合。
+\item \ce{HCOOCH3}；甲酸甲酯。含 C=O 和 C—O 键而无 O—H 键，不是羧酸或醇，应为酯，至少含酯基 \ce{-COO-}（式量 44）；$60-44=16$，剩余部分只能是 1 个 C 和 4 个 H，分子式为 \ce{C2H4O2}，酯只有甲酸甲酯 \ce{HCOOCH3}。它有 \ce{HCOO} 和 \ce{CH3} 两种 H，面积比 $1:3$，符合。
 \item (1) $n(\ce{C})=3.52/44=0.08$ mol，$n(\ce{H})=2\times1.80/18=0.20$ mol，$m(\ce{O})=1.48-0.96-0.20=0.32$ g，$n(\ce{O})=0.02$ mol；C:H:O$=4:10:1$，实验式 \ce{C4H10O}，式量 74，分子式 \ce{C4H10O}。(2) 有 O—H 键，为醇；2 组峰面积比 9:1，为 \ce{(CH3)3COH}，2-甲基-2-丙醇。(3) 能氧化为醛的醇含 \ce{-CH2OH}：\ce{CH3CH2CH2CH2OH}、\ce{(CH3)2CHCH2OH}。
 \item (1) \ce{C6H10}，$\Omega=\frac{2\times6+2-10}{2}=2$。(2) 只与 1 mol \ce{H2} 加成，说明只有 1 个碳碳双键，另 1 个不饱和度为环；氧化只得到直链二元酸，双键在六元环中：环己烯。(3) 加成反应，生成 1,2-二溴环己烷：\par{\centering\setchemfig{atom sep=1.5em}\chemfig{*6(-=----)}\quad\ce{+ Br2 ->}\quad\chemfig{*6(-(-Br)-(-Br)----)}\par}(4) \ce{CH2=C(CH3)-C(CH3)=CH2}（2,3-二甲基-1,3-丁二烯，\ce{CH2} 与 \ce{CH3} 两种 H，面积比 4:6）。
-\item (1) 15。$\Omega=5$，苯环 4、羧基 1，侧链饱和；除苯环和 \ce{-COOH} 外还有 2 个碳。两个取代基的组合有：\ce{-COOH} 与 \ce{-CH2CH3}，\ce{-CH2COOH} 与 \ce{-CH3}，\ce{-CH2CH2COOH} 与……（不行，只能有两个取代基且共 3 个碳在侧链上）。逐一列出：①\ce{-COOH}、\ce{-C2H5}；②\ce{-CH2COOH}、\ce{-CH3}；以上每组有邻、间、对 3 种，共 6 种。
+\item (1) 6。$\Omega=5$，苯环 4、羧基 1，侧链饱和；除苯环外侧链共 3 个碳（含羧基碳）。两个取代基的组合有：\ce{-COOH} 与 \ce{-CH2CH3}，\ce{-CH2COOH} 与 \ce{-CH3}；每组有邻、间、对 3 种，共 6 种。(2) 对乙基苯甲酸 \ce{CH3CH2-C6H4-COOH} 和对甲基苯乙酸 \ce{CH3-C6H4-CH2COOH}（均为对位）。两者都有 \ce{-CH3}（3）、\ce{-CH2-}（2）、苯环上两种 H（2、2）和 \ce{-COOH}（1），共 5 组；邻、间位异构体苯环上有 4 种 H，共 7 组，不符。(3) 14。一个取代基：\ce{-CH2CH2COOH}、\ce{-CH(CH3)COOH}，2 种；两个取代基：6 种；三个取代基 \ce{-COOH}、\ce{-CH3}、\ce{-CH3}，属于“两同一异”，6 种。共 $2+6+6=14$ 种。
 \end{jiexilist}

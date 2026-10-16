@@ -29,6 +29,8 @@
  \shade[ball color=warnred!80] ($(#1)-(#2)$) circle (0.055cm);
  \shade[ball color=warnred!80] ($(#1)+(#2)$) circle (0.055cm);
  \shade[ball color=black!60] (#1) circle (0.06cm);}
+% 图与图题不分页：\ceighttu 即放在 minipage 中的 \tu
+\newcommand{\ceighttu}[2]{\par\noindent\begin{minipage}{\linewidth}\tu{#1}{#2}\end{minipage}\par}
 % 图例：\ceightleg[半径]{画布坐标}{颜色}{文字}
 \newcommand{\ceightleg}[4][0.1]{\shade[ball color=#3] (#2) circle (#1cm); \node[right,font=\scriptsize] at (#2) {\hspace{0.6ex}#4};}
 
@@ -40,7 +42,7 @@
 
 图~\ref{fig:08-order} 用平面上的点表示粒子。左图中每个点周围的情况都一样，沿任何一行走下去，点的间隔都相同，这就是周期性的有序排列；右图中点的位置杂乱，没有一个可以不断重复的“图案”。
 
-\tu{\begin{tikzpicture}
+\ceighttu{\begin{tikzpicture}
 \begin{scope}
 \foreach \i in {0,...,6}{\foreach \j in {0,...,4}{\coordinate (a\i-\j) at (\i*0.45,\j*0.45);}}
 \foreach \i in {0,...,6}{\foreach \j in {0,...,4}{\fill[mainblue] (a\i-\j) circle (2.2pt);}}
@@ -80,7 +82,7 @@
 
 1 g 食盐中大约有 $2\times10^{22}$ 个离子，不可能逐个描述它们的位置。好在晶体中的排列是周期性的，只要找出一个能不断重复的单元，就能描述整块晶体。这和砌墙相似：一面墙由同样的砖块按同一方式一块挨一块砌成，知道砖块的样子和砌法，就知道整面墙的样子（图~\ref{fig:08-brick}(a)）。晶体中的“砖块”就是晶胞。
 
-\tu{\begin{tikzpicture}
+\ceighttu{\begin{tikzpicture}
 \begin{scope}
 \clip (0,0) rectangle (3.5,2);
 \foreach \r in {0,...,3}{\pgfmathsetmacro{\off}{mod(\r,2)*0.5}
@@ -116,7 +118,7 @@
 
 以立方晶胞为例，看图~\ref{fig:08-share}。图中细线是晶胞的棱，红球是被共用的粒子，蓝色粗线标出其中一个晶胞。(a) 中 8 个立方体围成一个大立方体，中心的红球同时是这 8 个晶胞的顶点，每个晶胞只分到它的 $\frac18$；(b) 中 4 个立方体围着一条竖直的棱，棱上的粒子被 4 个晶胞共有，每个占 $\frac14$；(c) 中两个晶胞共用一个面，面上的粒子每个晶胞占 $\frac12$；(d) 中粒子完全在晶胞内部，只属于这一个晶胞。
 
-\tu{\begin{tikzpicture}[c8lab/.style={font=\scriptsize,align=center}]
+\ceighttu{\begin{tikzpicture}[c8lab/.style={font=\scriptsize,align=center}]
 \begin{scope}[c8cell=0.75cm]
 \foreach \a in {0,1,2}{\foreach \b in {0,1,2}{
  \draw[black!40] (0,\a,\b)--(2,\a,\b); \draw[black!40] (\a,0,\b)--(\a,2,\b); \draw[black!40] (\a,\b,0)--(\a,\b,2);}}
@@ -151,7 +153,7 @@
 
 现在用这一方法数 \ce{NaCl} 晶胞（图~\ref{fig:08-nacl}）中的离子。图中大球代表 \ce{Cl-}，小球代表 \ce{Na+}，为了看清位置，球画得比实际小。
 
-\tu{\begin{tikzpicture}[c8cell=2.6cm]
+\ceighttu{\begin{tikzpicture}[c8cell=2.6cm]
 \ceightcube
 \foreach \p in \ceightV {\ceightball[0.16]{mainblue!70}{\p}}
 \foreach \p in \ceightF {\ceightball[0.16]{mainblue!70}{\p}}
@@ -159,7 +161,7 @@
 \ceightball[0.1]{warnred!85}{0.5,0.5,0.5}
 \node[c8lab,below left] at (0,0,0) {顶点 \ce{Cl-}};
 \node[c8lab,below] at (0.5,0,-0.03) {棱心 \ce{Na+}};
-\node[c8lab,above] at (0.5,0.5,1.04) {面心 \ce{Cl-}};
+\draw[-Stealth,black!70] (2.7cm,3.9cm) node[right,font=\scriptsize]{面心 \ce{Cl-}} -- (1.92cm,3.05cm);
 \draw[-Stealth,black!70] (4.3cm,0.9cm) node[right,font=\scriptsize]{体心 \ce{Na+}} -- (1.98cm,1.62cm);
 \ceightleg[0.16]{4.3cm,2.6cm}{mainblue!70}{\ce{Cl-}}
 \ceightleg[0.1]{4.3cm,2.1cm}{warnred!85}{\ce{Na+}}
@@ -196,7 +198,7 @@
 
 石墨是层状结构（图~\ref{fig:08-covmol}(b)），属于\textbf{混合型晶体}。层内每个 C 原子 $\mathrm{sp}^2$ 杂化，与 3 个 C 原子以共价键形成平面六元环网状结构；每个 C 还剩一个未参与杂化的 p 电子，它们形成遍及整层的大 $\pi$ 键，这些电子能在层内移动，所以石墨能导电。层与层之间是范德华力，容易相对滑动，所以石墨质软、有滑腻感。层内 C—C 键长（142 pm）比金刚石中（154 pm）短，石墨的熔点甚至比金刚石还高。每个 C 连 3 个 C—C 键，每个键由 2 个 C 共用，1 mol 石墨含 1.5 mol C—C 键；每个 C 被 3 个六元环共有，每个六元环平均含 $6\times\frac13=2$ 个 C。
 
-\tu{\begin{tikzpicture}
+\ceighttu{\begin{tikzpicture}
 \begin{scope}[c8cell=2.2cm]
 \ceightcube[black!50]
 \foreach \t/\a/\b/\c/\d in {{0.25,0.25,0.25}/{0,0,0}/{0.5,0.5,0}/{0.5,0,0.5}/{0,0.5,0.5},
@@ -211,7 +213,7 @@
 \end{scope}
 \begin{scope}[xshift=4.5cm]
 \foreach \ly in {0,1.25}{
-\begin{scope}[cm={1,0,0.55,0.38,(0,\ly)}]
+\begin{scope}[cm={1,0,0.55,0.45,(0,\ly)}]
 \foreach \i in {0,...,3}{\foreach \j in {0,1}{
  \pgfmathsetmacro{\cx}{\i*0.6}\pgfmathsetmacro{\cy}{(\j+0.5*mod(\i,2))*0.6928}
  \draw[black!70] (\cx,\cy) +(0:0.4)--+(60:0.4)--+(120:0.4)--+(180:0.4)--+(240:0.4)--+(300:0.4)--cycle;
@@ -238,7 +240,7 @@
 
 化学键中离子键和共价键并没有绝对的界限，两种元素的电负性差越大，化学键中离子键的成分（百分数）越大。ZnS 中的化学键就有相当大的共价成分，但它的结构常和离子晶体放在一起讨论。图~\ref{fig:08-ionic} 是四种常见的 AB 型和 \ce{AB2} 型结构。
 
-\tu{\begin{tikzpicture}[c8cell=1.8cm]
+\ceighttu{\begin{tikzpicture}[c8cell=1.8cm]
 \begin{scope}
 \ceightcube
 \foreach \p in \ceightV {\ceightball[0.12]{mainblue!70}{\p}}
@@ -274,6 +276,7 @@
 
 \begin{center}
 \small
+\begin{minipage}{\linewidth}\centering
 \captionof{table}{典型晶胞的组成与配位数\label{tab:08-cells}}
 \begin{tabularx}{\linewidth}{p{2.4cm}Xp{4.2cm}}
 \toprule
@@ -287,18 +290,19 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 干冰 & \ce{CO2} 分子顶点和面心 & 4 个 \ce{CO2}；紧邻 12 个 \\
 \bottomrule
 \end{tabularx}
+\end{minipage}
 \end{center}
 
 \begin{zhenti}{2026年广东卷第18题(7)（网络收集版）}
 ①Sb 与 N 同族，AlSb 与 GaN 中离子键成分的百分数较大的是\tk。②AlSb 晶体的立方晶胞结构如图~\ref{fig:08-alsb}，其原子占据 A、B、C 三种位置，每种位置上只有一种原子，则 Al 占据\tk{}位置，Sb 占据\tk{}位置。（填编号）
-\tu{\begin{tikzpicture}[c8cell=1.9cm]
+\ceighttu{\begin{tikzpicture}[c8cell=1.9cm]
 \ceightcube
 \foreach \p in \ceightV {\ceightball[0.1]{black!35}{\p}}
 \foreach \p in \ceightF {\ceightball[0.1]{mainblue!60}{\p}}
 \foreach \p in \ceightT {\ceightball[0.1]{warnred!80}{\p}}
 \node[c8lab,below left] at (0,0,0) {A};
-\node[c8lab,above] at (0.5,0.5,1.04) {B};
-\node[c8lab,right] at (0.78,0.25,0.75) {C};
+\draw[-Stealth,black!70] (-0.7cm,1.5cm) node[left,font=\scriptsize]{B} -- (0.88cm,0.97cm);
+\draw[-Stealth,black!70] (-0.7cm,0.6cm) node[left,font=\scriptsize]{C} -- (0.58cm,0.6cm);
 \node[c8lab,right] at (2.6cm,1.5cm) {A：顶点\\B：面心\\C：体内（4 个）};
 \end{tikzpicture}}{AlSb 晶胞中的三种位置（示意重绘）\label{fig:08-alsb}}
 \textbf{解析：}①离子键成分随两元素电负性差的增大而增大。N 的电负性远大于 Sb，而 Ga 与 Al 的电负性相近，所以 GaN 中电负性差更大，离子键成分更大。②AlSb 为 1:1 型。A（顶点）$8\times\frac18=1$，B（面心）$6\times\frac12=3$，合计 4；C（体内）4 个。只有“A 与 B 合起来”才能和 C 构成 1:1，所以顶点和面心是同一种原子，体内是另一种，结构与 ZnS 相同。答案为 Al 占据 A、B，Sb 占据 C（二者互换也符合题意）。
@@ -312,7 +316,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 
 图~\ref{fig:08-metal}(c) 的钙钛矿 \ce{CaTiO3} 是一种重要的复合氧化物结构：Ca 位于顶点（$8\times\frac18=1$），Ti 位于体心（1），O 位于面心（$6\times\frac12=3$），组成为 \ce{CaTiO3}。Ti 周围有 6 个 O（八面体配位）；每个 Ca 周围最近的 O 有 12 个：共用该顶点的 8 个晶胞中，每个晶胞各有 3 个面心 O 与它距离最近，而每个面心 O 被 2 个晶胞共用，$8\times3\div2=12$。
 
-\tu{\begin{tikzpicture}[c8cell=1.9cm]
+\ceighttu{\begin{tikzpicture}[c8cell=1.9cm]
 \begin{scope}
 \ceightcube
 \foreach \p in \ceightV {\ceightball[0.13]{orange!80}{\p}}
@@ -340,6 +344,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 
 \begin{center}
 \small
+\begin{minipage}{\linewidth}\centering
 \captionof{table}{四类晶体的比较\label{tab:08-types}}
 \begin{tabularx}{\linewidth}{p{1.4cm}XXXX}
 \toprule
@@ -353,6 +358,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 实例 & 干冰、冰、\ce{I2}、大多数有机物 & 金刚石、晶体硅、SiC、\ce{SiO2} & \ce{NaCl}、CsCl、MgO & Na、Cu、Fe \\
 \bottomrule
 \end{tabularx}
+\end{minipage}
 \end{center}
 
 比较熔沸点时，先看晶体类型，一般共价晶体$>$离子晶体$>$分子晶体，金属晶体差别很大；类型相同，再比较起作用的那种作用力。分子晶体熔化时破坏的是分子间作用力，与分子内共价键的强弱无关：有分子间氢键的反常地高；组成和结构相似的，相对分子质量越大，范德华力越大，熔沸点越高；相对分子质量相近的，分子极性越大越高。
@@ -378,10 +384,10 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 
 以晶胞的一个顶点为原点，以从这个顶点出发的三条棱为 $x$、$y$、$z$ 轴，把晶胞边长当作 1，晶胞中每个粒子的位置就可以用三个 0 到 1 之间的数表示，叫\textbf{原子分数坐标}（图~\ref{fig:08-coord}）。例如原点 (0,0,0)，前面的面心 $(\frac12,0,\frac12)$，体心 $(\frac12,\frac12,\frac12)$，原点所在小立方体的中心 $(\frac14,\frac14,\frac14)$。
 
-\tu{\begin{tikzpicture}[c8cell=2.6cm]
+\ceighttu{\begin{tikzpicture}[c8cell=2.6cm]
 \ceightcube[black!55]
 \draw[-Stealth,thick] (0,0,0)--(1.3,0,0) node[right]{$x$};
-\draw[-Stealth,thick] (0,0,0)--(0,1.55,0) node[above right]{$y$};
+\draw[-Stealth,thick] (0,0,0)--(0,1,0) node[above left]{$y$};
 \draw[-Stealth,thick] (0,0,0)--(0,0,1.3) node[above]{$z$};
 \ceightball[0.09]{warnred!85}{0,0,0}
 \ceightball[0.09]{warnred!85}{0.5,0,0.5}
@@ -391,7 +397,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 \node[c8lab,below left] at (0,0,0) {原点 (0,0,0)};
 \node[c8lab,left] at (0.47,0,0.5) {$(\frac12,0,\frac12)$};
 \node[c8lab,right] at (0.53,0.5,0.5) {$(\frac12,\frac12,\frac12)$};
-\node[c8lab,below] at (0.25,0.25,0.22) {$(\frac14,\frac14,\frac14)$};
+\node[c8lab,right] at (0.28,0.25,0.25) {$(\frac14,\frac14,\frac14)$};
 \node[c8lab,above right] at (1,1,1) {(1,1,1)};
 \end{tikzpicture}}{原子分数坐标（以边长为单位 1）\label{fig:08-coord}}
 
@@ -401,7 +407,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 
 把晶胞中的粒子按 $z$ 坐标分组，同一高度的粒子画在同一张正方形平面图上（相当于从上往下俯视这一层），就得到分层图。图~\ref{fig:08-layer} 是 \ce{NaCl} 晶胞的分层图。$z=0$ 层是晶胞的底面：顶点和底面面心是 \ce{Cl-}，四条底棱的中点是 \ce{Na+}。$z=\frac12$ 层是从中间水平切开的截面：四条竖直棱的中点和体心是 \ce{Na+}，四个侧面的面心是 \ce{Cl-}。$z=1$ 层与 $z=0$ 层相同。
 
-\tu{\begin{tikzpicture}[x=2cm,y=2cm]
+\ceighttu{\begin{tikzpicture}[x=2cm,y=2cm]
 \foreach \s/\lab/\mid in {0/{$z=0$}/0,1.6/{$z=\frac12$}/1,3.2/{$z=1$}/0}{
 \begin{scope}[xshift=\s*2cm]
 \draw (0,0) rectangle (1,1);
@@ -428,7 +434,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 
 图~\ref{fig:08-projz} 是三种晶胞沿 $z$ 轴的投影，点旁的小字是落在该点的粒子的 $z$ 坐标。体心立方中，顶点原子投影到正方形四角，体心原子投影到中心。面心立方中，上下两个面心都投影到中心，四个侧面的面心投影到四条边的中点。\ce{NaCl} 的投影最能说明问题：九个投影点上都同时有 \ce{Na+} 和 \ce{Cl-}，例如中心点既有上下面心的 \ce{Cl-}（$z=0$、1），也有体心的 \ce{Na+}（$z=\frac12$）。
 
-\tu{\begin{tikzpicture}[x=2cm,y=2cm]
+\ceighttu{\begin{tikzpicture}[x=2cm,y=2cm]
 \begin{scope}
 \draw (0,0) rectangle (1,1);
 \foreach \x/\y in {0/0,1/0,0/1,1/1}{\shade[ball color=orange!80] (\x,\y) circle (0.12cm);}
@@ -441,7 +447,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 \draw (0,0) rectangle (1,1);
 \foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0.5,0.5/0,0/0.5,1/0.5,0.5/1}{\shade[ball color=orange!80] (\x,\y) circle (0.12cm);}
 \node[font=\tiny,above right] at (0.53,0.53) {0,1};
-\node[font=\tiny,below] at (0.5,-0.04) {$\frac12$};
+\node[font=\tiny,left] at (-0.05,0.5) {$\frac12$};
 \node[font=\tiny,below left] at (0,0) {0,1};
 \node[font=\small] at (0.5,-0.3) {(b) 面心立方};
 \end{scope}
@@ -455,7 +461,7 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 
 沿体对角线投影要复杂些（图~\ref{fig:08-proj111}）。光线沿体对角线方向，正方体的轮廓投影成正六边形。体对角线两端的顶点 (0,0,0) 和 (1,1,1) 都落在六边形中心；其余 6 个顶点落在六边形的 6 个角上；6 个面心各落在中心与一个角连线的中点，例如顶面面心 $(\frac12,\frac12,1)$ 恰好在 (0,0,1) 的投影与中心连线的中点。所以面心立方沿体对角线的投影图是“六边形 6 个角、6 个中点和中心”共 13 个点，其中中心点对应 2 个原子。
 
-\tu{\begin{tikzpicture}
+\ceighttu{\begin{tikzpicture}
 \begin{scope}[c8cell=2cm]
 \ceightcube[black!55]
 \foreach \p in \ceightV {\ceightball[0.1]{mainblue!70}{\p}}
@@ -476,9 +482,9 @@ ZnS（闪锌矿） & \ce{S^2-} 顶点和面心，\ce{Zn^2+} 占一半四面体�
 \node[c8lab,below] at (-90:\R+0.08) {(1,1,0)};
 \node[c8lab,left] at (-150:\R+0.08) {(1,0,0)};
 \node[c8lab,left] at (150:\R+0.08) {(1,0,1)};
-\node[c8lab,anchor=north west] at (0.05,-0.05) {(0,0,0)\\(1,1,1)};
 \node[c8lab,right] at (2.6,0.6) {\textcolor{mainblue}{$\bullet$} 顶点原子};
 \node[c8lab,right] at (2.6,0.1) {\textcolor{exorange}{$\bullet$} 面心原子};
+\node[c8lab,right,align=left] at (2.6,-0.55) {中心点：(0,0,0) 与\\(1,1,1) 两个顶点重叠};
 \end{scope}
 \end{tikzpicture}}{面心立方晶胞沿体对角线的投影（右图标出各顶点原子的坐标）\label{fig:08-proj111}}
 
@@ -489,7 +495,7 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 \tcblower
 \jie (1) $(\frac14,\frac14,\frac14)$、$(\frac34,\frac34,\frac14)$、$(\frac34,\frac14,\frac34)$、$(\frac14,\frac34,\frac34)$。四个空隙“互不相邻”，所以下层（$z=\frac14$）的两个在一条对角线上，上层（$z=\frac34$）的两个在另一条对角线上。\\
 (2) 沿 $z$ 轴投影时只看 $x$、$y$ 坐标：\ce{S^2-} 投影在正方形的四个顶点、四条边的中点和中心；\ce{Zn^2+} 投影在 $(\frac14,\frac14)$、$(\frac34,\frac34)$、$(\frac34,\frac14)$、$(\frac14,\frac34)$ 四点，如图~\ref{fig:08-znsproj}。
-\tu{\begin{tikzpicture}[x=2.4cm,y=2.4cm]
+\ceighttu{\begin{tikzpicture}[x=2.4cm,y=2.4cm]
 \draw (0,0) rectangle (1,1);
 \draw[black!25,dashed] (0.5,0)--(0.5,1) (0,0.5)--(1,0.5);
 \foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0,0.5/1,0/0.5,1/0.5,0.5/0.5}{\fill[mainblue] (\x,\y) circle (2.4pt);}
@@ -514,7 +520,7 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 
 求晶胞中两个粒子的距离，要用到初中学过的勾股定理。图~\ref{fig:08-diag} 中，晶胞边长为 $a$。底面是边长为 $a$ 的正方形，它的对角线（面对角线）$=\sqrt{a^2+a^2}=\sqrt2a$。体对角线从 (0,0,0) 到 (1,1,1)，它和底面对角线、一条竖直棱构成直角三角形（直角在 (1,1,0) 处），所以体对角线 $=\sqrt{(\sqrt2a)^2+a^2}=\sqrt3a$。前面给出的公式 $d=a\sqrt{\Delta x^2+\Delta y^2+\Delta z^2}$ 就是把勾股定理连用两次的结果。
 
-\tu{\begin{tikzpicture}[c8cell=2.6cm]
+\ceighttu{\begin{tikzpicture}[c8cell=2.6cm]
 \ceightcube[black!55]
 \draw[mainblue,thick] (0,0,0)--(1,1,0);
 \draw[warnred,thick] (0,0,0)--(1,1,1);
@@ -522,7 +528,7 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 \draw[black!70] (0.93,0.93,0)--(0.93,0.93,0.08)--(1,1,0.08);
 \node[c8lab,below] at (0.5,0,0) {$a$};
 \node[c8lab,right] at (1,0.5,0) {$a$};
-\node[c8lab,below right,mainblue] at (0.55,0.55,0) {$\sqrt2a$};
+\node[c8lab,above left,mainblue] at (0.62,0.62,0) {$\sqrt2a$};
 \node[c8lab,above left,warnred] at (0.5,0.5,0.5) {$\sqrt3a$};
 \node[c8lab,right,deepgreen] at (1,1,0.5) {$a$};
 \end{tikzpicture}}{立方晶胞的面对角线与体对角线\label{fig:08-diag}}
@@ -531,7 +537,7 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 
 求金属原子半径时，高中采用\textbf{刚性球模型}：把原子看成大小一定的硬球，距离最近的原子相互接触（相切）。这是一种近似，实际原子没有明确的边界，但用它算出的半径与测量值符合得很好。关键是判断沿哪条线相切：沿那条线，原子一个挨一个，没有空隙。图~\ref{fig:08-touch} 是三种立方晶胞中原子相切的截面。
 
-\tu{\begin{tikzpicture}
+\ceighttu{\begin{tikzpicture}
 \begin{scope}
 \begin{scope}\clip (0,0) rectangle (2,2);
 \foreach \x/\y in {0/0,2/0,0/2,2/2}{\shade[ball color=orange!70] (\x,\y) circle (1);}\end{scope}
@@ -568,7 +574,7 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 
 离子晶体中，最近的阴、阳离子间距（核间距）同样由几何位置决定。\ce{NaCl} 中 \ce{Na+} 在棱心，与顶点的 \ce{Cl-} 沿棱相邻，最近距离为 $\frac a2$；CsCl 中体心 \ce{Cs+} 与顶点 \ce{Cl-} 相距半条体对角线，即 $\frac{\sqrt3}{2}a$。ZnS 稍复杂：把晶胞切成 8 个边长为 $\frac a2$ 的小立方体，每个 \ce{Zn^2+} 位于一个小立方体的中心，周围 4 个 \ce{S^2-} 位于这个小立方体的 4 个互不相邻的顶点上，构成正四面体（图~\ref{fig:08-tet}）。\ce{Zn^2+} 与 \ce{S^2-} 的距离是小立方体体对角线的一半：$\frac12\times\sqrt3\times\frac a2=\frac{\sqrt3}{4}a$，也就是大晶胞体对角线的 $\frac14$。金刚石中最近两个 C 原子的距离同样是 $\frac{\sqrt3}{4}a$。
 
-\tu{\begin{tikzpicture}
+\ceighttu{\begin{tikzpicture}
 \begin{scope}[c8cell=2.2cm]
 \ceightcube[black!50]
 \draw[mainblue,thick] (0,0,0)--(0.5,0,0)--(0.5,0,0.5)--(0,0,0.5)--cycle (0.5,0,0)--(0.5,0.5,0)--(0.5,0.5,0.5)--(0.5,0,0.5) (0,0,0.5)--(0,0.5,0.5)--(0.5,0.5,0.5);
@@ -593,7 +599,7 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 
 晶体中一个粒子周围距离最近且相等的粒子的数目叫\textbf{配位数}。离子晶体中通常指一个离子周围最近的异电荷离子数；金属晶体中指一个原子周围最近的原子数。数配位数分三步：先选一个周围情况容易看全的粒子（体心粒子最好）；再确定“最近”的距离是多少；最后数出所有处于这个距离的粒子，包括相邻晶胞中的粒子。
 
-\tu{\begin{tikzpicture}[c8cell=2.2cm]
+\ceighttu{\begin{tikzpicture}[c8cell=2.2cm]
 \begin{scope}
 \ceightcube[black!40]
 \foreach \p in \ceightF {\draw[c8bond] (0.5,0.5,0.5)--(\p);}
@@ -628,14 +634,14 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 \end{liti}
 
 \begin{zhenti}{2025年广东卷第18题(5)}
-\ce{Ni_xCu_yN_z} 晶体的立方晶胞中原子所处位置为顶点、面心和体心。已知：同种位置原子相同，相邻原子间的最近距离之比 $d_{\text{Ni—Cu}}:d_{\text{Ni—N}}=\sqrt2:1$，则 $x:y:z=$\tk；晶体中与 Cu 原子最近且等距离的 Ni 原子的数目为\tk。
+\ce{Ni_xCu_yN_z} 晶体的立方晶胞中原子所处位置为顶点、面心和体心。已知：同种位置原子相同，相邻原子间的最近距离之比 $d_{\text{Ni—Cu}}:d_{\text{Ni—N}}=\sqrt2:1$，则 $x:y:z=$\tk；晶体中与 Cu 原子最近且等距离的原子的数目为\tk。
 
 \textbf{解析：}设边长为 $a$。三种位置两两之间的最近距离：面心到顶点 $\frac{\sqrt2}{2}a$，面心到体心 $\frac12a$，顶点到体心 $\frac{\sqrt3}{2}a$。比值为 $\sqrt2:1$ 的只有“面心—顶点”与“面心—体心”，Ni 同时出现在两个距离中，所以 Ni 在面心，Cu 在顶点，N 在体心。Ni：$6\times\frac12=3$；Cu：$8\times\frac18=1$；N：1。$x:y:z=3:1:1$。顶点 Cu 周围最近的是面心上的 Ni，与上面面心立方配位数的数法相同，共 12 个（也可以算：共用该顶点的 8 个晶胞各有 3 个面心与它相邻，每个面心被 2 个晶胞共用，$8\times3\div2=12$）。
 \end{zhenti}
 
 \section{晶体密度的计算}
 
-晶体由晶胞无隙并置而成，每个晶胞的质量和体积都相同，所以一个晶胞的密度就是晶体的密度：$\rho=\dfrac{m(\text{晶胞})}{V(\text{晶胞})}$。高一学过，1 mol 粒子有 $N_\text{A}$ 个，质量为 $M$ g，所以一个“化学式单元”的质量为 $\dfrac{M}{N_\text{A}}$ g。若一个晶胞含 $N$ 个化学式单元，晶胞质量为 $\dfrac{N\cdot M}{N_\text{A}}$ g；立方晶胞的体积为 $a^3$。于是
+晶体由晶胞无隙并置而成，每个晶胞的质量和体积都相同，所以一个晶胞的密度就是晶体的密度，即 $\rho=m(\text{晶胞})/V(\text{晶胞})$。高一学过，1 mol 粒子有 $N_\text{A}$ 个，质量为 $M$ g，所以一个“化学式单元”的质量为 $M/N_\text{A}$ g。若一个晶胞含 $N$ 个化学式单元，晶胞质量就是 $N\cdot M/N_\text{A}$ g；立方晶胞的体积为 $a^3$。于是
 
 \begin{gainian}[晶胞密度公式]
 \[
@@ -649,14 +655,16 @@ $N$：一个晶胞所含化学式单元数（用均摊法求）；$M$：摩尔�
 \begin{liti}[基础·原创]
 \ce{NaCl} 晶胞边长为 564 pm，$M(\ce{NaCl})=58.5$ g·mol$^{-1}$，$N_\text{A}=6.02\times10^{23}$ mol$^{-1}$，求 \ce{NaCl} 晶体的密度。
 \tcblower
-\jie 一个晶胞含 4 个 \ce{NaCl}。$a=564\times10^{-10}$ cm，$a^3\approx1.79\times10^{-22}$ cm$^3$。
-$\rho=\dfrac{4\times58.5}{6.02\times10^{23}\times(564\times10^{-10})^3}\ \text{g·cm}^{-3}\approx2.17$ g·cm$^{-3}$。
+\jie 一个晶胞含 4 个 \ce{NaCl}；$a=564$ pm $=564\times10^{-10}$ cm，$a^3\approx1.79\times10^{-22}$ cm$^3$。
+\[\rho=\frac{4\times58.5}{6.02\times10^{23}\times(564\times10^{-10})^3}\ \text{g·cm}^{-3}\approx2.17\ \text{g·cm}^{-3}\]
 \end{liti}
 
 \begin{liti}[典型·原创]
 铜晶体为面心立方结构，晶胞边长 $a=361$ pm，$M(\ce{Cu})=64$ g·mol$^{-1}$，$N_\text{A}=6.02\times10^{23}$ mol$^{-1}$。求铜的密度和铜原子半径。
 \tcblower
-\jie 每个晶胞含 Cu：$8\times\frac18+6\times\frac12=4$。$\rho=\dfrac{4\times64}{6.02\times10^{23}\times(361\times10^{-10})^3}\ \text{g·cm}^{-3}\approx9.0$ g·cm$^{-3}$。面心立方中原子沿面对角线相切：$4r=\sqrt2a$，$r=\frac{\sqrt2}{4}\times361\ \text{pm}\approx128$ pm。\\
+\jie 每个晶胞含 Cu：$8\times\frac18+6\times\frac12=4$。
+\[\rho=\frac{4\times64}{6.02\times10^{23}\times(361\times10^{-10})^3}\ \text{g·cm}^{-3}\approx9.0\ \text{g·cm}^{-3}\]
+面心立方中原子沿面对角线相切：$4r=\sqrt2a$，$r=\frac{\sqrt2}{4}\times361\ \text{pm}\approx128$ pm。\\
 \xianjing 常见错误是忘记把 pm 换算成 cm，或把 $N$ 取成 14（数了顶点和面心的个数而没有均摊）。
 \end{liti}
 
@@ -664,11 +672,14 @@ $\rho=\dfrac{4\times58.5}{6.02\times10^{23}\times(564\times10^{-10})^3}\ \text{g
 某 AB 型离子晶体具有 \ce{NaCl} 型结构，密度为 $\rho$ g·cm$^{-3}$，摩尔质量为 $M$ g·mol$^{-1}$，阿伏加德罗常数为 $N_\text{A}$。求晶体中阴、阳离子的最近距离（用 pm 表示，列出表达式）。
 \tcblower
 \silu 已知密度反求边长，再由几何关系求距离。\\
-\jie \ce{NaCl} 型晶胞含 4 个 AB。由 $\rho=\dfrac{4M}{N_\text{A}a^3}$ 得 $a=\sqrt[3]{\dfrac{4M}{\rho N_\text{A}}}$ cm。阴、阳离子沿棱相邻，最近距离 $d=\frac a2=\dfrac12\sqrt[3]{\dfrac{4M}{\rho N_\text{A}}}\times10^{10}$ pm。
+\jie \ce{NaCl} 型晶胞含 4 个 AB。由 $\rho=\dfrac{4M}{N_\text{A}a^3}$ 得 $a=\sqrt[3]{\dfrac{4M}{\rho N_\text{A}}}$ cm。阴、阳离子沿棱相邻，最近距离为边长的一半，再把 cm 换算成 pm（1 cm $=10^{10}$ pm）：
+\[d=\frac a2=\frac12\sqrt[3]{\frac{4M}{\rho N_\text{A}}}\times10^{10}\ \text{pm}\]
 \end{liti}
 
 \begin{tuozhan}[空间利用率]
-把原子看成刚性球，晶胞中原子总体积占晶胞体积的百分数叫空间利用率。面心立方：4 个原子，$4r=\sqrt2a$，利用率 $=\dfrac{4\times\frac43\pi r^3}{a^3}=\dfrac{\sqrt2\pi}{6}\approx74\%$；体心立方：2 个原子，$4r=\sqrt3a$，利用率 $=\dfrac{2\times\frac43\pi r^3}{a^3}=\dfrac{\sqrt3\pi}{8}\approx68\%$；简单立方：1 个原子，$a=2r$，利用率 $=\dfrac{\pi}{6}\approx52\%$。面心立方和六方最密堆积的 74\% 是等径球堆积能达到的最大值。
+把原子看成刚性球，晶胞中原子总体积占晶胞体积的百分数叫空间利用率。以面心立方为例：一个晶胞含 4 个原子，$4r=\sqrt2a$，即 $r=\frac{\sqrt2}{4}a$，
+\[\text{空间利用率}=\frac{4\times\frac43\pi r^3}{a^3}=\frac{\sqrt2\pi}{6}\approx74\%\]
+同样可以算出，体心立方（2 个原子，$4r=\sqrt3a$）为 $\frac{\sqrt3\pi}{8}\approx68\%$，简单立方（1 个原子，$a=2r$）为 $\frac{\pi}{6}\approx52\%$。面心立方和六方最密堆积的 74\% 是等径球堆积能达到的最大值。
 \end{tuozhan}
 
 % ---------------- 章末 ----------------
@@ -725,7 +736,7 @@ $\rho=\dfrac{4\times58.5}{6.02\times10^{23}\times(564\times10^{-10})^3}\ \text{g
 \zu{B组\quad 高考典型}
 \begin{xiti}
 \item \laiyuan{2024年广东卷第18题(6)，结构图为示意重绘}\ 一种含 Ga、Ni、Co 元素的记忆合金的晶体结构可描述为 Ga 与 Ni 交替填充在 Co 构成的立方体体心，形成如图~\ref{fig:08-alloy} 所示的结构单元（小立方体棱长为 $a$ nm）。该合金的晶胞中，粒子个数最简比 Co:Ga:Ni$=$\tk，其立方晶胞的体积为\tk nm$^3$。
-\tu{\begin{tikzpicture}
+\ceighttu{\begin{tikzpicture}
 \begin{scope}[c8cell=2.6cm]\ceightcube\end{scope}
 \begin{scope}[c8cell=1.3cm]
 \draw[black!35] (1,0,0)--(1,0,2) (0,0,1)--(2,0,1) (1,0,2)--(1,2,2) (0,1,2)--(2,1,2) (2,1,0)--(2,1,2) (2,0,1)--(2,2,1);
