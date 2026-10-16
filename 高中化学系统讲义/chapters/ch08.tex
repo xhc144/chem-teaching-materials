@@ -502,8 +502,8 @@ ZnS（闪锌矿）晶胞中，\ce{S^2-} 位于顶点和面心，\ce{Zn^2+} 位�
 \draw[black!25,dashed] (0.5,0)--(0.5,1) (0,0.5)--(1,0.5);
 \foreach \x/\y in {0/0,1/0,0/1,1/1,0.5/0,0.5/1,0/0.5,1/0.5,0.5/0.5}{\fill[mainblue] (\x,\y) circle (2.4pt);}
 \foreach \x/\y/\h in {0.25/0.25/\frac14,0.75/0.75/\frac14,0.75/0.25/\frac34,0.25/0.75/\frac34}{\fill[warnred] (\x,\y) circle (2pt); \node[font=\tiny,above right] at (\x,\y) {$\h$};}
-\node[font=\scriptsize,right] at (1.15,0.65) {\textcolor{mainblue}{$\bullet$} \ce{S^2-}};
-\node[font=\scriptsize,right] at (1.15,0.4) {\textcolor{warnred}{$\bullet$} \ce{Zn^2+}（小字为 $z$）};
+\node[font=\scriptsize,right,text=black] at (1.15,0.65) {\textcolor{mainblue}{$\bullet$} \textcolor{black}{\ce{S^2-}}};
+\node[font=\scriptsize,right,text=black] at (1.15,0.4) {\textcolor{warnred}{$\bullet$} \textcolor{black}{\ce{Zn^2+}}（小字为 $z$）};
 \end{tikzpicture}}{ZnS 晶胞沿 $z$ 轴的投影\label{fig:08-znsproj}}
 \dianbo 投影图上共有 13 个点，但一个晶胞只含 4 个 \ce{S^2-} 和 4 个 \ce{Zn^2+}；若只给投影图而不标高度，单凭投影无法区分 $z=\frac14$ 与 $z=\frac34$ 的 \ce{Zn^2+}。
 \end{liti}
