@@ -1,0 +1,25 @@
+% 墨经原生书籍类的项目设置：A4打印，五号正文，单栏。
+\geometry{a4paper,textwidth=172mm,textheight=256mm,inner=19mm,top=21mm,
+  headheight=14pt,headsep=4.5mm,footskip=7.5mm}
+\setlength{\parskip}{0.15em}
+\xeCJKsetcharclass{"25A0}{"25FF}{1}
+\xeCJKsetcharclass{"00B7}{"00B7}{0}
+\xeCJKsetcharclass{"2013}{"2013}{0}
+\xeCJKsetcharclass{"2103}{"2103}{1}
+\setcounter{secnumdepth}{2}
+\makeatletter
+\renewcommand{\@pnumwidth}{2.2em}
+\renewcommand{\@tocrmarg}{3.2em}
+\makeatother
+% A4讲义的标题留白：保留墨经的章序数、字体和细线。
+\ctexset{
+  chapter={beforeskip=8mm,afterskip=6mm},
+  section={beforeskip=.5\baselineskip plus .2\baselineskip,
+           afterskip=.25\baselineskip},
+  subsection={beforeskip=.3\baselineskip plus .15\baselineskip,
+              afterskip=.2\baselineskip}
+}
+\booktitle{高中化学系统讲义}
+\booksubtitle{选择性必修1、2、3与高考综合}
+\bookedition{面向广东新高考}
+\publisher{}{}{2026}

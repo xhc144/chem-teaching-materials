@@ -1,0 +1,7 @@
+{
+  "template": "book",
+  "variant": "default",
+  "source_repository": "https://github.com/xhc144/claude-lab",
+  "source_commit": "35a5afc2524a4162e28a9cd9de3b9e1d32f61a0a",
+  "archive_sha256": "5d0e5d2d352869ed653fbdad21245f54005513fcae9560b75c07fef65791a257"
+}

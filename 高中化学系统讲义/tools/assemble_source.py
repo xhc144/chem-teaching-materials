@@ -21,6 +21,14 @@ def expand(path, stack=()):
     return ''.join(output)
 source = expand(root / 'main.tex')
 assert '\\input{' not in '\n'.join(line for line in source.splitlines() if not line.lstrip().startswith('%'))
+# Keep the standalone source usable outside the modular project. Local template
+# files are emitted by LaTeX's built-in filecontents environment when absent.
+bundled = []
+for dependency in sorted([*root.glob('mojing-*.cls'), *root.glob('mojing-*.sty')]):
+    bundled.append('\\begin{filecontents*}{' + dependency.name + '}\n'
+                   + dependency.read_text(encoding='utf-8').rstrip('\n')
+                   + '\n\\end{filecontents*}\n')
+source = ''.join(bundled) + source
 target = root / '高中化学系统讲义.tex'
 target.write_text(source, encoding='utf-8')
 print(target.name, len(source), 'characters')

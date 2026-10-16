@@ -2,33 +2,6 @@
 %  《高中化学系统讲义》导言区
 %  编译：xelatex（两遍）  字体：Noto Serif/Sans CJK SC + TeX Gyre Termes
 % ============================================================
-\usepackage[a4paper,top=2.1cm,bottom=2.0cm,left=1.9cm,right=1.9cm,
-  headheight=14pt,headsep=0.45cm,footskip=0.75cm]{geometry}
-
-% ---------- 字体 ----------
-\usepackage{amsmath,amssymb}
-\usepackage{unicode-math}
-\setmainfont{TeX Gyre Termes}
-\setsansfont{TeX Gyre Heros}
-\setmathfont{TeX Gyre Termes Math}
-\setCJKmainfont{Noto Serif CJK SC}[BoldFont={Noto Sans CJK SC Bold},ItalicFont={AR PL KaitiM GB}]
-\setCJKsansfont{Noto Sans CJK SC}[BoldFont={Noto Sans CJK SC Bold}]
-\setCJKmonofont{Noto Sans Mono CJK SC}
-\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont={Noto Serif CJK SC Bold}]
-\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}[BoldFont={Noto Sans CJK SC Bold}]
-\setCJKfamilyfont{zhkai}{AR PL KaitiM GB}[AutoFakeBold=2]
-\setCJKfamilyfont{zhfs}{AR PL KaitiM GB}
-\def\songti{\CJKfamily{zhsong}}
-\def\heiti{\CJKfamily{zhhei}}
-\def\kaishu{\CJKfamily{zhkai}}
-\linespread{1.16}
-\xeCJKsetcharclass{"2460}{"24FF}{1}   % ①②③ 等按中文字符处理
-\xeCJKsetcharclass{"2160}{"217F}{1}   % Ⅰ Ⅱ Ⅲ 罗马数字
-\xeCJKsetcharclass{"25A0}{"25FF}{1}   % △ ○ 等几何符号用中文字体
-\xeCJKsetcharclass{"00B7}{"00B7}{0}   % 单位中的中点·按西文处理，避免 kJ·mol 断行
-\xeCJKsetcharclass{"2013}{"2013}{0}   % en dash 用西文字体
-\setlength{\parskip}{0.15em}
-
 % ---------- 常用宏包 ----------
 \usepackage[version=4]{mhchem}
 \usepackage{chemfig}
@@ -47,7 +20,7 @@
 \usepackage{wrapfig}
 \usepackage{siunitx}
 \sisetup{inter-unit-product=\ensuremath{\cdot},per-mode=symbol}
-\usepackage[hidelinks,bookmarksnumbered]{hyperref}
+\hypersetup{hidelinks,bookmarksnumbered}
 \pdfstringdefDisableCommands{%
   \def\sigma{σ}\def\pi{π}\def\Delta{Δ}\def\alpha{α}\def\beta{β}%
   \def\rho{ρ}\def\lambda{λ}\def\mu{μ}\def\theta{θ}%
@@ -68,51 +41,8 @@
 \definecolor{lightpurple}{RGB}{244,238,250}
 \definecolor{graytext}{RGB}{90,90,90}
 
-% ---------- 章节样式 ----------
-\ctexset{
-  chapter={
-    format={\raggedright\heiti},
-    nameformat={\color{mainblue}\Large},
-    titleformat={\color{mainblue}\LARGE\bfseries},
-    number={\arabic{chapter}},
-    name={第,章},
-    aftername={\quad},
-    beforeskip={0pt},
-    afterskip={1.0em},
-    pagestyle=fancy
-  },
-  section={
-    format={\Large\heiti\color{mainblue}\raggedright},
-    number={\arabic{chapter}.\arabic{section}},
-    beforeskip={1.0ex plus .3ex},
-    afterskip={0.6ex}
-  },
-  subsection={
-    format={\large\heiti\raggedright},
-    number={\arabic{chapter}.\arabic{section}.\arabic{subsection}},
-    beforeskip={0.8ex plus .2ex},
-    afterskip={0.4ex}
-  },
-  subsubsection={
-    format={\normalsize\heiti\raggedright},
-    number={},
-    beforeskip={0.5ex},
-    afterskip={0.2ex}
-  },
-  contentsname={目\quad 录}
-}
-\setcounter{secnumdepth}{2}
-\setcounter{tocdepth}{1}
-
-% ---------- 页眉页脚 ----------
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\heiti\color{mainblue}\leftmark}
-\fancyhead[R]{\small\heiti\color{graytext}高中化学系统讲义}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\chaptermark}[1]{\markboth{第\,\thechapter\,章\quad #1}{}}
-\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+% ---------- 墨经书籍设置 ----------
+\input{book-config}
 
 % ---------- 列表 ----------
 \setlist{nosep,leftmargin=2em}
@@ -135,7 +65,8 @@
 \renewcommand{\theliti}{\thechapter-\arabic{liti}}
 \newenvironment{liti}[1][]{\par\addvspace{.7em}\Needspace{5\baselineskip}\refstepcounter{liti}\color{black}\noindent
  {\heiti 例\,\theliti}\if\relax\detokenize{#1}\relax\else{\small\quad（#1）}\fi\quad\ignorespaces}{\par\addvspace{.6em}}
-\newcommand{\tcblower}{\par\smallskip\noindent\color{black}\ignorespaces}
+\providecommand{\tcblower}{}
+\renewcommand{\tcblower}{\par\smallskip\noindent\color{black}\ignorespaces}
 
 \newcommand{\silu}{{\heiti 分析\quad}}
 \newcommand{\jie}{{\heiti 解\quad}}
