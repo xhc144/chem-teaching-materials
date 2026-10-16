@@ -46,7 +46,6 @@
 \usepackage{enumitem}
 \usepackage{needspace}
 \usepackage{multicol}
-\usepackage[skins,breakable,most]{tcolorbox}
 \usepackage{tasks}
 \usepackage{fancyhdr}
 \usepackage{xcolor}
@@ -55,7 +54,7 @@
 \usepackage{siunitx}
 \sisetup{inter-unit-product=\ensuremath{\cdot},per-mode=symbol}
 \usepackage[hidelinks,bookmarksnumbered]{hyperref}
-\hypersetup{pdftitle={高中化学系统讲义},pdfsubject={选择性必修1、2、3与高考综合（面向广东新高考）},pdfkeywords={高中化学,选择性必修,广东高考,讲义}}
+\hypersetup{bookmarksdepth=2,pdftitle={高中化学系统讲义},pdfsubject={选择性必修1、2、3与高考综合（面向广东新高考）},pdfkeywords={高中化学,选择性必修,广东高考,讲义}}
 
 % ---------- 颜色 ----------
 \definecolor{mainblue}{RGB}{0,84,147}
@@ -123,45 +122,22 @@
 \settasks{label=\Alph*．,label-width=2.4em,item-indent=2.8em,before-skip=0.1em,after-skip=0.1em,column-sep=0.5em}
 \setlength{\emergencystretch}{2.5em}
 
-% ---------- 栏目环境（统一为左侧细线样式，少用底色） ----------
-\tcbset{colupper=black,collower=black,coltitle=black,
-  basestyle/.style={enhanced,breakable,frame hidden,interior hidden,boxrule=0pt,arc=0mm,
-    left=3mm,right=0mm,top=0.5mm,bottom=0.5mm,before skip=0.6em,after skip=0.6em,
-    borderline west={1.2pt}{0pt}{#1}},
-  basestyle/.default=mainblue,
-  innertitle/.style={detach title,before upper={{\tcbtitle}\par\nobreak\smallskip}}
-}
-\newcommand{\boxtitle}[2]{{\heiti\bfseries\small\color{#1}#2}}
-% 定义与基本规律
-\newtcolorbox{gainian}[1][]{basestyle=mainblue,colback=white,
-  title={\boxtitle{mainblue}{\ifx\relax#1\relax 概念\else #1\fi}},innertitle}
-% 原理解释
-\newtcolorbox{benzhi}[1][]{basestyle=graytext,
-  title={\boxtitle{black}{\ifx\relax#1\relax 原理\else #1\fi}},innertitle}
-% 方法
-\newtcolorbox{fangfa}[1][]{basestyle=graytext,
-  title={\boxtitle{black}{\ifx\relax#1\relax 方法\else #1\fi}},innertitle}
-% 注意
-\newtcolorbox{yicuo}[1][]{basestyle=warnred,
-  title={\boxtitle{warnred}{注意\ifx\relax#1\relax\else：#1\fi}},innertitle}
-% 真题（参数为来源）
-\newtcolorbox{zhenti}[1]{enhanced,breakable,colback=white,colframe=graytext,boxrule=0.4pt,arc=0.5mm,
-  left=2.5mm,right=2.5mm,top=1mm,bottom=1mm,before skip=0.6em,after skip=0.6em,
-  title={\heiti\bfseries\small 题例\quad{\normalfont\small #1}},coltitle=black,colbacktitle=black!6,
-  toptitle=0.6mm,bottomtitle=0.6mm}
-% 拓展阅读（高考不作要求）
-\newtcolorbox{tuozhan}[1][]{basestyle=black!35,fontupper=\small,
-  title={\boxtitle{graytext}{阅读\ifx\relax#1\relax\else：#1\fi}},innertitle}
-
-% 例题：编号随章；上半题目、下半解析（下半以虚线分隔）
+% ---------- 语义环境：简洁正文排版 ----------
+\newcommand{\textheading}[2]{\par\addvspace{.6em}\Needspace{4\baselineskip}\noindent
+ {\heiti\if\relax\detokenize{#2}\relax #1\else #2\fi}\par\nobreak\smallskip\nobreak\color{black}\ignorespaces}
+\newenvironment{gainian}[1][]{\textheading{概念}{#1}}{\par\smallskip}
+\newenvironment{benzhi}[1][]{\textheading{原理}{#1}}{\par\smallskip}
+\newenvironment{fangfa}[1][]{\textheading{方法}{#1}}{\par\smallskip}
+\newenvironment{yicuo}[1][]{\textheading{注意}{#1}}{\par\smallskip}
+\newenvironment{tuozhan}[1][]{\small\textheading{阅读}{#1}}{\par\smallskip}
+\newenvironment{zhenti}[1]{\par\addvspace{.7em}\Needspace{5\baselineskip}\color{black}\noindent
+ {\heiti 题例\quad}{\small #1}\par\nobreak\smallskip\nobreak\ignorespaces}{\par\addvspace{.6em}}
 \newcounter{liti}[chapter]
 \renewcommand{\theliti}{\thechapter-\arabic{liti}}
-\newtcolorbox{liti}[1][]{enhanced,breakable,frame hidden,interior hidden,boxrule=0pt,arc=0mm,
-  left=0mm,right=0mm,top=0.5mm,bottom=0.5mm,before skip=0.7em,after skip=0.7em,
-  borderline north={0.4pt}{0pt}{black!45},borderline south={0.4pt}{0pt}{black!45},
-  segmentation style={dashed,black!45},lowerbox=visible,
-  before upper={\stepcounter{liti}{\heiti\bfseries 例\,\theliti}\ifx\relax#1\relax\else{\kaishu\small（#1）}\fi\quad},
-  before lower={}}
+\newenvironment{liti}[1][]{\par\addvspace{.7em}\Needspace{5\baselineskip}\refstepcounter{liti}\color{black}\noindent
+ {\heiti 例\,\theliti}\if\relax\detokenize{#1}\relax\else{\small\quad（#1）}\fi\quad\ignorespaces}{\par\addvspace{.6em}}
+\newcommand{\tcblower}{\par\smallskip\noindent\color{black}\ignorespaces}
+
 \newcommand{\silu}{{\heiti 分析\quad}}
 \newcommand{\jie}{{\heiti 解\quad}}
 \newcommand{\daan}{{\heiti 答案\quad}}
@@ -320,6 +296,7 @@
 
 \section*{试题与资料的来源}
 书中引用或改编的广东试题，均注明年份、地区与题号；题干删节、由图像改成文字、重新设置数据或设问的内容标为“改编”。参考试卷包括所提供的2024、2025年广东卷副本及2026年广东卷网络收集版，后者的版本身份在引用中保留。普通例题和练习服务于本章教学，不因题型常见就宣称其为某年真题。课程范围与资料出处列于书末，图示原则上按本书讲解需要绘制。
+\setcounter{tocdepth}{1}
 \tableofcontents
 
 \mainmatter
@@ -6456,7 +6433,7 @@ $N$：一个晶胞所含化学式单元数（用均摊法求）；$M$：摩尔�
 \item 4；8。\ce{C3H6Cl2} 用定一移一：\ce{CHCl2CH2CH3}、\ce{CH2ClCHClCH3}、\ce{CH2ClCH2CH2Cl}、\ce{CH3CCl2CH3}。\ce{C5H12} 的一氯代物即戊基的种数：正戊烷 3 种、异戊烷 4 种、新戊烷 1 种，共 8 种。
 \item 酮羰基；对甲基苯甲醛（\ce{CH3C6H4CHO}，对位）。能发生银镜反应说明含 \ce{-CHO}；\ce{C8H8O} 除苯环和醛基外剩 1 个 C。若为 \ce{C6H5CH2CHO}，有苯环上 3 种 H、\ce{CH2}、\ce{CHO}，共 5 组峰，不符；若为甲基苯甲醛，对位时 H 的种类为 \ce{-CH3}、苯环上两种、\ce{-CHO}，共 4 组，邻、间位时苯环上有 4 种 H，不符。
 \item (1) \ce{(CH3)2C=C(CH3)2}，2,3-二甲基-2-丁烯。氧化只得丙酮，说明双键两端各连两个甲基。(2) 1 种。分子结构对称，与 HBr 加成只得一种产物 \ce{(CH3)2CBr-CH(CH3)2}。(3) 不存在，双键碳上各连两个相同的甲基。
-\item 4；\ce{CH3-C6H4-CH3}（对二甲苯）；乙苯。\ce{C8H10} 芳香烃有乙苯和邻、间、对二甲苯 4 种。对二甲苯苯环上的 4 个 H 等效，一氯代物只有 1 种。侧链被酸性 \ce{KMnO4} 氧化时，无论侧链多长，与苯环相连的碳都变为 \ce{-COOH}：乙苯（1 个侧链）生成苯甲酸，二甲苯（2 个侧链）生成苯二甲酸。
+\item 4；\ce{CH3-C6H4-CH3}（对二甲苯）；乙苯。\ce{C8H10} 芳香烃有乙苯和邻、间、对二甲苯 4 种。对二甲苯苯环上的 4 个 H 等效，一氯代物只有 1 种。含苄位 H 的烷基侧链被酸性 \ce{KMnO4} 氧化时，无论侧链多长，与苯环相连的碳都变为 \ce{-COOH}：乙苯（1 个侧链）生成苯甲酸，二甲苯（2 个侧链）生成苯二甲酸。
 \item 5；6；\ce{CH2=C(CH3)2}。$\Omega=1$，可以是 1 个双键或 1 个环。烯烃：1-丁烯、2-丁烯、2-甲基丙烯，3 种；环烷烃：环丁烷、甲基环丙烷，2 种；共 5 种。其中只有 2-丁烯有顺反异构，考虑后共 6 种。本题在烯烃中筛选，加氢得到异丁烷 \ce{(CH3)3CH} 的只有 2-甲基丙烯。
 \item 8；1,3,5-三甲苯（均三甲苯），结构简式如下：\par{\centering\setchemfig{atom sep=1.5em}\chemfig{*6(-(-CH_3)=-(-CH_3)=-(-CH_3)=)}\par}一个侧链：丙苯、异丙苯（2 种）；两个侧链（甲基、乙基）：邻、间、对（3 种）；三个甲基：连三甲苯、偏三甲苯、均三甲苯（3 种）。均三甲苯高度对称，苯环上 3 个 H 等效。
 \item \ce{HCOOCH3}；甲酸甲酯。含 C=O 和 C—O 键而无 O—H 键，不是羧酸或醇，应为酯，至少含酯基 \ce{-COO-}（式量 44）；$60-44=16$，剩余部分只能是 1 个 C 和 4 个 H，分子式为 \ce{C2H4O2}，酯只有甲酸甲酯 \ce{HCOOCH3}。它有 \ce{HCOO} 和 \ce{CH3} 两种 H，面积比 $1:3$，符合。

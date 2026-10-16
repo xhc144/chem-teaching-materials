@@ -40,7 +40,6 @@
 \usepackage{enumitem}
 \usepackage{needspace}
 \usepackage{multicol}
-\usepackage[skins,breakable,most]{tcolorbox}
 \usepackage{tasks}
 \usepackage{fancyhdr}
 \usepackage{xcolor}
@@ -49,7 +48,7 @@
 \usepackage{siunitx}
 \sisetup{inter-unit-product=\ensuremath{\cdot},per-mode=symbol}
 \usepackage[hidelinks,bookmarksnumbered]{hyperref}
-\hypersetup{pdftitle={高中化学系统讲义},pdfsubject={选择性必修1、2、3与高考综合（面向广东新高考）},pdfkeywords={高中化学,选择性必修,广东高考,讲义}}
+\hypersetup{bookmarksdepth=2,pdftitle={高中化学系统讲义},pdfsubject={选择性必修1、2、3与高考综合（面向广东新高考）},pdfkeywords={高中化学,选择性必修,广东高考,讲义}}
 
 % ---------- 颜色 ----------
 \definecolor{mainblue}{RGB}{0,84,147}
@@ -117,45 +116,22 @@
 \settasks{label=\Alph*．,label-width=2.4em,item-indent=2.8em,before-skip=0.1em,after-skip=0.1em,column-sep=0.5em}
 \setlength{\emergencystretch}{2.5em}
 
-% ---------- 栏目环境（统一为左侧细线样式，少用底色） ----------
-\tcbset{colupper=black,collower=black,coltitle=black,
-  basestyle/.style={enhanced,breakable,frame hidden,interior hidden,boxrule=0pt,arc=0mm,
-    left=3mm,right=0mm,top=0.5mm,bottom=0.5mm,before skip=0.6em,after skip=0.6em,
-    borderline west={1.2pt}{0pt}{#1}},
-  basestyle/.default=mainblue,
-  innertitle/.style={detach title,before upper={{\tcbtitle}\par\nobreak\smallskip}}
-}
-\newcommand{\boxtitle}[2]{{\heiti\bfseries\small\color{#1}#2}}
-% 定义与基本规律
-\newtcolorbox{gainian}[1][]{basestyle=mainblue,colback=white,
-  title={\boxtitle{mainblue}{\ifx\relax#1\relax 概念\else #1\fi}},innertitle}
-% 原理解释
-\newtcolorbox{benzhi}[1][]{basestyle=graytext,
-  title={\boxtitle{black}{\ifx\relax#1\relax 原理\else #1\fi}},innertitle}
-% 方法
-\newtcolorbox{fangfa}[1][]{basestyle=graytext,
-  title={\boxtitle{black}{\ifx\relax#1\relax 方法\else #1\fi}},innertitle}
-% 注意
-\newtcolorbox{yicuo}[1][]{basestyle=warnred,
-  title={\boxtitle{warnred}{注意\ifx\relax#1\relax\else：#1\fi}},innertitle}
-% 真题（参数为来源）
-\newtcolorbox{zhenti}[1]{enhanced,breakable,colback=white,colframe=graytext,boxrule=0.4pt,arc=0.5mm,
-  left=2.5mm,right=2.5mm,top=1mm,bottom=1mm,before skip=0.6em,after skip=0.6em,
-  title={\heiti\bfseries\small 题例\quad{\normalfont\small #1}},coltitle=black,colbacktitle=black!6,
-  toptitle=0.6mm,bottomtitle=0.6mm}
-% 拓展阅读（高考不作要求）
-\newtcolorbox{tuozhan}[1][]{basestyle=black!35,fontupper=\small,
-  title={\boxtitle{graytext}{阅读\ifx\relax#1\relax\else：#1\fi}},innertitle}
-
-% 例题：编号随章；上半题目、下半解析（下半以虚线分隔）
+% ---------- 语义环境：简洁正文排版 ----------
+\newcommand{\textheading}[2]{\par\addvspace{.6em}\Needspace{4\baselineskip}\noindent
+ {\heiti\if\relax\detokenize{#2}\relax #1\else #2\fi}\par\nobreak\smallskip\nobreak\color{black}\ignorespaces}
+\newenvironment{gainian}[1][]{\textheading{概念}{#1}}{\par\smallskip}
+\newenvironment{benzhi}[1][]{\textheading{原理}{#1}}{\par\smallskip}
+\newenvironment{fangfa}[1][]{\textheading{方法}{#1}}{\par\smallskip}
+\newenvironment{yicuo}[1][]{\textheading{注意}{#1}}{\par\smallskip}
+\newenvironment{tuozhan}[1][]{\small\textheading{阅读}{#1}}{\par\smallskip}
+\newenvironment{zhenti}[1]{\par\addvspace{.7em}\Needspace{5\baselineskip}\color{black}\noindent
+ {\heiti 题例\quad}{\small #1}\par\nobreak\smallskip\nobreak\ignorespaces}{\par\addvspace{.6em}}
 \newcounter{liti}[chapter]
 \renewcommand{\theliti}{\thechapter-\arabic{liti}}
-\newtcolorbox{liti}[1][]{enhanced,breakable,frame hidden,interior hidden,boxrule=0pt,arc=0mm,
-  left=0mm,right=0mm,top=0.5mm,bottom=0.5mm,before skip=0.7em,after skip=0.7em,
-  borderline north={0.4pt}{0pt}{black!45},borderline south={0.4pt}{0pt}{black!45},
-  segmentation style={dashed,black!45},lowerbox=visible,
-  before upper={\stepcounter{liti}{\heiti\bfseries 例\,\theliti}\ifx\relax#1\relax\else{\kaishu\small（#1）}\fi\quad},
-  before lower={}}
+\newenvironment{liti}[1][]{\par\addvspace{.7em}\Needspace{5\baselineskip}\refstepcounter{liti}\color{black}\noindent
+ {\heiti 例\,\theliti}\if\relax\detokenize{#1}\relax\else{\small\quad（#1）}\fi\quad\ignorespaces}{\par\addvspace{.6em}}
+\newcommand{\tcblower}{\par\smallskip\noindent\color{black}\ignorespaces}
+
 \newcommand{\silu}{{\heiti 分析\quad}}
 \newcommand{\jie}{{\heiti 解\quad}}
 \newcommand{\daan}{{\heiti 答案\quad}}
